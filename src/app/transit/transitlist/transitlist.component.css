@@ -1,0 +1,6 @@
+tr.odd {
+    display: none !important;
+}
+thead {
+    flex: 0 0 auto;
+}

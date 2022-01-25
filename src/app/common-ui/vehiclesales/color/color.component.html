@@ -1,0 +1,92 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-primary">
+        <div class="card-header bg-primary">
+          <h3 class="card-title">Bike Variant</h3>
+        </div>
+        <form [formGroup]="colorForm" (ngSubmit)="submit()">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Bike Model</label> 
+                  <select formControlName="modelId" class="form-control dropdown-primary" id="Select1">
+                    <option *ngFor="let data of bikemodeldata"  [value]=data.modelId selected>{{data.modelName}}</option>
+                </select>
+                </div>
+              </div>
+            </div>           
+            <div class="col-md-3">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Color Name</label>
+                  <input type="text" class="form-control" formControlName="colorName" id="exampleInputEmail1" placeholder="variant">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Color Code</label>
+                  <input type="text" class="form-control" formControlName="colorCode" id="exampleInputEmail1" placeholder="variant">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="card-body pt-5">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card card-primary">
+        <div class="card-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+              <tr class="text-center">
+                <th>SI.NO</th>
+                <th>Bike Model</th>
+                <th>Color Name</th>
+                <th>Color Code</th>                
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <tr *ngFor="let data of colordata; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{data.modelName}}</td>
+                <td>{{data.colorName}}</td>    
+                <td>{{data.colorCode}}</td>            
+                <td><i class="fas fa-edit" style="color: blue;"(click)="Editcolor(data.colorId)"></i></td>
+                <td><i class="fa fa-trash" (click)="Delete(data.colorId)" style="color: red;" aria-hidden="true"></i></td>
+              </tr>              
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>

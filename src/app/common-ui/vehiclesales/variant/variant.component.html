@@ -1,0 +1,68 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header bg-primary">
+            <h3 class="card-title">Bike Variant</h3>
+          </div>
+          <form [formGroup]="variantForm" (ngSubmit)="submit()">
+            <div class="row">
+              <div class="col-md-5">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Color Name</label> 
+                    <select formControlName="colorId" class="form-control dropdown-primary" id="Select1">
+                      <option *ngFor="let data of color"  [value]=data.colorId selected>{{data.colorName}}</option>
+                  </select>
+                  </div>
+                </div>
+              </div>           
+              <div class="col-md-5">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">variant Name</label>
+                    <input type="text" class="form-control" formControlName="variantName" id="exampleInputEmail1" placeholder="variant">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-2">
+                <div class="card-body pt-5">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr class="text-center">
+                  <th>SI.NO</th>
+                  <th>Variant Name</th>
+                  <th>Color Name</th>
+                  <!-- <th>Color Code</th>                 -->
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let data of variant; let i=index;">
+                  <td>{{i+1}}</td>
+                  <td>{{data.variantName}}</td>
+                  <td>{{data.colorName}}</td>    
+                  <!-- <td>{{data.colorCode}}</td>             -->
+                  <td><i class="fas fa-edit" style="color: blue;"(click)="Editcolor(data.variantId)"></i></td>
+                  <td><i class="fa fa-trash" (click)="Delete(data.variantId)" style="color: red;" aria-hidden="true"></i></td>
+                </tr> 
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+    </div>
+  </div>

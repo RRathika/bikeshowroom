@@ -1,0 +1,123 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header bg-primary">
+                    <h3 class="card-title">Enquiry Details</h3>
+                    <button class="btn btn-success float-end" (click)="addshow()">Add Enquiry</button>
+                </div>
+                <table id="example1" class="table table-bordered table-striped mt-5">
+                    <thead>
+                        <tr class="text-center">
+                            <th>SI.NO</th>
+                            <th>Name</th>
+                            <th>Mobile No</th>
+                            <th>Planing Date</th>
+                            <th>Vehicle Model</th>
+                            <th>Address</th>
+                            <th>Follow</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr *ngFor="let data of list; let i=index;">
+                            <td>{{i+1}}</td>
+                            <td>{{data.name}}</td>
+                            <td>{{data.mobileNo}}</td>
+                            <td>{{data.planningDate | date }} <h4 class="badge badge-danger">{{data.followCount}}</h4>
+                            </td>
+                            <td>{{data.interestedInName}}</td>
+                            <td>{{data.place}}</td>
+                            <td>
+                                <i class="fas fa-edit" data-toggle="modal" data-target="#exampleModal"
+                                    data-whatever="@mdo" (click)="popup(data.enquiryId)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"
+                    [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" *ngIf="flowcount!=3 && enquiryStatus">
+                                <form [formGroup]="popupForm" (ngSubmit)="submit()">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">Reason</label>
+                                                <textarea class="form-control" rows="4"
+                                                    formControlName="description"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label">Planing Date</label>
+                                                <input type="date" class="form-control" id="recipient-name"
+                                                    [readonly]="enquiryDetailsId" formControlName="planningDate">
+                                                <button type="submit" class="btn btn-primary mt-3"
+                                                    *ngIf="enquiryDetailsId =='' &&  flowcount!=3 && status!='InProgress'">Save</button>
+                                                <button type="submit" class="btn btn-primary mt-3"
+                                                    *ngIf="enquiryDetailsId!=''">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <thead>
+                                        <th>No</th>
+                                        <th>Date</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                        <th *ngIf="flowcount!=3">Edit</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of enquirydetailslist;let i=index;">
+                                            <td>{{i+1}}</td>
+                                            <td>{{data.planningDate | date}}</td>
+                                            <td>{{data.remarks}}</td>
+                                            <td>{{data.statusName}}</td>
+                                            <td *ngIf="flowcount!=3 && enquiryStatus"> <i class="fas fa-edit"
+                                                    (click)="editdetails(data.enquiryDetailsId)"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="model-footer" *ngIf="flowcount!=3 && enquiryStatus">
+                                <div class="col-md-12 mb-3">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <!-- <label for="exampleFormControlSelect1">Example select</label> -->
+                                                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="closedata">
+                                                  <option ngValue=""> Select Option</option>
+                                                  <option ngValue="1">Not interest</option>
+                                                  <option ngValue="2">Purchase</option>
+                                                </select>
+                                              </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-danger" (click)="closealldata()">Close</button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-warning" (click)="clear()">Clear
+                                                Data</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

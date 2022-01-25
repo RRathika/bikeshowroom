@@ -1,0 +1,257 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-primary">
+				<div class="card-header bg-primary">
+					<h3 class="card-title">Vehicle Purchase Details</h3>
+                </div>
+				<form [formGroup]="vehiclepurchaseForm" (ngSubmit)="submit()">
+				<div class="col-md-12 pt-3 border">
+					<div class="card card-primary">	
+							<div class="card-body">
+								<div class="row">
+                                    <div class="col-md-6">				
+										<div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label for="exampleInputEmail1">Reference No</label>
+											<input type="text" class="form-control" 
+												placeholder="Reference No" formControlName="referenceNo">
+                                            </div>
+											<div class="col-md-6">
+                                                <label for="exampleInputEmail1">received Date</label>
+											<input type="date" class="form-control" 
+												placeholder="Bike Type" formControlName="receiveddate">
+                                            </div>
+										</div>						
+										<div class="form-group row">
+											<label for="exampleInputEmail1">Inv.No & Date</label>
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control" placeholder="Transit Type" formControlName="invoiceno">
+                                            </div>
+											<div class="col-md-6">
+                                                <input type="date" class="form-control">
+                                            </div>                                            
+										</div>
+										<div class="form-group row">
+											<label for="exampleInputEmail1">Pay Mode</label>
+                                            <div class="col-md-6 text-center">
+                                                <button class="btn btn-warning">Import</button>
+                                            </div>
+                                            <div class="col-md-6">                                                
+											<select class="form-control">
+                                                <option>Cash</option>
+                                                <option>Card</option>
+                                            </select>
+                                            </div>											
+										</div>
+										<div class="form-group row">
+                                            <label for="exampleInputEmail1">Purchase Type</label>
+                                            <div class="col-md-6">                                                
+											<select class="form-control">
+                                                <option>Cash</option>
+                                                <option>Card</option>
+                                            </select>
+                                            </div>
+                                            <div class="col-md-6">
+											<select class="form-control">
+                                                <option>Cash</option>
+                                                <option>Card</option>
+                                            </select>
+                                            </div>											
+										</div>									
+															
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="exampleInputEmail1">Stock Poin</label>
+                                        <select class="form-control">
+                                            <option>Cash</option>
+                                            <option>Card</option>
+                                        </select>
+                                    </div>			
+                                    <div class="form-group row">
+										<label>Transit Type</label>                                       
+                                        <div class="col-md-6 text-center">                                                
+                                        <button class="btn btn-success">SUPPLIER</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" placeholder="Transit Type" formControlName="invoiceno">
+                                        </div>											
+                                    </div>	
+                                    <div class="form-group row"> 
+                                            <label for="exampleInputEmail1">Town</label>
+                                            <input type="text" class="form-control" placeholder="Transit Type" formControlName="invoiceno">
+                                    </div>
+                                    <div class="form-group row"> 
+                                            <label for="exampleInputEmail1">GST No.</label>
+                                            <input type="text" class="form-control" placeholder="Transit Type" formControlName="invoiceno">
+                                       </div>
+                                   				
+                                </div>
+								</div>
+							</div>
+						
+					</div>
+				</div>		
+                <div class="card-body border">
+					<div class="card-header bg-primary">						
+						<!-- <button class="btn btn-success float-right" (click)="submit()">Submit</button> -->
+						<h3 class="card-title">Transit List</h3>
+					</div>
+					<div style="overflow-x:auto;overflow-y: auto;height: 200px;">
+					<table  class="table table-striped table-bordered table-sm" cellspacing="0"
+					width="100%">
+						<thead style="text-align: center;">
+							<tr>
+								<th>ID</th>
+								<th>Frame No</th>
+								<th>Engine No</th>
+								<th>material Code</th>
+								<th>Vehicle Model Id</th>
+								<th>Variant Id</th>								
+							</tr>
+						</thead>
+						<tbody style="text-align: center;">
+							<!-- <tr *ngFor="let row of splitData; let i=index; " class="table-info">
+								<td>{{i+1}}</td>
+								<td *ngFor="let val of row">{{val}}</td>
+								<td><select class="browser-default custom-select" (change)="onChange($event,i)">
+									<option selected>Open this select menu</option>
+									<option *ngFor="let item of bikemodel" [value]=item.modelId >{{item.modelName}}</option>									
+								  </select></td>
+								<td><select class="browser-default custom-select"  (change)="onChange1($event,i)">
+									<option selected>Open this select menu</option>
+									<option *ngFor="let item of color" [value]=item.variantId >{{item.variant}}</option>									
+								  </select></td>
+							</tr> -->
+						</tbody>
+					</table>
+				</div>
+				</div>
+				<div class="col-md-12 border">
+					<div class="row">
+					<div class="col-md-6 mt-3">						
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label for="exampleInputEmail1">Tot.Veh.Cost</label>
+							<input type="text" class="form-control" 
+								placeholder="Reference No" formControlName="referenceNo">
+							</div>
+							<div class="col-md-3">
+								<label for="exampleInputEmail1">IGST Amt</label>								 
+							<input type="text" class="form-control" 
+								placeholder="%" formControlName="receiveddate">							
+							</div>
+							<div class="col-md-5">								
+								<input type="text" class="form-control mt-4" 
+								placeholder="Bike Type" formControlName="receiveddate">
+							</div>							
+						</div>
+						<div class="form-group row">							
+							<div class="col-md-3">
+								<label for="exampleInputEmail1">discount</label>								 
+							<input type="text" class="form-control" 
+								placeholder="%" formControlName="receiveddate">							
+							</div>
+							<div class="col-md-5">								
+								<input type="text" class="form-control mt-4" 
+								placeholder="Bike Type" formControlName="receiveddate">
+							</div>
+							<div class="col-md-4">
+								<label for="exampleInputEmail1">Cess Amount</label>
+							<input type="text" class="form-control" 
+								placeholder="Reference No" formControlName="referenceNo">
+							</div>							
+						</div>
+						<div class="form-group row">							
+							<div class="col-md-6">
+								<label for="exampleInputEmail1">Freight</label>								 
+							<input type="text" class="form-control" 
+								placeholder="" formControlName="receiveddate">							
+							</div>
+							<div class="col-md-6">
+								<label for="exampleInputEmail1">Additional Discount</label>								
+								<input type="text" class="form-control" 
+								placeholder="Bike Type" formControlName="receiveddate">
+							</div>														
+						</div>
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label for="exampleInputEmail1">Insurance</label>
+							<input type="text" class="form-control" 
+								placeholder="Reference No" formControlName="referenceNo">
+							</div>
+							<div class="col-md-3">
+								<label for="exampleInputEmail1">TCS Amt</label>								 
+							<input type="text" class="form-control" 
+								placeholder="%" formControlName="receiveddate">							
+							</div>
+							<div class="col-md-5">								
+								<input type="text" class="form-control mt-4" 
+								placeholder="Bike Type" formControlName="receiveddate">
+							</div>							
+						</div>
+						<div class="form-group row">
+							<div class="col-md-4">
+								<label for="exampleInputEmail1">Total</label>
+							<input type="text" class="form-control" 
+								placeholder="Reference No" formControlName="referenceNo" [disabled]="true">
+							</div>
+							<div class="col-md-3">
+								<label for="exampleInputEmail1">Round off</label>								 
+							<input type="text" class="form-control" 
+								placeholder="%" formControlName="receiveddate">							
+							</div>
+							<div class="col-md-5">		
+								<label for="exampleInputEmail1">Net Amount</label>						
+								<input type="text" class="form-control" 
+								placeholder="Bike Type" formControlName="receiveddate" [disabled]="true">
+							</div>							
+						</div>
+					</div>
+					<div class="col-md-6 mt-3">
+						<div class="form-group row">
+							<div class="col-md-10">
+								<label for="exampleInputEmail1">Ledger Name</label>
+							<input type="text" class="form-control" 
+								placeholder="Reference No" formControlName="referenceNo">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="exampleInputEmail1">Cheq/DD</label>
+							<div class="col-md-3">
+								<button class="btn btn-warning">Chq.Book</button>
+							</div>
+							<div class="col-md-3">								
+							<input type="text" class="form-control" 
+								placeholder="Reference No" formControlName="referenceNo">
+							</div>	
+							<div class="col-md-4">
+								<input type="date" class="form-control">
+							</div>										
+						</div>
+						<div class="form-group row">
+							<div class="col-md-10">
+								<label for="exampleInputEmail1">Bank Details</label>
+							<input type="text" class="form-control" 
+								placeholder="Reference No" formControlName="referenceNo">
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-12">
+								<label for="exampleInputEmail1">Narration</label>
+								<textarea rows="4" class="form-control"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 text-center my-3">
+						<button class="btn btn-success">Save</button>
+						<button class="btn btn-danger ml-3">Exit</button>
+					</div>
+				</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,100 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header bg-primary">
+            <h3 class="card-title">Bike Model Details</h3>
+          </div>
+          <form [formGroup]="bikemodelForm" (ngSubmit)="submit()">
+            <div class="row">
+            <div class="col-md-3">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="bikeType">Bike Type</label>
+                  <!-- <input class="form-control" list="vehicle"
+                  placeholder="Type to search..." formControlName="vehicleType"> -->
+                <select id="vehicle" class="form-control" formControlName="vehicleType">
+                  <option value="1">Bike</option>
+                  <option value="2">Scooty</option>
+                </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="modelName">Model Name</label>
+                  <input type="email" class="form-control" formControlName="modelName" id="modelName" placeholder="Model Name">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="modelName">Model Code</label>
+                  <input type="email" class="form-control" formControlName="modelCode" id="modelName" placeholder="Model Code">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card-body pt-5">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-12">
+      <div class="card card-primary">     
+        <div class="card-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+              <tr class="text-center">
+                <th>SI.NO</th>
+                <th>Bike Type</th>
+                <th>Model Name</th>
+                <th>Model Code</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <tr *ngFor="let data of getbike; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{data.vehicleTypeName}}</td>
+                <td>{{data.modelName}}</td>
+                <td>{{data.modelCode}}</td>
+                <td><i class="fas fa-edit" style="color: blue;" (click)="bikemodeledit(data.modelId)"></i></td>
+                <td><i class="fa fa-trash" (click)="Delete(data.modelId)" style="color: red;" aria-hidden="true"></i></td>
+              </tr>
+            </tbody>  
+          </table>
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"
+          [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination>
+        </div>
+        <!-- /.card-body -->
+      </div>
+    </div>
+  </div>
+  </div>
+  <ngb-toast header="Notification header">
+    Content of the notification
+  </ngb-toast>
+  <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
