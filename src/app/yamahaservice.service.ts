@@ -146,6 +146,12 @@ export class YamahaserviceService {
     return this.httpclient.get(this.url+'AdvanceBooking/GetAdvanceBookingsByModelName');
   }
   getusercode(){
-    return this.httpclient.get(this.url+'UserRegistration/GetUserCode');
+    return this.httpclient.get(this.url+'UserRegistration/GetUserCode',{responseType:'text'});
   }
+  getmacaddress(){
+    return this.httpclient.get(this.url+ 'UserRegistration/GetMacAddress',{responseType:'text'});
+  }
+  saveregister(data:any){
+    return this.httpclient.post(this.url+'UserRegistration/SaveUserRegistration',data);
+  } 
 }

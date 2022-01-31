@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RegisterComponent } from './authentication/register/register.component';
 import { AdvancebookComponent } from './common-ui/advancebook/advancebook.component';
 import { DashboardComponent } from './common-ui/dashboard/dashboard.component';
 import { EnquirylistComponent } from './common-ui/enquiry/enquirylist/enquirylist.component';
@@ -41,7 +42,7 @@ children:[
 {path:'rolemaster',component:RolemasterComponent},
 {path:'showroom',component:ShowroomComponent},
 {path:'vehiclepurchase',component:VehiclepurchaseComponent},
-{path:'variant',component:VariantComponent}]}
+{path:'variant',component:VariantComponent},{path:'register',component:RegisterComponent}]}
 ];
 
 @NgModule({

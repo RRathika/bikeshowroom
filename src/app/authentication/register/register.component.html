@@ -23,54 +23,24 @@
                 </div>
                 <div class="col-md-4">
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" formControlName="name" placeholder="Name">
+                    <input type="text" class="form-control" formControlName="userName" placeholder="Name">
                     <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fas fa-user"></span>
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- <div class="col-md-4">
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" formControlName="lastName" placeholder="Last name">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-user"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
-                <!-- <div class="col-md-4">
-                  <div class="input-group mb-3">
-                    <input type="email" class="form-control" formControlName="mail" placeholder="Email">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-envelope"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+                </div>                
                 <div class="col-md-4">
                   <div class="input-group mb-3">
-                    <input type="password" class="form-control" formControlName="mobileNo" placeholder="Mobile No">
+                    <input type="text" class="form-control" formControlName="mobileNo" placeholder="Mobile No">
                     <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fas fa-phone"></span>
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- <div class="col-md-4">
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" formControlName="alternativeMobileNo" placeholder="Alternative Mobile No">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-phone"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+                </div>                
                 <div class="col-md-4">
                   <div class="input-group mb-3">
                     <select class="form-control" formControlName="gender" placeholder="Alternative Mobile No">
@@ -92,7 +62,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" formControlName="macAddress" placeholder="Mac Address">
+                    <input type="text" class="form-control" formControlName="macAddress" placeholder="Mac Address" [value]="macadd">
                     <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fas fa-user"></span>
@@ -102,84 +72,13 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group mb-3">
-                    <textarea class="form-control" formControlName="place" placeholder="place" rows="2"></textarea>
-                    <!-- <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-address-card"></span>
-                      </div>
-                    </div> -->
+                    <textarea class="form-control" formControlName="place" placeholder="place" rows="2"></textarea>                    
                   </div>
-                </div>
-                <!-- <div class="col-md-4">
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" formControlName="city" placeholder="City">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-address-card"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" formControlName="state" placeholder="State">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-address-card"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" formControlName="country" placeholder="Country">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-address-card"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" formControlName="zipcode" placeholder="ZipCode">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-address-card"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group mb-3">
-                    <select class="form-control" formControlName="showRoomId" placeholder="Show Room Name">
-                      <option>Show Room Name</option>
-                      <option>12</option>
-                      <option>123</option>                   
-                    </select>
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-address-list"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
-                <div class="row">
-                  <!-- <div class="col-6">
-                    <div class="icheck-primary">
-                      <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                      <label for="agreeTerms">
-                        I agree to the <a href="#">terms</a>
-                      </label>
-                    </div>
-                  </div> -->
-                  <!-- /.col -->
+                </div>                
                   <div class="col-md-12 my-2 text-center">
                     <button type="submit" class="btn btn-primary">Register</button>
-                </div>   
-                  <!-- /.col -->
                 </div>
-              </div>
+                </div>
             </form>
           </div>
 
