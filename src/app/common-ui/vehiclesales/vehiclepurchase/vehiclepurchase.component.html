@@ -12,88 +12,62 @@
 								<div class="row">
                                     <div class="col-md-6">				
 										<div class="form-group row">
-                                            <div class="col-md-6">
-                                                <label for="exampleInputEmail1">Reference No</label>
-											<input type="text" class="form-control" 
-												placeholder="Reference No" formControlName="referenceNo">
+											<div class="col-md-6">
+												<label for="exampleInputEmail1">Inv.No</label>
+                                                <input type="text" class="form-control" placeholder="Invoice no" formControlName="invoiceNo">
                                             </div>
 											<div class="col-md-6">
-                                                <label for="exampleInputEmail1">received Date</label>
-											<input type="date" class="form-control" 
-												placeholder="Bike Type" formControlName="receiveddate">
+												<label for="exampleInputEmail1">Date</label>
+                                                <input type="date" class="form-control" formControlName="invoiceDate">
                                             </div>
 										</div>						
-										<div class="form-group row">
-											<label for="exampleInputEmail1">Inv.No & Date</label>
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" placeholder="Transit Type" formControlName="invoiceno">
-                                            </div>
+										<div class="form-group row">											
 											<div class="col-md-6">
-                                                <input type="date" class="form-control">
-                                            </div>                                            
+                                                <label for="exampleInputEmail1">received Date</label>
+											<input type="date" class="form-control" formControlName="receivedDate">
+                                            </div> 
+											<div class="col-md-6">
+												<label for="exampleInputEmail1">Transit Type</label>                                                
+											<select class="form-control" formControlName="purchaseType">
+                                                <option value="1">Within State</option>
+                                                <option value="2">Without State</option>
+                                            </select>
+                                            </div>	                                           
 										</div>
 										<div class="form-group row">
-											<label for="exampleInputEmail1">Pay Mode</label>
-                                            <div class="col-md-6 text-center">
-                                                <button class="btn btn-warning">Import</button>
-                                            </div>
-                                            <div class="col-md-6">                                                
-											<select class="form-control">
-                                                <option>Cash</option>
-                                                <option>Card</option>
-                                            </select>
-                                            </div>											
-										</div>
-										<div class="form-group row">
-                                            <label for="exampleInputEmail1">Purchase Type</label>
-                                            <div class="col-md-6">                                                
-											<select class="form-control">
-                                                <option>Cash</option>
-                                                <option>Card</option>
-                                            </select>
-                                            </div>
                                             <div class="col-md-6">
-											<select class="form-control">
-                                                <option>Cash</option>
-                                                <option>Card</option>
-                                            </select>
-                                            </div>											
-										</div>									
-															
+												<label for="exampleInputEmail1">Pay Mode</label>
+                                                <input type="file" #myInput  multiple="false" (change)="onFileChange($event)" />
+                                            </div>								
+										</div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label for="exampleInputEmail1">Stock Poin</label>
-                                        <select class="form-control">
-                                            <option>Cash</option>
-                                            <option>Card</option>
-                                        </select>
-                                    </div>			
-                                    <div class="form-group row">
-										<label>Transit Type</label>                                       
-                                        <div class="col-md-6 text-center">                                                
-                                        <button class="btn btn-success">SUPPLIER</button>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" placeholder="Transit Type" formControlName="invoiceno">
-                                        </div>											
-                                    </div>	
-                                    <div class="form-group row"> 
-                                            <label for="exampleInputEmail1">Town</label>
-                                            <input type="text" class="form-control" placeholder="Transit Type" formControlName="invoiceno">
-                                    </div>
-                                    <div class="form-group row"> 
-                                            <label for="exampleInputEmail1">GST No.</label>
-                                            <input type="text" class="form-control" placeholder="Transit Type" formControlName="invoiceno">
-                                       </div>
-                                   				
+									<fieldset class="border p-2">
+										<legend  class="float-none w-auto p-2">Supplier Details</legend>
+										<div class="form-group row">
+											<div class="col-md-6">
+												<label>Name</label>  
+												<input type="text" class="form-control" placeholder="Name" formControlName="supplierName">
+											</div>
+											<div class="col-md-6">
+												<label>Gst</label>  
+												<input type="text" class="form-control" placeholder="Gst" formControlName="supplierGST">
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-md-12">
+												<label>Address</label>  
+												<textarea class="form-control" placeholder="Address" formControlName="suppierAddress" rows="2"></textarea>
+											</div>
+										</div>
+									 </fieldset>
                                 </div>
 								</div>
 							</div>
 						
 					</div>
 				</div>		
-                <div class="card-body border">
+                <div class="card-body border" *ngIf="count==1">
 					<div class="card-header bg-primary">						
 						<!-- <button class="btn btn-success float-right" (click)="submit()">Submit</button> -->
 						<h3 class="card-title">Transit List</h3>
@@ -103,150 +77,130 @@
 					width="100%">
 						<thead style="text-align: center;">
 							<tr>
-								<th>ID</th>
-								<th>Frame No</th>
+								<th>SI.No</th>
+								<th>Key No</th>
+								<th>Chassis No</th>
 								<th>Engine No</th>
-								<th>material Code</th>
-								<th>Vehicle Model Id</th>
-								<th>Variant Id</th>								
+								<th>Model Code</th>
+								<th>Model Name</th>
+								<th>color code</th>
+								<th>color Name</th>								
 							</tr>
 						</thead>
-						<tbody style="text-align: center;">
-							<!-- <tr *ngFor="let row of splitData; let i=index; " class="table-info">
+						<tbody style="text-align: center;" *ngIf="purchase">
+							 <tr *ngFor="let row of purchase; let i=index; " (change)="onChange($event,i)" class="table-info" >
 								<td>{{i+1}}</td>
-								<td *ngFor="let val of row">{{val}}</td>
-								<td><select class="browser-default custom-select" (change)="onChange($event,i)">
-									<option selected>Open this select menu</option>
-									<option *ngFor="let item of bikemodel" [value]=item.modelId >{{item.modelName}}</option>									
-								  </select></td>
-								<td><select class="browser-default custom-select"  (change)="onChange1($event,i)">
-									<option selected>Open this select menu</option>
-									<option *ngFor="let item of color" [value]=item.variantId >{{item.variant}}</option>									
-								  </select></td>
-							</tr> -->
+								<td><input type="text" /></td>
+								<td>{{row.chassisNo	}}</td>
+								<td>{{row.engineNo}}</td>
+								<td>{{row.modelCode}}</td>
+								<td>{{row.vehicleModelName}}</td>
+								<td>{{row.modelColorCode}}</td>
+								<td>{{row.colorName}}</td>
+							</tr> 
+						</tbody>
+						<tbody style="text-align: center;" *ngIf="exceldata">
+							<tr *ngFor="let row of exceldata; let i=index; " class="table-info" >
+								<td>{{i+1}}</td>
+								<td><input type="text" (change)="onChange($event,i)" /></td>
+								<td>{{row.ChassisNo	}}</td>
+								<td>{{row.EngineNo}}</td>
+								<td>{{row.ModelCode}}</td>
+								<td>{{row.modelname}}</td>
+								<td>{{row.ModelColorCode}}</td>
+								<td>{{row.colorname}}</td>
+							</tr> 
 						</tbody>
 					</table>
 				</div>
 				</div>
 				<div class="col-md-12 border">
 					<div class="row">
-					<div class="col-md-6 mt-3">						
-						<div class="form-group row">
-							<div class="col-md-4">
-								<label for="exampleInputEmail1">Tot.Veh.Cost</label>
-							<input type="text" class="form-control" 
-								placeholder="Reference No" formControlName="referenceNo">
+						<fieldset class="border p-2">
+							<legend  class="float-none w-auto p-2">Pay Details</legend>
+							<div class="row">	
+							<div class="col-md-6 mt-3">													
+								<div class="form-group row">
+									<div class="col-md-4">
+										<label for="exampleInputEmail1">Tot.Veh.Cost</label>
+									<input type="text" class="form-control" 
+										placeholder="Total Vehicle Cost" (change)="vehiclecost($event)" formControlName="totalVehicleCost">
+									</div>
+									<div class="col-md-2">
+										<label for="exampleInputEmail1">IGST Amt</label>								 
+									<input type="text" class="form-control" 
+										placeholder="%" formControlName="igstPercentage" (change)="igst($event)">							
+									</div>
+									<div class="col-md-6">
+										<label for="exampleInputEmail1">Insurance</label>
+									<input type="text" class="form-control" 
+										placeholder="Insurance" formControlName="insurance" (change)="insurance($event)">
+									</div>	
+								</div>							
+								<div class="form-group row">
+									<div class="col-md-4">
+										<label for="exampleInputEmail1">Freight</label>								 
+									<input type="text" class="form-control" 
+										placeholder="Freight" formControlName="freight" (change)="freight($event)">							
+									</div>			
+									<div class="col-md-2">
+										<label for="exampleInputEmail1">discount</label>								 
+									<input type="text" class="form-control" 
+										placeholder="%" formControlName="discountPercentage" (change)="discount($event)">							
+									</div>	
+									<div class="col-md-6">
+										<label for="exampleInputEmail1">Additional Discount</label>								
+										<input type="text" class="form-control" 
+										placeholder="Additional Discount" formControlName="additionalDiscount" (change)="discountamount($event)">
+									</div>
+																				
+								</div>
+								<div class="form-group row">
+									<div class="col-md-6">
+										<label for="exampleInputEmail1">Total</label>
+									<input type="text" class="form-control" 
+										placeholder="Total" formControlName="total" [value]="this.total" readonly>
+									</div>
+									<div class="col-md-6">		
+										<label for="exampleInputEmail1">Net Amount</label>						
+										<input type="text" class="form-control" 
+										placeholder="Net Amount" formControlName="netAmount" [value]="this.netamount" readonly>
+									</div>									
+								</div>								
 							</div>
-							<div class="col-md-3">
-								<label for="exampleInputEmail1">IGST Amt</label>								 
-							<input type="text" class="form-control" 
-								placeholder="%" formControlName="receiveddate">							
-							</div>
-							<div class="col-md-5">								
-								<input type="text" class="form-control mt-4" 
-								placeholder="Bike Type" formControlName="receiveddate">
-							</div>							
-						</div>
-						<div class="form-group row">							
-							<div class="col-md-3">
-								<label for="exampleInputEmail1">discount</label>								 
-							<input type="text" class="form-control" 
-								placeholder="%" formControlName="receiveddate">							
-							</div>
-							<div class="col-md-5">								
-								<input type="text" class="form-control mt-4" 
-								placeholder="Bike Type" formControlName="receiveddate">
-							</div>
-							<div class="col-md-4">
-								<label for="exampleInputEmail1">Cess Amount</label>
-							<input type="text" class="form-control" 
-								placeholder="Reference No" formControlName="referenceNo">
-							</div>							
-						</div>
-						<div class="form-group row">							
-							<div class="col-md-6">
-								<label for="exampleInputEmail1">Freight</label>								 
-							<input type="text" class="form-control" 
-								placeholder="" formControlName="receiveddate">							
-							</div>
-							<div class="col-md-6">
-								<label for="exampleInputEmail1">Additional Discount</label>								
-								<input type="text" class="form-control" 
-								placeholder="Bike Type" formControlName="receiveddate">
-							</div>														
-						</div>
-						<div class="form-group row">
-							<div class="col-md-4">
-								<label for="exampleInputEmail1">Insurance</label>
-							<input type="text" class="form-control" 
-								placeholder="Reference No" formControlName="referenceNo">
-							</div>
-							<div class="col-md-3">
-								<label for="exampleInputEmail1">TCS Amt</label>								 
-							<input type="text" class="form-control" 
-								placeholder="%" formControlName="receiveddate">							
-							</div>
-							<div class="col-md-5">								
-								<input type="text" class="form-control mt-4" 
-								placeholder="Bike Type" formControlName="receiveddate">
-							</div>							
-						</div>
-						<div class="form-group row">
-							<div class="col-md-4">
-								<label for="exampleInputEmail1">Total</label>
-							<input type="text" class="form-control" 
-								placeholder="Reference No" formControlName="referenceNo" [disabled]="true">
-							</div>
-							<div class="col-md-3">
-								<label for="exampleInputEmail1">Round off</label>								 
-							<input type="text" class="form-control" 
-								placeholder="%" formControlName="receiveddate">							
-							</div>
-							<div class="col-md-5">		
-								<label for="exampleInputEmail1">Net Amount</label>						
-								<input type="text" class="form-control" 
-								placeholder="Bike Type" formControlName="receiveddate" [disabled]="true">
-							</div>							
-						</div>
-					</div>
-					<div class="col-md-6 mt-3">
-						<div class="form-group row">
-							<div class="col-md-10">
-								<label for="exampleInputEmail1">Ledger Name</label>
-							<input type="text" class="form-control" 
-								placeholder="Reference No" formControlName="referenceNo">
+							<div class="col-md-6 mt-3">
+								<fieldset class="border p-2">
+									<legend  class="float-none w-auto p-2">Pay Details</legend>
+									<div class="form-group row">
+										<div class="col-md-12">
+											<label for="exampleInputEmail1">Payment Mode</label>
+											<select class="form-control" (change)="onchange($event)" formControlName="paymentModeId">
+												<option value="1">Cash</option>
+												<option value="2">Card</option>
+												<option value="3">Cheque</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group row" *ngIf="textboxdisplay=='card'">
+										<div class="col-md-12">
+											<label for="exampleInputEmail1">Card Details</label>
+											<textarea rows="2" class="form-control" formControlName="cardDetails"></textarea>
+										</div>
+									</div>
+									<div class="form-group row"  *ngIf="textboxdisplay=='cheque'">
+										<div class="col-md-12">
+											<label for="exampleInputEmail1">Cheque Details</label>
+											<textarea rows="2" class="form-control" formControlName="checkDetails"></textarea>
+										</div>
+									</div>
+								</fieldset>								
 							</div>
 						</div>
-						<div class="form-group row">
-							<label for="exampleInputEmail1">Cheq/DD</label>
-							<div class="col-md-3">
-								<button class="btn btn-warning">Chq.Book</button>
-							</div>
-							<div class="col-md-3">								
-							<input type="text" class="form-control" 
-								placeholder="Reference No" formControlName="referenceNo">
-							</div>	
-							<div class="col-md-4">
-								<input type="date" class="form-control">
-							</div>										
-						</div>
-						<div class="form-group row">
-							<div class="col-md-10">
-								<label for="exampleInputEmail1">Bank Details</label>
-							<input type="text" class="form-control" 
-								placeholder="Reference No" formControlName="referenceNo">
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-md-12">
-								<label for="exampleInputEmail1">Narration</label>
-								<textarea rows="4" class="form-control"></textarea>
-							</div>
-						</div>
-					</div>
+						</fieldset>				
+				
 					<div class="col-md-12 text-center my-3">
-						<button class="btn btn-success">Save</button>
-						<button class="btn btn-danger ml-3">Exit</button>
+						<button class="btn btn-success" type="submit">Save</button>
+						<button type="button" class="btn btn-danger ml-3" (click)="clear()">Clear</button>
 					</div>
 				</div>
 				</div>

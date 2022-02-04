@@ -11,64 +11,61 @@
 					<div class="card card-primary">	
 							<div class="card-body">
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Invoice No</label>
 											<input type="text" class="form-control" 
 												placeholder="Invoice No" formControlName="invoiceNo">
 										</div>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Date</label>
 											<input type="date" class="form-control" 
-												placeholder="Bike Type" formControlName="date">
+												placeholder="Bike Type" formControlName="invoiceDate">
 										</div>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Transit Type</label>
-											<input type="text" class="form-control" 
-												placeholder="Transit Type" formControlName="transitType">
+											<select class="form-select" aria-label="Default select example">
+												<option selected>Select option</option>
+												<option value="1">Within State</option>
+												<option value="2">Outside State</option>
+											  </select>											
 										</div>
 									</div>
-									<div class="col-md-4">
+									<!-- <div class="col-md-4">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Stock Type</label>
 											<input type="text" class="form-control" 
 												placeholder="Stock Type" formControlName="stockType">
 										</div>
-									</div>
-									<div class="col-md-4">
+									</div> -->
+									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Supplier/Plant</label>
 											<input type="text" class="form-control" 
 												placeholder="Supplier/Plant" formControlName="supplier">
 										</div>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Transport Name</label>
 											<input type="email" class="form-control" 
 												placeholder="Transport Name" formControlName="transportName">
 										</div>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Truck Number</label>
 											<input type="text" class="form-control"  placeholder="Truck Number"formControlName="truckNo">
 										</div>
 									</div>								
-									<div class="col-md-4">
-										<div class="form-group">
-											<label for="exampleInputEmail1">Amount</label>
-											<input type="number" class="form-control" 
-												placeholder="Amount" formControlName="amount">
-										</div>
-									</div>									
-									<div class="col-md-4">
-										<div class="card-body p-4 mt-1 ml-5 ">
-											<input type="file" (change)="onFileChange($event)" multiple="false" />
+																		
+									<div class="col-md-3">
+										<div class="card-body p-4 mt-1">
+											<input type="file" #myInput (change)="onFileChange($event)" multiple="false" />
 										</div>
 									</div>
 								</div>
@@ -76,7 +73,7 @@
 						
 					</div>
 				</div>
-				<div class="card-body">
+				<div class="card-body" *ngIf="count==1">
 					<div class="card-header bg-primary">						
 						<!-- <button class="btn btn-success float-right" (click)="submit()">Submit</button> -->
 						<h3 class="card-title">Transit List</h3>
@@ -87,25 +84,23 @@
 						<thead style="text-align: center;">
 							<tr>
 								<th>ID</th>
-								<th>Frame No</th>
+								<th>Chassis No</th>
 								<th>Engine No</th>
-								<th>material Code</th>
-								<th>Vehicle Model Id</th>
-								<th>Variant Id</th>								
+								<th>Model Code</th>
+								<th>Model Name</th>
+								<th>Model Color Code</th>
+								<th>Model Color Name</th>								
 							</tr>
 						</thead>
 						<tbody style="text-align: center;">
-							<tr *ngFor="let row of splitData; let i=index; " class="table-info">
+							<tr *ngFor="let row of exceldata; let i=index; " class="table-info">
 								<td>{{i+1}}</td>
-								<td *ngFor="let val of row">{{val}}</td>
-								<td><select class="browser-default custom-select" (change)="onChange($event,i)">
-									<option selected>Open this select menu</option>
-									<option *ngFor="let item of bikemodel" [value]=item.modelId >{{item.modelName}}</option>									
-								  </select></td>
-								<td><select class="browser-default custom-select"  (change)="onChange1($event,i)">
-									<option selected>Open this select menu</option>
-									<option *ngFor="let item of color" [value]=item.variantId >{{item.variant}}</option>									
-								  </select></td>
+								<td>{{row.ChassisNo}}</td>
+								<td>{{row.EngineNo}}</td>
+								<td>{{row.ModelCode}}</td>
+								<td>{{row.modelname}}</td>
+								<td>{{row.ModelColorCode}}</td>
+								<td>{{row.colorname}}</td>
 							</tr>
 						</tbody>
 					</table>

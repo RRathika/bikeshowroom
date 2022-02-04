@@ -30,7 +30,7 @@ export class EnquirylistComponent implements OnInit {
     enquiryId: [0],
     enquiryDetailsId: [0],
     planningDate: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required])
+    remarks: new FormControl('', [Validators.required])
   });
   ngOnInit(): void {
     this.enquiry();
@@ -51,10 +51,7 @@ export class EnquirylistComponent implements OnInit {
   enquirydetail(id: any) {
     this.service.getenquirydetailbyidall(id).subscribe((data: any) => {
       this.enquirydetailslist = data;
-      //console.log(data[0].followCount);
-      this.flowcount = data[0].followCount;
-      this.status = data[2].statusName;
-      this.enquiryStatus=data.enquiryClosingStatus;
+      this.flowcount=data[0].isActive;     
     })
   }
   submit() {
@@ -103,10 +100,12 @@ export class EnquirylistComponent implements OnInit {
       this.enquiryDetailsId = this.result.enquiryDetailsId;
       if (data) {
         this.popupForm.patchValue(data);
+        console.log(data);        
         let part = data.planningDate.split('T00:00:00');
         let parts = part[0];
         this.popupForm.patchValue({
-          planningDate: parts
+          planningDate: parts,
+           remarks:this.result.remarks
         })
       }
     });
@@ -116,15 +115,27 @@ export class EnquirylistComponent implements OnInit {
     this.enquiryDetailsId = '';
   }
   closealldata(){
-    if(this.closedata!='')
+    if(this.closedata==1 || this.closedata==2)
     {
+      console.log(this.closedata);
       this.myData = {  
         enquiryId: this.enquiryid,  
         status: this.closedata 
       };  
-      this.service.updateenquiryclose(this.myData).subscribe(data=>{
-        console.log("succes");        
+      this.service.updateenquiryclose(this.myData).subscribe((data:any)=>{
+        if (data.statusCode == 200) {   
+          this.enquirydetail(this.enquiryid);      
+          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
+          
+        } 
+        else{
+          this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 15000});
+        }    
       })  
+    }
+    else
+    {
+      this.toastService.show('Please Select the reson for enquiry closing',{classname: 'bg-danger text-light', delay: 15000});
     }    
   }
 }

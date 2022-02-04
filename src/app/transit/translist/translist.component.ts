@@ -30,4 +30,10 @@ export class TranslistComponent implements OnInit {
   add(){
     this.router.navigateByUrl("/dashboard/transitadd")
   }
+  movepurchase(id:any){
+    this.service.movetopurchase(id).subscribe(data=>{
+      this.service.purchasedata.next(data);
+      this.router.navigateByUrl("/dashboard/vehiclepurchase");
+    })
+  }
 }

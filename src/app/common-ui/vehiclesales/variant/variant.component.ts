@@ -19,10 +19,11 @@ export class VariantComponent implements OnInit {
   num1 : number=0;
   num2 : number=0; 
   num3 : number=0;
-  igstp:number=0;
-  cgstp:number=0;
-  sgstp : number=0;
+  igstp:any;
+  cgstp:any;
+  sgstp : any;
   solution:any;
+  total:any;
   constructor(private router:Router,private service:YamahaserviceService,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   variantForm: FormGroup = this.formBuilder.group({
     colorId:new FormControl('',[Validators.required]),
@@ -30,16 +31,16 @@ export class VariantComponent implements OnInit {
     variantName:new FormControl('',[Validators.required]),
     yearsOfWarranty:new FormControl('',[Validators.required]),
     oilChange:new FormControl('',[Validators.required]),
-currentModel:new FormControl('',[Validators.required]),
-hsnCode:new FormControl('',[Validators.required]),
-invoiceAmount:new FormControl('',[Validators.required]),
-lifeTax:new FormControl('',[Validators.required]),
-insurance:new FormControl('',[Validators.required]),
-dealerRate:new FormControl(''),
-igst:new FormControl(''),
-cgst:new FormControl(''),
-sgst:new FormControl(''),
-total:new FormControl('',[Validators.required])
+    currentModel:new FormControl('',[Validators.required]),
+    hsnCode:new FormControl('',[Validators.required]),
+    invoiceAmount:new FormControl('',[Validators.required]),
+    lifeTax:new FormControl('',[Validators.required]),
+    insurance:new FormControl('',[Validators.required]),
+    dealerRate:new FormControl(''),
+    igst:new FormControl(''),
+    cgst:new FormControl(''),
+    sgst:new FormControl(''),
+    total:new FormControl('',[Validators.required])
   })
   ngOnInit(): void {
     this.loadcolor();
@@ -54,7 +55,6 @@ total:new FormControl('',[Validators.required])
     })
     if(this.num1)
     {
-      console.log(this.num1); 
       if(this.num2)
       {
         if(this.num3)
@@ -127,7 +127,7 @@ total:new FormControl('',[Validators.required])
       })
     }
     else{
-    if(this.variantForm.valid){
+    
       this.service.savevariant(this.variantForm?.value).subscribe((data:any)=>{
         if(data.statusCode==200){
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
@@ -138,7 +138,7 @@ total:new FormControl('',[Validators.required])
         this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 }); 
       }
       })
-    }
+    
   }
   }
   amount(amount:any)
@@ -152,8 +152,64 @@ total:new FormControl('',[Validators.required])
   sum()
   {
     this.solution=this.num1+this.num2+this.num3;
+    this.total=this.solution;
+    this.igstp=this.variantForm.value['igst'];
+    this.cgstp=this.variantForm.value['cgst'];
+    this.sgstp=this.variantForm.value['sgst'];
+    if(this.igstp!='')
+    {
+    this.igst(this.igstp);
+    }
+    if(this.cgstp!='')
+    {
+    this.cgst(this.cgstp);
+    }
+    if(this.sgstp!='')
+    {
+    this.cgst(this.cgstp);
+    }
   }
-  igst(){}
-  cgst(){}
-  sgst(){}
+  igst(igstvalue:any){   
+    console.log(igstvalue);    
+    this.igstp=(this.total*(igstvalue/100));
+    this.total=this.total+this.igstp;
+    console.log(this.total);    
+  }
+  cgst(cgstvalue:any){
+    console.log(cgstvalue);    
+    this.igstp=(this.total*(cgstvalue/100));
+    this.total=this.total+this.igstp;
+    console.log(this.total);
+  }
+  sgst(sgstvalue:any){
+    console.log(sgstvalue);    
+    this.igstp=(this.total*(sgstvalue/100));
+    this.total=this.total+this.igstp;
+    console.log(this.total);
+  }
+  ngonchange2(e:any)
+  {
+    this.cgstp=this.variantForm.value['cgst'];
+    if(this.cgstp!='')
+    {
+    this.cgst(this.cgstp);
+    }
+  }
+  ngonchange3(e:any)
+  {
+    this.sgstp=this.variantForm.value['sgst'];
+    if(this.sgstp!='')
+    {
+    this.cgst(this.cgstp);
+    }
+  }
+  ngonchange1(e:any)
+  {
+    console.log("onchange");    
+    this.igstp=this.variantForm.value['igst'];  
+    if(this.igstp!='')
+    {
+    this.igst(this.igstp);
+    }
+  }
 }

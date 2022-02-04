@@ -13,7 +13,6 @@ import { BikemodelComponent } from './common-ui/vehiclesales/bikemodel/bikemodel
 import { VendorsComponent } from './common-ui/vehiclesales/vendors/vendors.component';
 import { VendoraddComponent } from './common-ui/vehiclesales/vendoradd/vendoradd.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-// import { TransitlistComponent } from './transitlist/transitlist.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { AddvehiclesalesComponent } from './common-ui/vehiclesales/addvehiclesales/addvehiclesales.component';
@@ -30,6 +29,7 @@ import { TranslistComponent } from './transit/translist/translist.component';
 import { ShowroomComponent } from './transit/showroom/showroom.component';
 import { VehiclepurchaseComponent } from './common-ui/vehiclesales/vehiclepurchase/vehiclepurchase.component';
 import { VariantComponent } from './common-ui/vehiclesales/variant/variant.component';
+import { VehiclepurchaselistComponent } from './common-ui/vehiclesales/vehiclepurchaselist/vehiclepurchaselist.component';
 
 
 @NgModule({
@@ -54,7 +54,8 @@ import { VariantComponent } from './common-ui/vehiclesales/variant/variant.compo
     TranslistComponent,
     ShowroomComponent,
     VehiclepurchaseComponent,
-    VariantComponent
+    VariantComponent,
+    VehiclepurchaselistComponent
   ],
   imports: [
     BrowserModule,

@@ -89,19 +89,19 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="exampleInputEmail1">IGST</label>
-                      <input type="number" class="form-control" formControlName="igst"  [(ngModel)]="igstp" (change)="igst()" placeholder="%">
+                      <input type="number" class="form-control" formControlName="igst" (change)=ngonchange1($event)  placeholder="%">
                     </div>                 
                 </div>
                 <div class="col-md-6">                  
                     <div class="form-group">
                       <label for="exampleInputEmail1">CGST</label>
-                      <input type="number" class="form-control" formControlName="cgst" [(ngModel)]="cgstp" (change)="cgst()"  placeholder="%">
+                      <input type="number" class="form-control" formControlName="cgst" (change)=ngonchange2($event) placeholder="%">
                     </div>                  
                 </div>
                 <div class="col-md-6">                  
                     <div class="form-group">
                       <label for="exampleInputEmail1">SGST</label>
-                      <input type="number" class="form-control" formControlName="sgst" [(ngModel)]="sgstp" (change)="sgst()"  placeholder="%">
+                      <input type="number" class="form-control" formControlName="sgst" (change)=ngonchange3($event) placeholder="%">
                     </div>                  
                 </div>
                 </div>
@@ -112,7 +112,7 @@
                 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Total</label>
-                    <input type="number" class="form-control" formControlName="total"  [value]="this.solution" placeholder="Total">
+                    <input type="number" class="form-control" formControlName="total"  [value]="this.total" placeholder="Total">
                   </div>
                 
               </div>

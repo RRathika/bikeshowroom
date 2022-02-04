@@ -14,7 +14,7 @@ export class YamahaserviceService {
   public enquirydetails = new BehaviorSubject<any>('');
   public rolemaster = new BehaviorSubject<any>('');
   public variant = new BehaviorSubject<any>('');
-  // public advanceid=new BehaviorSubject<any>('');
+  public purchasedata=new BehaviorSubject<any>('');
   getbikemodel():Observable<any>{
     return this.httpclient.get(this.url+'BikeModel/GetBikeModels');
   }
@@ -153,5 +153,20 @@ export class YamahaserviceService {
   }
   saveregister(data:any){
     return this.httpclient.post(this.url+'UserRegistration/SaveUserRegistration',data);
+  }
+  getbikemodelname(name:any)
+  {
+    return this.httpclient.get(this.url+`BikeModel/GetBikeModelNameByModelCode?ModelCode=${name}`,{responseType:'text'});
+  }
+  getcolorname(name:any){
+    return this.httpclient.get(this.url+ `BikeColor/GetBikeColorNameByColorCode?ModelCode=${name}`,{responseType:'text'});
+  }
+  movetopurchase(id:any)
+  {
+    return this.httpclient.get(this.url+`Transit/GetTransitandTransitDetailsByTransitId?TransitId=${id}`);
+  }
+  savepurchase(data:any)
+  {
+    return this.httpclient.post(this.url+`VehiclePurchase/SaveVehiclePurchase`,data);
   } 
 }
