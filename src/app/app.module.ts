@@ -30,6 +30,8 @@ import { ShowroomComponent } from './transit/showroom/showroom.component';
 import { VehiclepurchaseComponent } from './common-ui/vehiclesales/vehiclepurchase/vehiclepurchase.component';
 import { VariantComponent } from './common-ui/vehiclesales/variant/variant.component';
 import { VehiclepurchaselistComponent } from './common-ui/vehiclesales/vehiclepurchaselist/vehiclepurchaselist.component';
+import { VehiclestockComponent } from './vehicleManage/vehiclestock/vehiclestock.component';
+import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktransfer.component';
 
 
 @NgModule({
@@ -55,7 +57,9 @@ import { VehiclepurchaselistComponent } from './common-ui/vehiclesales/vehiclepu
     ShowroomComponent,
     VehiclepurchaseComponent,
     VariantComponent,
-    VehiclepurchaselistComponent
+    VehiclepurchaselistComponent,
+    VehiclestockComponent,
+    StocktransferComponent
   ],
   imports: [
     BrowserModule,

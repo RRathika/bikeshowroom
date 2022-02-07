@@ -1,1 +1,84 @@
-<p>vehiclepurchaselist works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header bg-primary">
+                    <h3 class="card-title">Transit Details</h3>
+                    <button class="btn btn-success float-end" (click)="add()">Vehicle Purchase Add</button>
+                </div>
+                <div class="col-md-12">
+
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>SI.NO</th>
+                                    <th>Invoice No</th>
+                                    <th>Date</th>
+                                    <th>Purchase Type</th>
+                                    <th>Supplier Name</th>
+                                    <th>Supplier Address</th>
+                                    <th>Supplier GST</th>
+                                    <th>Amount</th>
+                                    <th>View Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr *ngFor="let data of vehiclepurchase; let i=index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.invoiceNo}}</td>
+                                    <td>{{data.invoiceDate|date}}</td>
+                                    <td>{{data.purchaseType}}</td>
+                                    <td>{{data.supplierName}}</td>
+                                    <td>{{data.suppierAddress}}</td>
+                                    <td>{{data.supplierGST}}</td>
+                                    <td>{{data.netAmount}}</td>
+                                    <td><i class="fas fa-eye" style="color: blue;"  data-toggle="modal" data-target="#exampleModal"
+                                            data-whatever="@mdo" (click)="viewbyid(data.vehiclePurchaseId)"></i></td>
+                                    <!-- <td><i class="fa fa-arrow-right" data-toggle="tooltip" data-placement="top" title="Move to purchase" (click)="movepurchase(data.transitId)" aria-hidden="true"></i></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" id="transit">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="exampleModalLabel">Details</h3>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table">
+                                            <thead>
+                                                <!-- <th>Transit Id</th> -->
+                                                <th>Key No</th>
+                                                <th>Chassis No</th>
+                                                <th>Engine No</th>
+                                                <th>Meterial Code</th>
+                                                <th>Vehicle Model Name</th>
+                                                <th>Color</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of purchasebyid">
+                                                    <!-- <td>{{item.transitId}}</td>-->
+                                                    <td>{{item.keyNo}}</td>
+                                                    <td>{{item.chassisNo}}</td>
+                                                    <td>{{item.engineNo}}</td>
+                                                    <td>{{item.modelCode}}</td>
+                                                    <td>{{item.vehicleModelName}}</td>
+                                                    <td>{{item.colorName}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

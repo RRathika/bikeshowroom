@@ -168,5 +168,12 @@ export class YamahaserviceService {
   savepurchase(data:any)
   {
     return this.httpclient.post(this.url+`VehiclePurchase/SaveVehiclePurchase`,data);
+  }
+  getvehiclepurchase(){
+    return this.httpclient.get(this.url+`VehiclePurchase/GetVehiclePurchase`);
   } 
+  getvehiclepurchasebyid(id:any)
+  {
+    return this.httpclient.get(this.url+`VehiclePurchase/GetVehiclePurchaseDetailsByVehiclePurchaseId?VehiclePurchaseId=${id}`);
+  }
 }

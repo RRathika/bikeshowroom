@@ -1,0 +1,97 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header bg-primary">
+                    <h3 class="card-title">Vehicle stock Details</h3>
+                </div>
+                <form [formGroup]="stockForm" (ngSubmit)="submit()">
+                    <div class="row p-3">                       
+                        <!-- <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="modelName">Received Date</label>
+                                <input type="date" class="form-control" formControlName="name" id="name"
+                                    placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="modelName">Chassis No</label>
+                                <select class="form-control" formControlName="name">
+                                    <option>Name1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="modelName">Engine No</label>
+                                <select class="form-control" formControlName="name">
+                                    <option>Name1</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="modelName">Showroom Name</label>
+                                <select class="form-control" formControlName="name">
+                                    <option>Name1</option>
+                                </select>
+                            </div>
+                        </div>
+                       
+                        <!-- <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="modelName">Color Name</label>
+                                <select class="form-control" formControlName="name">
+                                    <option>Name1</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="modelName">Model Name</label>
+                                <select class="form-control" formControlName="name">
+                                    <option>Name1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 my-4">
+                            <div class="form-group pt-1">
+                                <button class="btn btn-success" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+    <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr class="text-center">
+                  <th>SI.NO</th>
+                  <th>Received Date</th>
+                  <th>Chassis No</th>                                   
+                  <th>Engine No</th>
+                  <th>Showroom Name</th>
+                  <th>Color Name</th>
+                  <th>Model Name</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <!-- <tr *ngFor="let data of roles;let i=index;">
+                  <td>{{i+1}}</td>
+                  <td>{{data.role}}</td>                             
+                  <td><i class="fas fa-edit" style="color: blue;" (click)="edit(data.roleId)"></i></td>
+                  <td><i class="fa fa-trash" style="color: red;" aria-hidden="true" (click)="delete(data.roleId)"></i></td>
+                </tr>               -->
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+    </div>
+</div>
