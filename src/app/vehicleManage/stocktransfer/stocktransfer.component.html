@@ -11,30 +11,31 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Date</label>
-                                <input type="date" class="form-control" formControlName="name" id="name">
+                                <input type="date" class="form-control" formControlName="date" id="name">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Chassis No</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>Chassis no</option>
+                                <select class="form-select" formControlName="chassisNo">
+                                    <option *ngFor="let data of chassisdata" [value]="data.chassisNo">{{data.chassisNo}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Engine No</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>Engine no</option>
+                                <select class="form-select" formControlName="engineNo">
+                                    <option *ngFor="let data of enginedata" [value]="data.engineNo">{{data.engineNo}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Model Name</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>Model Name1</option>
+                                <select class="form-select" formControlName="vehicleModelId">
+                                    <!-- <option value="0" selected>All Model Name</option> -->
+                                    <option *ngFor="let bikemodel of bikemodelname;let i=index;" [value]="bikemodel.modelId">{{bikemodel.modelName}}</option>
                                 </select>
                             </div>
                         </div>
@@ -42,16 +43,18 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">From showroom Name</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>From showroom Name</option>
+                                <select class="form-select" formControlName="fromShowRoomId">
+                                    <!-- <option value="0">All showroom name</option> -->
+                                    <option *ngFor="let data of showroomdata;" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">To showroom Name</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>To showroom Name</option>
+                                <select class="form-select" formControlName="toShowRoomId">
+                                    <!-- <option value="0">All showroom name</option> -->
+                                    <option *ngFor="let data of showroomdata;" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                 </select>
                             </div>
                         </div>

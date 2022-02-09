@@ -32,6 +32,8 @@ import { VariantComponent } from './common-ui/vehiclesales/variant/variant.compo
 import { VehiclepurchaselistComponent } from './common-ui/vehiclesales/vehiclepurchaselist/vehiclepurchaselist.component';
 import { VehiclestockComponent } from './vehicleManage/vehiclestock/vehiclestock.component';
 import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktransfer.component';
+import { RegisterComponent } from './users/register/register.component';
+import { UserdetailsComponent } from './users/userdetails/userdetails.component';
 
 
 @NgModule({
@@ -59,7 +61,9 @@ import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktrans
     VariantComponent,
     VehiclepurchaselistComponent,
     VehiclestockComponent,
-    StocktransferComponent
+    StocktransferComponent,
+    RegisterComponent,
+    UserdetailsComponent
   ],
   imports: [
     BrowserModule,

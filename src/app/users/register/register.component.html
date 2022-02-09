@@ -1,5 +1,5 @@
-<div class="container d-flex justify-content-center h-100 p-5">
-  <div class="mx-auto p-5">
+<div class="container d-flex justify-content-center h-100">
+  <div class="mx-auto">
     <div class="register-box">
       <div class="register-logo">
         <a href="#"><b>YAMAHA</b></a>
@@ -43,16 +43,16 @@
                 </div>                
                 <div class="col-md-4">
                   <div class="input-group mb-3">
-                    <select class="form-control" formControlName="gender" placeholder="Alternative Mobile No">
+                    <select class="form-select" formControlName="gender" placeholder="Alternative Mobile No">
                       <option>Select gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>                   
                     </select>
-                    <div class="input-group-append">
+                    <!-- <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fas fa-address-list"></span>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -70,7 +70,15 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Role Name</label>
+                   <select class="form-select" formControlName="roleId">
+                     <option *ngFor="let data of role" [value]="data.roleId">{{data.role}}</option>
+                   </select>
+                  </div>  
+                </div>
+                <div class="col-md-8">
                   <div class="form-group mb-3">
                     <textarea class="form-control" formControlName="place" placeholder="place" rows="2"></textarea>                    
                   </div>

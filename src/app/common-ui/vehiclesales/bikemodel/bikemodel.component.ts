@@ -17,9 +17,8 @@ export class BikemodelComponent implements OnInit {
   result:any;
   modelId:any;
   page = 1;
-  pageSize = 4;
-  collectionSize=5;
-  currentRate = 8;
+  pageSize = 10;
+  pagingNumber = 0;
   constructor(private service:YamahaserviceService,private router: Router,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   bikemodelForm: FormGroup = this.formBuilder.group({
     modelId:0,
@@ -36,10 +35,14 @@ export class BikemodelComponent implements OnInit {
         this.bikemodelForm.patchValue(response);
       }
     })
+    
   }
   getbikemodel(){
       this.service.getbikemodel().subscribe(data=>{
-          this.getbike=data;         
+        this.getbike=data;
+        this.page = 1;
+        this.pagingNumber = 0;
+        this.pagingNumber = Math.ceil(this.getbike.length / (this.pageSize / 10));    
       })
   }
   submit(){

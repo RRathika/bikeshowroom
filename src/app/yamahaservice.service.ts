@@ -15,6 +15,7 @@ export class YamahaserviceService {
   public rolemaster = new BehaviorSubject<any>('');
   public variant = new BehaviorSubject<any>('');
   public purchasedata=new BehaviorSubject<any>('');
+  public user=new BehaviorSubject<any>('');
   getbikemodel():Observable<any>{
     return this.httpclient.get(this.url+'BikeModel/GetBikeModels');
   }
@@ -117,8 +118,7 @@ export class YamahaserviceService {
   getshowroom(){
     return this.httpclient.get(this.url+'ShowRoom/GetShowRoom');
   }
-  updateenquiryclose(data:any)
-  { 
+  updateenquiryclose(data:any){ 
     return this.httpclient.put(this.url+'EnquiryForm/UpdateEnquiries',data);
   }
   getadvancebook(){
@@ -175,5 +175,32 @@ export class YamahaserviceService {
   getvehiclepurchasebyid(id:any)
   {
     return this.httpclient.get(this.url+`VehiclePurchase/GetVehiclePurchaseDetailsByVehiclePurchaseId?VehiclePurchaseId=${id}`);
+  }
+  listvehiclestock(showroom:any,modelname:any){
+    return this.httpclient.get(this.url+`VehicleStock/GetVehicleStock?ShowRoomId=${showroom}&VehicleModelId=${modelname}`);
+  }
+  savestocktransfer(data:any){
+    return this.httpclient.post(this.url+'StockTransfer/SaveStockTransfer',data)
+  }
+  getuserdetails(){
+    return this.httpclient.get(this.url+`UserRegistration/GetUserDetails`);
+  }
+  getuserbyid(id:any){
+    return this.httpclient.get(this.url+`UserRegistration/GetUserDetailsById?UserCode=${id}`);
+  }
+  deleteuserdata(id:any){
+    return this.httpclient.delete(this.url+`UserRegistration/DeleteUserDetails?UserCode=${id}`);
+  }
+  updateuserdetail(data:any)
+  {
+    return this.httpclient.put(this.url+'UserRegistration/UpdateUserDetails',data);
+  }
+  getchassisno()
+  {
+    return this.httpclient.get(this.url+'VehicleStock/GetChassisNo');
+  }
+  getengineno()
+  {
+    return this.httpclient.get(this.url+'VehicleStock/GetEngineNo');
   }
 }

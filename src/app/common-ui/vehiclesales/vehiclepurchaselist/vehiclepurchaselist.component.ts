@@ -28,5 +28,7 @@ export class VehiclepurchaselistComponent implements OnInit {
     })
   }
   add()
-  {}
+  {
+    this.router.navigateByUrl('/dashboard/vehiclepurchaseadd')
+  }
 }

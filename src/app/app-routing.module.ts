@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterComponent } from './authentication/register/register.component';
 import { AdvancebookComponent } from './common-ui/advancebook/advancebook.component';
 import { DashboardComponent } from './common-ui/dashboard/dashboard.component';
 import { EnquirylistComponent } from './common-ui/enquiry/enquirylist/enquirylist.component';
@@ -18,6 +17,8 @@ import { RolemasterComponent } from './rolemaster/rolemaster.component';
 import { ShowroomComponent } from './transit/showroom/showroom.component';
 import { TransitlistComponent } from './transit/transitlist/transitlist.component';
 import { TranslistComponent } from './transit/translist/translist.component';
+import { RegisterComponent } from './users/register/register.component';
+import { UserdetailsComponent } from './users/userdetails/userdetails.component';
 import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktransfer.component';
 import { VehiclestockComponent } from './vehicleManage/vehiclestock/vehiclestock.component';
 
@@ -45,7 +46,9 @@ children:[
 {path:'rolemaster',component:RolemasterComponent},
 {path:'showroom',component:ShowroomComponent},
 {path:'vehiclepurchase',component:VehiclepurchaselistComponent},
+{path:'vehiclepurchaseadd',component:VehiclepurchaseComponent},
 {path:'variant',component:VariantComponent},
+{path:'user',component:UserdetailsComponent},
 {path:'register',component:RegisterComponent},
 {path:'vehiclestock',component:VehiclestockComponent},
 {path:'stocktype',component:StocktransferComponent}]}

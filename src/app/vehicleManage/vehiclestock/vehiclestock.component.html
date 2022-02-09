@@ -6,57 +6,27 @@
                     <h3 class="card-title">Vehicle stock Details</h3>
                 </div>
                 <form [formGroup]="stockForm" (ngSubmit)="submit()">
-                    <div class="row p-3">                       
-                        <!-- <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="modelName">Received Date</label>
-                                <input type="date" class="form-control" formControlName="name" id="name"
-                                    placeholder="Name">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="modelName">Chassis No</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>Name1</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="modelName">Engine No</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>Name1</option>
-                                </select>
-                            </div>
-                        </div> -->
+                    <div class="row p-3">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="modelName">Showroom Name</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>Name1</option>
+                                <select class="form-control" formControlName="ShowRoomId">
+                                    <option value="0">All showroom name</option>
+                                    <option *ngFor="let data of showroomdata;" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                 </select>
                             </div>
                         </div>
-                       
-                        <!-- <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="modelName">Color Name</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>Name1</option>
-                                </select>
-                            </div>
-                        </div> -->
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="modelName">Model Name</label>
-                                <select class="form-control" formControlName="name">
-                                    <option>Name1</option>
+                                <select class="form-control" formControlName="VehicleModelId">
+                                    <option value="0">All Model Name</option>
+                                    <option *ngFor="let bikemodel of bikemodelname;let i=index;" [value]="bikemodel.modelId">{{bikemodel.modelName}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-4 my-4">
-                            <div class="form-group pt-1">
+                            <div class="form-group text-center pt-1">
                                 <button class="btn btn-success" type="submit">Submit</button>
                             </div>
                         </div>
@@ -81,12 +51,15 @@
                 </tr>
               </thead>
               <tbody class="text-center">
-                <!-- <tr *ngFor="let data of roles;let i=index;">
+                <tr *ngFor="let data of vehiclestock;let i=index;">
                   <td>{{i+1}}</td>
-                  <td>{{data.role}}</td>                             
-                  <td><i class="fas fa-edit" style="color: blue;" (click)="edit(data.roleId)"></i></td>
-                  <td><i class="fa fa-trash" style="color: red;" aria-hidden="true" (click)="delete(data.roleId)"></i></td>
-                </tr>               -->
+                  <td>{{data.receivedDate|date}}</td>        
+                  <td>{{data.chassisNo}}</td>
+                  <td>{{data.engineNo}}</td>
+                  <td>{{data.showRoomName}}</td>
+                  <td>{{data.colorName}}</td>      
+                  <td>{{data.vehicleModelName}}</td>               
+                </tr>
               </tbody>
             </table>
           </div>

@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header bg-primary">
-                    <h3 class="card-title">Add Enquiry Details</h3>
+                    <h3 class="card-title">Advance Booking</h3>
                 </div>
             <form [formGroup]="advancebookForm" (ngSubmit)="submit()">
                 <div class="row p-2">
@@ -53,25 +53,34 @@
                                 placeholder="Model Name">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="form-group row">
-                            <label for="modelName">Advance Book</label>
-                            <div class="col-md-6">
-                                <select formControlName="variantId" class="form-control dropdown-primary" id="Select1">
-                                    <option value="" disabled selected hidden>Variant Name</option>
-                                    <option *ngFor="let data of varientcode" [value]=data.variantId>{{data.variant}}</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
+                                                   
+                            <div class="col-md-4">
+                                <label for="modelName">Model Name</label>    
                                 <select formControlName="modelId" class="form-control dropdown-primary" id="Select1">
                                     <option value="" disabled selected hidden>Model Name</option>
                                     <option *ngFor="let data of modelcode" [value]=data.modelId>{{data.modelName}}</option>
                                 </select>
                             </div>
+                            <div class="col-md-4">
+                                <label for="modelName">Color Name</label>
+                                <select formControlName="variantId" class="form-control dropdown-primary" id="Select1">
+                                    <option value="" disabled selected hidden>Color Name</option>
+                                    <option *ngFor="let data of varientcode" [value]=data.variantId>{{data.variant}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="modelName">Variant Name</label>
+                                <select formControlName="variantId" class="form-control dropdown-primary" id="Select1">
+                                    <option value="" disabled selected hidden>Variant Name</option>
+                                    <option *ngFor="let data of varientcode" [value]=data.variantId>{{data.variant}}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card-body text-center p-4">
+                    <div class="col-md-12">
+                        <div class="card-body text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                           </div>
                     </div>
