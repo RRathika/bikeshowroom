@@ -73,7 +73,7 @@
                                             <td>{{item.advanceBookingId}}</td>
                                             <td>{{item.advanceAmount}}</td>
                                             <td><a class="btn btn-info" data-dismiss="modal"
-                                                    (click)="apply(item.advanceBookingId)">Apply</a></td>
+                                                    (click)="apply(item.advanceBookingId,item.date)">Apply</a></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -123,10 +123,10 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Receipt type</label>
-                                            <select class="form-control" id="exampleFormControlSelect1"
+                                            <select class="form-select" id="exampleFormControlSelect1"
                                                 (change)="onChange($event.target)" formControlName="receiptType">
                                                 <option value="0"> Direct.</option>
-                                                <option value="1">Invoice</option>
+                                                <option value="1">Advance</option>
                                             </select>
                                         </div>
                                     </div>
@@ -158,8 +158,8 @@
                                     <hr style="width: 98%">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Full Name</label>
-                                            <input type="text" class="form-control" placeholder="Full Name"
+                                            <label for="exampleInputEmail1">First Name</label>
+                                            <input type="text" class="form-control" placeholder="First Name"
                                                 formControlName="firstName">
                                         </div>
                                     </div>
@@ -170,45 +170,36 @@
                                                 formControlName="lastName">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">SurName</label>
                                             <input type="email" class="form-control" placeholder="SurName">
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
+                                    </div> -->
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Gender</label>
-                                            <input class="form-control" list="datalistOptions1" id="exampleDataList"
-                                                placeholder="Type to search..." formControlName="gender">
-                                            <datalist id="datalistOptions1">
-                                                <option value="Female">
-                                                <option value="Male">
-                                            </datalist>
+                                            <select class="form-select" placeholder="Type to search..." formControlName="gender">                                            
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Date of Birth</label>
                                             <input type="date" class="form-control" placeholder="Date of Birth"
                                                 formControlName="dob">
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Father Name</label>
-                                            <input class="form-control" list="datalistOptions2" id="exampleDataList"
-                                                placeholder="Type to search..."
-                                                style="width:25%;margin-top: 2rem!important;float: left;">
-                                            <datalist id="datalistOptions2">
-                                                <option value="D/O">
-                                                <option value="S/O">
-                                            </datalist>
+                                            <label for="exampleInputEmail1">Father's Name</label>                                            
                                             <input type="text" class="form-control" placeholder="Father Name"
-                                                style="width: 75%;" formControlName="fatherName">
+                                                formControlName="fatherName">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">GST No</label>
                                             <input type="text" class="form-control" placeholder="GST No"
@@ -231,7 +222,7 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputPassword"
-                                                    class="col-sm-3 col-form-label">Area/Name</label>
+                                                    class="col-sm-3 col-form-label">Area Name</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="inputPassword"
                                                         placeholder="Area/Name" formControlName="areaName">
@@ -239,7 +230,7 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputPassword"
-                                                    class="col-sm-3 col-form-label">Town/Village</label>
+                                                    class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-4">
                                                     <input type="text" class="form-control" id="inputPassword"
                                                         placeholder="Town/Village" formControlName="city">
@@ -254,24 +245,18 @@
                                                 <label for="inputPassword" class="col-sm-3 col-form-label">District
                                                     Name</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" list="datalistOptions3"
-                                                        id="exampleDataList" placeholder="District Name"
-                                                        formControlName="district">
-                                                    <datalist id="datalistOptions3">
-                                                        <option value="Direct">
-                                                    </datalist>
+                                                    <select class="form-select" placeholder="District Name"  formControlName="district" (change)="districttaluk($event)">                                                    
+                                                        <option *ngFor="let item of districtname" [value]="item.districtId">{{item.district}}</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputPassword"
                                                     class="col-sm-3 col-form-label">Mandal/Taluk</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" list="datalistOptions4"
-                                                        id="exampleDataList" placeholder="Mandal/Taluk"
-                                                        formControlName="taluk">
-                                                    <datalist id="datalistOptions4">
-                                                        <option value="Direct">
-                                                    </datalist>
+                                                    <select class="form-select" placeholder="Mandal/Taluk" formControlName="taluk">                                                    
+                                                        <option *ngFor="let data of taluk1" [value]="data.talukId">{{data.taluk}}</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="text-center">
@@ -314,26 +299,20 @@
                                             <div class="form-group row">
                                                 <label for="inputPassword" class="col-sm-3 col-form-label">District
                                                     Name</label>
-                                                <div class="col-sm-9">
-                                                    <input class="form-control" list="datalistOptions5"
-                                                        id="exampleDataList" placeholder="District Name"
-                                                        formControlName="district">
-                                                    <datalist id="datalistOptions5">
-                                                        <option value="Direct">
-                                                    </datalist>
-                                                </div>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-select" placeholder="District Name"  formControlName="district" (change)="districttaluk($event)">                                                    
+                                                            <option *ngFor="let item of districtname" [value]="item.districtId">{{item.district}}</option>
+                                                        </select>
+                                                    </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputPassword"
                                                     class="col-sm-3 col-form-label">Mandal/Taluk</label>
-                                                <div class="col-sm-9">
-                                                    <input class="form-control" list="datalistOptions6"
-                                                        id="exampleDataList" placeholder="Mandal/Taluk"
-                                                        formControlName="taluk">
-                                                    <datalist id="datalistOptions6">
-                                                        <option value="Direct">
-                                                    </datalist>
-                                                </div>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-select" placeholder="Mandal/Taluk" formControlName="taluk">                                                    
+                                                            <option *ngFor="let data of taluk1" [value]="data.talukId">{{data.taluk}}</option>
+                                                        </select>
+                                                    </div>
                                             </div>
                                         </form>
                                     </div>
@@ -387,47 +366,17 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Qualification</label>
-                                            <input type="text" class="form-control" list="qualification"
-                                                placeholder="Qualification" formControlName="qualification">
-                                            <datalist id="qualification">
-                                                <option value="10th qualified">
-                                                <option value="12th qualified">
-                                                <option value="MBA">
-                                                <option value="BBA">
-                                                <option value="B.Tech and B.Arch">
-                                                <option value="M.Tech">
-                                                <option value="ME">
-                                                <option value="BE">
-                                                <option value="Arts-psychology">
-                                                <option value="Arts-history">
-                                                <option value="Arts-sociology">
-                                                <option value="BCA">
-                                                <option value="MCA">
-                                                <option value="B.F.A">
-                                                <option value="B.Ed">
-                                                <option value="M.Ed">
-                                                <option value="Fashion">
-                                                <option value="Journalism BJMC">
-                                                <option value="B.Pharma">
-                                                <option value="M.Pharma">
-                                                <option value="Hotel Management">
-                                                <option value="BDS">
-                                                <option value="MBBS">
-                                                <option value="Nursing- B.Sc.">
-                                                <option value="Nursing- M.Sc.">
-                                                <option value="BDS">
-                                                <option value="B.Com/CA/CFA/CS">
-                                            </datalist>
+                                            <select class="form-select" placeholder="Qualification" formControlName="qualification">
+                                                <option *ngFor="let item of qualification" [value]="item.qualificationId">{{item.qualification}}</option>
+                                           </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Occupation</label>
-                                            <input type="text" class="form-control" list="occupation"
-                                                placeholder="occupation" formControlName="occupation">
-                                            <datalist id="occupation">
-                                                <option value="Employee">
-                                            </datalist>
+                                            <select class="form-select" placeholder="occupation" formControlName="occupation">
+                                                <option *ngFor="let item of occupation" [value]="item.occupationId">{{item.occupation}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -460,29 +409,25 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Gender</label>
-                                            <input type="text" class="form-control" list="gender" placeholder="Gender"
-                                                formControlName="nomineeGender">
-                                            <datalist id="gender">
-                                                <option value="Female">
-                                                <option value="Male">
-                                            </datalist>
+                                            <select class="form-select" placeholder="Gender" formControlName="nomineeGender"> 
+                                                <option value="Male">Male</option>                                           
+                                                <option value="Female">Female</option>                                                
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Relation</label>
-                                            <input type="text" class="form-control" placeholder="Relation"
-                                                formControlName="relation" list="relation">
-                                            <datalist id="relation">
-                                                <option value="Father">
-                                                <option value="Mother">
-                                                <option value="Son">
-                                                <option value="Daughter">
-                                                <option value="Husband">
-                                                <option value="Wife">
-                                                <option value="Brother">
-                                                <option value="Sister">
-                                            </datalist>
+                                            <select class="form-select" formControlName="relation">                                           
+                                                <option value="Father">Father</option>
+                                                <option value="Mother">Mother</option>
+                                                <option value="Son">Son</option>
+                                                <option value="Daughter">Daughter</option>
+                                                <option value="Husband">Husband</option>
+                                                <option value="Wife">Wife</option>
+                                                <option value="Brother">Brother</option>
+                                                <option value="Sister">Sister</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">

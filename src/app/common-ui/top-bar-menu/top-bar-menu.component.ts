@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cks-top-bar-menu',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopBarMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
-
+  logout(){
+    localStorage.removeItem('UserCode');
+    localStorage.removeItem('ShowRoomId');
+    localStorage.removeItem('UserName');
+    localStorage.removeItem('MacAddress');
+    this.router.navigateByUrl('');
+  }
 }

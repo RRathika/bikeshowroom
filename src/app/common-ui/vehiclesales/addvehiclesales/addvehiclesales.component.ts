@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { data } from 'jquery';
 import { ToastServiceService } from 'src/app/toast-service.service';
 import { YamahaserviceService } from 'src/app/yamahaservice.service';
 
@@ -18,6 +19,11 @@ export class AddvehiclesalesComponent implements OnInit {
   bookdata:any;
   username:any;
   modelname:any;
+  districtname:any;
+  taluk1:any;
+  qualification:any;
+  occupation:any;
+  year:any;
   constructor(private service:YamahaserviceService,private route:Router,private formBuilder:FormBuilder,private datePipe: DatePipe,public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
    }
@@ -68,10 +74,42 @@ export class AddvehiclesalesComponent implements OnInit {
   
   ngOnInit(): void {
     this.customerDetailForm.controls['receiptNos'].disable();
+    this.customerDetailForm.controls['date'].disable();
     this.isdisable=true;
     this.loadadvancebook();
     this.loadname();
     this.loadmodelname();
+    this.district();
+    this.loadqualification();
+    this.loadoccupation();
+    this.getyear();
+  }
+  loadqualification(){
+    this.service.getqualification().subscribe(data=>{
+      this.qualification=data;
+    })
+  }
+  loadoccupation(){
+    this.service.getoccupation().subscribe(data=>{
+      this.occupation=data;
+    })
+  }
+  getyear(){
+    this.service.getyear().subscribe(data=>{
+      this.year=data;
+    })
+  }
+  district(){
+    this.service.getdistrict().subscribe(data=>{
+      this.districtname=data;
+    })
+  }
+  districttaluk(e:any)
+  {
+    let name=e.target.value;
+    this.service.gettaluk(name).subscribe((data:any)=>{
+      this.taluk1=data
+    })
   }
   loadadvancebook(){
     this.service.getadvancebook().subscribe(data=>{
@@ -88,9 +126,11 @@ export class AddvehiclesalesComponent implements OnInit {
       this.modelname=data;
     })
   }
-  apply(id:any){
-    // console.log(id);
-    this.customerDetailForm.patchValue({receiptNos:id});
+  apply(id:any,date1:any){
+    let date2=date1.split('T');
+    console.log(date2[0]);
+    
+    this.customerDetailForm.patchValue({receiptNos:id,date:date2[0]});
   }
   shift(){
     this.permanentaddressForm.patchValue(this.presentaddressForm.value);
@@ -100,11 +140,13 @@ export class AddvehiclesalesComponent implements OnInit {
   if(e.value==1)
   {
     this.customerDetailForm.controls['receiptNos'].enable();
+    this.customerDetailForm.controls['date'].enable();
     this.isdisable=false;
   }
   else
   {
     this.customerDetailForm.controls['receiptNos'].disable();
+    this.customerDetailForm.controls['date'].disable();
     this.isdisable=true;
   }  
   }

@@ -24,7 +24,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="modelName">Gender</label>
-                            <select formControlName="gender" class="form-control dropdown-primary" id="Select1">
+                            <select formControlName="gender" class="form-select dropdown-primary" id="Select1">
                                 <option value="Male" selected>Male</option>
                                 <option value="Female" selected>Female</option>
                             </select>
@@ -40,7 +40,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="modelName">Payment Mode Id</label>
-                            <select formControlName="paymentModeId" class="form-control dropdown-primary" id="Select1">
+                            <select formControlName="paymentModeId" class="form-select dropdown-primary" id="Select1">
                                 <option value="" disabled selected hidden>Payment Mode</option>
                                 <option *ngFor="let list of paymentoption" [value]=list.paymentModeId >{{list.paymentModeName}}</option>
                             </select>
@@ -50,7 +50,7 @@
                         <div class="form-group">
                             <label for="modelName">Advance Amount</label>
                             <input type="email" class="form-control" formControlName="advanceAmount" 
-                                placeholder="Model Name">
+                                placeholder="Advance Amount">
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -58,23 +58,23 @@
                                                    
                             <div class="col-md-4">
                                 <label for="modelName">Model Name</label>    
-                                <select formControlName="modelId" class="form-control dropdown-primary" id="Select1">
-                                    <option value="" disabled selected hidden>Model Name</option>
-                                    <option *ngFor="let data of modelcode" [value]=data.modelId>{{data.modelName}}</option>
+                                <select formControlName="modelId" class="form-select dropdown-primary"(change)='modelnamechange($event)'>
+                                    <!-- <option value="" disabled selected hidden>Model Name</option> -->
+                                    <option *ngFor="let data of modelcode" [value]="data.modelId">{{data.modelName}}</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label for="modelName">Color Name</label>
-                                <select formControlName="variantId" class="form-control dropdown-primary" id="Select1">
-                                    <option value="" disabled selected hidden>Color Name</option>
-                                    <option *ngFor="let data of varientcode" [value]=data.variantId>{{data.variant}}</option>
+                                <select formControlName="colorId" [(ngModel)]="selectedObject"class="form-select dropdown-primary" (change)='colornamechange($event)'>
+                                    <option value="" selected>Color Name</option>
+                                    <option *ngFor="let data of colorcode" [value]="data.colorId">{{data.colorName}}</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label for="modelName">Variant Name</label>
-                                <select formControlName="variantId" class="form-control dropdown-primary" id="Select1">
-                                    <option value="" disabled selected hidden>Variant Name</option>
-                                    <option *ngFor="let data of varientcode" [value]=data.variantId>{{data.variant}}</option>
+                                <select formControlName="variantId" class="form-select dropdown-primary"  >
+                                    <!-- <option value="" disabled selected hidden>Variant Name</option> -->
+                                    <option *ngFor="let data of varientcode" [value]="data.variantId">{{data.variantName}}</option>
                                 </select>
                             </div>
                         </div>

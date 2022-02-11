@@ -15,6 +15,7 @@ export class StocktransferComponent implements OnInit {
   showroomdata:any;
   chassisdata:any;
   enginedata:any;
+  selectedDevice:any;
   constructor(private service:YamahaserviceService,private formbuilder:FormBuilder,private router:Router,public toastservice:ToastServiceService) { }
   stocktransferForm:FormGroup=this.formbuilder.group({
     vehicleStockId: 0,
@@ -27,13 +28,13 @@ export class StocktransferComponent implements OnInit {
     userCode: "YAMAHA001"  
   })
   ngOnInit(): void {
-    this.modelname();
+     this.modelname();
     this.showroom();
     this.chassisno();
     this.engineno();
   }
   chassisno(){
-    this.service.getchassisno().subscribe(data=>{
+    this.service.getchassisno().subscribe((data:any)=>{
       this.chassisdata=data;
     })
   }
@@ -43,12 +44,12 @@ export class StocktransferComponent implements OnInit {
     })
   }
   modelname(){  
-    this.service.getbikemodel().subscribe(data=>{
+    this.service.getbikemodel().subscribe((data:any[])=>{
       this.bikemodelname=data;
     })
   }
   showroom(){
-    this.service.getshowroom().subscribe(data=>{
+    this.service.getshowroom().subscribe((data:any)=>{
       this.showroomdata=data
     })
   }
@@ -66,5 +67,26 @@ export class StocktransferComponent implements OnInit {
         }
       })
     }
+  }
+  chassisnoSelected(e:any)
+  {
+    let value=e.target.value;
+    this.service.selectchassisno(value).subscribe((data:any)=>{
+      this.stocktransferForm.patchValue({
+        engineNo:data.engineNo,
+        vehicleModelId:data.vehicleModelId,
+        fromShowRoomId:data.fromShowRoomId
+      })
+    })   
+  }
+  enginenoSelected(e:any){
+    let value=e.target.value;
+    this.service.selectengineno(value).subscribe((data:any)=>{
+      this.stocktransferForm.patchValue({
+        chassisNo:data.chassisNo,
+        vehicleModelId:data.vehicleModelId,
+        fromShowRoomId:data.fromShowRoomId
+      })
+    }) 
   }
 }

@@ -17,7 +17,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Chassis No</label>
-                                <select class="form-select" formControlName="chassisNo">
+                                <select class="form-select" formControlName="chassisNo" (change)='chassisnoSelected($event)'>
                                     <option *ngFor="let data of chassisdata" [value]="data.chassisNo">{{data.chassisNo}}</option>
                                 </select>
                             </div>
@@ -25,7 +25,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Engine No</label>
-                                <select class="form-select" formControlName="engineNo">
+                                <select class="form-select" formControlName="engineNo" (change)='enginenoSelected($event)'>
                                     <option *ngFor="let data of enginedata" [value]="data.engineNo">{{data.engineNo}}</option>
                                 </select>
                             </div>

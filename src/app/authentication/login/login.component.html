@@ -7,17 +7,17 @@
             <div class="card">
                 <div class="card-body login-card-body">
                     <p class="login-box-msg">Sign in to start your session</p>
-                    <form action="#" method="post">
+                    <form [formGroup]="loginForm" (ngSubmit)="submit()">
                         <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Email">
+                            <input type="email" class="form-control" placeholder="User Name" formControlName="userName">
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
+                                    <span class="fas fa-user"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="password" class="form-control" placeholder="Password">
+                            <input type="password" class="form-control" placeholder="Password" formControlName="password">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
@@ -25,22 +25,22 @@
                             </div>
                         </div>
                         <div class="row">
-                          <div class="col-8">
+                          <!-- <div class="col-8">
                             <div class="icheck-primary">
                               <input type="checkbox" id="agreeTerms" name="terms" value="agree">
                               <label for="agreeTerms">
                                 Remember me
                               </label>
                             </div>
-                          </div>
-                            <div class="col-4">
-                                <button type="submit" (click)="submit()" class="btn btn-primary btn-block align-center">Sign In</button>
+                          </div> -->
+                            <div class="flex-parent jc-center">
+                                <button type="submit" class="btn btn-primary btn-block align-center">Sign In</button>
                             </div>
                         </div>
                     </form>
-                    <p class="mb-0 text-center pt-2">
+                    <!-- <p class="mb-0 text-center pt-2">
                         <a href="#/register" class="text-center">Register a new membership</a>
-                    </p>
+                    </p> -->
                 </div>
             </div>
         </div>

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {  Router } from '@angular/router';
+import { data } from 'jquery';
+import { ToastServiceService } from 'src/app/toast-service.service';
+import { YamahaserviceService } from 'src/app/yamahaservice.service';
 
 @Component({
   selector: 'app-login',
@@ -7,12 +11,54 @@ import {  Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private router:Router) { }
-
+  username:any;
+  usercode:any;
+  showroom:any;
+  mac:any;
+  constructor(private router:Router,private service:YamahaserviceService,private formbuilder:FormBuilder,private toastservice:ToastServiceService) { }
+  loginForm:FormGroup=this.formbuilder.group({
+    userName:new FormControl('',[Validators.required]),
+    password:new FormControl('',[Validators.required]),
+    macAddress:new FormControl('')
+  });
   ngOnInit(): void {
+    this.macaddresss();
   }
-  submit(){
-    this.router.navigate(['/dashboard']);
+  macaddresss()
+  {
+    this.service.getmacaddress().subscribe(data=>{
+      this.loginForm.patchValue({
+        macAddress:data
+      }) 
+      // console.log(this.loginForm.value['macAddress']);       
+    })
+  }
+  submit(){   
+    if(this.loginForm.valid){
+      // console.log(this.loginForm.value);      
+      this.service.savelogin(this.loginForm.value).subscribe((data:any)=>{
+        if(data.statusCode==400)
+        {
+          this.toastservice.show(data.message,{className:'bg-danger text-light', delay: 15000})
+        }
+        else{
+         this.username= localStorage.setItem('UserName', data.userName);
+         this.usercode= localStorage.setItem('UserCode', data.userCode);
+         this.showroom= localStorage.setItem('ShowRoomId', data.showRoomId);
+         this.mac= localStorage.setItem('MacAddress', data.macAddress);
+          if(this.username!='' && this.usercode!=''&& this.showroom!=''&&this.mac!=''){
+          this.router.navigate(['/dashboard']);
+          }
+          else{
+            this.toastservice.show('Doesnot match your details',{className:'bg-danger text-light', delay: 15000})
+          }
+        }
+      })
+    }
+    else
+    {
+      this.toastservice.show('Please Fill all Field',{className:'bg-danger text-light', delay: 15000})
+    }
+    
   }
 }
