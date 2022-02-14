@@ -3,33 +3,35 @@
       <div class="col-md-12">
         <div class="card card-primary">
           <div class="card-header bg-primary">
-            <h3 class="card-title">Show Room Details</h3>
+            <h3 class="card-title">Yard Details</h3>
           </div>
-          <form [formGroup]="showroomForm" (ngSubmit)="submit()">
+          <form [formGroup]="yardForm" (ngSubmit)="submit()">
             <div class="row p-3">
-              <div class="col-md-6">
-                <!-- <div class="card-body"> -->
+              <div class="col-md-4">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Show Room Name</label> 
-                    <input type="text" class="form-control" formControlName="showRoomName" placeholder="Show Room Name">
+                    <label for="exampleInputEmail1">Yard Name</label> 
+                    <input type="text" class="form-control" formControlName="yardName" placeholder="Yard Name">
                   </div>
-                <!-- </div> -->
               </div>
-              <div class="col-md-6">
-                <!-- <div class="card-body"> -->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Show room Name</label> 
+                  <select class="form-select" formControlName="showroomNameId">
+                      <option>Show Room</option>
+                  </select>
+                </div>
+             </div>
+              <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
                     <input type="text" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
                   </div>
-                <!-- </div>   -->
-                </div>           
+              </div>           
               <div class="col-md-10">
-                <!-- <div class="card-body"> -->
                   <div class="form-group">
                     <label for="exampleInputEmail1">Address</label>
                     <textarea placeholder="Address" class="form-control" rows="3" formControlName="address"></textarea> 
                   </div>
-                <!-- </div> -->
               </div>
               <div class="col-md-2">
                 <div class="card-body pt-5">
@@ -48,6 +50,7 @@
               <thead>
                 <tr class="text-center">
                   <th>SI.NO</th>
+                  <th>Yard Name</th>
                   <th>Show Room Name</th>
                   <th>Address</th>                
                   <th>Mobile No</th>
@@ -56,14 +59,14 @@
                 </tr>
               </thead>
               <tbody class="text-center">
-                <tr *ngFor="let data of showdata; let i=index;">
+                <!-- <tr *ngFor="let data of showdata; let i=index;">
                   <td>{{i+1}}</td>
                   <td>{{data.showRoomName}}</td>
                   <td>{{data.address}}</td>
                   <td>{{data.mobileNo}}</td>                
                   <td><i class="fas fa-edit" style="color: blue;"></i></td>
                   <td><i class="fa fa-trash"  style="color: red;" aria-hidden="true"></i></td>
-                </tr>              
+                </tr>               -->
               </tbody>
             </table>
           </div>

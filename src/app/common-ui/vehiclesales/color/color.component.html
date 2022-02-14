@@ -11,7 +11,7 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Bike Model</label> 
-                  <select formControlName="modelId" class="form-control dropdown-primary" id="Select1">
+                  <select formControlName="modelId" class="form-select dropdown-primary" id="Select1">
                     <option *ngFor="let data of bikemodeldata"  [value]=data.modelId selected>{{data.modelName}}</option>
                 </select>
                 </div>

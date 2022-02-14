@@ -10,50 +10,46 @@
               <div class="col-md-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Color Name</label> 
-                    <select formControlName="colorId" class="form-control dropdown-primary" id="Select1">
+                    <select formControlName="colorId" class="form-select dropdown-primary" id="Select1">
                       <option *ngFor="let data of color"  [value]=data.colorId selected>{{data.colorName}}</option>
                   </select>
                   </div>                
-              </div>           
-              <div class="col-md-3">
-                
+              </div>   
+              <div class="col-md-3">                
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Variant Code</label>
+                  <input type="text" class="form-control" formControlName="variantCode"  placeholder="variant Code">
+                </div>               
+            </div>        
+              <div class="col-md-3">                
                   <div class="form-group">
                     <label for="exampleInputEmail1">Variant Name</label>
                     <input type="text" class="form-control" formControlName="variantName"  placeholder="variant">
-                  </div>
-               
+                  </div>               
               </div>
-              <div class="col-md-3">
-                
+              <div class="col-md-3">                
                   <div class="form-group">
                     <label for="exampleInputEmail1">Years of Warranty</label>
                     <input type="text" class="form-control" formControlName="yearsOfWarranty"  placeholder="Years of Warranty">
                   </div>
-                
               </div>
               <div class="col-md-3">
-                
                   <div class="form-group">
                     <label for="exampleInputEmail1">Oil Change </label>
                     <input type="text" class="form-control" formControlName="oilChange"  placeholder="Oil Change">
                   </div>
-                
               </div>
               <div class="col-md-3">
-                
                   <div class="form-group">
                     <label for="exampleInputEmail1">Current Model </label>
                     <input type="text" class="form-control" formControlName="currentModel"  placeholder="Current Model">
                   </div>
-                
               </div>
               <div class="col-md-3">
-                
                   <div class="form-group">
                     <label for="exampleInputEmail1">HSN Code </label>
                     <input type="text" class="form-control" formControlName="hsnCode"  placeholder="HSN Code">
                   </div>
-               
               </div>
               <div class="row">
                 <div class="col-md-6">
@@ -132,6 +128,7 @@
               <thead>
                 <tr class="text-center">
                   <th>SI.NO</th>
+                  <th>Variant Code</th>
                   <th>Variant Name</th>
                   <th>Color Name</th>
                   <!-- <th>Color Code</th>                 -->
@@ -142,6 +139,7 @@
               <tbody class="text-center">
                 <tr *ngFor="let data of variant; let i=index;">
                   <td>{{i+1}}</td>
+                  <td>{{data.variantCode}}</td>
                   <td>{{data.variantName}}</td>
                   <td>{{data.colorName}}</td>    
                   <!-- <td>{{data.colorCode}}</td>             -->

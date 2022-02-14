@@ -34,6 +34,7 @@ import { VehiclestockComponent } from './vehicleManage/vehiclestock/vehiclestock
 import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktransfer.component';
 import { RegisterComponent } from './users/register/register.component';
 import { UserdetailsComponent } from './users/userdetails/userdetails.component';
+import { YardComponent } from './transit/yard/yard.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { UserdetailsComponent } from './users/userdetails/userdetails.component'
     VehiclestockComponent,
     StocktransferComponent,
     RegisterComponent,
-    UserdetailsComponent
+    UserdetailsComponent,
+    YardComponent
   ],
   imports: [
     BrowserModule,

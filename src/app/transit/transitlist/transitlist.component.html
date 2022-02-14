@@ -28,7 +28,7 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Transit Type</label>
-											<select class="form-select" aria-label="Default select example">
+											<select class="form-select" aria-label="Default select example" formControlName="transitType">
 												<option selected>Select option</option>
 												<option value="1">Within State</option>
 												<option value="2">Outside State</option>
@@ -89,7 +89,9 @@
 								<th>Model Code</th>
 								<th>Model Name</th>
 								<th>Model Color Code</th>
-								<th>Model Color Name</th>								
+								<th>Model Color Name</th>
+								<th>Variant Code</th>		
+								<th>Variant Name</th>						
 							</tr>
 						</thead>
 						<tbody style="text-align: center;">
@@ -101,6 +103,8 @@
 								<td>{{row.modelname}}</td>
 								<td>{{row.ModelColorCode}}</td>
 								<td>{{row.colorname}}</td>
+								<td>{{row.VariantCode}}</td>
+								<td>{{row.variantname}}</td>
 							</tr>
 						</tbody>
 					</table>

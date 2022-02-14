@@ -5,6 +5,7 @@ import { ToastServiceService } from 'src/app/toast-service.service';
 import { YamahaserviceService } from 'src/app/yamahaservice.service';
 import * as XLSX from 'xlsx';
 import { ViewChild } from '@angular/core';
+import { data } from 'jquery';
 const { read, write, utils } = XLSX;
 
 @Component({
@@ -22,6 +23,7 @@ export class TransitlistComponent implements OnInit {
   color: any;
   exceldata:any;
   count=0;
+  variantdata:any;
   @ViewChild('myInput')
   myInputVariable: any;
   constructor(private router: Router, private service: YamahaserviceService, private formBuilder: FormBuilder, private toastService: ToastServiceService) { }
@@ -29,7 +31,7 @@ export class TransitlistComponent implements OnInit {
     invoiceNo: new FormControl('', [Validators.required]),
     invoiceDate: new FormControl('', [Validators.required]),
     transitType: new FormControl('', [Validators.required]),
-    stockType: new FormControl('', [Validators.required]),
+    stockType: 0,
     supplier: new FormControl('', [Validators.required]),
     transportName: new FormControl('', [Validators.required]),
     truckNo: new FormControl('', [Validators.required]),
@@ -38,17 +40,23 @@ export class TransitlistComponent implements OnInit {
     isActive: 0
   })
   ngOnInit(): void {
+    this.model();
+    this.colorid();
     this.variant();
-    this.modelid();
   }
-  variant() {
+  model() {
     this.service.getbikemodel().subscribe(data => {
       this.bikemodel = data;
     })
   }
-  modelid() {
+  colorid() {
     this.service.getcolor().subscribe(data => {
       this.color = data;
+    })
+  }
+  variant(){
+    this.service.getvariant().subscribe(data=>{
+      this.variantdata=data;
     })
   }
   onFileChange(evt: any) {
@@ -81,21 +89,27 @@ export class TransitlistComponent implements OnInit {
         // this.jsonData[i].colorId='';
         let model=this.jsonData[i].ModelCode;
         let colorcode = this.jsonData[i].ModelColorCode;
+        let variantcode=this.jsonData[i].VariantCode;
+        let variantvalue=this.variantdata.filter((value:{variantName:any;variantCode:any;variantId:any})=>{
+          if(variantcode==value.variantCode){
+            this.jsonData[i].variantname = value.variantName;
+            this.jsonData[i].variantId = value.variantId;
+            console.log(this.jsonData[i].variantname);
+          }
+        })
         let bikedata= this.bikemodel.filter((value: any)=>{
           if(model==value.modelCode){
             // alert('yes')            
             this.jsonData[i].modelname = value.modelName;
             this.jsonData[i].vehicleModelId = value.modelId;
             console.log(this.jsonData[i].modelname);
-          }
-          
+          }          
         });
         let colordata= this.color.filter((value: { colorCode: any; colorName: any;colorId:any; })=>{
           if(colorcode==value.colorCode){   
             this.jsonData[i].colorname =value.colorName;
             this.jsonData[i].colorId=value.colorId;
-          }
-         
+          }         
         });
       }
       // this.splitData = this.data.slice(1);
@@ -112,7 +126,7 @@ export class TransitlistComponent implements OnInit {
     this.jsonData[i].variantId = event.target.value;
   }
   
-  submit() {
+  submit() {    
     this.transitForm.patchValue({ createTransitDetailsDTO: this.jsonData });
     console.log(this.transitForm.value);
     if(this.transitForm.valid){

@@ -10,7 +10,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="modelName">Showroom Name</label>
-                                <select class="form-control" formControlName="ShowRoomId">
+                                <select class="form-select" formControlName="ShowRoomId">
                                     <option value="0">All showroom name</option>
                                     <option *ngFor="let data of showroomdata;" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                 </select>
@@ -19,7 +19,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="modelName">Model Name</label>
-                                <select class="form-control" formControlName="VehicleModelId">
+                                <select class="form-select" formControlName="VehicleModelId">
                                     <option value="0">All Model Name</option>
                                     <option *ngFor="let bikemodel of bikemodelname;let i=index;" [value]="bikemodel.modelId">{{bikemodel.modelName}}</option>
                                 </select>

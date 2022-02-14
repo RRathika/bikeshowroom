@@ -28,6 +28,7 @@ export class VariantComponent implements OnInit {
   variantForm: FormGroup = this.formBuilder.group({
     colorId:new FormControl('',[Validators.required]),
     variantId:0,
+    variantCode:new FormControl(''),
     variantName:new FormControl('',[Validators.required]),
     yearsOfWarranty:new FormControl('',[Validators.required]),
     oilChange:new FormControl('',[Validators.required]),
@@ -113,6 +114,8 @@ export class VariantComponent implements OnInit {
     });
   }
   submit(){
+    
+    console.log(this.variantForm.value);
     if(this.variantId)
     {
       this.service.updatevariant(this.variantForm?.value).subscribe((data:any)=>{
@@ -126,8 +129,8 @@ export class VariantComponent implements OnInit {
       }
       })
     }
-    else{
-    
+    else{   
+      this.variantForm.value['total']=this.total;
       this.service.savevariant(this.variantForm?.value).subscribe((data:any)=>{
         if(data.statusCode==200){
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 

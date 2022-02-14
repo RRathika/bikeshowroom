@@ -17,6 +17,7 @@ import { RolemasterComponent } from './rolemaster/rolemaster.component';
 import { ShowroomComponent } from './transit/showroom/showroom.component';
 import { TransitlistComponent } from './transit/transitlist/transitlist.component';
 import { TranslistComponent } from './transit/translist/translist.component';
+import { YardComponent } from './transit/yard/yard.component';
 import { RegisterComponent } from './users/register/register.component';
 import { UserdetailsComponent } from './users/userdetails/userdetails.component';
 import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktransfer.component';
@@ -24,8 +25,7 @@ import { VehiclestockComponent } from './vehicleManage/vehiclestock/vehiclestock
 
 
 const routes: Routes = [
-  // {path: '', redirectTo:'',pathMatch:'full'},
-  {
+{
   path: 'auth',
   loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
 },
@@ -51,7 +51,8 @@ children:[
 {path:'user',component:UserdetailsComponent},
 {path:'register',component:RegisterComponent},
 {path:'vehiclestock',component:VehiclestockComponent},
-{path:'stocktype',component:StocktransferComponent}]}
+{path:'stocktype',component:StocktransferComponent},
+{path:'yard',component:YardComponent}]}
 ];
 
 @NgModule({

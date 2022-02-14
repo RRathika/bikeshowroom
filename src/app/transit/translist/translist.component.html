@@ -7,7 +7,9 @@
                     <button class="btn btn-success float-end" (click)="add()">Add Transit</button>
                 </div>
                 <div class="col-md-12">
-
+                    <div class="card-body">
+                        
+                    </div>
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
@@ -59,6 +61,8 @@
                                                 <th>Meterial Code</th>
                                                 <th>Vehicle Model Name</th>
                                                 <th>Color</th>
+                                                <th>Variant Code</th>
+                                                <!-- <th>Variant Name</th> -->
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let item of viewdata">
@@ -68,6 +72,8 @@
                                                     <td>{{item.modelCode}}</td>
                                                     <td>{{item.vehicleModelName}}</td>
                                                     <td>{{item.colorName}}</td>
+                                                    <td>{{item.variantCode}}</td>
+                                                    <!-- <td>{{item.variantName}}</td> -->
                                                 </tr>
                                             </tbody>
                                         </table>

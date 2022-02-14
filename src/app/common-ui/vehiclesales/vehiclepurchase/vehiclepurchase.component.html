@@ -13,7 +13,7 @@
                                     <div class="col-md-6">				
 										<div class="form-group row">
 											<div class="col-md-6">
-												<label for="exampleInputEmail1">Inv.No</label>
+												<label for="exampleInputEmail1">Invoice No</label>
                                                 <input type="text" class="form-control" placeholder="Invoice no" formControlName="invoiceNo">
                                             </div>
 											<div class="col-md-6">
@@ -23,12 +23,12 @@
 										</div>						
 										<div class="form-group row">											
 											<div class="col-md-6">
-                                                <label for="exampleInputEmail1">received Date</label>
+                                                <label for="exampleInputEmail1">Received Date</label>
 											<input type="date" class="form-control" formControlName="receivedDate">
                                             </div> 
 											<div class="col-md-6">
 												<label for="exampleInputEmail1">Transit Type</label>                                                
-											<select class="form-control" formControlName="purchaseType">
+											<select class="form-select" formControlName="purchaseType">
                                                 <option value="1">Within State</option>
                                                 <option value="2">Without State</option>
                                             </select>
@@ -84,7 +84,9 @@
 								<th>Model Code</th>
 								<th>Model Name</th>
 								<th>color code</th>
-								<th>color Name</th>								
+								<th>color Name</th>
+								<th>Variant Code</th>
+								<th>Variant Name</th>								
 							</tr>
 						</thead>
 						<tbody style="text-align: center;" *ngIf="purchase">
@@ -97,6 +99,8 @@
 								<td>{{row.vehicleModelName}}</td>
 								<td>{{row.modelColorCode}}</td>
 								<td>{{row.colorName}}</td>
+								<td>{{row.variantCode}}</td>
+								<td>{{row.variantName}}</td>
 							</tr> 
 						</tbody>
 						<tbody style="text-align: center;" *ngIf="exceldata">
@@ -109,6 +113,8 @@
 								<td>{{row.modelname}}</td>
 								<td>{{row.ModelColorCode}}</td>
 								<td>{{row.colorname}}</td>
+								<td>{{row.VariantCode}}</td>
+								<td>{{row.variantname}}</td>
 							</tr> 
 						</tbody>
 					</table>
@@ -174,7 +180,7 @@
 									<div class="form-group row">
 										<div class="col-md-12">
 											<label for="exampleInputEmail1">Payment Mode</label>
-											<select class="form-control" (change)="onchange($event)" formControlName="paymentModeId">
+											<select class="form-select" (change)="onchange($event)" formControlName="paymentModeId">
 												<option value="1">Cash</option>
 												<option value="2">Card</option>
 												<option value="3">Cheque</option>

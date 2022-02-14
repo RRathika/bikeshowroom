@@ -24,6 +24,7 @@ export class VehiclepurchaseComponent implements OnInit {
   netamount=0;
   @ViewChild('myInput')
   myInputVariable: any;
+  variantdata:any;
   constructor(private router:Router,private service:YamahaserviceService,private formbuilder:FormBuilder,public toastservice:ToastServiceService) { }
   vehiclepurchaseForm:FormGroup=this.formbuilder.group({
   receivedDate:  new FormControl('', [Validators.required]),
@@ -71,17 +72,23 @@ export class VehiclepurchaseComponent implements OnInit {
       })
       console.log(this.vehiclepurchaseForm.value['transitId']);
     }
-    this.variant();
     this.modelid();
+    this.colorid();
+    this.variantid();
   }
-  variant() {
+  modelid() {
     this.service.getbikemodel().subscribe(data => {
       this.bikemodel = data;
     })
   }
-  modelid() {
+  colorid() {
     this.service.getcolor().subscribe(data => {
       this.color = data;
+    })
+  }
+  variantid(){
+    this.service.getvariant().subscribe(data=>{
+      this.variantdata=data;
     })
   }
   onchange(e:any)
@@ -124,6 +131,14 @@ export class VehiclepurchaseComponent implements OnInit {
         this.jsonData[i].keyNo='';       
         let model=this.jsonData[i].ModelCode;
         let colorcode = this.jsonData[i].ModelColorCode;
+        let variantcode=this.jsonData[i].VariantCode;
+        let variantvalue=this.variantdata.filter((value:{variantName:any;variantCode:any;variantId:any})=>{
+          if(variantcode==value.variantCode){
+            this.jsonData[i].variantname = value.variantName;
+            this.jsonData[i].variantId = value.variantId;
+            console.log(this.jsonData[i].variantname);
+          }
+        })
         let bikedata= this.bikemodel.filter((value: any)=>{
           if(model==value.modelCode){                      
             this.jsonData[i].modelname = value.modelName;
