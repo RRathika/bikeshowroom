@@ -26,23 +26,30 @@ export class TransitlistComponent implements OnInit {
   variantdata:any;
   @ViewChild('myInput')
   myInputVariable: any;
+  showdata:any;
+  roledata:any;
   constructor(private router: Router, private service: YamahaserviceService, private formBuilder: FormBuilder, private toastService: ToastServiceService) { }
   transitForm: FormGroup = this.formBuilder.group({
     invoiceNo: new FormControl('', [Validators.required]),
     invoiceDate: new FormControl('', [Validators.required]),
     transitType: new FormControl('', [Validators.required]),
-    stockType: 0,
     supplier: new FormControl('', [Validators.required]),
     transportName: new FormControl('', [Validators.required]),
     truckNo: new FormControl('', [Validators.required]),
-    createTransitDetailsDTO: new FormControl,
-    status: 0,
-    isActive: 0
+    showRoomId:new FormControl('',[Validators.required]),
+    createTransitDetailsDTO: new FormControl
   })
   ngOnInit(): void {
     this.model();
     this.colorid();
     this.variant();
+    this.showroomdata();
+    this.roledata=localStorage.getItem('RoleId')
+  }
+  showroomdata(){
+    this.service.getshowroom().subscribe(data=>{
+      this.showdata=data;
+    })
   }
   model() {
     this.service.getbikemodel().subscribe(data => {
@@ -77,7 +84,7 @@ export class TransitlistComponent implements OnInit {
         const sheet = wb.Sheets[name];
         initial = XLSX.utils.sheet_to_json(sheet);
         this.exceldata=initial;
-        console.log(this.exceldata);        
+        // console.log(this.exceldata);        
         return initial;
       }, {});
       // const dataString = JSON.stringify(this.jsonData);
@@ -94,7 +101,7 @@ export class TransitlistComponent implements OnInit {
           if(variantcode==value.variantCode){
             this.jsonData[i].variantname = value.variantName;
             this.jsonData[i].variantId = value.variantId;
-            console.log(this.jsonData[i].variantname);
+            // console.log(this.jsonData[i].variantname);
           }
         })
         let bikedata= this.bikemodel.filter((value: any)=>{
@@ -102,7 +109,7 @@ export class TransitlistComponent implements OnInit {
             // alert('yes')            
             this.jsonData[i].modelname = value.modelName;
             this.jsonData[i].vehicleModelId = value.modelId;
-            console.log(this.jsonData[i].modelname);
+            // console.log(this.jsonData[i].modelname);
           }          
         });
         let colordata= this.color.filter((value: { colorCode: any; colorName: any;colorId:any; })=>{
@@ -128,8 +135,12 @@ export class TransitlistComponent implements OnInit {
   
   submit() {    
     this.transitForm.patchValue({ createTransitDetailsDTO: this.jsonData });
-    console.log(this.transitForm.value);
-    if(this.transitForm.valid){
+   if(this.transitForm.value['showRoomId']=='')
+   {
+    this.transitForm.value['showRoomId']=localStorage.getItem('ShowRoomId');
+   }
+    console.log(this.transitForm.value);    
+    // if(this.transitForm.valid){
     this.service.savetransit(this.transitForm.value).subscribe((data: any) => {
       if (data.statusCode == 200) {
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
@@ -140,10 +151,10 @@ export class TransitlistComponent implements OnInit {
         this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 });
       }
     })
-  }
-  else{
-    this.toastService.show("Please fill all field", { classname: 'bg-danger text-light', delay: 15000 });
-  }
+  // }
+  // else{
+  //   this.toastService.show("Please fill all field", { classname: 'bg-danger text-light', delay: 15000 });
+  // }
   }
   clear() {
     this.transitForm.reset();

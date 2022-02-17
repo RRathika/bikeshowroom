@@ -28,7 +28,8 @@ export class AdvancebookComponent implements OnInit {
   paymentModeId:new FormControl('',[Validators.required]), 
   variantId:new FormControl('',[Validators.required]), 
   modelId: new FormControl('',[Validators.required]), 
-  colorId:new FormControl('',[Validators.required])
+  colorId:new FormControl('',[Validators.required]),
+  showRoomId:new FormControl('',[Validators.required])
   });
   ngOnInit(): void {
     this.paymentmode();
@@ -85,6 +86,9 @@ export class AdvancebookComponent implements OnInit {
   }
  
   submit(){
+    this.advancebookForm.patchValue({
+      showRoomId:localStorage.getItem('ShowRoomId')
+    })
     if(this.advancebookForm.valid)
     {
       this.service.saveadvancebokk(this.advancebookForm.value).subscribe(data=>{

@@ -62,7 +62,14 @@
 											<input type="text" class="form-control"  placeholder="Truck Number"formControlName="truckNo">
 										</div>
 									</div>								
-																		
+									<div class="col-md-3" *ngIf="roledata==1">
+										<div class="form-group">
+											<label for="exampleInputEmail1">ShowRoom Name</label>
+											<select class="form-select" aria-label="Default select example" formControlName="showRoomId">
+												<option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
+											</select>											
+										</div>
+									</div>									
 									<div class="col-md-3">
 										<div class="card-body p-4 mt-1">
 											<input type="file" #myInput (change)="onFileChange($event)" multiple="false" />

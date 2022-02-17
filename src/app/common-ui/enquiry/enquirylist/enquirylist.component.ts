@@ -25,6 +25,9 @@ export class EnquirylistComponent implements OnInit {
   closedata:any;
   myData:any;
   enquiryStatus:any;
+  showroom: any;
+  roleid: any;
+  showdata:any;
   constructor(private router: Router, private service: YamahaserviceService, private formbuilder: FormBuilder,public toastService:ToastServiceService) { }
   popupForm: FormGroup = this.formbuilder.group({
     enquiryId: [0],
@@ -33,13 +36,35 @@ export class EnquirylistComponent implements OnInit {
     remarks: new FormControl('', [Validators.required])
   });
   ngOnInit(): void {
+    this.showroom=localStorage.getItem('ShowRoomId');
+    this.roleid=localStorage.getItem('RoleId')
     this.enquiry();
+    this.showroomdata();
+  }
+  showroomdata(){
+    this.service.getshowroom().subscribe(data=>{
+      this.showdata=data;
+    })
+  }
+  showroomchange(e:any){
+    let name=e.target.value;
+    this.service.getenquiry(this.roleid,name).subscribe(data=>{
+      if(data.statusCode==200)
+      {
+        this.toastService.show(data.message,{classname:'bg-success text-light', delay: 10000})
+        this.list=[];
+      }
+      else
+      {
+      this.list=data;
+    }
+    })
   }
   addshow() {
     this.router.navigate(['/dashboard/enquiryadd']);
   }
   enquiry() {
-    this.service.getenquiry().subscribe(data => {
+    this.service.getenquiry(this.roleid,this.showroom).subscribe(data => {
       this.list = data;
     })
   }

@@ -73,12 +73,20 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Role Name</label>
-                   <select class="form-select" formControlName="roleId">
+                   <select class="form-select" formControlName="roleId" (change)="changeshowroom($event)">
                      <option *ngFor="let data of role" [value]="data.roleId">{{data.role}}</option>
                    </select>
                   </div>  
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Showroom Name</label>
+                   <select class="form-select" formControlName="showRoomId" readonly>
+                     <option *ngFor="let data of showroom" [value]="data.showRoomId">{{data.showRoomName}}</option>
+                   </select>
+                  </div>  
+                </div>
+                <div class="col-md-4">
                   <div class="form-group mb-3">
                     <textarea class="form-control" formControlName="place" placeholder="place" rows="2"></textarea>                    
                   </div>

@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   result:any;
   userId: any;
   role:any;
+  showroom:any;
   constructor(private service:YamahaserviceService,private formbuilder:FormBuilder,private route:Router,public toastservice:ToastServiceService) {}
   registerForm:FormGroup=this.formbuilder.group({
     userCode: new FormControl('',[Validators.required]), 
@@ -25,10 +26,13 @@ export class RegisterComponent implements OnInit {
     dob: new FormControl('',[Validators.required]),
     place: new FormControl('',[Validators.required]), 
     macAddress: new FormControl('',[Validators.required]),
-    roleId:new FormControl('',[Validators.required])
+    roleId:new FormControl('',[Validators.required]),
+    showRoomId:new FormControl('',[Validators.required])
   });
   ngOnInit(): void {
     this.loadrole();
+    this.loadshowroom();
+    this.registerForm.controls['showRoomId'].disable();
      if(this.service.user.value=='')
     {
     this.loadusercode();
@@ -45,6 +49,11 @@ export class RegisterComponent implements OnInit {
     })
   }
   }
+  loadshowroom(){
+    this.service.getshowroom().subscribe(data=>{
+      this.showroom=data;
+    })
+  }
   loadrole(){
     this.service.getrolemaster().subscribe(data=>{
       this.role=data;
@@ -57,6 +66,15 @@ export class RegisterComponent implements OnInit {
         userCode: this.usercode}); 
     })
   }
+  changeshowroom(e:any){
+    if(e.target.value!=1){
+      this.registerForm.controls['showRoomId'].enable();
+    }
+    else{
+      this.registerForm.controls['showRoomId'].disable();
+      this.registerForm.value['showRoomId']=0;
+    }
+  }
   loadmacaddress(){
     this.service.getmacaddress().subscribe(data=>{
       this.macadd=data;
@@ -65,8 +83,6 @@ export class RegisterComponent implements OnInit {
     })
   }
   submit(){
-    
-    // console.log(this.registerForm.value);
     if(this.service.user.value=='')
     {
     if(this.registerForm.valid){
@@ -84,6 +100,7 @@ export class RegisterComponent implements OnInit {
 }
 else
 {
+  // console.log(this.registerForm.value);
   if(this.registerForm.valid){
     this.service.updateuserdetail(this.registerForm.value).subscribe((data:any)=>{
       if(data.statusCode==200)

@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   usercode:any;
   showroom:any;
   mac:any;
+  roleid:any;
   constructor(private router:Router,private service:YamahaserviceService,private formbuilder:FormBuilder,private toastservice:ToastServiceService) { }
   loginForm:FormGroup=this.formbuilder.group({
     userName:new FormControl('',[Validators.required]),
@@ -46,6 +47,7 @@ export class LoginComponent implements OnInit {
          this.usercode= localStorage.setItem('UserCode', data.userCode);
          this.showroom= localStorage.setItem('ShowRoomId', data.showRoomId);
          this.mac= localStorage.setItem('MacAddress', data.macAddress);
+         this.roleid=localStorage.setItem('RoleId',data.roleId);
           if(this.username!='' && this.usercode!=''&& this.showroom!=''&&this.mac!=''){
           this.router.navigate(['/dashboard']);
           }

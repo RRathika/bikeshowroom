@@ -112,7 +112,8 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   loadadvancebook(){
-    this.service.getadvancebook().subscribe(data=>{
+    let bookid=localStorage.getItem('ShowRoomId')
+    this.service.getadvancebook(bookid).subscribe(data=>{
      this.bookdata=data;   
     })
   }

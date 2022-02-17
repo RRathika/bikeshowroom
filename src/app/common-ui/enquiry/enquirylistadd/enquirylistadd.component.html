@@ -5,44 +5,44 @@
                 <div class="card-header bg-primary">
                     <h3 class="card-title">Add Enquiry Details</h3>
                 </div>
-            <form [formGroup]="enquiryaddForm" (ngSubmit)="submit()">
-                <div class="row p-3">
-                    <div class="col-md-4">                       
+                <form [formGroup]="enquiryaddForm" (ngSubmit)="submit()">
+                    <div class="row p-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Name</label>
                                 <input type="text" class="form-control" formControlName="name" id="name"
                                     placeholder="Name">
-                            </div>                        
-                    </div>
-                    <!-- <div class="col-md-4">                        
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-4">                        
                             <div class="form-group">
                                 <label for="modelName">Last Name</label>
                                 <input type="text" class="form-control" formControlName="lastName" id="lastName"
                                     placeholder="Last Name">
                             </div>                       
                     </div> -->
-                    <div class="col-md-4">                        
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Mobile No</label>
                                 <input type="text" class="form-control" formControlName="mobileNo" id="mobileNo"
                                     placeholder="Mobile No">
-                            </div>                        
-                    </div>
-                    <!-- <div class="col-md-4">                        
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-4">                        
                             <div class="form-group">
                                 <label for="modelName">Email</label>
                                 <input type="email" class="form-control" formControlName="mail" id="mail"
                                     placeholder="Email">
                             </div>                        
                     </div> -->
-                    <div class="col-md-4">                        
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Planing Date</label>
                                 <input type="date" class="form-control" formControlName="planningDate" id="modelName"
                                     placeholder="Date">
-                            </div>                        
-                    </div>
-                    <div class="col-md-4">                        
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <label for="exampleInputEmail1">Vehicle Type</label>
                             <div class="input-group">
                                 <div class="custom-file ml-4">
@@ -56,29 +56,36 @@
                                     <label class="form-check-label ml-5" for="flexCheckDefault1">
                                         Scooty
                                     </label>
-                                </div>                           
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">                        
+                        <div class="col-md-3" *ngIf="roledata==1">
+                            <div class="form-group">
+                                <label for="modelName">Showroom Name</label>
+                                <select class="form-select" formControlName="showRoomId">
+                                    <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Place</label>
-                                <textarea rows="2" class="form-control" formControlName="place"></textarea>
-                            </div>                        
-                    </div>
-                    <div class="col-md-4">                        
-                        <div class="form-group">
-                            <label for="modelName">Remarks</label>
-                            <textarea rows="2" class="form-control" formControlName="remarks"></textarea>
+                                <textarea rows="1" class="form-control" formControlName="place"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="modelName">Remarks</label>
+                                <textarea rows="1" class="form-control" formControlName="remarks"></textarea>
+                            </div>
                         </div>                        
-                </div>
-                    
-                        <div class="card-body text-center pt-1">
+                        <div class="col-md-3 text-center mt-3 pt-1">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
-                    
-            </form>
-        </div>
+
+                </form>
+            </div>
         </div>
     </div>
 </div>

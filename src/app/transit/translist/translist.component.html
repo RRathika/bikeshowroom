@@ -1,16 +1,48 @@
+<div class="col-md-3" *ngIf="roleid==1">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Showroom</label>
+        <select class="form-select" (change)="showroomchange($event)">
+            <option>Select</option>
+            <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
+        </select>
+    </div>
+</div>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row"> 
             <div class="card card-primary">
                 <div class="card-header bg-primary">
                     <h3 class="card-title">Transit Details</h3>
                     <button class="btn btn-success float-end" (click)="add()">Add Transit</button>
                 </div>
                 <div class="col-md-12">
-                    <div class="card-body">
-                        
+                    <div class="row pt-1">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Month</label>
+                                <select class="form-select">
+                                    <option>Jan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">From Date</label>
+                                <input type="date" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">To Date</label>
+                                <input type="date" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="form-group m-4 pt-1">
+                                <button class="btn btn-success">Search</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <div class="">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr class="text-center">
@@ -18,7 +50,7 @@
                                     <th>Invoice No</th>
                                     <th>Date</th>
                                     <th>Trasit Type</th>
-                                    <th>Stock Type</th>
+                                    <!-- <th>Stock Type</th> -->
                                     <th>Supplier</th>
                                     <th>Transport Name</th>
                                     <th>Truck No</th>
@@ -32,13 +64,16 @@
                                     <td>{{data.invoiceNo}}</td>
                                     <td>{{data.invoiceDate|date}}</td>
                                     <td>{{data.transitType}}</td>
-                                    <td>{{data.stockType}}</td>
+                                    <!-- <td>{{data.stockType}}</td> -->
                                     <td>{{data.supplier}}</td>
                                     <td>{{data.transportName}}</td>
                                     <td>{{data.truckNo}}</td>
-                                    <td><i class="fas fa-eye" style="color: blue;"  data-toggle="modal" data-target="#exampleModal"
-                                            data-whatever="@mdo" (click)="viewbyid(data.transitId)"></i></td>
-                                    <td><i class="fa fa-arrow-right" data-toggle="tooltip" data-placement="top" title="Move to purchase" (click)="movepurchase(data.transitId)" aria-hidden="true"></i></td>
+                                    <td><i class="fas fa-eye" style="color: blue;" data-toggle="modal"
+                                            data-target="#exampleModal" data-whatever="@mdo"
+                                            (click)="viewbyid(data.transitId)"></i></td>
+                                    <td><i class="fa fa-arrow-right" data-toggle="tooltip" data-placement="top"
+                                            title="Move to purchase" (click)="movepurchase(data.transitId)"
+                                            aria-hidden="true"></i></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -84,6 +119,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+       
     </div>
 </div>

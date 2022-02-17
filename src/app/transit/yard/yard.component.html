@@ -16,8 +16,9 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Show room Name</label> 
-                  <select class="form-select" formControlName="showroomNameId">
-                      <option>Show Room</option>
+                  <select class="form-select" formControlName="showRoomId">
+                      <option>Select Showroom</option>
+                      <option *ngFor="let item of showroomdata" [value]="item.showRoomId">{{item.showRoomName}}</option>
                   </select>
                 </div>
              </div>
@@ -51,7 +52,6 @@
                 <tr class="text-center">
                   <th>SI.NO</th>
                   <th>Yard Name</th>
-                  <th>Show Room Name</th>
                   <th>Address</th>                
                   <th>Mobile No</th>
                   <th>Edit</th>
@@ -59,14 +59,14 @@
                 </tr>
               </thead>
               <tbody class="text-center">
-                <!-- <tr *ngFor="let data of showdata; let i=index;">
+                <tr *ngFor="let data of yarddata; let i=index;">
                   <td>{{i+1}}</td>
-                  <td>{{data.showRoomName}}</td>
+                  <td>{{data.yardName}}</td>
                   <td>{{data.address}}</td>
                   <td>{{data.mobileNo}}</td>                
-                  <td><i class="fas fa-edit" style="color: blue;"></i></td>
-                  <td><i class="fa fa-trash"  style="color: red;" aria-hidden="true"></i></td>
-                </tr>               -->
+                  <td><i class="fas fa-edit" style="color: blue;" (click)="edityard(data.yardId)"></i></td>
+                  <td><i class="fa fa-trash"  style="color: red;" aria-hidden="true" (click)="delete(data.yardId)"></i></td>
+                </tr>              
               </tbody>
             </table>
           </div>
