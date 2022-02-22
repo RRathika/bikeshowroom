@@ -32,13 +32,28 @@
                                                 <option value="1">Within State</option>
                                                 <option value="2">Without State</option>
                                             </select>
-                                            </div>	                                           
+                                            </div>
+											                                         
 										</div>
 										<div class="form-group row">
-                                            <div class="col-md-6">
+											<div class="col-md-6" *ngIf="roledata==1">
+												<div class="form-group">
+													<label for="exampleInputEmail1">ShowRoom Name</label>
+													<select class="form-select" aria-label="Default select example" formControlName="showRoomId" (change)="changeshowroom($event)">
+														<option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
+													</select>											
+												</div>
+											</div>
+											<div class="col-md-6">
+												<label for="exampleInputEmail1">Yard Name</label>
+												<select class="form-select" formControlName="yardId">
+													<option *ngFor="let item of yardname" [value]="item.yardId">{{item.yardName}}</option>
+												</select>
+											</div>	  
+											<div class="col-md-6">
 												<label for="exampleInputEmail1">Pay Mode</label>
                                                 <input type="file" #myInput  multiple="false" (change)="onFileChange($event)" />
-                                            </div>								
+                                            </div>					
 										</div>
                                 </div>
                                 <div class="col-md-6">

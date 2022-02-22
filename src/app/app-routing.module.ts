@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthguardGuard } from './authguard.guard';
 import { AdvancebookComponent } from './common-ui/advancebook/advancebook.component';
 import { DashboardComponent } from './common-ui/dashboard/dashboard.component';
 import { EnquirylistComponent } from './common-ui/enquiry/enquirylist/enquirylist.component';
@@ -8,6 +9,7 @@ import { HomeComponent } from './common-ui/home/home.component';
 import { AddvehiclesalesComponent } from './common-ui/vehiclesales/addvehiclesales/addvehiclesales.component';
 import { BikemodelComponent } from './common-ui/vehiclesales/bikemodel/bikemodel.component';
 import { ColorComponent } from './common-ui/vehiclesales/color/color.component';
+import { InvoiceComponent } from './common-ui/vehiclesales/invoice/invoice.component';
 import { VariantComponent } from './common-ui/vehiclesales/variant/variant.component';
 import { VehiclepurchaseComponent } from './common-ui/vehiclesales/vehiclepurchase/vehiclepurchase.component';
 import { VehiclepurchaselistComponent } from './common-ui/vehiclesales/vehiclepurchaselist/vehiclepurchaselist.component';
@@ -30,7 +32,7 @@ const routes: Routes = [
   loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
 },
 
-{path:'dashboard',component:DashboardComponent,
+{path:'dashboard',component:DashboardComponent, canActivate :[AuthguardGuard],
 children:[
 {path:'',component:HomeComponent},
 {path:'color', component:ColorComponent},
@@ -52,7 +54,8 @@ children:[
 {path:'register',component:RegisterComponent},
 {path:'vehiclestock',component:VehiclestockComponent},
 {path:'stocktype',component:StocktransferComponent},
-{path:'yard',component:YardComponent}]}
+{path:'yard',component:YardComponent},
+{path:'invoice',component:InvoiceComponent}]}
 ];
 
 @NgModule({

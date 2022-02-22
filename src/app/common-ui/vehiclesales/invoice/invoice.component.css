@@ -1,0 +1,27 @@
+.card-style{
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+    margin-bottom: 10px;
+    margin-top: 50px;
+    width: 70%;
+   
+}
+.invoice{
+    background-color: rgb(231, 231, 231);
+}
+table {
+width: 100%;
+}
+.text-right{
+    position: relative;
+  float: right;
+  width:30%;
+  margin: 0 auto;
+}
+.table-style{
+    width:50%;
+    position: relative;
+    float: right;
+    
+    margin: 0 auto;
+}

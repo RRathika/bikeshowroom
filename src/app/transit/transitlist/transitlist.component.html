@@ -65,9 +65,17 @@
 									<div class="col-md-3" *ngIf="roledata==1">
 										<div class="form-group">
 											<label for="exampleInputEmail1">ShowRoom Name</label>
-											<select class="form-select" aria-label="Default select example" formControlName="showRoomId">
+											<select class="form-select" aria-label="Default select example" formControlName="showRoomId" (change)="changeshowroom($event)">
 												<option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
 											</select>											
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="exampleInputEmail1">Yard Name</label>
+											<select class="form-select" aria-label="Default select example" formControlName="yardId">
+												<option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}</option>
+											</select>
 										</div>
 									</div>									
 									<div class="col-md-3">

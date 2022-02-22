@@ -5,170 +5,601 @@ import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { ToastServiceService } from 'src/app/toast-service.service';
 import { YamahaserviceService } from 'src/app/yamahaservice.service';
-
 @Component({
   selector: 'app-addvehiclesales',
   templateUrl: './addvehiclesales.component.html',
   styleUrls: ['./addvehiclesales.component.css'],
-  providers: [DatePipe]  
+  providers: [DatePipe]
 })
 export class AddvehiclesalesComponent implements OnInit {
   // permanentaddressForm:any;
-  isdisable= false;
-  myDate :any;
-  bookdata:any;
-  username:any;
-  modelname:any;
-  districtname:any;
-  taluk1:any;
-  qualification:any;
-  occupation:any;
-  year:any;
-  constructor(private service:YamahaserviceService,private route:Router,private formBuilder:FormBuilder,private datePipe: DatePipe,public toastService: ToastServiceService) {
+  isShownHome: boolean = true ;
+  isShownProfile: boolean = false;
+  isShownContact: boolean = false;
+  iscredit: boolean = false;
+  isFinance: boolean = false;
+  isCashinhand: boolean = false;
+  iscard: boolean = false;
+  ischeque: boolean = false;
+  isUPI: boolean = false;
+  isDD: boolean = false;
+  isShownCash: boolean = false;
+  isdisable = false;
+  myDate: any;
+  bookdata: any;
+  username: any;
+  modelname: any;
+  districtname: any;
+  taluk1: any;
+  qualification: any;
+  occupation: any;
+  year: any;
+  show: any;
+  role: any;
+  showroomname: any;
+  yardname: any;
+  varientcode: any;
+  colorcode: any;
+  modelcode: any;
+  selectedObject: any;
+  totaldata: any;
+  finalamount: any;
+  patchdata: any;
+  colordetails: any;
+  finance:any;
+  invoicevalue:any;
+  now: any = Date.now();
+  format: string = "medium";
+  disableTextbox:boolean=false;
+  advanceamount=0;
+  constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
-   }
+  }
+ 
   presentaddressForm: FormGroup = this.formBuilder.group({
-    doorNo:new FormControl('',[Validators.required]),
-    areaName:new FormControl('',[Validators.required]),
-    city:new FormControl('',[Validators.required]),
-    district:new FormControl('',[Validators.required]),
-    taluk:new FormControl('',[Validators.required]),
-    pinCode:new FormControl('',[Validators.required])
+    doorNo: new FormControl('', [Validators.required]),
+    areaName: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    district: new FormControl('', [Validators.required]),
+    taluk: new FormControl('', [Validators.required]),
+    pinCode: new FormControl('', [Validators.required])
   });
   permanentaddressForm: FormGroup = this.formBuilder.group({
-    doorNo:new FormControl('',[Validators.required]),
-    areaName:new FormControl('',[Validators.required]),
-    city:new FormControl('',[Validators.required]),
-    district:new FormControl('',[Validators.required]),
-    taluk:new FormControl('',[Validators.required]),
-    pinCode:new FormControl('',[Validators.required])
+    doorNo: new FormControl('', [Validators.required]),
+    areaName: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    district: new FormControl('', [Validators.required]),
+    taluk: new FormControl('', [Validators.required]),
+    pinCode: new FormControl('', [Validators.required])
   });
-  customerDetailForm:FormGroup= this.formBuilder.group({
-    invoiceNo:new FormControl('',[]),
-    invoiceDate: new FormControl('',[]),
-    receiptType: new FormControl('',[]),
-    receiptNos: new FormControl('',[]),
-    date: new FormControl('',[]),
-    firstName: new FormControl('',[]), 
-    lastName: new FormControl('',[]), 
-    gender: new FormControl('',[]),
-    dob: new FormControl('',[]),
-    fatherName:new FormControl('',[]),
-    gstNo: new FormControl('',[]), 
+  customerDetailForm: FormGroup = this.formBuilder.group({
+    invoiceNo: new FormControl('', []),
+    invoiceDate: new FormControl('', []),
+    receiptType: new FormControl('', []),
+    receiptNos: new FormControl('', []),
+    date: new FormControl('', []),
+    firstName: new FormControl('', []),
+    lastName: new FormControl('', []),
+    gender: new FormControl('', []),
+    dob: new FormControl('', []),
+    fatherName: new FormControl('', []),
+    gstNo: new FormControl('', []),
     presentAddress: new FormControl(),
     permanentAddress: new FormControl(),
-    phoneOff: new FormControl('',[]), 
-    residence: new FormControl('',[]), 
-    mobileNo: new FormControl('',[]),
-    eMail: new FormControl('',[]),
-    addressProof: new FormControl('',[]), 
-    aadharNo: new FormControl('',[]),
-    qualification: new FormControl('',[]), 
-    occupation: new FormControl('',[]),
-    maritalStatus: new FormControl('',[]), 
-    nomineeName: new FormControl('',[]),
-    nomineeAge: new FormControl('',[]),
-    nomineeGender: new FormControl('',[]), 
-    relation: new FormControl('',[])  
+    phoneOff: new FormControl('', []),
+    residence: new FormControl('', []),
+    mobileNo: new FormControl('', []),
+    eMail: new FormControl('', []),
+    addressProof: new FormControl('', []),
+    aadharNo: new FormControl('', []),
+    qualification: new FormControl('', []),
+    occupation: new FormControl('', []),
+    maritalStatus: new FormControl('', []),
+    nomineeName: new FormControl('', []),
+    nomineeAge: new FormControl('', []),
+    nomineeGender: new FormControl('', []),
+    relation: new FormControl('', [])
   })
-  
+  vehicleDetailsForm: FormGroup = this.formBuilder.group({
+    showRoomId: new FormControl('', []),
+    yardId: new FormControl('', []),
+    modelId: new FormControl('', []),
+    chassisNo: new FormControl('', []),
+    engineNo: new FormControl('', []),
+    colorId: new FormControl('', []),
+    keyNo: new FormControl('', []),
+    month: new FormControl('', []),
+    year: new FormControl('', []),
+    vehicleSaleType: new FormControl('', []),
+    invoiceAmount: new FormControl('', []),
+    vehicleCost: new FormControl('', []),
+    discountAmount: 0,
+    tax: new FormControl('', []),
+    rounded: new FormControl('', []),
+    registerAt: new FormControl('', []),
+    finaltotal: new FormControl('', []),
+    total: new FormControl('', []),
+    igst: new FormControl('', []),
+    cgst: new FormControl('', []),
+    sgst: new FormControl('', []),
+    lifetax: new FormControl('', []),
+    insurance: new FormControl('', []),
+    taxtotal: new FormControl('', [])
+  })
+  payDetails: FormGroup = this.formBuilder.group({   
+      transactionTypeId: 0,
+      vehicleCost: 0,
+      otherAmount: 0,
+      totalAmount: 0,
+      bookrecamt:0,
+      financeamt:0,
+      creditamt:0,
+      cashbank:0,
+      excessamt:0,
+      balanceamt: 0,
+      createVehicleSalePaymentDetailDTO: new FormControl(),
+      createVehicleSaleCreditDetailDTO:new FormControl(),
+      createVehicleSaleFinanceDetailDTO: new FormControl()
+    })
+   
+    transtypecash:FormGroup=this.formBuilder.group({
+        handAmount: 0,
+        currentDate: new FormControl('', []),
+        cardAmount: 0,
+        cardDetails: new FormControl('', []),
+        chequeAmount: 0,
+        chequeDetails: new FormControl('', []),
+        chequeDate: new FormControl('', []),
+        chequeNo: new FormControl('', []),
+        ddAmount: 0,
+        ddDetails: new FormControl('', []),
+        ddDate: new FormControl('', []),
+        ddNo: new FormControl('', []),
+        upiAmount: 0,
+        upiNo: new FormControl('', []),
+        status: 0
+    })
+    creditForm:FormGroup=this.formBuilder.group({
+      creditAmount: 0,
+      name: new FormControl('', []),
+      mobileNo: new FormControl('', []),
+      address: new FormControl('', []),
+      status: 0
+    })
+    financeForm:FormGroup=this.formBuilder.group({
+      financeId: 0,
+      downPayment: 0,
+      status: 0
+    })
+    finalform:FormGroup=this.formBuilder.group({
+      createVehicleCustomerDetailsDTO:new FormControl(),
+      createVehicleSalesDetailDTO:new FormControl(),
+      createVehicleSaleTransactionDetailDTO:new FormControl()
+    })
   ngOnInit(): void {
-    this.customerDetailForm.controls['receiptNos'].disable();
-    this.customerDetailForm.controls['date'].disable();
-    this.isdisable=true;
+    this.disable();   
     this.loadadvancebook();
     this.loadname();
     this.loadmodelname();
     this.district();
     this.loadqualification();
-    this.loadoccupation();
-    this.getyear();
+    this.loadoccupation();    
+    this.loadinvoice();    
+    this.show = localStorage.getItem('ShowRoomId');
+    this.role = localStorage.getItem('RoleId');   
   }
-  loadqualification(){
-    this.service.getqualification().subscribe(data=>{
-      this.qualification=data;
-    })
-  }
-  loadoccupation(){
-    this.service.getoccupation().subscribe(data=>{
-      this.occupation=data;
-    })
-  }
-  getyear(){
-    this.service.getyear().subscribe(data=>{
-      this.year=data;
-    })
-  }
-  district(){
-    this.service.getdistrict().subscribe(data=>{
-      this.districtname=data;
-    })
-  }
-  districttaluk(e:any)
-  {
-    let name=e.target.value;
-    this.service.gettaluk(name).subscribe((data:any)=>{
-      this.taluk1=data
-    })
-  }
-  loadadvancebook(){
-    let bookid=localStorage.getItem('ShowRoomId')
-    this.service.getadvancebook(bookid).subscribe(data=>{
-     this.bookdata=data;   
-    })
-  }
-  loadname(){
-    this.service.getadvancename().subscribe(data=>{
-      this.username=data;
-    })
-  }
-  loadmodelname(){
-    this.service.getmodelname().subscribe(data=>{
-      this.modelname=data;
-    })
-  }
-  apply(id:any,date1:any){
-    let date2=date1.split('T');
-    console.log(date2[0]);
-    
-    this.customerDetailForm.patchValue({receiptNos:id,date:date2[0]});
-  }
-  shift(){
-    this.permanentaddressForm.patchValue(this.presentaddressForm.value);
-  }
-  onChange(e:any){
-  
-  if(e.value==1)
-  {
-    this.customerDetailForm.controls['receiptNos'].enable();
-    this.customerDetailForm.controls['date'].enable();
-    this.isdisable=false;
-  }
-  else
-  {
+  disable(){
     this.customerDetailForm.controls['receiptNos'].disable();
     this.customerDetailForm.controls['date'].disable();
+    this.customerDetailForm.controls['invoiceNo'].disable();
     this.isdisable=true;
-  }  
   }
-  onKeyUp(x:any) { // appending the updated value to the variable
-    let data=x.target.value;    
-   let final = data.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter((s: string | any[]) => s.length > 0).join("-");
-  //  console.log(final);
-   this.customerDetailForm.patchValue({aadharNo:final});
+  
+  loadinvoice(){
+   
+    this.service.getinvoice().subscribe((data:any)=>{
+      this.invoicevalue=data;
+      console.log(this.invoicevalue);
+      this.customerDetailForm.patchValue({
+        invoiceNo:this.invoicevalue
+      })
+    })
   }
-  submit(){
-    this.customerDetailForm.patchValue({presentAddress:this.presentaddressForm.value,permanentAddress:this.permanentaddressForm.value})
-  if(this.customerDetailForm.valid){
-    this.service.savecustomerDetails(this.customerDetailForm.value).subscribe((data:any)=>{
-    if(data.statusCode==200){      
-      this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
-      //this.route.navigateByUrl('/dashboard/enquirylist');
+  loadfinance(){
+    this.service.getfinance().subscribe(data=>{
+      this.finance=data;      
+    })
+  }
+  color() {
+    this.service.getcolor().subscribe(data => {
+      this.colordetails = data;
+    })
+  }
+  model() {
+    this.service.getbikemodel().subscribe(data => {
+      this.modelcode = data;
+    })
+  }
+  showroom() {
+    this.service.getshowroom().subscribe(data => {
+      this.showroomname = data;
+    })
+  }
+  yard() {
+    this.service.getyard().subscribe(data => {
+      this.yardname = data;
+    })
+  }
+  selectyard(e: any) {
+    let name = e.target.value;
+    this.service.showroombyyard(name).subscribe(data => {
+      this.yardname = data;
+    })
+  }
+  checkboxvalues: any = [
+    {
+      value: "CashInhand",
+      check: 1
+    },
+    {
+      value: "Card",
+      check: 2
+    },
+    {
+      value: "Cheque",
+      check: 3
+    },
+    {
+      value: "UPI",
+      check: 4
+    },
+    {
+      value: "DD",
+      check: 5
+    }
+  ];
+  loadqualification() {
+    this.service.getqualification().subscribe(data => {
+      this.qualification = data;
+    })
+  }
+  modelnamechange(e: any) {
+    debugger
+    let model = e.target.value;
+    this.vehicleDetailsForm.patchValue({
+      modelId: model
+    })
+    this.service.selectmodel(model).subscribe(data => {
+      if (data.statusCode == 200) {
+        this.colorcode = [];
+        this.varientcode = [];
+        this.toastService.show('Dont have related color', { classname: 'bg-danger text-light', delay: 10000 });
       }
-      else{
-        this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 15000});
-      } 
-   })    
+      else {
+        this.colorcode = data;
+      }
+    })
   }
+  colornamechange(e: any) {
+    let model = e.target.value;
+    this.vehicleDetailsForm.patchValue({
+      colorId: model
+    })
+    this.service.selectcolor(model).subscribe(data => {
+      if (data.statusCode == 200) {
+        this.varientcode = [];
+        this.toastService.show('Dont have related variant', { classname: 'bg-danger text-light', delay: 10000 });
+      }
+      else {
+        this.varientcode = data;
+      }
+    })
+  }
+  variantnamechange(e: any) {
+    let variant = e.target.value;
+    let show = localStorage.getItem('ShowRoomId');
+    let role = localStorage.getItem('RoleId');
+    this.service.vartantbydata(variant, show, role).subscribe(data => {
+      this.totaldata = data;
+      for (let i = 0; i <= this.totaldata.length; i++) {
+        this.finalamount = Math.round(this.totaldata[i].total);
+        this.totaldata[i].netamount = this.finalamount;
+        console.log(this.totaldata);
+      }
+
+    })
+  }
+  gstcalculation(e: any) {
+    
+    let data = e.target.value;
+    let invoice = (data / 100) * (this.vehicleDetailsForm.value['vehicleCost']);
+    let invoiceamount = this.vehicleDetailsForm.value['vehicleCost'] + invoice;
+    let final = invoiceamount + this.vehicleDetailsForm.value['taxtotal']
+    this.vehicleDetailsForm.patchValue({
+      tax: invoice,
+      invoiceAmount: invoiceamount,
+      total: final,
+      finaltotal: final
+    })
+
+  }
+  applyvehicle(chass: any, cg: any, sg: any, ig: any, engine: any, ins: any, invoice: any, key: any, life: any, net: any, total: any) {
+    let totalfortable = life + ins;
+    //  this.patchdata=this.totaldata; 
+    //  console.log(this.patchdata);
+    this.vehicleDetailsForm.patchValue({
+      chassisNo: chass,
+      engineNo: engine,
+      keyNo: key,
+      vehicleCost: invoice,
+      taxtotal: totalfortable,
+      rounded: net,
+      cgst: cg,
+      sgst: sg,
+      igst: ig,
+      insurance: ins,
+      lifetax: life
+    })
+
+  }
+  loadoccupation() {
+    this.service.getoccupation().subscribe(data => {
+      this.occupation = data;
+    })
+  }
+  getyear() {
+    this.service.getyear().subscribe(data => {
+      this.year = data;
+    })
+  }
+  district() {
+    this.service.getdistrict().subscribe(data => {
+      this.districtname = data;
+    })
+  }
+  districttaluk(e: any) {
+    let name = e.target.value;
+    this.service.gettaluk(name).subscribe((data: any) => {
+      this.taluk1 = data
+    })
+  }
+  loadadvancebook() {
+    let bookid = localStorage.getItem('ShowRoomId')
+    this.service.getadvancebook(bookid).subscribe(data => {
+      this.bookdata = data;
+    })
+  }
+  loadname() {
+    this.service.getadvancename().subscribe(data => {
+      this.username = data;
+    })
+  }
+  loadmodelname() {
+    this.service.getmodelname().subscribe(data => {
+      this.modelname = data;
+    })
+  }
+  apply(id: any, date1: any,advance:any) {
+    let date2 = date1.split('T');
+    this.advanceamount=advance;
+    console.log(date2[0]);
+    this.customerDetailForm.patchValue({ receiptNos: id, date: date2[0] });
+  }
+  shift() {
+    this.permanentaddressForm.patchValue(this.presentaddressForm.value);
+  }
+  onChange(e: any) {
+
+    if (e.value == 1) {
+      this.customerDetailForm.controls['receiptNos'].enable();
+      this.customerDetailForm.controls['date'].enable();
+      this.isdisable = false;
+    }
+    else {
+      this.customerDetailForm.controls['receiptNos'].disable();
+      this.customerDetailForm.controls['date'].disable();
+      this.isdisable = true;
+    }
+  }
+  onKeyUp(x: any) { // appending the updated value to the variable
+    let data = x.target.value;
+    let final = data.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter((s: string | any[]) => s.length > 0).join("-");
+    //  console.log(final);
+    this.customerDetailForm.patchValue({ aadharNo: final });
+  }
+  submit() {
+    this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
+    // console.log(this.customerDetailForm.value);
+    
+    this.isShownProfile = ! this.isShownProfile;
+    this.isShownHome = false;
+    this.isShownContact = false;
+    this.showroom();
+    this.yard();
+    this.model();
+    this.color();
+    this.loadfinance();
+    this.getyear();
+  }
+  vehicleform() {
+    // console.log(this.vehicleDetailsForm.value);
+    this.isShownHome =false;
+    this.isShownProfile = false;
+    this.isShownContact =  ! this.isShownHome;
+  }
+  toggleShowProfile(){
+    this.isShownProfile = ! this.isShownProfile;
+    this.isShownHome = false;
+    this.isShownContact = false;
+  }
+  toggleShowHome(){
+    this.isShownHome = ! this.isShownHome;
+    this.isShownProfile = false;
+    this.isShownContact = false;
+  }
+  loadfield(){
+    let vehiclecost1=this.vehicleDetailsForm.value['vehicleCost'];
+    let otheramount1=this.vehicleDetailsForm.value['taxtotal'];
+    let net=this.vehicleDetailsForm.value['total'];
+    let bookamount=this.advanceamount;
+    this.payDetails.patchValue({
+      vehicleCost:vehiclecost1,
+      otherAmount:otheramount1,
+      totalAmount:net,
+      bookrecamt:bookamount
+    })
+  }
+  toggleShowCash(value: any) {
+    console.log(value.target.value);
+    this.loadfield();
+    switch (value.target.value) {
+      case '1':
+        this.isShownCash = !this.isShownCash;
+        this.isFinance = false;
+        this.iscredit = false;
+        break;
+
+      case "2":
+        this.iscredit = !this.iscredit;
+        this.isShownCash = false;
+        this.isCashinhand = false;
+        this.iscard = false;
+        this.ischeque = false;
+        this.isUPI = false;
+        this.isDD = false;
+        this.isFinance = false;
+        break;
+      default:
+        console.log("No such day exists!");
+        break;
+      case "3":
+        this.isFinance = !this.isFinance;
+        this.isShownCash = false;
+        this.isCashinhand = false;
+        this.iscard = false;
+        this.ischeque = false;
+        this.isUPI = false;
+        this.isDD = false;
+        this.iscredit = false;
+        break;
+    }
+   if(value.target.value==1)
+   {
+    let bookamount=this.advanceamount;
+    let net=this.vehicleDetailsForm.value['total'];
+    let cash=this.transtypecash.value['handAmount'];
+    let card=this.transtypecash.value['cardAmount'];
+    let cheque=this.transtypecash.value['chequeAmount'];
+    let dd=this.transtypecash.value['ddAmount'];
+    let upi=this.transtypecash.value['upiAmount'];
+    let amount=cash+card+cheque+dd+upi
+    let balance=net-(bookamount+amount)
+    this.payDetails.patchValue({
+      cashbank:amount,
+      balanceamt:balance
+    })
+   }
+   if(value.target.value==2)
+   {
+    let amount=this.creditForm.value['creditAmount'];
+    let bookamount=this.advanceamount;
+    let net=this.vehicleDetailsForm.value['total'];
+    let balance=net-(bookamount+amount)
+    this.payDetails.patchValue({
+      creditamt:amount,
+      balanceamt:balance
+    })
+   }
+   if(value.target.value==3)
+   {
+    let amount=this.finalform.value['downPayment'];
+    let bookamount=this.advanceamount;
+    let net=this.vehicleDetailsForm.value['total'];
+    let balance=net-(bookamount+amount)
+    this.payDetails.patchValue({
+      financeamt:amount,
+      balanceamt:balance
+    })
+   }
+
+  }
+
+  showchecked(checked: any) {
+    console.log(checked.target.value);
+    let me = checked.target.value
+
+    var x = me;
+    var y: number = +x;
+    console.log(y);
+
+    switch (y) {
+      case 1:
+        this.isCashinhand = !this.isCashinhand;
+        break;
+      case 2:
+        this.iscard = !this.iscard;
+        break;
+      case 3:
+        this.ischeque = !this.ischeque;
+        break;
+      case 4:
+        this.isUPI = !this.isUPI;
+        break;
+      case 5:
+        this.isDD = !this.isDD;
+        break; default:
+        console.log("No such day exists!");
+        break;
+    }
+    let bookamount=this.advanceamount;
+    let net=this.vehicleDetailsForm.value['total'];
+    let cash=this.transtypecash.value['handAmount'];
+    let card=this.transtypecash.value['cardAmount'];
+    let cheque=this.transtypecash.value['chequeAmount'];
+    let dd=this.transtypecash.value['ddAmount'];
+    let upi=this.transtypecash.value['upiAmount'];
+    let amount=cash+card+cheque+dd+upi
+    let balance=net-(bookamount+amount)
+    this.payDetails.patchValue({
+      cashbank:amount,
+      balanceamt:balance
+    })
+    
+  }
+  finalsubmit() {   
+    this.myDate=this.datePipe.transform(this.now, 'yyyy-MM-dd');
+    this.transtypecash.patchValue({
+      currentDate:this.myDate,
+      chequeDate:this.myDate,
+      ddDate:this.myDate
+    })  
+    this.payDetails.patchValue({
+      createVehicleSalePaymentDetailDTO:this.transtypecash.value,createVehicleSaleCreditDetailDTO:this.creditForm.value,createVehicleSaleFinanceDetailDTO:this.financeForm.value
+    })
+    // console.log(this.payDetails.value);
+    this.finalform.patchValue({
+      createVehicleCustomerDetailsDTO:this.customerDetailForm.value,createVehicleSalesDetailDTO:this.vehicleDetailsForm.value,createVehicleSaleTransactionDetailDTO:this.payDetails.value
+    })
+    this.print()  
+    // console.log(this.finalform);
+    // this.service.salessave(this.finalform.value).subscribe((data:any)=>{
+    //   if(data.statusCode==200)
+    //   {
+    //     this.toastService.show(data.message,{classname:'bg-success text-light', delay: 10000});
+              
+    //     this.finalform.reset();
+    //     this.isShownHome = ! this.isShownHome;
+    //     this.isShownProfile = false;
+    //     this.isShownContact = false;
+    //   }
+    //   else{
+    //     this.toastService.show(data.message,{classname:'bg-danger text-light', delay: 10000})
+    //   }
+    // })
+    
+  }
+  print(){
+    this.service.printvalue.next(this.finalform.value);
+    this.route.navigateByUrl('/dashboard/invoice');
   }
 }

@@ -18,6 +18,7 @@ export class YamahaserviceService {
   public user=new BehaviorSubject<any>('');
   public showroom=new BehaviorSubject<any>('');
   public yard = new BehaviorSubject<any>('');
+  public printvalue=new BehaviorSubject<any>('')
   getbikemodel():Observable<any>{return this.httpclient.get(this.url+'BikeModel/GetBikeModels');}
   savebikemodel(data:any):Observable<any>{return this.httpclient.post(this.url+'BikeModel/SaveBikeModel',data);}
   updatebikemodel(data:any):Observable<any>{return this.httpclient.put(this.url+'BikeModel/UpdateBikeModel',data);}
@@ -48,7 +49,7 @@ export class YamahaserviceService {
   updaterolemaster(data:any):Observable<any>{return this.httpclient.put(this.url+'RoleMaster/UpdateRoleName',data);}
   deleterolemaster(id:any):Observable<any>{return this.httpclient.delete(this.url+`RoleMaster/DeleteRoleName?RoleId=${id}`);}
   savetransit(data:any):Observable<any>{return this.httpclient.post(this.url+'Transit/SaveTransit',data);}
-  gettransit(name:any,id:any):Observable<any>{return this.httpclient.get(this.url+`Transit/GetTransit?RoleId=${id}&ShowRoomId=${name}`); }
+  gettransit(show:any,yard:any,mon:any,from:any,to:any):Observable<any>{return this.httpclient.get(this.url+`Transit/GetTransit?ShowRoomId=${show}&YardId=${yard}&Month=${mon}&FromDate=${from}&ToDate=${to}`); }
   getbyidtransit(id:any):Observable<any>{return this.httpclient.get(this.url+`Transit/GetTransitDetailsById?TransitId=${id}`);}
   saveshowroom(data:any):Observable<any>{return this.httpclient.post(this.url+'ShowRoom/SaveShowRoom',data);}
   getshowroom():Observable<any>{return this.httpclient.get(this.url+'ShowRoom/GetShowRoom');}
@@ -68,7 +69,7 @@ export class YamahaserviceService {
   getcolorname(name:any):Observable<any>{ return this.httpclient.get(this.url+ `BikeColor/GetBikeColorNameByColorCode?ModelCode=${name}`,{responseType:'text'});}
   movetopurchase(id:any):Observable<any>{return this.httpclient.get(this.url+`Transit/GetTransitandTransitDetailsByTransitId?TransitId=${id}`);}
   savepurchase(data:any):Observable<any>{return this.httpclient.post(this.url+`VehiclePurchase/SaveVehiclePurchase`,data);}
-  getvehiclepurchase():Observable<any>{return this.httpclient.get(this.url+`VehiclePurchase/GetVehiclePurchase`);} 
+  getvehiclepurchase(show:any,yard:any,mon:any,from:any,to:any):Observable<any>{return this.httpclient.get(this.url+`VehiclePurchase/GetVehiclePurchase?ShowRoomId=${show}&YardId=${yard}&Month=${mon}&FromDate=${from}&ToDate=${to}`);} 
   getvehiclepurchasebyid(id:any):Observable<any>{return this.httpclient.get(this.url+`VehiclePurchase/GetVehiclePurchaseDetailsByVehiclePurchaseId?VehiclePurchaseId=${id}`);}
   listvehiclestock(showroom:any,modelname:any):Observable<any>{ return this.httpclient.get(this.url+`VehicleStock/GetVehicleStock?ShowRoomId=${showroom}&VehicleModelId=${modelname}`);}
   savestocktransfer(data:any):Observable<any>{return this.httpclient.post(this.url+'StockTransfer/SaveStockTransfer',data);}
@@ -76,8 +77,8 @@ export class YamahaserviceService {
   getuserbyid(id:any):Observable<any>{return this.httpclient.get(this.url+`UserRegistration/GetUserDetailsById?UserCode=${id}`);}
   deleteuserdata(id:any):Observable<any>{return this.httpclient.delete(this.url+`UserRegistration/DeleteUserDetails?UserCode=${id}`);}
   updateuserdetail(data:any):Observable<any>{return this.httpclient.put(this.url+'UserRegistration/UpdateUserDetails',data);}
-  getchassisno():Observable<any>{return this.httpclient.get(this.url+'VehicleStock/GetChassisNo');}
-  getengineno():Observable<any>{return this.httpclient.get(this.url+'VehicleStock/GetEngineNo');}
+  getchassisno(role:any,show:any):Observable<any>{return this.httpclient.get(this.url+`VehicleStock/GetChassisNo?RoleId=${role}&ShowRoomId=${show}&YardId=0`);}
+  getengineno(role:any,show:any):Observable<any>{return this.httpclient.get(this.url+`VehicleStock/GetEngineNo?RoleId=${role}&ShowRoomId=${show}&YardId=0`);}
   selectchassisno(name:any):Observable<any>{return this.httpclient.get(this.url+ `VehicleStock/GetVehicleStockByChassisNo?ChassisNo=${name}`);}
   selectengineno(id:any):Observable<any>{return this.httpclient.get(this.url+`VehicleStock/GetVehicleStockByEngineNo?EngineNo=${id}`);}
   selectmodel(id:any):Observable<any>{return this.httpclient.get(this.url+`BikeColor/GetBikeColorDetailsByModelId?ModelId=${id}`);}
@@ -96,4 +97,9 @@ export class YamahaserviceService {
   deleteshowroom(id:any):Observable<any>{return this.httpclient.delete(this.url+`ShowRoom/DeleteShowRoom?ShowRoomId=${id}`);}
   updateyard(data:any):Observable<any>{return this.httpclient.put(this.url+'Yard/UpdateYard',data);}
   deleteyard(id:any):Observable<any>{return this.httpclient.delete(this.url+`Yard/DeleteYard?YardId=${id}`);}
+  showroombyyard(id:any):Observable<any>{return this.httpclient.get(this.url+`Yard/GetYardByShowRoomId?ShowRoomId=${id}`);}
+  vartantbydata(variant:any,show:any,role:any):Observable<any>{return this.httpclient.get(this.url+`VehicleStock/GetVehicleDetailsByVariantId?VariantId=${variant}&RoleId=${role}&ShowRoomId=${show}&YardId=0`);}
+  getfinance():Observable<any>{return this.httpclient.get(this.url+'FinanceDetail/GetFinanceDetail');}
+  getinvoice():Observable<any>{return this.httpclient.get(this.url+'VehicleCustomerDetails/GetInvoiceNo');}
+  salessave(data:any):Observable<any>{return this.httpclient.post(this.url+'VehicleSalesDetail/SaveVehicleSales',data);}
 }

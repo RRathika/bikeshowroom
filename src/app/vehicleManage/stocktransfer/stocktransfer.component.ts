@@ -16,6 +16,8 @@ export class StocktransferComponent implements OnInit {
   chassisdata:any;
   enginedata:any;
   selectedDevice:any;
+  show: any;
+  role: any;
   constructor(private service:YamahaserviceService,private formbuilder:FormBuilder,private router:Router,public toastservice:ToastServiceService) { }
   stocktransferForm:FormGroup=this.formbuilder.group({
     vehicleStockId: 0,
@@ -28,18 +30,20 @@ export class StocktransferComponent implements OnInit {
     userCode: "YAMAHA001"  
   })
   ngOnInit(): void {
-     this.modelname();
+    this.show=localStorage.getItem('ShowRoomId');
+    this.role=localStorage.getItem('RoleId');
+    this.modelname();
     this.showroom();
-    this.chassisno();
-    this.engineno();
+    this.chassisno(this.role,this.show);
+    this.engineno(this.role,this.show);
   }
-  chassisno(){
-    this.service.getchassisno().subscribe((data:any)=>{
+  chassisno(role:any,show:any){
+    this.service.getchassisno(role,show).subscribe((data:any)=>{
       this.chassisdata=data;
     })
   }
-  engineno(){
-    this.service.getengineno().subscribe(data=>{
+  engineno(role:any,show:any){
+    this.service.getengineno(role,show).subscribe(data=>{
       this.enginedata=data;
     })
   }

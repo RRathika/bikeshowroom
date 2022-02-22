@@ -17,6 +17,8 @@ export class AdvancebookComponent implements OnInit {
   modelcode:any;
   colorcode:any;
   selectedObject:any;
+  showdata:any;
+  role:any;
   constructor(private service:YamahaserviceService,private route:Router,private formbuilder:FormBuilder,public toastservice:ToastServiceService) { }
   
   advancebookForm:FormGroup=this.formbuilder.group({
@@ -36,6 +38,13 @@ export class AdvancebookComponent implements OnInit {
     this.color();
     this.model();
     this.varient();
+    this.showroomdata();
+    this.role=localStorage.getItem('RoleId');
+  }
+  showroomdata(){
+    this.service.getshowroom().subscribe(data=>{
+      this.showdata=data;
+    })
   }
   paymentmode(){
     this.service.getpaymentmode().subscribe(data=>{
@@ -86,9 +95,13 @@ export class AdvancebookComponent implements OnInit {
   }
  
   submit(){
+    if(this.role!=1){
     this.advancebookForm.patchValue({
       showRoomId:localStorage.getItem('ShowRoomId')
     })
+    }
+    console.log(this.advancebookForm.value);
+    
     if(this.advancebookForm.valid)
     {
       this.service.saveadvancebokk(this.advancebookForm.value).subscribe(data=>{

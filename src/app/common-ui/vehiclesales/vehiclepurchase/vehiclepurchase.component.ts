@@ -25,6 +25,10 @@ export class VehiclepurchaseComponent implements OnInit {
   @ViewChild('myInput')
   myInputVariable: any;
   variantdata:any;
+  showname: any;
+  yardname: any;
+  roledata: any;
+  showdata:any;
   constructor(private router:Router,private service:YamahaserviceService,private formbuilder:FormBuilder,public toastservice:ToastServiceService) { }
   vehiclepurchaseForm:FormGroup=this.formbuilder.group({
   receivedDate:  new FormControl('', [Validators.required]),
@@ -32,7 +36,8 @@ export class VehiclepurchaseComponent implements OnInit {
   invoiceDate:  new FormControl('', [Validators.required]),
   paymentModeId:  new FormControl('', [Validators.required]),
   purchaseType:  new FormControl('', [Validators.required]),
-  showRoomId:  1,
+  showRoomId:  new FormControl('',[Validators.required]),
+  yardId : new FormControl('',[Validators.required]),
   supplierName:  new FormControl('', [Validators.required]),
   suppierAddress:  new FormControl('', [Validators.required]),
   supplierGST:  new FormControl('', [Validators.required]),
@@ -49,7 +54,22 @@ export class VehiclepurchaseComponent implements OnInit {
   transitId:new FormControl,
   createVehiclePurchaseDetailsDTO:  new FormControl});
   ngOnInit(): void {
-   
+    this.showroomdata();
+    this.roledata=localStorage.getItem('RoleId');
+    this.showname=localStorage.getItem('ShowRoomId');
+    if(this.showname!=0)
+    {
+    this.service.showroombyyard(this.showname).subscribe(data=>{
+      if(data.statusCode==200)
+      {
+        this.yardname=[];
+        this.toastservice.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
+      }
+      else{
+      this.yardname=data;
+      }
+    })
+  }
     if(this.service.purchasedata.value!='')
     {
       this.count=this.count+1;
@@ -81,6 +101,11 @@ export class VehiclepurchaseComponent implements OnInit {
       this.bikemodel = data;
     })
   }
+  showroomdata(){
+    this.service.getshowroom().subscribe(data=>{
+      this.showdata=data;
+    })
+  }
   colorid() {
     this.service.getcolor().subscribe(data => {
       this.color = data;
@@ -89,6 +114,19 @@ export class VehiclepurchaseComponent implements OnInit {
   variantid(){
     this.service.getvariant().subscribe(data=>{
       this.variantdata=data;
+    })
+  }
+  changeshowroom(e:any){
+    let data=e.target.value;
+    this.service.showroombyyard(data).subscribe(data=>{
+      if(data.statusCode==200)
+      {
+        this.yardname=[];
+        this.toastservice.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
+      }
+      else{
+      this.yardname=data;
+      }
     })
   }
   onchange(e:any)
@@ -210,6 +248,10 @@ export class VehiclepurchaseComponent implements OnInit {
     console.log(this.total);
   }
   submit(){
+    if(this.vehiclepurchaseForm.value['showRoomId']=='')
+   {
+    this.vehiclepurchaseForm.value['showRoomId']=localStorage.getItem('ShowRoomId');
+   }
     this.vehiclepurchaseForm.patchValue({
       total:this.total,
       netAmount:this.netamount

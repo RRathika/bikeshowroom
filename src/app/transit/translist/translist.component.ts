@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { data } from 'jquery';
 import { ToastServiceService } from 'src/app/toast-service.service';
 import { YamahaserviceService } from 'src/app/yamahaservice.service';
 
@@ -14,35 +16,72 @@ export class TranslistComponent implements OnInit {
   showroom:any;
   roleid:any;
   showdata:any;
-  constructor(private router:Router,private service:YamahaserviceService,public toastservice:ToastServiceService) { }
-
+  yard:any;
+  constructor(private router:Router,private formBuilder:FormBuilder,private service:YamahaserviceService,public toastservice:ToastServiceService) { }
+  translistForm:FormGroup=this.formBuilder.group({
+    fromdate:'',
+    todate:'',
+    month:0,
+    showRoomId:new FormControl(''),    
+    yard:new FormControl('')
+  })
   ngOnInit(): void {
     this.showroom=localStorage.getItem('ShowRoomId');
     this.roleid=localStorage.getItem('RoleId')
-    this.loaddata( this.showroom,this.roleid);
+    this.loaddata( this.showroom);
     this.showroomdata();
+    this.loadyard();
   }
-  showroomchange(e:any){
-    let name=e.target.value;
-    this.service.gettransit(name,this.roleid).subscribe(data=>{
+  submit(){
+    console.log(this.translistForm.value);
+    if(this.showroom!=0)
+    {
+      this.translistForm.value['showRoomId']=this.showroom;
+    }
+    this.service.gettransit(this.translistForm.value['showRoomId'],this.translistForm.value['yard'],this.translistForm.value['month'],this.translistForm.value['fromdate'],this.translistForm.value['todate']).subscribe(data=>{
       if(data.statusCode==200)
       {
-        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000})
+        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
         this.list=[];
+        this.translistForm.reset();
       }
       else
       {
       this.list=data;
+      this.translistForm.reset();
     }
     })
+  }
+  changemonth(e:any){
+    console.log(e.target.value);
+    this.translistForm.controls['fromdate'].disable();
+    this.translistForm.controls['todate'].disable();
+    this.translistForm.value['fromdate']='';
+    this.translistForm.value['todate']='';
+  }
+  loadyard(){
+    if(this.showroom!=0)
+    {
+    this.service.showroombyyard(this.showroom).subscribe(data=>{
+      this.yard=data;
+    })
+  }
+  }
+  showroomchange(e:any){
+    let name=e.target.value;
+    this.service.showroombyyard(name).subscribe(data=>{
+      this.yard=data;
+    });
   }
   showroomdata(){
     this.service.getshowroom().subscribe(data=>{
       this.showdata=data;
     })
   }
-  loaddata(show:any,id:any){    
-    this.service.gettransit(show,id).subscribe(data=>{
+  loaddata(show:any){ 
+    let from="01-01-0001 00:00:00";
+    let to="01-01-0001 00:00:00";  
+    this.service.gettransit(show,0,0,from,to).subscribe(data=>{
       if(data.statusCode==200)
       {
         this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
@@ -51,6 +90,7 @@ export class TranslistComponent implements OnInit {
       else
       {
       this.list=data;
+      
     }
     })
   }

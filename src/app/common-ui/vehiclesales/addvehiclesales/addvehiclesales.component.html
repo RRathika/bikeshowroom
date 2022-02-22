@@ -8,17 +8,33 @@
 
                 <div class="card-body">
                     <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
-                                role="tab" aria-controls="nav-home" aria-selected="true">Cutomer Details</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist" *ngIf="isShownHome">
+                            <a class="nav-item nav-link active"  data-toggle="tab" href="#nav-home"
+                                role="tab" aria-controls="nav-home" aria-selected="false">Cutomer Details</a>
+                            <a class="nav-item nav-link"  
                                 role="tab" aria-controls="nav-profile" aria-selected="false">Vehicle Details</a>
-                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                            <a class="nav-item nav-link"  
+                                role="tab" aria-controls="nav-contact" aria-selected="false">Pay Details</a>
+                        </div>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist" *ngIf="isShownProfile">
+                            <a class="nav-item nav-link " id="nav-home-tab"
+                                role="tab" aria-controls="nav-home" aria-selected="false">Cutomer Details</a>
+                            <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                role="tab" aria-controls="nav-profile" aria-selected="false">Vehicle Details</a>
+                            <a class="nav-item nav-link" id="nav-contact-tab"
+                                role="tab" aria-controls="nav-contact" aria-selected="false">Pay Details</a>
+                        </div>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist" *ngIf="isShownContact">
+                            <a class="nav-item nav-link " id="nav-home-tab" 
+                                role="tab" aria-controls="nav-home" aria-selected="false">Cutomer Details</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" 
+                                role="tab" aria-controls="nav-profile" aria-selected="false">Vehicle Details</a>
+                            <a class="nav-item nav-link active" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
                                 role="tab" aria-controls="nav-contact" aria-selected="false">Pay Details</a>
                         </div>
                     </nav>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        aria-labelledby="exampleModalLabel" aria-hidden="true"  *ngIf="isShownHome">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -28,18 +44,17 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="col-md-12">
-                                        <form>
-                                        <div class="row">                                            
+                                    <div class="col-md-12">                                        
+                                            <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                    <label>Name</label>
-                                                    <input class="form-control" list="advancebookname"
-                                                        placeholder="Type to search..."formControlName="name">
-                                                    <datalist id="advancebookname">
-                                                        <option *ngFor="let data of username;" [value]=data.name>
-                                                    </datalist>
-                                                </div>
+                                                        <label>Name</label>
+                                                        <input class="form-control" list="advancebookname"
+                                                            placeholder="Type to search..." formControlName="name">
+                                                        <datalist id="advancebookname">
+                                                            <option *ngFor="let data of username;" [value]=data.name>
+                                                        </datalist>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label>Date</label>
@@ -48,16 +63,15 @@
                                                 <div class="col-md-4">
                                                     <label>Bike Model</label>
                                                     <input class="form-control" list="advancebookmodelname"
-                                                        placeholder="Type to search..."formControlName="modelName">
+                                                        placeholder="Type to search..." formControlName="modelName">
                                                     <datalist id="advancebookmodelname">
                                                         <option *ngFor="let data of modelname;" [value]=data.modelName>
                                                     </datalist>
                                                 </div>
                                                 <div class="col-md-12 my-2 text-center">
                                                     <button type="submit" class="btn btn-success">Search</button>
-                                                </div>                                            
-                                        </div>
-                                    </form>
+                                                </div>
+                                            </div>                                       
                                     </div>
                                     <table class="table text-center">
                                         <tr>
@@ -73,7 +87,86 @@
                                             <td>{{item.advanceBookingId}}</td>
                                             <td>{{item.advanceAmount}}</td>
                                             <td><a class="btn btn-info" data-dismiss="modal"
-                                                    (click)="apply(item.advanceBookingId,item.date)">Apply</a></td>
+                                                    (click)="apply(item.advanceBookingId,item.date,item.advanceAmount)">Apply</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" *ngIf="isShownProfile"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content" style="width: 800px;">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="exampleModalLabel">Vehicle Details</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12">                                        
+                                            <div class="row pb-2">
+                                                <div class="col-md-4">
+                                                    <label for="modelName">Model Name</label>
+                                                    <select formControlName="modelId"
+                                                        class="form-select dropdown-primary"
+                                                        (change)='modelnamechange($event)'>
+                                                        <option *ngFor="let data of modelcode" [value]="data.modelId">
+                                                            {{data.modelName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="modelName">Color Name</label>
+                                                    <select formControlName="colorId" [(ngModel)]="selectedObject"
+                                                        class="form-select dropdown-primary"
+                                                        (change)='colornamechange($event)'>
+                                                        <option value="" selected>Color Name</option>
+                                                        <option *ngFor="let data of colorcode" [value]="data.colorId">
+                                                            {{data.colorName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="modelName">Variant Name</label>
+                                                    <select formControlName="variantId"
+                                                        class="form-select dropdown-primary"
+                                                        (change)='variantnamechange($event)'>
+                                                        <!-- <option value="" disabled selected hidden>Variant Name</option> -->
+                                                        <option *ngFor="let data of varientcode"
+                                                            [value]="data.variantId">{{data.variantName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                       
+                                    </div>
+                                    <table class="table text-center">
+                                        <tr>
+                                            <!-- <th>Select</th> -->
+                                            <th>Si.No</th>
+                                            <th>Chassis No</th>
+                                            <th>Engin No</th>
+                                            <th>Key No</th>
+                                            <th>Total Amount</th>
+                                            <th>View</th>
+                                        </tr>
+                                        <tr *ngFor="let item of totaldata;let i=index;">
+                                            <!-- <td><input type="checkbox"></td> -->
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.chassisNo}}</td>
+                                            <td>{{item.engineNo}}</td>
+                                            <td>{{item.keyNo}}</td>
+                                            <td>{{item.netamount}}</td>
+                                            <td><a class="btn btn-info" data-dismiss="modal"
+                                                    (click)="applyvehicle(item.chassisNo,item.cgst,item.sgst,item.igst,item.engineNo,item.insurance,item.invoiceAmount,item.keyNo,item.lifeTax,item.netamount,item.total)">Apply</a>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -86,15 +179,15 @@
                     </div>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                            aria-labelledby="nav-home-tab">
+                            aria-labelledby="nav-home-tab"  *ngIf="isShownHome">
                             <form [formGroup]="customerDetailForm" (ngSubmit)="submit()">
                                 <div class="row mt-3">
 
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Invoice No</label>
-                                            <input type="email" class="form-control" placeholder="Invoice No"
-                                                formControlName="invoiceNo">
+                                            <input type="email" class="form-control" 
+                                                formControlName="invoiceNo" [value]="invoicevalue" [attr.disabled]="disableTextbox">
                                         </div>
                                     </div>
                                     <!-- <div class="col-md-3">
@@ -179,7 +272,8 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Gender</label>
-                                            <select class="form-select" placeholder="Type to search..." formControlName="gender">                                            
+                                            <select class="form-select" placeholder="Type to search..."
+                                                formControlName="gender">
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
                                             </select>
@@ -194,7 +288,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Father's Name</label>                                            
+                                            <label for="exampleInputEmail1">Father's Name</label>
                                             <input type="text" class="form-control" placeholder="Father Name"
                                                 formControlName="fatherName">
                                         </div>
@@ -221,16 +315,15 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="inputPassword"
-                                                    class="col-sm-3 col-form-label">Area Name</label>
+                                                <label for="inputPassword" class="col-sm-3 col-form-label">Area
+                                                    Name</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="inputPassword"
                                                         placeholder="Area/Name" formControlName="areaName">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="inputPassword"
-                                                    class="col-sm-3 col-form-label">City</label>
+                                                <label for="inputPassword" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-4">
                                                     <input type="text" class="form-control" id="inputPassword"
                                                         placeholder="Town/Village" formControlName="city">
@@ -245,8 +338,10 @@
                                                 <label for="inputPassword" class="col-sm-3 col-form-label">District
                                                     Name</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-select" placeholder="District Name"  formControlName="district" (change)="districttaluk($event)">                                                    
-                                                        <option *ngFor="let item of districtname" [value]="item.districtId">{{item.district}}</option>
+                                                    <select class="form-select" placeholder="District Name"
+                                                        formControlName="district" (change)="districttaluk($event)">
+                                                        <option *ngFor="let item of districtname"
+                                                            [value]="item.districtId">{{item.district}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -254,8 +349,10 @@
                                                 <label for="inputPassword"
                                                     class="col-sm-3 col-form-label">Mandal/Taluk</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-select" placeholder="Mandal/Taluk" formControlName="taluk">                                                    
-                                                        <option *ngFor="let data of taluk1" [value]="data.talukId">{{data.taluk}}</option>
+                                                    <select class="form-select" placeholder="Mandal/Taluk"
+                                                        formControlName="taluk">
+                                                        <option *ngFor="let data of taluk1" [value]="data.talukId">
+                                                            {{data.taluk}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -299,20 +396,24 @@
                                             <div class="form-group row">
                                                 <label for="inputPassword" class="col-sm-3 col-form-label">District
                                                     Name</label>
-                                                    <div class="col-sm-9">
-                                                        <select class="form-select" placeholder="District Name"  formControlName="district" (change)="districttaluk($event)">                                                    
-                                                            <option *ngFor="let item of districtname" [value]="item.districtId">{{item.district}}</option>
-                                                        </select>
-                                                    </div>
+                                                <div class="col-sm-9">
+                                                    <select class="form-select" placeholder="District Name"
+                                                        formControlName="district" (change)="districttaluk($event)">
+                                                        <option *ngFor="let item of districtname"
+                                                            [value]="item.districtId">{{item.district}}</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputPassword"
                                                     class="col-sm-3 col-form-label">Mandal/Taluk</label>
-                                                    <div class="col-sm-9">
-                                                        <select class="form-select" placeholder="Mandal/Taluk" formControlName="taluk">                                                    
-                                                            <option *ngFor="let data of taluk1" [value]="data.talukId">{{data.taluk}}</option>
-                                                        </select>
-                                                    </div>
+                                                <div class="col-sm-9">
+                                                    <select class="form-select" placeholder="Mandal/Taluk"
+                                                        formControlName="taluk">
+                                                        <option *ngFor="let data of taluk1" [value]="data.talukId">
+                                                            {{data.taluk}}</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -366,16 +467,20 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Qualification</label>
-                                            <select class="form-select" placeholder="Qualification" formControlName="qualification">
-                                                <option *ngFor="let item of qualification" [value]="item.qualificationId">{{item.qualification}}</option>
-                                           </select>
+                                            <select class="form-select" placeholder="Qualification"
+                                                formControlName="qualification">
+                                                <option *ngFor="let item of qualification"
+                                                    [value]="item.qualificationId">{{item.qualification}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Occupation</label>
-                                            <select class="form-select" placeholder="occupation" formControlName="occupation">
-                                                <option *ngFor="let item of occupation" [value]="item.occupationId">{{item.occupation}}</option>
+                                            <select class="form-select" placeholder="occupation"
+                                                formControlName="occupation">
+                                                <option *ngFor="let item of occupation" [value]="item.occupationId">
+                                                    {{item.occupation}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -409,16 +514,17 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Gender</label>
-                                            <select class="form-select" placeholder="Gender" formControlName="nomineeGender"> 
-                                                <option value="Male">Male</option>                                           
-                                                <option value="Female">Female</option>                                                
+                                            <select class="form-select" placeholder="Gender"
+                                                formControlName="nomineeGender">
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Relation</label>
-                                            <select class="form-select" formControlName="relation">                                           
+                                            <select class="form-select" formControlName="relation">
                                                 <option value="Father">Father</option>
                                                 <option value="Mother">Mother</option>
                                                 <option value="Son">Son</option>
@@ -436,607 +542,510 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <div class="row mt-3">
-                                <div class="col-sm-6">
-                                    <!-- <div class="form-group row">
-                                        <div class="col-sm-3"><label for="exampleInputEmail1">Delivery Challan
-                                                No.</label></div>
-                                        <div class="col-sm-9"><input type="text" class="form-control"
-                                                placeholder="Relation"></div>
-                                    </div>
-                                    <hr> -->
-                                    <div class="form-group row">
-                                        <button class="col-sm-3 col-form-button btn btn-info">Sale Form</button>
-                                        <div class="col-sm-9">
-                                            <select class="browser-default custom-select">
-                                                <option selected>Open this select menu</option>
-                                                <option value="Show Room">Show Room</option>
-                                                <option value="Yard">Yard</option>
-                                            </select>
+                        <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" *ngIf="isShownProfile" >
+                            <form [formGroup]="vehicleDetailsForm" (ngSubmit)="vehicleform()">
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <div class="col-md-6" *ngIf="role==1">
+                                                <select class="browser-default custom-select"
+                                                    formControlName="showRoomId" (change)="selectyard($event)">
+                                                    <option selected>Open this select menu</option>
+                                                    <option *ngFor="let name of showroomname" [value]="name.showRoomId">
+                                                        {{name.showRoomName}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="browser-default custom-select" formControlName="yardId">
+                                                    <option selected>Open this select menu</option>
+                                                    <option *ngFor="let name of yardname" [value]="name.yardId">
+                                                        {{name.yardName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <button class="col-sm-3 col-form-button btn btn-info" data-toggle="modal"
+                                                data-target="#exampleModal1">Vehicle Model</button>
+                                            <div class="col-sm-9">
+                                                <select class="form-select"  [attr.disabled]="disableTextbox" formControlName="modelId">
+                                                    <option *ngFor="let item of modelcode" [value]="item.modelId">
+                                                        {{item.modelName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row">
+
+                                            <div class="col-sm-3">
+                                                <label class="label" for="customCheckDisabled">Frame No:</label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" formControlName="chassisNo"  [attr.disabled]="disableTextbox">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label class="label" for="customCheckDisabled">Eng No:</label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" formControlName="engineNo"  [attr.disabled]="disableTextbox">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="label" for="customCheckDisabled">Color</label>
+
+                                                <select class="form-select"  [attr.disabled]="disableTextbox" formControlName="colorId">
+                                                    <option *ngFor="let data of colordetails" [value]="data.colorId">
+                                                        {{data.colorName}} </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="label" for="customCheckDisabled">Key No</label>
+
+                                                <input type="text" class="form-control" id="customCheck"
+                                                    formControlName="keyNo"  [attr.disabled]="disableTextbox">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label class="label">Month of Mfg</label>
+                                                <select class="form-select" formControlName="month">
+                                                    <option value="1">January</option>
+                                                    <option value="2">February</option>
+                                                    <option value="3">March</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">May</option>
+                                                    <option value="6">June</option>
+                                                    <option value="7">July</option>
+                                                    <option value="8">August</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="label">Year of Mfg</label>
+                                                <select class="form-select" formControlName="year">
+                                                    <option *ngFor="let name of year" [value]=name>{{name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row">
+                                            <div class="col-sm-3"><label for="exampleInputEmail1">Vehicle Sale
+                                                    Type</label>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <select class="browser-default custom-select"
+                                                    formControlName="vehicleSaleType">
+                                                    <option selected>Open this select menu</option>
+                                                    <option value="Within State Sales">Within State Sales</option>
+                                                    <option value="outside State Sales">Outside State Sales</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <button class="col-sm-3 col-form-button btn btn-info">Vehicle Model</button>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="inputPassword"
-                                                placeholder="Model Name">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="label" for="customCheckDisabled">Invoice Amount</label>
+                                                <input type="text" class="form-control" formControlName="invoiceAmount"  [attr.disabled]="disableTextbox">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="label" for="customCheckDisabled">Vehicle Cost</label>
+                                                <input type="text" class="form-control" formControlName="vehicleCost"  [attr.disabled]="disableTextbox">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- <div class="form-group row">
-                                        <div class="col-sm-3">
-                                            <label class="label" for="customCheckDisabled">Create Histry Card</label>
-                                        </div>
-                                        <div class="col-sm-1">
-                                            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="label" for="customCheckDisabled">Extended Warrenty</label>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <input type="text" class="form-control" id="customCheck" list="Warrenty">
-                                            <datalist id="Warrenty">
-                                                <option value="No">
-                                                <option value="Yes">
-                                            </datalist>
-                                        </div>
-                                    </div> -->
-                                    <hr>
-                                    <div class="form-group row">
-                                        <div class="col-sm-3">
-                                            <button class="btn btn-info">Vehicle</button>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="label" for="customCheckDisabled">Frame No:</label>
-                                            <label class="label" for="customCheckDisabled">Eng No:</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control">
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-2">
-                                            <label class="label" for="customCheckDisabled">Color</label>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" list="color">
-                                            <datalist id="color">
-                                                <option value="red">
-                                            </datalist>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <label class="label" for="customCheckDisabled">Key No</label>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="customCheck">
+                                        <div class="form-group row">
+                                            <div class="col-sm-4">
+                                                <label class="label" for="customCheckDisabled">CGST, SGST, IGST</label>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control"
+                                                    (change)="gstcalculation($event)">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"  [attr.disabled]="disableTextbox" formControlName="tax">
+                                            </div>
 
                                         </div>
+                                        <div>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Particulars</th>
+                                                        <th scope="col">Account For</th>
+                                                        <th scope="col">Collected</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">Life Tax</th>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="lifetax"  [attr.disabled]="disableTextbox"/>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="lifetax"  [attr.disabled]="disableTextbox"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">insurance</th>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="insurance" [attr.disabled]="disableTextbox" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="insurance"  [attr.disabled]="disableTextbox"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Extra charges</th>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Other charges</th>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Extended Warrenty</th>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Total</th>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="taxtotal"[attr.disabled]="disableTextbox" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="taxtotal"[attr.disabled]="disableTextbox" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-2">
+                                                <label class="label" for="customCheckDisabled">Total</label>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" formControlName="finaltotal"[attr.disabled]="disableTextbox">
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <label class="label" for="customCheckDisabled">Net Total</label>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" formControlName="total" [attr.disabled]="disableTextbox">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!-- <div class="form-group row">
-                                        <div class="col-sm-2">
-                                            <label class="label" for="customCheckDisabled">Battery No</label>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <label class="label" for="customCheckDisabled">F.S.Book</label>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div> -->
-                                    <div class="form-group row">
-                                        <div class="col-sm-2">
-                                            <label class="label" for="customCheckDisabled">Month,Year of Mfg</label>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="date" class="form-control">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <label class="label" for="customCheckDisabled">Current Date</label>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="date" class="form-control">
-                                        </div>
-                                        <!-- <div class="col-sm-3">
-                                            <input type="text" class="form-control" list="year">
-                                            <datalist id="year">
-                                                <option value="2022">
-                                            </datalist>
-                                        </div> -->
-                                        <!-- <div class="col-sm-2">
-                                            <label class="label" for="customCheckDisabled">Tax Mode</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control">
-                                        </div> -->
+                                    <div class="col-md-12 text-center">
+                                        <!-- <button class="btn btn-info m-3 p-3" data-toggle="tab" id="nav-home-tab"
+                                        href="#nav-home">Pre</button> -->
+                                        <button class="btn btn-info m-3 p-3" (click)="toggleShowHome()">Pre</button>
+                                        <button type="submit" class="btn btn-success p-3">Next</button>
                                     </div>
-                                    <!-- <div class="form-group row"> -->
 
-                                    <!-- <div class="col-sm-2">
-                                            <input type="text" class="form-control" value="T/R">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control">
-                                        </div> -->
-
-                                    <!-- </div> -->
-                                    <!-- <div class="form-group row">
-                                        <div class="col-sm-3">
-                                            <button class="btn btn-info">Financier</button>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control">
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div> -->
-                                    <hr>
-                                    <div class="form-group row">
-                                        <div class="col-sm-3"><label for="exampleInputEmail1">Vehicle Sale Type</label>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <select class="browser-default custom-select">
-                                                <option selected>Open this select menu</option>
-                                                <option value="Within State Sales">Within State Sales</option>
-                                                <option value="outside State Sales">Outside State Sales</option>
-                                            </select>
-                                        </div>
-                                        <!-- <input type="text" class="form-control" placeholder=""
-                                                list="saletype">
-                                            <datalist id="saletype">
-                                                <option value="">
-                                            </datalist>
-                                        </div> -->
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-3">
-                                            <label class="label" for="customCheckDisabled">Invoice Amount</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="label" for="customCheckDisabled">Vehicle Cost</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-
-                                    <div class="form-group row">
-                                        <div class="col-sm-3">
-                                            <label class="label" for="customCheckDisabled">Tax(CGST+SGST)</label>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                        <!-- <div class="col-sm-1">
-                                            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label class="label" for="customCheckDisabled">After TAX</label>
-                                        </div> -->
-
-                                    </div>
-                                    <!-- <div class="form-group row">
-                                        <div class="col-sm-2">
-                                            <label class="label" for="customCheckDisabled">GST Cess Per</label>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div> 
-                                        <div class="col-sm-3">
-                                            <label class="label" for="customCheckDisabled">Additional Discount</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                    </div> -->
-                                    <div class="form-group row">
-                                        <div class="col-sm-3">
-                                            <label class="label" for="customCheckDisabled">Rounded</label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Particulars</th>
-                                                    <th scope="col">Account For</th>
-                                                    <th scope="col">Collected</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">Life Tax</th>
-                                                    <td>9994</td>
-                                                    <td>9994</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">T.R Fee</th>
-                                                    <td>985</td>
-                                                    <td>985</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">insurance</th>
-                                                    <td>6685</td>
-                                                    <td>6685</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Finance/HYP Fee</th>
-                                                    <td>500</td>
-                                                    <td>500</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Extra charges</th>
-                                                    <td>0</td>
-                                                    <td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Other charges</th>
-                                                    <td>0</td>
-                                                    <td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Extended Warrenty</th>
-                                                    <td>0</td>
-                                                    <td>0</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Total</th>
-                                                    <td>18164</td>
-                                                    <td>18164</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label class="label" for="customCheckDisabled">Total</label>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="customCheck">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 text-center">
-                                    <button class="btn btn-info m-3 p-3" data-toggle="tab" id="nav-home-tab"
-                                        href="#nav-home">Pre</button>
-                                    <button class="btn btn-success p-3">Next</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
-                        <div class="tab-pane fade border" id="nav-contact" role="tabpanel"
+                        <div class="tab-pane fade border show active" id="nav-contact" role="tabpanel" *ngIf="isShownContact"
                             aria-labelledby="nav-contact-tab">
-                            <div class="row mt-3 ">
-                                <div class="col-sm-4">
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Transaction Type</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Vehicle Cost</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Other Amounts</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Total Amount</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Book.Rec.Amt</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Finance Amount</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Credit Amount</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Cash/Bank Amt.</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Excess Amount</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label>Balance Amt</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" list="transtype">
-                                            <datalist id="transtype">
-                                                <option value="Cash">
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="col-sm-12 header-border">
-                                        <h4 class="heading-subtitle"><span>Select Finance Ledger</span></h4>
-                                        <div class="form-group row">
-                                            <div class="col-sm-2">
-                                                <button class="btn btn-info">Ledger</button>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input class="form-control">
-                                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                                <label for="vehicle1"> Trade Advance (Finance Vehicle) </label><br>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <input class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 header-border">
-                                        <h4 class="heading-subtitle"><span>Select Credit Ledger</span></h4>
-                                        <div class="form-group row">
-                                            <div class="col-sm-2">
-                                                <button class="btn btn-info">Ledger</button>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input class="form-control">
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <input class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 header-border">
-                                        <h4 class="heading-subtitle"><span>Select Cash/Bank Ledger</span></h4>
-                                        <div class="form-group row">
-                                            <div class="col-sm-2">
-                                                <label>Ledger Name</label>
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <input class="form-control" list="ledger">
-                                                <datalist id="ledger">
-                                                    <option value="Cash">
-                                                </datalist>
-                                            </div>
-                                            <br>
-                                            <div class="col-sm-2">
-                                                <label>Cheq/DD No</label>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <label>Date</label>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <input type="date" class="form-control">
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <label>Bank Details</label>
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <input class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 header-border">
-                                        <h4 class="heading-subtitle"><span>Return to customer (Excess / Other
-                                                Amounts)</span></h4>
+                            <form [formGroup]="payDetails" (ngSubmit)="finalsubmit()">
+                                <div class="row mt-3 ">
+                                    <div class="col-sm-6">
                                         <div class="form-group row">
                                             <div class="col-sm-4">
-                                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                                <label for="vehicle1">Other Charges </label><br>
+                                                <label>Transaction Type</label>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                                <label for="vehicle1"> Insurance Amount </label><br>
+                                            <div class="col-sm-8">
+                                                <select (change)="toggleShowCash($event)" class="form-control"
+                                                    name="val" list="transtype" id="transtype"
+                                                    formControlName="transactionTypeId">
+                                                    <option selected disabled>Select One</option>
+                                                    <option value=1>Cash</option>
+                                                    <option value=2>Credit</option>
+                                                    <option value=3>Finance</option>
+                                                </select>
                                             </div>
+                                        </div>
+
+                                        <div *ngIf="isShownCash" class="form-group pl-3">
+                                            <div *ngFor="let value of checkboxvalues"
+                                                class="flex-container  align-center multi-checkbox">
+                                                <input type="checkbox" value=" {{value.check}}"
+                                                    (change)="showchecked($event)">
+                                                {{value.value}}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row">
                                             <div class="col-sm-4">
-                                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                                <label for="vehicle1"> Reg. + TR + HYP Charges </label><br>
+                                                <label>Vehicle Cost</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" list="transtype"
+                                                    formControlName="vehicleCost" [attr.disabled]="disableTextbox">                                             
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-md-4">
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <label>Ledger</label>
-                                                    </div>
-                                                    <div class="col-md-9">
-                                                        <select style="width: 100%;height: 30px;">
-                                                            <option>Cash</option>
-                                                        </select>
-                                                    </div>
+                                            <div class="col-sm-4">
+                                                <label>Other Amounts</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" list="transtype"
+                                                    formControlName="otherAmount" [attr.disabled]="disableTextbox">                                                
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row">
+                                            <div class="col-sm-4">
+                                                <label>Total Amount</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" list="transtype"
+                                                    formControlName="totalAmount" [attr.disabled]="disableTextbox">
+                                               
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-group row">
+                                            <div class="col-sm-4">
+                                                <label>Book.Rec.Amt</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" list="transtype" formControlName="bookrecamt" [attr.disabled]="disableTextbox">                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" *ngIf="isFinance">
+                                            <div class="col-sm-4">
+                                                <label>Finance Amount</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" list="transtype" formControlName="financeamt" [attr.disabled]="disableTextbox">                                               
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" *ngIf="iscredit">
+                                            <div class="col-sm-4">
+                                                <label>Credit Amount</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" list="transtype" formControlName="creditamt" [attr.disabled]="disableTextbox">                                               
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" *ngIf="isShownCash">
+                                            <div class="col-sm-4">
+                                                <label>Cash/Bank Amt.</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" list="transtype" formControlName="cashbank" [attr.disabled]="disableTextbox">
+                                            </div>
+                                        </div>                                        
+                                        <hr>
+                                        <div class="form-group row">
+                                            <div class="col-sm-4">
+                                                <label>Balance Amt</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" list="transtype" formControlName="balanceamt" [attr.disabled]="disableTextbox">                                               
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="col-sm-6 pr-4">
+                                        <form [formGroup]="transtypecash">
+                                        <div class="col-sm-12 header-border card" *ngIf="isCashinhand">
+                                            <h3 class="heading-subtitle"><b>Cash Inhand</b></h3>
+                                            <div class="form-group row">
+                                                <div class="col-sm-2">
+                                                    <label class="heading-subtitle">Amount</label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="number"
+                                                        formControlName="handAmount"><br>
                                                 </div>
                                             </div>
-                                            <div class="col-md-5">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <button class="btn btn-info">Ledger</button>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <input type="text" class="form-control">
-                                                    </div>
+                                        </div>
+                                        <div class="col-sm-12 header-border card" *ngIf="iscard">
+                                            <h3 class="heading-subtitle"><b>Card</b></h3>
+                                            <div class="form-group row">
+                                                <div class="col-sm-2">
+                                                    <label  class="heading-subtitle">Amount</label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" formControlName="cardAmount">
+                                                </div>
+                                                <div class="col-sm-2 pt-2">
+                                                    <label>Card Details</label>
+                                                </div>
+                                                <div class="col-sm-10 pt-2">
+                                                    <input class="form-control" type="text" formControlName="cardDetails">
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <!-- <button class="btn btn-info">Ledger</button> -->
-                                                <input type="date" class="form-control">
+                                        </div>
+                                        <div class="col-sm-12 header-border card" *ngIf="ischeque">
+                                            <h3 class="heading-subtitle"><b>Cheque</b></h3>
+                                            <div class="form-group row">
+                                                <div class="col-sm-2">
+                                                    <label class="heading-subtitle">Amount</label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="number"
+                                                        formControlName="chequeAmount"><br>
+                                                </div>
+                                                <br>
+                                                <div class="col-sm-2">
+                                                    <label>Cheque No</label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="number" class="form-control" formControlName="chequeNo"> 
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label>Date</label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="date" class="form-control" formControlName="chequeDate">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label>Cheque Details</label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" formControlName="chequeDetails">
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="col-sm-12 header-border card" *ngIf="isUPI">
+                                            <h3 class="heading-subtitle"><b>UPI</b></h3>
+                                            <div class="form-group row">
+                                                <div class="col-sm-2">
+                                                    <label class="heading-subtitle">Amount</label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="number"
+                                                        formControlName="ddAmount"><br>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <h4 class="heading-subtitle"><b>UPI No:</b></h4>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="number" formControlName="upiNo"> <br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 header-border card" *ngIf="isDD">
+                                            <h3 class="heading-subtitle"><b>Demand Draft</b></h3>
+                                            <div class="form-group row">
+                                                <div class="col-sm-2">
+                                                    <label class="heading-subtitle">Amount</label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="number"
+                                                        formControlName="upiAmount"><br>
+                                                </div>
+                                                <br>
+                                                <div class="col-sm-2">
+                                                    <label>DD No</label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="number" class="form-control" formControlName="ddNo">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label>DD Date</label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="date" class="form-control" formControlName="ddDate">
+                                                </div>
+                                                <div class="col-sm-2 pt-2">
+                                                    <label>DD Details</label>
+                                                </div>
+                                                <div class="col-sm-10 pt-2">
+                                                    <input class="form-control" type="text" formControlName="ddDetails">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                        <div class="col-sm-12 header-border card" *ngIf="isFinance">
+                                            <form [formGroup]="financeForm">
+                                            <h3 class="heading-subtitle"><b>Finance</b></h3>
+                                            <div class="form-group row">
+                                                <div class="col-sm-4">
+                                                    <h4 class="heading-subtitle"><b>Finance List</b></h4>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                   <select class="form-select" formControlName="financeId">
+                                                       <option>Select Finance</option>
+                                                       <option *ngFor="let data of finance" value="data.financeDetailId">{{data.financeName}}</option>
+                                                   </select><br>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <h4 class="heading-subtitle"><b>Down Payment</b></h4>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control" type="number" formControlName="downPayment"><br>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        </div>
+                                        <div class="col-sm-12 header-border card" *ngIf="iscredit">
+                                            <form [formGroup]="creditForm">
+                                            <h3 class="heading-subtitle"><b>Credit</b></h3>
+                                            <div class="form-group row">
+
+                                                <br>
+                                                <div class="col-sm-2">
+                                                    <label>Amount</label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="number" class="form-control" formControlName="creditAmount">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label>Name</label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" formControlName="name">
+                                                </div>
+                                                <div class="col-sm-2 pt-2">
+                                                    <label>Mobile Number</label>
+                                                </div>
+                                                <div class="col-sm-4 pt-2">
+                                                    <input class="form-control" type="number" formControlName="mobileNo">
+                                                </div>
+                                                <div class="col-sm-2 pt-2">
+                                                    <label> Address</label>
+                                                </div>
+                                                <div class="col-sm-4 pt-2">
+                                                    <textarea class="form-control" formControlName="address"></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        </div>    
+                                                                       
                                     </div>
-                                    <div class="col-sm-12 header-border">
+                                    
+                                    <div class="col-sm-12">
                                         <div class="row">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label>Sales Executive</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <label>Enq.No</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
+                                            <div class="text-center">
+                                                <!-- <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                                                    href="#nav-profile" role="tab" aria-controls="nav-profile"
+                                                    aria-selected="false">
+                                                    <button class="btn btn-warning">Pre</button></a> -->
+                                                    <button class="btn btn-warning" (click)="toggleShowProfile()">Pre</button>
+                                                <button class="btn btn-success ml-2" type="submit">Save and Print</button>
+                                                <!-- <button class="btn btn-warning ml-2">Print</button> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="col-sm-12">
-                                    <div class="row">
-                                        <div class="col-sm-5">
-                                            <div class="form-group row">
-                                                <div class="col-md-2">
-                                                    <label for="">Helmet</label>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-2">
-                                                    <label>Cost</label>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>Pur. Bill No&Date</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <button class="btn btn-info">Other Details</button>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <div class="form-group row">
-                                                <div class="col-md-3">
-                                                    <label>eSeva Forms</label>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <select class="form-control">
-                                                        <option>Card</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <button class="btn btn-warning">Print</button>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-md-3">
-                                                    <label>eSeva Forms</label>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <select class="form-control">
-                                                        <option>Card</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="row">
-                                        <div class="text-center">
-                                            <button class="btn btn-warning">Pre</button>
-                                            <button class="btn btn-success ml-2">Save</button>
-                                            <button class="btn btn-danger ml-2">Exit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

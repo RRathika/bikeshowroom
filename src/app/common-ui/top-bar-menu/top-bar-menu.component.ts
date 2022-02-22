@@ -17,6 +17,7 @@ export class TopBarMenuComponent implements OnInit {
     localStorage.removeItem('ShowRoomId');
     localStorage.removeItem('UserName');
     localStorage.removeItem('MacAddress');
+    localStorage.removeItem('RoleId')
     this.router.navigateByUrl('');
   }
 }

@@ -7,7 +7,64 @@
                     <button class="btn btn-success float-end" (click)="add()">Vehicle Purchase Add</button>
                 </div>
                 <div class="col-md-12">
-
+                    <form [formGroup]="purchaselistForm" (ngSubmit)="submit()">
+                        <div class="row pt-1">
+                            <div class="col-md-3" *ngIf="roleid==1">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Showroom Name</label>
+                                    <select class="form-select" (change)="showroomchange($event)" formControlName="showRoomId">
+                                        <option>Select</option>
+                                        <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yard Name</label>
+                                    <select class="form-select"formControlName="yard">
+                                        <!-- <option>Select</option> -->
+                                        <option *ngFor="let data of yard" [value]="data.yardId">{{data.yardName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Month</label>
+                                    <select class="form-select" formControlName="month" (change)="changemonth($event)">
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">From Date</label>
+                                    <input type="date" class="form-control" formControlName="fromdate"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">To Date</label>
+                                    <input type="date" class="form-control" formControlName="todate"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <div class="form-group mt-3 pt-1">
+                                    <button type="submit" class="btn btn-success">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
