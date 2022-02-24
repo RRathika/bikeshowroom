@@ -41,7 +41,8 @@ export class EnquirylistaddComponent implements OnInit {
 
   ngOnInit(): void { 
     this.loadshowroom();
-    this.roledata=localStorage.getItem('RoleId')
+    this.roledata=localStorage.getItem('RoleId');
+    this.show=localStorage.getItem('ShowRoomId');
   }
   loadshowroom(){
     this.service.getshowroom().subscribe(data=>{
@@ -64,6 +65,9 @@ export class EnquirylistaddComponent implements OnInit {
     this.enquiryaddForm?.removeControl('planningDate'); 
     this.enquiryaddForm?.removeControl('remarks');  
     this.MainForm.patchValue({ createEnquiryDetailsDTO: this.createForm.value, createEnquiryDTO: this.enquiryaddForm.value })
+    if(this.MainForm.valid)
+    {
+      debugger
     this.service.saveenquiry(this.MainForm?.value).subscribe((data:any)=>{
       if(data.statusCode==200){      
       this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
@@ -73,6 +77,7 @@ export class EnquirylistaddComponent implements OnInit {
         this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 15000});
       } 
     })   
+  }
     // console.log(this.MainForm.value);
     
   }
@@ -82,5 +87,8 @@ export class EnquirylistaddComponent implements OnInit {
       planningDate: date,
       remarks:remark
     });
+  }
+  viewlist(){
+    this.route.navigateByUrl('/dashboard/enquirylist')
   }
 }

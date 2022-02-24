@@ -4,6 +4,7 @@
             <div class="card card-primary">
                 <div class="card-header bg-primary">
                     <h3 class="card-title">Add Enquiry Details</h3>
+                    <button class="btn btn-success btn-sm float-end" (click)="viewlist()">View Enquiry Details</button>
                 </div>
                 <form [formGroup]="enquiryaddForm" (ngSubmit)="submit()">
                     <div class="row p-3">

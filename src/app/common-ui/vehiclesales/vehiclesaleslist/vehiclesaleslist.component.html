@@ -1,0 +1,299 @@
+<div class="container">
+    <div class="col-md-12">
+        <div class="card card-primary">
+            <div class="card-header bg-primary">
+                <h3 class="card-title">Vehicle Purchase Details</h3>
+                <button class="btn btn-success float-end" (click)="add()">Add Sales</button>
+            </div>
+             <div class="col-md-12">
+                 <form [formGroup]="saleForm" (ngSubmit)="submit()">
+                 <div class="row">
+                    <div class="col-md-3" *ngIf="roleid==1">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Showroom Name</label>
+                            <select class="form-select" (change)="showroomchange($event)" formControlName="showRoomId">
+                                <!-- <option>Select</option> -->
+                                <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Yard Name</label>
+                            <select class="form-select" formControlName="yard">
+                                <!-- <option>Select</option> -->
+                                <option *ngFor="let data of yard" [value]="data.yardId">{{data.yardName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">From Date</label>
+                            <input type="date" class="form-control" formControlName="fromdate"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">To Date</label>
+                            <input type="date" class="form-control" formControlName="todate"/>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <div class="form-group mt-2 pt-1">
+                            <button type="submit" class="btn btn-success">Search</button>
+                        </div>
+                    </div>
+                 </div>
+                </form>
+             </div>   
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr class="text-center">
+                  <th>SI.NO</th>
+                  <th>Invoice No</th>
+                  <th>Invoice Date</th>
+                  <th>Customer Name</th>
+                  <th>Vehicle model Name</th>                
+                  <th>Chassis No</th>
+                  <th>Engine No</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let data of list; let i=index;">
+                  <td>{{i+1}}</td>
+                  <td>{{data.invoiceNo}}</td>
+                  <td>{{data.invoiceDate}}</td>
+                  <td>{{data.customerName}}</td>    
+                  <td>{{data.vehicleModelName}}</td>   
+                  <td>{{data.chassisNo}}</td>
+                  <td>{{data.engineNo}}</td>
+                  <td><i class="fas fa-eye" style="color: blue;" data-toggle="modal"
+                    data-target="#exampleModal" data-whatever="@mdo"
+                    (click)="viewbyid(data.vehicleSalesInvoiceDetailId)"></i></td>
+                </tr> 
+              </tbody>
+            </table>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" id="transit" style="width:900px">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel">Details</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" *ngIf="viewdata">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Invoice No:</b> {{viewdata.invoiceNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Invoice Date:</b> {{viewdata.invoiceDate | date}} </h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Customer Name:</b> {{viewdata.customerName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Present DoorNo:</b>{{viewdata.presentDoorNo}} </h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Present Area Name:</b> {{viewdata.presentAreaName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Present City:</b> {{viewdata.presentCity}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Present District:</b> {{viewdata.presentDistrict}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Mobile No:</b> {{viewdata.mobileNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Aadhar No:</b> {{viewdata.aadharNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Vehicle Model Name:</b> {{viewdata.vehicleModelName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Chassis No:</b> {{viewdata.chassisNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Engine No:</b> {{viewdata.engineNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Variant Name:</b> {{viewdata.variantName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>key No:</b> {{viewdata.keyNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Month:</b> {{viewdata.month}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Year:</b> {{viewdata.year}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>ShowRoom Name:</b> {{viewdata.showRoomName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Yard Name:</b> {{viewdata.yardName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Total Amount:</b> {{viewdata.totalAmount}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Balance Amount:</b> {{viewdata.balanceAmount}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Hand Amount:</b> {{viewdata.handAmount}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Card Amount:</b> {{viewdata.cardAmount}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Card Details:</b> {{viewdata.cardDetails}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Vehicle Model Name:</b> {{viewdata.vehicleModelName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Cheque Amount:</b> {{viewdata.chequeAmount}}</h4>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Cheque Details:</b> {{viewdata.chequeDetails}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Cheque Date:</b> {{viewdata.chequeDate | date}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Cheque No:</b> {{viewdata.chequeNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>DD Amount:</b> {{viewdata.ddAmount}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>DD Details:</b> {{viewdata.ddDetails}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>DD Date:</b> {{viewdata.ddDate | date}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>DD No:</b> {{viewdata.ddNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>UPI Amount:</b> {{viewdata.upiAmount}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>UPI No:</b> {{viewdata.upiNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Credit Amount:</b> {{viewdata.creditAmount}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Credit Name:</b> {{viewdata.creditName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Credit MobileNo:</b> {{viewdata.creditMobileNo}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Credit Address:</b> {{viewdata.creditAddress}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Finance Name:</b> {{viewdata.financeName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 for="exampleInputEmail1"><b>Down Payment:</b> {{viewdata.downPayment}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      </div>
+</div>

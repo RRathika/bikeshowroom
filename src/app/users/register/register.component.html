@@ -43,8 +43,8 @@
                 </div>                
                 <div class="col-md-4">
                   <div class="input-group mb-3">
-                    <select class="form-select" formControlName="gender" placeholder="Alternative Mobile No">
-                      <option>Select gender</option>
+                    <select class="form-select" formControlName="gender" aria-label="Default select example"  >
+                      <option value="" disabled>Select gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>                   
                     </select>
@@ -73,7 +73,8 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Role Name</label>
-                   <select class="form-select" formControlName="roleId" (change)="changeshowroom($event)">
+                   <select class="form-select" formControlName="roleId" (change)="changeshowroom($event)" aria-label="Default select example">
+                     <option value="" disabled>Select Role Name</option>
                      <option *ngFor="let data of role" [value]="data.roleId">{{data.role}}</option>
                    </select>
                   </div>  
@@ -81,7 +82,8 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Showroom Name</label>
-                   <select class="form-select" formControlName="showRoomId" readonly>
+                   <select class="form-select" formControlName="showRoomId" readonly aria-label="Default select example">
+                    <option value="" disabled>Select Role Name</option>
                      <option *ngFor="let data of showroom" [value]="data.showRoomId">{{data.showRoomName}}</option>
                    </select>
                   </div>  

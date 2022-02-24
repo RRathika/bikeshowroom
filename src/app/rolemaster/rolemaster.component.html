@@ -1,51 +1,33 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-primary">
-              <div class="card-header bg-primary">
-                <h3 class="card-title">Role Master Details</h3>
-              </div>
-              <form [formGroup]="roleForm" (ngSubmit)="submit()">
-                <div class="row">                                 
-                  <div class="col-md-6">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Role Name</label>
-                        <input type="text" class="form-control" formControlName="role"  placeholder="Role Name">
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-2">
-                    <div class="card-body pt-5">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
+    <div class="row">        
           <div class="col-md-12">
             <div class="card card-primary">
               <div class="card-body">
+                <div class="card-header bg-primary" >     
+                  <h3 class="card-title">Role Master Details</h3>             
+                  <button class="btn btn-success float-end btn-sm" (click)="display()">Add New Role</button>
+                </div>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr class="text-center">
-                      <th>SI.NO</th>
+                      <!-- <th>SI.NO</th> -->
                       <th>Name</th>                                   
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">
-                    <tr *ngFor="let data of roles;let i=index;">
-                      <td>{{i+1}}</td>
+                    <tr *ngFor="let data of roles | paginate: { itemsPerPage: count, currentPage: p };let i=index;">
+                      <!-- <td>{{i+1}}</td> -->
                       <td>{{data.role}}</td>                             
-                      <td><i class="fas fa-edit" style="color: blue;" (click)="edit(data.roleId)"></i></td>
-                      <td><i class="fa fa-trash" style="color: red;" aria-hidden="true" (click)="delete(data.roleId)"></i></td>
+                      <td><button class="btn btn-success" (click)="edit(data.roleId)"><i class="fas fa-edit" style="color: white;" ></i></button></td>
+                      <td><button class="btn btn-danger"  (click)="delete(data.roleId)"><i class="fa fa-trash" style="color: white;" aria-hidden="true"></i></button></td>
                     </tr>              
                   </tbody>
                 </table>
+                <div class="text-right">
+                  <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+                </div>
               </div>
               <!-- /.card-body -->
             </div>

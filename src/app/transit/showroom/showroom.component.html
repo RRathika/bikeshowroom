@@ -1,9 +1,10 @@
 <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="displayadd">
         <div class="card card-primary">
           <div class="card-header bg-primary">
             <h3 class="card-title">Show Room Details</h3>
+            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Showroom List</button>
           </div>
           <form [formGroup]="showroomForm" (ngSubmit)="submit()">
             <div class="row p-3">
@@ -12,6 +13,10 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Show Room Name</label> 
                     <input type="text" class="form-control" formControlName="showRoomName" placeholder="Show Room Name">
+                    <span class="text-danger"
+                    *ngIf="(showroomForm.controls.showRoomName.touched || submitted) && showroomForm.controls.showRoomName.errors?.required">
+                    <small>Name is required</small> 
+                    </span>
                   </div>
                 <!-- </div> -->
               </div>
@@ -20,6 +25,11 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
                     <input type="text" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
+                    <span class="text-danger"
+                    *ngIf="(showroomForm.controls.showRoomName.touched || submitted) && showroomForm.controls.showRoomName.errors?.required">
+                    <small>Mobile number is required</small> 
+                    <!-- <div *ngIf="showroomForm.controls.showRoomName.errors?.pattern">Mobile number is not 10 digit</div> -->
+                    </span>
                   </div>
                 <!-- </div>   -->
                 </div>           
@@ -28,12 +38,17 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Address</label>
                     <textarea placeholder="Address" class="form-control" rows="3" formControlName="address"></textarea> 
+                    <span class="text-danger"
+                    *ngIf="(showroomForm.controls.showRoomName.touched || submitted) && showroomForm.controls.showRoomName.errors?.required">
+                    <small>Address is required</small> 
+                </span>
                   </div>
                 <!-- </div> -->
               </div>
               <div class="col-md-2">
                 <div class="card-body pt-5">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button *ngIf="!showRoomId" type="submit" class="btn btn-primary">Submit</button>
+                  <button *ngIf="showRoomId" type="submit" class="btn btn-primary">Update</button>
                 </div>
               </div>
             </div>
@@ -41,13 +56,17 @@
           </form>
         </div>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="!displayadd">
         <div class="card card-primary">
           <div class="card-body">
+            <div class="card-header bg-primary" >     
+              <h3 class="card-title">Showroom Master Details</h3>             
+              <button class="btn btn-success float-end btn-sm" (click)="display()">Add Showroom</button>
+            </div>
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr class="text-center">
-                  <th>SI.NO</th>
+                  <!-- <th>SI.NO</th> -->
                   <th>Show Room Name</th>
                   <th>Address</th>                
                   <th>Mobile No</th>
@@ -56,16 +75,19 @@
                 </tr>
               </thead>
               <tbody class="text-center">
-                <tr *ngFor="let data of showdata; let i=index;">
-                  <td>{{i+1}}</td>
+                <tr *ngFor="let data of showdata| paginate: { itemsPerPage: count, currentPage: p };let i=index;">
+                  <!-- <td>{{i+1}}</td> -->
                   <td>{{data.showRoomName}}</td>
                   <td>{{data.address}}</td>
                   <td>{{data.mobileNo}}</td>                
-                  <td><i class="fas fa-edit" style="color: blue;" (click)="editshowroom(data.showRoomId)"></i></td>
-                  <td><i class="fa fa-trash"  style="color: red;" aria-hidden="true" (click)="delete(data.showRoomId)"></i></td>
+                  <td> <button class="btn btn-success" (click)="editshowroom(data.showRoomId)"><i class="fas fa-edit" style="color: white;" ></i></button></td>
+                  <td><button class="btn btn-danger" (click)="delete(data.showRoomId)"><i class="fa fa-trash"  style="color: white;" aria-hidden="true" ></i></button></td>
                 </tr>              
               </tbody>
             </table>
+            <div class="text-right">
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+            </div>
           </div>
           <!-- /.card-body -->
         </div>

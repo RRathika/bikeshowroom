@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddrolemasterComponent } from './addrolemaster/addrolemaster.component';
 import { AuthguardGuard } from './authguard.guard';
 import { AdvancebookComponent } from './common-ui/advancebook/advancebook.component';
 import { DashboardComponent } from './common-ui/dashboard/dashboard.component';
 import { EnquirylistComponent } from './common-ui/enquiry/enquirylist/enquirylist.component';
 import { EnquirylistaddComponent } from './common-ui/enquiry/enquirylistadd/enquirylistadd.component';
+import { FinanceComponent } from './common-ui/Finance/finance.component';
 import { HomeComponent } from './common-ui/home/home.component';
 import { AddvehiclesalesComponent } from './common-ui/vehiclesales/addvehiclesales/addvehiclesales.component';
 import { BikemodelComponent } from './common-ui/vehiclesales/bikemodel/bikemodel.component';
@@ -13,6 +15,7 @@ import { InvoiceComponent } from './common-ui/vehiclesales/invoice/invoice.compo
 import { VariantComponent } from './common-ui/vehiclesales/variant/variant.component';
 import { VehiclepurchaseComponent } from './common-ui/vehiclesales/vehiclepurchase/vehiclepurchase.component';
 import { VehiclepurchaselistComponent } from './common-ui/vehiclesales/vehiclepurchaselist/vehiclepurchaselist.component';
+import { VehiclesaleslistComponent } from './common-ui/vehiclesales/vehiclesaleslist/vehiclesaleslist.component';
 import { VendoraddComponent } from './common-ui/vehiclesales/vendoradd/vendoradd.component';
 import { VendorsComponent } from './common-ui/vehiclesales/vendors/vendors.component';
 import { RolemasterComponent } from './rolemaster/rolemaster.component';
@@ -22,8 +25,10 @@ import { TranslistComponent } from './transit/translist/translist.component';
 import { YardComponent } from './transit/yard/yard.component';
 import { RegisterComponent } from './users/register/register.component';
 import { UserdetailsComponent } from './users/userdetails/userdetails.component';
+import { ShowroomtoyardComponent } from './vehicleManage/showroomtoyard/showroomtoyard.component';
 import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktransfer.component';
 import { VehiclestockComponent } from './vehicleManage/vehiclestock/vehiclestock.component';
+import { YardtoyardComponent } from './vehicleManage/yardtoyard/yardtoyard.component';
 
 
 const routes: Routes = [
@@ -31,7 +36,7 @@ const routes: Routes = [
   path: 'auth',
   loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
 },
-
+{path:'invoice',component:InvoiceComponent},
 {path:'dashboard',component:DashboardComponent, canActivate :[AuthguardGuard],
 children:[
 {path:'',component:HomeComponent},
@@ -42,6 +47,7 @@ children:[
 {path:'transitadd',component:TransitlistComponent},
 {path:'transitlist',component:TranslistComponent},
 {path:'addvehiclesale',component:AddvehiclesalesComponent},
+{path:'vehiclesalelist',component:VehiclesaleslistComponent},
 {path:'enquirylist',component:EnquirylistComponent},
 {path:'enquiryadd',component:EnquirylistaddComponent},
 {path:'advancebook',component:AdvancebookComponent},
@@ -55,7 +61,10 @@ children:[
 {path:'vehiclestock',component:VehiclestockComponent},
 {path:'stocktype',component:StocktransferComponent},
 {path:'yard',component:YardComponent},
-{path:'invoice',component:InvoiceComponent}]}
+{path:'finance',component:FinanceComponent},
+{path:'showroomtoyard',component:ShowroomtoyardComponent},
+{path:'yardtoyard',component:YardtoyardComponent},
+{path:'addrole',component:AddrolemasterComponent}]}
 ];
 
 @NgModule({

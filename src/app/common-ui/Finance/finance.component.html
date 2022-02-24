@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header bg-primary">
+            <h3 class="card-title">Finance Details</h3>
+          </div>
+          <form [formGroup]="financeForm" (ngSubmit)="submit()">
+            <div class="row p-3">
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Finance Name</label> 
+                    <input type="text" class="form-control" formControlName="financeName" placeholder="Finance Name">
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Mobile No</label>
+                    <input type="text" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
+                  </div>
+                </div>           
+              <div class="col-md-10">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Address</label>
+                    <textarea placeholder="Address" class="form-control" rows="3" formControlName="address"></textarea> 
+                  </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card-body pt-5">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </div>
+            
+          </form>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr class="text-center">
+                  <th>SI.NO</th>
+                  <th>Finance Name</th>
+                  <th>Address</th>                
+                  <th>Mobile No</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let data of showdata; let i=index;">
+                  <td>{{i+1}}</td>
+                  <td>{{data.financeName}}</td>
+                  <td>{{data.address}}</td>
+                  <td>{{data.mobileNo}}</td>                
+                  <td><i class="fas fa-edit" style="color: blue;" (click)="editFinance(data.financeDetailId)"></i></td>
+                  <td><i class="fa fa-trash"  style="color: red;" aria-hidden="true" (click)="delete(data.financeDetailId)"></i></td>
+                </tr>              
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

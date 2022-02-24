@@ -35,7 +35,12 @@ import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktrans
 import { RegisterComponent } from './users/register/register.component';
 import { UserdetailsComponent } from './users/userdetails/userdetails.component';
 import { YardComponent } from './transit/yard/yard.component';
-
+import { VehiclesaleslistComponent } from './common-ui/vehiclesales/vehiclesaleslist/vehiclesaleslist.component';
+import { ShowroomtoyardComponent } from './vehicleManage/showroomtoyard/showroomtoyard.component';
+import { YardtoyardComponent } from './vehicleManage/yardtoyard/yardtoyard.component';
+import { FinanceComponent } from './common-ui/Finance/finance.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { AddrolemasterComponent } from './addrolemaster/addrolemaster.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +70,12 @@ import { YardComponent } from './transit/yard/yard.component';
     StocktransferComponent,
     RegisterComponent,
     UserdetailsComponent,
-    YardComponent
+    YardComponent,
+    VehiclesaleslistComponent,
+    ShowroomtoyardComponent,
+    YardtoyardComponent,
+    FinanceComponent,
+    AddrolemasterComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +86,8 @@ import { YardComponent } from './transit/yard/yard.component';
     DataTablesModule,
     NgbModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxPaginationModule
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]

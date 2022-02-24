@@ -13,7 +13,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Showroom Name</label>
                                 <select class="form-select" (change)="showroomchange($event)" formControlName="showRoomId">
-                                    <option>Select</option>
+                                    <!-- <option>Select</option> -->
                                     <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                 </select>
                             </div>

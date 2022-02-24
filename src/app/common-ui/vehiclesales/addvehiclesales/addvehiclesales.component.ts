@@ -52,6 +52,10 @@ export class AddvehiclesalesComponent implements OnInit {
   format: string = "medium";
   disableTextbox:boolean=false;
   advanceamount=0;
+  cash:number=0;
+  card:number=0;
+  cheque:number=0;
+  dd:number=0;upi:number=0;
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -193,6 +197,16 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.controls['date'].disable();
     this.customerDetailForm.controls['invoiceNo'].disable();
     this.isdisable=true;
+    let role = localStorage.getItem('RoleId');
+    
+    if(role != '1')
+    {
+      this.myDate=this.datePipe.transform(this.now, 'yyyy-MM-dd');
+      this.customerDetailForm.controls['invoiceDate'].disable();
+      this.customerDetailForm.patchValue({
+        invoiceDate:this.myDate
+      })
+    }
   }
   
   loadinvoice(){
@@ -264,7 +278,7 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   modelnamechange(e: any) {
-    debugger
+    
     let model = e.target.value;
     this.vehicleDetailsForm.patchValue({
       modelId: model
@@ -296,6 +310,7 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   variantnamechange(e: any) {
+    debugger
     let variant = e.target.value;
     let show = localStorage.getItem('ShowRoomId');
     let role = localStorage.getItem('RoleId');
@@ -483,44 +498,44 @@ export class AddvehiclesalesComponent implements OnInit {
         this.iscredit = false;
         break;
     }
-   if(value.target.value==1)
-   {
-    let bookamount=this.advanceamount;
-    let net=this.vehicleDetailsForm.value['total'];
-    let cash=this.transtypecash.value['handAmount'];
-    let card=this.transtypecash.value['cardAmount'];
-    let cheque=this.transtypecash.value['chequeAmount'];
-    let dd=this.transtypecash.value['ddAmount'];
-    let upi=this.transtypecash.value['upiAmount'];
-    let amount=cash+card+cheque+dd+upi
-    let balance=net-(bookamount+amount)
-    this.payDetails.patchValue({
-      cashbank:amount,
-      balanceamt:balance
-    })
-   }
-   if(value.target.value==2)
-   {
-    let amount=this.creditForm.value['creditAmount'];
-    let bookamount=this.advanceamount;
-    let net=this.vehicleDetailsForm.value['total'];
-    let balance=net-(bookamount+amount)
-    this.payDetails.patchValue({
-      creditamt:amount,
-      balanceamt:balance
-    })
-   }
-   if(value.target.value==3)
-   {
-    let amount=this.finalform.value['downPayment'];
-    let bookamount=this.advanceamount;
-    let net=this.vehicleDetailsForm.value['total'];
-    let balance=net-(bookamount+amount)
-    this.payDetails.patchValue({
-      financeamt:amount,
-      balanceamt:balance
-    })
-   }
+  //  if(value.target.value==1)
+  //  {
+  //   let bookamount=this.advanceamount;
+  //   let net=this.vehicleDetailsForm.value['total'];
+  //   let cash=this.transtypecash.value['handAmount'];
+  //   let card=this.transtypecash.value['cardAmount'];
+  //   let cheque=this.transtypecash.value['chequeAmount'];
+  //   let dd=this.transtypecash.value['ddAmount'];
+  //   let upi=this.transtypecash.value['upiAmount'];
+  //   let amount=cash+card+cheque+dd+upi
+  //   let balance=net-(bookamount+amount)
+  //   this.payDetails.patchValue({
+  //     cashbank:amount,
+  //     balanceamt:balance
+  //   })
+  //  }
+  //  if(value.target.value==2)
+  //  {
+  //   let amount=this.creditForm.value['creditAmount'];
+  //   let bookamount=this.advanceamount;
+  //   let net=this.vehicleDetailsForm.value['total'];
+  //   let balance=net-(bookamount+amount)
+  //   this.payDetails.patchValue({
+  //     creditamt:amount,
+  //     balanceamt:balance
+  //   })
+  //  }
+  //  if(value.target.value==3)
+  //  {
+  //   let amount=this.finalform.value['downPayment'];
+  //   let bookamount=this.advanceamount;
+  //   let net=this.vehicleDetailsForm.value['total'];
+  //   let balance=net-(bookamount+amount)
+  //   this.payDetails.patchValue({
+  //     financeamt:amount,
+  //     balanceamt:balance
+  //   })
+  //  }
 
   }
 
@@ -551,6 +566,11 @@ export class AddvehiclesalesComponent implements OnInit {
         console.log("No such day exists!");
         break;
     }
+    
+    
+  }
+  cashinhand(e:any){    
+    
     let bookamount=this.advanceamount;
     let net=this.vehicleDetailsForm.value['total'];
     let cash=this.transtypecash.value['handAmount'];
@@ -558,13 +578,40 @@ export class AddvehiclesalesComponent implements OnInit {
     let cheque=this.transtypecash.value['chequeAmount'];
     let dd=this.transtypecash.value['ddAmount'];
     let upi=this.transtypecash.value['upiAmount'];
-    let amount=cash+card+cheque+dd+upi
-    let balance=net-(bookamount+amount)
+    let amount=parseInt(cash) + parseInt(card) + parseInt(cheque) + parseInt(dd) + parseInt(upi);
+    let balance=net-(bookamount+amount);
     this.payDetails.patchValue({
       cashbank:amount,
-      balanceamt:balance
+      balanceamt:balance,
+      financeamt:0,
+      creditamt:0
     })
-    
+  }
+  creditamount(e:any)
+  {
+    let bookamount=this.advanceamount;
+    let net=this.vehicleDetailsForm.value['total'];    
+    let amount=this.creditForm.value['creditAmount'];
+    let balance=net-(bookamount+amount)
+    this.payDetails.patchValue({
+      creditamt:amount,
+      balanceamt:balance,
+      financeamt:0,
+      cashbank:0
+    })
+  }
+  financeamount(e:any)
+  {
+    let bookamount=this.advanceamount;
+    let net=this.vehicleDetailsForm.value['total'];    
+    let amount=this.financeForm.value['downPayment'];
+    let balance=net-(bookamount+amount)
+    this.payDetails.patchValue({
+      financeamt:amount,
+      balanceamt:balance,
+      creditamt:0,
+      cashbank:0
+    })
   }
   finalsubmit() {   
     this.myDate=this.datePipe.transform(this.now, 'yyyy-MM-dd');
@@ -580,26 +627,22 @@ export class AddvehiclesalesComponent implements OnInit {
     this.finalform.patchValue({
       createVehicleCustomerDetailsDTO:this.customerDetailForm.value,createVehicleSalesDetailDTO:this.vehicleDetailsForm.value,createVehicleSaleTransactionDetailDTO:this.payDetails.value
     })
-    this.print()  
-    // console.log(this.finalform);
-    // this.service.salessave(this.finalform.value).subscribe((data:any)=>{
-    //   if(data.statusCode==200)
-    //   {
-    //     this.toastService.show(data.message,{classname:'bg-success text-light', delay: 10000});
-              
-    //     this.finalform.reset();
-    //     this.isShownHome = ! this.isShownHome;
-    //     this.isShownProfile = false;
-    //     this.isShownContact = false;
-    //   }
-    //   else{
-    //     this.toastService.show(data.message,{classname:'bg-danger text-light', delay: 10000})
-    //   }
-    // })
+     
+   
+    this.service.salessave(this.finalform.value).subscribe((data:any)=>{
+      if(data)
+      {
+        this.service.printvalue.next(this.finalform.value);
+        this.toastService.show(data.message,{classname:'bg-success text-light', delay: 10000});  
+        this.print();         
+      }
+      else{
+        this.toastService.show(data.message,{classname:'bg-danger text-light', delay: 10000})
+      }
+    })
     
   }
-  print(){
-    this.service.printvalue.next(this.finalform.value);
-    this.route.navigateByUrl('/dashboard/invoice');
+  print(){    
+    this.route.navigateByUrl('/invoice');
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ToastServiceService } from '../toast-service.service';
 import { YamahaserviceService } from '../yamahaservice.service';
@@ -14,63 +15,33 @@ export class RolemasterComponent implements OnInit {
   getid:any;
   result: any;
   roleId:any;
-  constructor(private service:YamahaserviceService,private formbuilder:FormBuilder,public toastService:ToastServiceService) { }
-  roleForm:FormGroup=this.formbuilder.group({
-    roleId:0,
-    role:new FormControl('',[Validators.required])  
-  })
+  submitted = false;
+  displayadd:boolean=false;
+  p: number = 1;
+  count: number = 10;
+  constructor(private service:YamahaserviceService,private formbuilder:FormBuilder,public toastService:ToastServiceService,private route:Router) {}
+ 
   ngOnInit(): void {
-    this.getdata();
-    this.service.rolemaster.subscribe(data=>{
-      this.result=data; 
-      this.roleId=this.result.roleId;
-      if(data){        
-        this.roleForm.patchValue(data);
-      }
-    })
+    this.getdata();  
   }
   getdata(){
+   
     this.service.getrolemaster().subscribe(data=>{
       this.roles=data;
       console.log(this.roles);      
     })
   }
-  submit(){
-    if(this.roleId)
-    {
-      this.service.updaterolemaster(this.roleForm.value).subscribe((data:any)=>{ 
-        if(data.statusCode==200)
-        {
-          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
-          this.roleForm.reset();
-          this.getdata(); 
-        } 
-         else{
-          this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 });
-         }   
-      })
-    }
-    else{
-    this.service.saverolemaster(this.roleForm.value).subscribe((data:any)=>{ 
-      if(data.statusCode==200)
-      {
-        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
-        this.roleForm.reset();
-        this.getdata(); 
-      } 
-       else{
-        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 });
-       }   
-    })
-  }
-  }
+ 
   click(id:any){
     this.getid=id;
   }
   edit(id:any){
+    this.displayadd=true;    
     this.service.rolegetbyId(id).subscribe(data=>{
-      this.service.rolemaster.next(data);
+      this.service.rolemaster.next(data); 
+      this.route.navigateByUrl('/dashboard/addrole')
     })
+  
   }
   delete(id:any){
     const swalWithBootstrapButtons = Swal.mixin({
@@ -101,4 +72,8 @@ export class RolemasterComponent implements OnInit {
       }
     });  
   }
+  display(){  
+    this.route.navigateByUrl('/dashboard/addrole')
+  }
+  
 }

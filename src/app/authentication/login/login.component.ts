@@ -24,6 +24,11 @@ export class LoginComponent implements OnInit {
   });
   ngOnInit(): void {
     this.macaddresss();
+    localStorage.removeItem('UserCode');
+    localStorage.removeItem('ShowRoomId');
+    localStorage.removeItem('UserName');
+    localStorage.removeItem('MacAddress');
+    localStorage.removeItem('RoleId');
   }
   macaddresss()
   {

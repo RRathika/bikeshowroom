@@ -1,12 +1,4 @@
-<div class="col-md-3" *ngIf="roleid==1">
-    <div class="form-group">
-        <label for="exampleInputEmail1">Showroom</label>
-        <select class="form-select" (change)="showroomchange($event)">
-            <option>Select</option>
-            <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
-        </select>
-    </div>
-</div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -15,7 +7,16 @@
                     <h3 class="card-title">Enquiry Details</h3>
                     <button class="btn btn-success float-end" (click)="addshow()">Add Enquiry</button>
                 </div>
-                <table id="example1" class="table table-bordered table-striped mt-5">
+                <div class="col-md-3 pt-2" *ngIf="roleid==1">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Showroom</label>
+                        <select class="form-select" (change)="showroomchange($event)">
+                            <option>Select</option>
+                            <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr class="text-center">
                             <th>SI.NO</th>
@@ -43,8 +44,8 @@
                         </tr>
                     </tbody>
                 </table>
-                <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"
-                    [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination>
+                <!-- <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"
+                    [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination> -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">

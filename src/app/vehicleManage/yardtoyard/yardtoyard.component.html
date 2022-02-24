@@ -1,0 +1,124 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header bg-primary">
+            <h3 class="card-title">Yard To Yard</h3>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="modelName">From Showroom</label>
+                  <select class="form-select" aria-label="Default select example" (change)="changeShowroom($event)">
+                    <option>Select</option>
+                    <option *ngFor="let data of showroomdata;" [value]="data.showRoomId">{{data.showRoomName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">From Yard</label>  
+                  <select class="form-select" aria-label="Default select example" (change)="changeFromYard($event)">
+                    <option>Select</option>
+                    <option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">To Yard</label>    
+                    <select class="form-select" aria-label="Default select example" (change)="changeToYard($event)">
+                      <option>Select</option>
+                      <option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  
+  
+  
+  
+      <div class="row">
+        <div class="col-md-6">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>
+                  </th>
+                  <th>Chassis No</th>
+                  <th>Engine No</th>
+                  <th>Model Name</th>
+                  <th>Yard Id</th>
+                </tr>
+              </thead>
+              <tr *ngFor="let data of firstTable;let i=index;">
+                <td>
+                  <input type="checkbox" value="{{data.id}}"
+                    (click)="onSelect(firstTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId)">
+                </td>
+                <td>{{data.chassisNo}}</td>
+                <td>{{data.engineNo}}</td>
+                <td>{{data.vehicleModelName}}</td>
+                <td>{{data.yardId}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Chassis No</th>
+                  <th>Engine No</th>
+                  <th>Model Name</th>
+                  <th>Yard Id</th>
+                </tr>
+              </thead>
+              <tr *ngFor="let data of secondTable; let i=index;">
+                <td>
+                  <input type="checkbox" value="{{data.id}}"
+                    (click)="onDelect(secondTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId)">
+                </td>
+                <td>{{ data.chassisNo }}</td>
+                <td>{{ data.engineNo }}</td>
+                <td>{{ data.vehicleModelName }}</td>
+                <td>{{data.yardId}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+  
+        <div class="text-center mx-auto p-3">
+          <button type="submit" class="btn btn-primary" (click)="save()">
+            Submit
+          </button>
+        </div>
+  
+      </div>
+  
+  
+  
+  
+  
+  
+    </div>
+  </div>
+  <ngb-toast header="Notification header">
+    Content of the notification
+  </ngb-toast>
+  
+  
+  
+  

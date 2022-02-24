@@ -9,3 +9,7 @@ p{
     font-family: ui-sans-serif;
     font-size: 16px;
 }
+h3.card-title {
+    margin: 0px !important;
+    padding-top: 0.25rem!important;
+}

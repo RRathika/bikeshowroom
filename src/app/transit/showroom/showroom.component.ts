@@ -15,6 +15,11 @@ export class ShowroomComponent implements OnInit {
   showdata:any;
   result: any;
   showRoomId:any;
+  submitted = false;
+  displayadd:boolean=false;
+  p: number = 1;
+  count: number = 10;
+  // phoneNumber = "^(\+\d{1,3}[- ]?)?\d{10}$";
   constructor(private router:Router,private service:YamahaserviceService,private formbuilder:FormBuilder,public toastservice:ToastServiceService) { }
   showroomForm:FormGroup=this.formbuilder.group({
   showRoomName:new FormControl('',[Validators.required]),
@@ -23,17 +28,7 @@ export class ShowroomComponent implements OnInit {
   showRoomId:0
   })
   ngOnInit(): void {
-    this.loaddata();
-    
-      this.service.showroom.subscribe(data=>{
-        this.result=data; 
-        this.showRoomId=this.result.showRoomId;
-      console.log(this.result);
-        if(data){        
-          this.showroomForm.patchValue(data);
-        }
-      })
-    
+    this.loaddata(); 
   }
   loaddata(){
     this.service.getshowroom().subscribe(data=>{
@@ -41,6 +36,7 @@ export class ShowroomComponent implements OnInit {
     })
   }
   submit(){
+    this.submitted = true;
     if(this.showRoomId)
     {
       if(this.showroomForm.valid){
@@ -49,6 +45,7 @@ export class ShowroomComponent implements OnInit {
          {
           this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 5000 }); 
           this.showroomForm.reset();
+          this.displayadd=false;
           this.loaddata();
          }
          else{
@@ -65,6 +62,7 @@ export class ShowroomComponent implements OnInit {
        {
         this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 5000 }); 
         this.showroomForm.reset();
+        this.displayadd=false;
         this.loaddata();
        }
        else{
@@ -75,8 +73,17 @@ export class ShowroomComponent implements OnInit {
   }
   }
   editshowroom(id:any){
+    this.displayadd=true;
     this.service.getbyidshowroom(id).subscribe(data=>{
       this.service.showroom.next(data);
+      this.service.showroom.subscribe(data=>{
+        this.result=data; 
+        this.showRoomId=this.result.showRoomId;
+      console.log(this.result);
+        if(data){        
+          this.showroomForm.patchValue(data);
+        }
+      })
     })
   }
   delete(id:any){
@@ -108,5 +115,13 @@ export class ShowroomComponent implements OnInit {
       console.log('cancel');
       }
     });
+  }
+  display(){    
+    this.displayadd=true;
+    this.service.showroom.next('');
+    this.showroomForm.reset();
+  }
+  listdisplay(){
+    this.displayadd=false;
   }
 }

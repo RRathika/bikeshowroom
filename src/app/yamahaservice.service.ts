@@ -18,7 +18,8 @@ export class YamahaserviceService {
   public user=new BehaviorSubject<any>('');
   public showroom=new BehaviorSubject<any>('');
   public yard = new BehaviorSubject<any>('');
-  public printvalue=new BehaviorSubject<any>('')
+  public printvalue=new BehaviorSubject<any>('');
+  public finance= new BehaviorSubject<any>('');
   getbikemodel():Observable<any>{return this.httpclient.get(this.url+'BikeModel/GetBikeModels');}
   savebikemodel(data:any):Observable<any>{return this.httpclient.post(this.url+'BikeModel/SaveBikeModel',data);}
   updatebikemodel(data:any):Observable<any>{return this.httpclient.put(this.url+'BikeModel/UpdateBikeModel',data);}
@@ -71,7 +72,7 @@ export class YamahaserviceService {
   savepurchase(data:any):Observable<any>{return this.httpclient.post(this.url+`VehiclePurchase/SaveVehiclePurchase`,data);}
   getvehiclepurchase(show:any,yard:any,mon:any,from:any,to:any):Observable<any>{return this.httpclient.get(this.url+`VehiclePurchase/GetVehiclePurchase?ShowRoomId=${show}&YardId=${yard}&Month=${mon}&FromDate=${from}&ToDate=${to}`);} 
   getvehiclepurchasebyid(id:any):Observable<any>{return this.httpclient.get(this.url+`VehiclePurchase/GetVehiclePurchaseDetailsByVehiclePurchaseId?VehiclePurchaseId=${id}`);}
-  listvehiclestock(showroom:any,modelname:any):Observable<any>{ return this.httpclient.get(this.url+`VehicleStock/GetVehicleStock?ShowRoomId=${showroom}&VehicleModelId=${modelname}`);}
+  listvehiclestock(showroom:any,modelname:any,yard:any):Observable<any>{ return this.httpclient.get(this.url+`VehicleStock/GetVehicleStock?ShowRoomId=${showroom}&VehicleModelId=${modelname}&YardId=${yard}`);}
   savestocktransfer(data:any):Observable<any>{return this.httpclient.post(this.url+'StockTransfer/SaveStockTransfer',data);}
   getuserdetails():Observable<any>{return this.httpclient.get(this.url+`UserRegistration/GetUserDetails`);}
   getuserbyid(id:any):Observable<any>{return this.httpclient.get(this.url+`UserRegistration/GetUserDetailsById?UserCode=${id}`);}
@@ -102,4 +103,13 @@ export class YamahaserviceService {
   getfinance():Observable<any>{return this.httpclient.get(this.url+'FinanceDetail/GetFinanceDetail');}
   getinvoice():Observable<any>{return this.httpclient.get(this.url+'VehicleCustomerDetails/GetInvoiceNo');}
   salessave(data:any):Observable<any>{return this.httpclient.post(this.url+'VehicleSalesDetail/SaveVehicleSales',data);}
+  getsales(show:any,yard:any,from:any,to:any):Observable<any>{return this.httpclient.get(this.url+`VehicleSalesDetail/GetVehicleSalesInvoiceDetail?ShowRoomId=${show}&YardId=${yard}&FromDate=${from}&ToDate=${to}`);}
+  getbysale(id:any):Observable<any>{return this.httpclient.get(this.url+`VehicleSalesDetail/GetVehicleSalesInvoiceDetailById?VehicleSalesInvoiceDetailId=${id}`)}
+  saveFinanceDetail(data:any):Observable<any>{return this.httpclient.post(this.url+'FinanceDetail/SaveFinanceDetail',data);}
+
+  getFinanceDetailById(id:any):Observable<any>{return this.httpclient.get(this.url+`FinanceDetail/GetFinanceDetailById?FinanceDetailId=${id}`);}
+
+  updateFinanceDetail(data:any):Observable<any>{return this.httpclient.put(this.url+'FinanceDetail/UpdateFinanceDetail',data);}
+
+  deleteFinanceDetail(id:any):Observable<any>{return this.httpclient.post(this.url+`FinanceDetail/DeleteFinanceDetail?FinanceDetailId=${id}`,"");}
 }
