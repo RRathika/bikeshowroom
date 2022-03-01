@@ -13,6 +13,9 @@
                                 <label for="modelName">Name</label>
                                 <input type="text" class="form-control" formControlName="name" id="name"
                                     placeholder="Name">
+                                    <div class="text-danger" *ngIf="submitted">
+                                        <span  *ngIf="enquiryaddForm.controls.name.errors?.required">Name required.</span> 
+                                     </div> 
                             </div>
                         </div>
                         <!-- <div class="col-md-4">                        
@@ -25,8 +28,13 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Mobile No</label>
-                                <input type="text" class="form-control" formControlName="mobileNo" id="mobileNo"
+                                <input type="number" class="form-control" formControlName="mobileNo" id="mobileNo"
                                     placeholder="Mobile No">
+                                    <div class="text-danger" *ngIf="submitted">
+                                        <span  *ngIf="enquiryaddForm.controls.mobileNo.errors?.required">Mobile Number required.</span>
+                                        <span *ngIf="enquiryaddForm.controls.mobileNo.errors?.pattern">Please, Enter 10 digit Mobile Number.</span>
+                                        <span></span> 
+                                     </div> 
                             </div>
                         </div>
                         <!-- <div class="col-md-4">                        
@@ -41,6 +49,9 @@
                                 <label for="modelName">Planing Date</label>
                                 <input type="date" class="form-control" formControlName="planningDate" id="modelName"
                                     placeholder="Date">
+                                    <div class="text-danger" *ngIf="submitted">
+                                        <span *ngIf="createForm.controls.planningDate.errors?.required">planning Date required.</span>                                       
+                                     </div> 
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -48,7 +59,7 @@
                             <div class="input-group">
                                 <div class="custom-file ml-4">
                                     <input class="form-check-input " type="radio" value="1" id="flexCheckDefault"
-                                        formControlName="interestedIn">
+                                        formControlName="interestedIn" >
                                     <label class="form-check-label" for="flexCheckDefault">
                                         Bike
                                     </label>
@@ -56,29 +67,36 @@
                                         formControlName="interestedIn">
                                     <label class="form-check-label ml-5" for="flexCheckDefault1">
                                         Scooty
-                                    </label>
-                                </div>
+                                    </label>                                    
+                                </div>                                 
                             </div>
+                            <div class="text-danger" *ngIf="submitted">
+                                <span  *ngIf="enquiryaddForm.controls.interestedIn.errors?.required">Vehicle type required.</span> 
+                             </div>
                         </div>
                         <div class="col-md-3" *ngIf="roledata==1">
                             <div class="form-group">
                                 <label for="modelName">Showroom Name</label>
                                 <select class="form-select" formControlName="showRoomId">
+                                    <option value="">Select</option>
                                     <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                 </select>
+                                <div class="text-danger" *ngIf="submitted">
+                                    <span  *ngIf="enquiryaddForm.controls.showRoomId.errors?.required">Showroom Name required.</span> 
+                                 </div> 
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Place</label>
                                 <textarea rows="1" class="form-control" formControlName="place"></textarea>
-                            </div>
+                            </div>                            
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Remarks</label>
                                 <textarea rows="1" class="form-control" formControlName="remarks"></textarea>
-                            </div>
+                            </div>                            
                         </div>                        
                         <div class="col-md-3 text-center mt-3 pt-1">
                             <button type="submit" class="btn btn-primary">Submit</button>

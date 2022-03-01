@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder,FormControl,FormGroup } from '@angular/forms';
+import { FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { ToastServiceService } from 'src/app/toast-service.service';
@@ -16,23 +16,21 @@ export class YardComponent implements OnInit {
    showroomdata:any;
    result:any;
    yardId:any;
+   submitted:boolean = false;
+  displayadd:boolean=false;
+  p: number = 1;
+  count: number = 10;
   constructor(private service:YamahaserviceService,private router:Router,private formbuilder:FormBuilder,public toastservice:ToastServiceService) { }
   yardForm:FormGroup=this.formbuilder.group({
-    yardName:new FormControl(''),
-    showRoomId:new FormControl(''),
-    mobileNo:new FormControl(''),
-    address:new FormControl(''),
+    yardName:new FormControl('',[Validators.required]),
+    showRoomId:new FormControl('',[Validators.required]),
+    mobileNo:new FormControl('',[Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+    address:new FormControl('',[Validators.required]),
     yardId:0 
   });
   ngOnInit(): void {
     this.loadyard();
-    this.showroom();
-    this.service.yard.subscribe(data=>{
-      this.result=data;
-      console.log(this.result);
-      this.yardId=this.result.yardId;
-      this.yardForm.patchValue(data);
-    })
+    this.showroom();   
   }
   loadyard(){
     this.service.getyard().subscribe(data=>{
@@ -45,8 +43,15 @@ export class YardComponent implements OnInit {
     })
   }
   edityard(id:any){
+    this.displayadd=true;
     this.service.getbyidyard(id).subscribe(data=>{
       this.service.yard.next(data);
+      this.service.yard.subscribe(data=>{
+        this.result=data;
+        console.log(this.result);
+        this.yardId=this.result.yardId;
+        this.yardForm.patchValue(data);
+      })
     })
   }
   delete(id:any){
@@ -80,6 +85,7 @@ export class YardComponent implements OnInit {
     });
   }
   submit(){
+    this.submitted=true;
     if(this.yardId){
       if(this.yardForm.valid)
     {
@@ -87,6 +93,7 @@ export class YardComponent implements OnInit {
         if(data.statusCode==200){
           this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 5000});
           this.yardForm.reset();
+          this.displayadd=false;
           this.loadyard();
         }
         else
@@ -103,6 +110,7 @@ export class YardComponent implements OnInit {
         if(data.statusCode==200){
           this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 5000});
           this.yardForm.reset();
+          this.displayadd=false;
           this.loadyard();
         }
         else
@@ -110,10 +118,16 @@ export class YardComponent implements OnInit {
           this.toastservice.show(data.message,{classname: 'bg-danger text-light', delay: 5000});
         }
       })
-    }
-    else{
-      this.toastservice.show("Fill All Field",{classname:'bg-danger text-light', delay:15000});
-    }
+    }    
   }
+  }
+  display(){    
+    this.displayadd=true;
+    this.service.yard.next('');
+    this.yardForm.reset();
+    this.submitted=false;
+  }
+  listdisplay(){
+    this.displayadd=false;
   }
 }

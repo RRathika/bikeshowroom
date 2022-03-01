@@ -1,9 +1,10 @@
 <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="displayadd">
         <div class="card card-primary">
           <div class="card-header bg-primary">
             <h3 class="card-title">Bike Model Details</h3>
+            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Bike Model List</button>
           </div>
           <form [formGroup]="bikemodelForm" (ngSubmit)="submit()">
             <div class="row">
@@ -17,6 +18,11 @@
                   <option value="1">Bike</option>
                   <option value="2">Scooty</option>
                 </select>
+                <div *ngIf="submitted">
+                  <span class="text-danger" *ngIf="bikemodelForm.controls.vehicleType.errors?.required">
+                <small>Vehicle Type required</small> 
+                </span>
+                </div> 
                 </div>
               </div>
             </div>
@@ -25,6 +31,11 @@
                 <div class="form-group">
                   <label for="modelName">Model Name</label>
                   <input type="email" class="form-control" formControlName="modelName" id="modelName" placeholder="Model Name">
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="bikemodelForm.controls.modelName.errors?.required">
+                  <small>Name is required</small> 
+                  </span>
+                  </div> 
                 </div>
               </div>
             </div>
@@ -33,21 +44,31 @@
                 <div class="form-group">
                   <label for="modelName">Model Code</label>
                   <input type="email" class="form-control" formControlName="modelCode" id="modelName" placeholder="Model Code">
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="bikemodelForm.controls.modelCode.errors?.required">
+                  <small>Model Code  required</small> 
+                  </span>
+                  </div> 
                 </div>
               </div>
             </div>
             <div class="col-md-3">
               <div class="card-body pt-5">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit"  *ngIf="!modelId" class="btn btn-primary">Submit</button>
+                <button type="submit" *ngIf="modelId" class="btn btn-primary">Update</button>
               </div>
             </div>
           </div>
           </form>
         </div>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="!displayadd">
       <div class="card card-primary">     
         <div class="card-body">
+          <div class="card-header bg-primary" >     
+            <h3 class="card-title">Bike Model Master Details</h3>             
+            <button class="btn btn-success float-end btn-sm" (click)="display()">Add Bike Model</button>
+          </div>
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr class="text-center">
@@ -60,16 +81,19 @@
               </tr>
             </thead>
             <tbody class="text-center">
-              <tr *ngFor="let data of getbike; let i=index;">
-                <td>{{i+1}}</td>
+              <tr *ngFor="let data of getbike | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
+                <td>{{ (p - 1) * count + i +1 }}</td>
                 <td>{{data.vehicleTypeName}}</td>
                 <td>{{data.modelName}}</td>
                 <td>{{data.modelCode}}</td>
-                <td><i class="fas fa-edit" style="color: blue;" (click)="bikemodeledit(data.modelId)"></i></td>
-                <td><i class="fa fa-trash" (click)="Delete(data.modelId)" style="color: red;" aria-hidden="true"></i></td>
+                <td><button class="btn btn-success btn-sm"  (click)="bikemodeledit(data.modelId)"><i class="fas fa-edit" style="color: white;"></i></button></td>
+                <td><button class="btn btn-danger btn-sm" (click)="Delete(data.modelId)"> <i class="fa fa-trash" style="color: white;" aria-hidden="true"></i></button></td>
               </tr>
             </tbody>  
           </table>
+          <div class="text-right">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+          </div>
         	<!-- <ngb-pagination [collectionSize]="pagingNumber" [(page)]="page" [boundaryLinks]="true"></ngb-pagination> -->
         </div>
         <!-- /.card-body -->

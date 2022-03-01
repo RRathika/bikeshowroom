@@ -10,18 +10,18 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr class="text-center">
-                      <!-- <th>SI.NO</th> -->
+                      <th>SI.NO</th>
                       <th>Name</th>                                   
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">
-                    <tr *ngFor="let data of roles | paginate: { itemsPerPage: count, currentPage: p };let i=index;">
-                      <!-- <td>{{i+1}}</td> -->
+                    <tr *ngFor="let i=index;let data of roles | paginate: { itemsPerPage: count, currentPage: p };">
+                      <td>{{ (p - 1) * count + i +1 }}</td>
                       <td>{{data.role}}</td>                             
-                      <td><button class="btn btn-success" (click)="edit(data.roleId)"><i class="fas fa-edit" style="color: white;" ></i></button></td>
-                      <td><button class="btn btn-danger"  (click)="delete(data.roleId)"><i class="fa fa-trash" style="color: white;" aria-hidden="true"></i></button></td>
+                      <td><button class="btn btn-success btn-sm" (click)="edit(data.roleId)"><i class="fas fa-edit" style="color: white;" ></i></button></td>
+                      <td><button class="btn btn-danger btn-sm"  (click)="delete(data.roleId)"><i class="fa fa-trash" style="color: white;" aria-hidden="true"></i></button></td>
                     </tr>              
                   </tbody>
                 </table>

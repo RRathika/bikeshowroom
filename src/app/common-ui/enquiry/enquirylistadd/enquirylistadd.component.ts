@@ -19,24 +19,26 @@ export class EnquirylistaddComponent implements OnInit {
   showdata:any;
   roledata: any;
   show:any;
+  submitted:boolean=false;
+  checked="checked";
   constructor(private route: Router, private service: YamahaserviceService, private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   enquiryaddForm: FormGroup = this.formBuilder.group({
     name: new FormControl('', [Validators.required]),   
-    mobileNo: new FormControl('', [Validators.required]),
-    place: new FormControl('', [Validators.required]),
-    interestedIn: new FormControl('', [Validators.required]),
+    mobileNo: new FormControl('', [Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+    place: new FormControl(''),
+    interestedIn: new FormControl('',[Validators.required]),
     planningDate: new FormControl('', [Validators.required]),
-    remarks:new FormControl('',[Validators.required]),
-    showRoomId:new FormControl('')
+    remarks:new FormControl(''),
+    showRoomId:new FormControl('',[Validators.required])
   })
   createForm:FormGroup=this.formBuilder.group({
     enquiryId: [0],
     planningDate:new FormControl('', [Validators.required]),
-    remarks:new FormControl('', [Validators.required])
+    remarks:new FormControl('')
   })
   MainForm: FormGroup = this.formBuilder.group({
-    createEnquiryDTO: new FormControl(this.enquiryaddForm),
-    createEnquiryDetailsDTO: new FormControl(this.createForm)
+    createEnquiryDTO: new FormControl(this.enquiryaddForm, [Validators.required]),
+    createEnquiryDetailsDTO: new FormControl(this.createForm, [Validators.required])
   })
 
   ngOnInit(): void { 
@@ -49,7 +51,8 @@ export class EnquirylistaddComponent implements OnInit {
       this.showdata=data;
     })
   }
-  submit() {    
+  submit() {   
+    this.submitted=true; 
     if(this.roledata!=1)
     {
       this.enquiryaddForm.patchValue({showRoomId:this.show});
@@ -65,10 +68,9 @@ export class EnquirylistaddComponent implements OnInit {
     this.enquiryaddForm?.removeControl('planningDate'); 
     this.enquiryaddForm?.removeControl('remarks');  
     this.MainForm.patchValue({ createEnquiryDetailsDTO: this.createForm.value, createEnquiryDTO: this.enquiryaddForm.value })
-    if(this.MainForm.valid)
-    {
-      debugger
-    this.service.saveenquiry(this.MainForm?.value).subscribe((data:any)=>{
+    if(this.enquiryaddForm.valid && this.createForm.valid)
+    {      
+    this.service.saveenquiry(this.MainForm.value).subscribe((data:any)=>{
       if(data.statusCode==200){      
       this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
       this.route.navigateByUrl('/dashboard/enquirylist');

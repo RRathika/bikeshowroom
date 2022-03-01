@@ -1,9 +1,10 @@
 <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="displayadd">
         <div class="card card-primary">
           <div class="card-header bg-primary">
-            <h3 class="card-title">Yard Details</h3>
+            <h3 class="card-title">Yard Add</h3>
+            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Yard List</button>
           </div>
           <form [formGroup]="yardForm" (ngSubmit)="submit()">
             <div class="row p-3">
@@ -11,6 +12,11 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Yard Name</label> 
                     <input type="text" class="form-control" formControlName="yardName" placeholder="Yard Name">
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="yardForm.controls.yardName.errors?.required">
+                    <small>Name is required</small> 
+                    </span>
+                    </div> 
                   </div>
               </div>
               <div class="col-md-4">
@@ -20,23 +26,40 @@
                       <option>Select Showroom</option>
                       <option *ngFor="let item of showroomdata" [value]="item.showRoomId">{{item.showRoomName}}</option>
                   </select>
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="yardForm.controls.showRoomId.errors?.required">
+                  <small>Name is required</small> 
+                  </span>
+                  </div> 
                 </div>
              </div>
               <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
                     <input type="text" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
+                    <div class="text-danger" *ngIf="submitted">
+                      <span 
+                      *ngIf="yardForm.controls.mobileNo.errors?.required">
+                      <small>Mobile number is required</small> </span>
+                      <div *ngIf="yardForm.controls.mobileNo.errors?.pattern">Mobile number is not 10 digit</div>
+                    </div>
                   </div>
               </div>           
               <div class="col-md-10">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Address</label>
                     <textarea placeholder="Address" class="form-control" rows="3" formControlName="address"></textarea> 
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="yardForm.controls.address.errors?.required">
+                    <small>Name is required</small> 
+                    </span>
+                    </div> 
                   </div>
               </div>
               <div class="col-md-2">
                 <div class="card-body pt-5">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" *ngIf="!yardId" class="btn btn-primary">Submit</button>
+                  <button type="submit" *ngIf="yardId" class="btn btn-primary">Update</button>
                 </div>
               </div>
             </div>
@@ -44,9 +67,13 @@
           </form>
         </div>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="!displayadd">
         <div class="card card-primary">
           <div class="card-body">
+            <div class="card-header bg-primary" >     
+              <h3 class="card-title">Yard Master Details</h3>             
+              <button class="btn btn-success float-end btn-sm" (click)="display()">Add Yard</button>
+            </div>
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr class="text-center">
@@ -59,16 +86,19 @@
                 </tr>
               </thead>
               <tbody class="text-center">
-                <tr *ngFor="let data of yarddata; let i=index;">
-                  <td>{{i+1}}</td>
+                <tr *ngFor="let data of yarddata| paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
+                  <td>{{ (p - 1) * count + i +1 }}</td>
                   <td>{{data.yardName}}</td>
                   <td>{{data.address}}</td>
                   <td>{{data.mobileNo}}</td>                
-                  <td><i class="fas fa-edit" style="color: blue;" (click)="edityard(data.yardId)"></i></td>
-                  <td><i class="fa fa-trash"  style="color: red;" aria-hidden="true" (click)="delete(data.yardId)"></i></td>
+                  <td> <button class="btn btn-success btn-sm" (click)="edityard(data.yardId)"><i class="fas fa-edit" style="color: white;" ></i></button></td>
+                  <td> <button class="btn btn-danger btn-sm" (click)="delete(data.yardId)"><i class="fa fa-trash"  style="color: white;" aria-hidden="true"></i></button></td>
                 </tr>              
               </tbody>
             </table>
+            <div class="text-right">
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+            </div>
           </div>
           <!-- /.card-body -->
         </div>

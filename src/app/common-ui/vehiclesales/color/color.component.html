@@ -1,9 +1,10 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" *ngIf="displayadd">
       <div class="card card-primary">
         <div class="card-header bg-primary">
           <h3 class="card-title">Bike Color</h3>
+          <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Bike color List</button>
         </div>
         <form [formGroup]="colorForm" (ngSubmit)="submit()">
           <div class="row">
@@ -14,6 +15,11 @@
                   <select formControlName="modelId" class="form-select dropdown-primary" id="Select1">
                     <option *ngFor="let data of bikemodeldata"  [value]=data.modelId selected>{{data.modelName}}</option>
                 </select>
+                <div *ngIf="submitted">
+                  <span class="text-danger" *ngIf="colorForm.controls.modelId.errors?.required">
+                <small>Model Name required</small> 
+                </span>
+                </div> 
                 </div>
               </div>
             </div>           
@@ -22,6 +28,11 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Color Name</label>
                   <input type="text" class="form-control" formControlName="colorName" id="exampleInputEmail1" placeholder="variant">
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="colorForm.controls.colorName.errors?.required">
+                  <small>Color Name required</small> 
+                  </span>
+                  </div> 
                 </div>
               </div>
             </div>
@@ -30,21 +41,31 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Color Code</label>
                   <input type="text" class="form-control" formControlName="colorCode" id="exampleInputEmail1" placeholder="variant">
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="colorForm.controls.colorName.errors?.required">
+                  <small>Color code required</small> 
+                  </span>
+                  </div> 
                 </div>
               </div>
             </div>
             <div class="col-md-2">
               <div class="card-body pt-5">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" *ngIf="!variantId" class="btn btn-primary">Submit</button>
+                <button type="submit" *ngIf="variantId" class="btn btn-primary">Update</button>
               </div>
             </div>
           </div>
         </form>
       </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12" *ngIf="!displayadd">
       <div class="card card-primary">
         <div class="card-body">
+          <div class="card-header bg-primary" >     
+            <h3 class="card-title">Color Master Details</h3>             
+            <button class="btn btn-success float-end btn-sm" (click)="display()">Add Color</button>
+          </div>
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr class="text-center">
@@ -57,16 +78,19 @@
               </tr>
             </thead>
             <tbody class="text-center">
-              <tr *ngFor="let data of colordata; let i=index;">
-                <td>{{i+1}}</td>
+              <tr *ngFor="let data of colordata | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
+                <td>{{ (p - 1) * count + i +1 }}</td>
                 <td>{{data.modelName}}</td>
                 <td>{{data.colorName}}</td>    
                 <td>{{data.colorCode}}</td>            
-                <td><i class="fas fa-edit" style="color: blue;"(click)="Editcolor(data.colorId)"></i></td>
-                <td><i class="fa fa-trash" (click)="Delete(data.colorId)" style="color: red;" aria-hidden="true"></i></td>
+                <td> <button class="btn btn-success btn-sm" (click)="Editcolor(data.colorId)"> <i class="fas fa-edit" style="color: white;"></i></button></td>
+                <td> <button class="btn btn-danger btn-sm" (click)="Delete(data.colorId)"><i class="fa fa-trash"  style="color: white;" aria-hidden="true"></i></button></td>
               </tr>              
             </tbody>
           </table>
+          <div class="text-right">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+          </div>
         </div>
         <!-- /.card-body -->
       </div>

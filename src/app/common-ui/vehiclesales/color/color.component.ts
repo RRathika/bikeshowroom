@@ -15,6 +15,10 @@ export class ColorComponent implements OnInit {
   bikemodeldata:any;
   variantId:any;
   result:any;
+  p: number = 1;
+  count: number = 10;
+  submitted:boolean = false;
+  displayadd:boolean=false;
   constructor(private router:Router,private service:YamahaserviceService,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   colorForm: FormGroup = this.formBuilder.group({
     colorId:0,
@@ -25,14 +29,7 @@ export class ColorComponent implements OnInit {
   ngOnInit(): void {
     this.getcolor();
     this.getmodel();
-    this.service.color.subscribe(data=>{
-      this.result=data; 
-      console.log(this.result);      
-      this.variantId=this.result.colorId;
-      if(data){        
-        this.colorForm.patchValue(data);
-      }
-    })
+    
   }
   getmodel(){
     this.service.getbikemodel().subscribe(data=>{
@@ -45,12 +42,16 @@ export class ColorComponent implements OnInit {
     })
   }
   submit(){
+    this.submitted=true;
+    if(this.colorForm.valid)
+    {
     if(this.variantId){
       console.log("update");      
       this.service.updatecolor(this.colorForm?.value).subscribe(data=>{
         if(data.statusCode==200){
           this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });   
           this.colorForm.reset();
+          this.displayadd=false;
           this.getcolor();
           }
           else{
@@ -64,6 +65,7 @@ export class ColorComponent implements OnInit {
       if(data.statusCode==200){
       this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
       this.colorForm.reset();
+      this.displayadd=false;
       this.getcolor();   
       }
       else{
@@ -71,10 +73,20 @@ export class ColorComponent implements OnInit {
       }
     })
   }
+}
   }
   Editcolor(id:any){
+    this.displayadd=true;
     this.service.getbyidcolor(id).subscribe(data=>{     
         this.service.color.next(data);
+        this.service.color.subscribe(data=>{
+          this.result=data; 
+          console.log(this.result);      
+          this.variantId=this.result.colorId;
+          if(data){        
+            this.colorForm.patchValue(data);
+          }
+        })
     })
   }
   Delete(id:any){
@@ -106,5 +118,14 @@ export class ColorComponent implements OnInit {
       console.log('cancel');
       }
     });
+  }
+  display(){    
+    this.displayadd=true;
+    this.service.color.next('');
+    this.colorForm.reset();
+    this.submitted=false;
+  }
+  listdisplay(){
+    this.displayadd=false;
   }
 }

@@ -16,9 +16,10 @@ export class BikemodelComponent implements OnInit {
   statusCode:any;
   result:any;
   modelId:any;
-  page = 1;
-  pageSize = 10;
-  pagingNumber = 0;
+  p: number = 1;
+  count: number = 10;
+  submitted:boolean = false;
+  displayadd:boolean=false;
   constructor(private service:YamahaserviceService,private router: Router,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   bikemodelForm: FormGroup = this.formBuilder.group({
     modelId:0,
@@ -27,31 +28,26 @@ export class BikemodelComponent implements OnInit {
     modelCode:new FormControl('',[Validators.required])
   })
   ngOnInit(): void {
-    this.getbikemodel();
-    this.service.bikemodel.subscribe(response=>{
-      this.result=response; 
-      this.modelId=this.result.modelId;
-      if(response){        
-        this.bikemodelForm.patchValue(response);
-      }
-    })
+    this.getbikemodel(); 
     
   }
   getbikemodel(){
       this.service.getbikemodel().subscribe(data=>{
         this.getbike=data;
-        this.page = 1;
-        this.pagingNumber = 0;
-        this.pagingNumber = Math.ceil(this.getbike.length / (this.pageSize / 10));    
+         
       })
   }
   submit(){
+    this.submitted=true;
+    if(this.bikemodelForm.valid)
+    {
     if(this.modelId){
       this.service.updatebikemodel(this.bikemodelForm?.value).subscribe(data=>{
         this.statusCode=data.statusCode;
       if(this.statusCode==200){
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
         this.bikemodelForm.reset();
+        this.displayadd=false;
         this.getbikemodel()
       }
       else{
@@ -65,6 +61,7 @@ export class BikemodelComponent implements OnInit {
       if(this.statusCode==200){
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
         this.bikemodelForm.reset();
+        this.displayadd=false;
         this.getbikemodel()
       }
       else{
@@ -72,10 +69,19 @@ export class BikemodelComponent implements OnInit {
       }    
     })
   }
+}
   }
   bikemodeledit(id:any){
+    this.displayadd=true;
      this.service.getbyidmodel(id).subscribe(data=>{
       this.service.bikemodel.next(data);    
+      this.service.bikemodel.subscribe(response=>{
+        this.result=response; 
+        this.modelId=this.result.modelId;
+        if(response){        
+          this.bikemodelForm.patchValue(response);
+        }
+      })
     })    
   }
   Delete(id:any){
@@ -106,5 +112,14 @@ export class BikemodelComponent implements OnInit {
       console.log('cancel');
       }
     });  
+  }
+  display(){    
+    this.displayadd=true;
+    this.service.bikemodel.next('');
+    this.bikemodelForm.reset();
+    this.submitted=false;
+  }
+  listdisplay(){
+    this.displayadd=false;
   }
 }

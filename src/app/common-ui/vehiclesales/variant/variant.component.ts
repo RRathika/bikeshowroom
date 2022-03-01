@@ -16,14 +16,16 @@ export class VariantComponent implements OnInit {
   variant:any;
   result: any;
   variantId:any;
-  num1 : number=0;
-  num2 : number=0; 
-  num3 : number=0;
   igstp:any;
   cgstp:any;
   sgstp : any;
   solution:any;
   total:any;
+  p: number = 1;
+  count: number = 10;
+  submitted:boolean = false;
+  displayadd:boolean=false;
+  currentModel:number=1;
   constructor(private router:Router,private service:YamahaserviceService,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   variantForm: FormGroup = this.formBuilder.group({
     colorId:new FormControl('',[Validators.required]),
@@ -32,7 +34,7 @@ export class VariantComponent implements OnInit {
     variantName:new FormControl('',[Validators.required]),
     yearsOfWarranty:new FormControl('',[Validators.required]),
     oilChange:new FormControl('',[Validators.required]),
-    currentModel:new FormControl('',[Validators.required]),
+    currentModel:new FormControl(1),
     hsnCode:new FormControl('',[Validators.required]),
     invoiceAmount:new FormControl('',[Validators.required]),
     lifeTax:new FormControl('',[Validators.required]),
@@ -54,17 +56,17 @@ export class VariantComponent implements OnInit {
         this.variantForm.patchValue(data);
       }
     })
-    if(this.num1)
-    {
-      if(this.num2)
-      {
-        if(this.num3)
-        {
-          this.solution=this.num1+this.num2+this.num3;
-          console.log(this.solution);          
-        }
-      }
-    }
+    // if(this.num1)
+    // {
+    //   if(this.num2)
+    //   {
+    //     if(this.num3)
+    //     {
+    //       this.solution=this.num1+this.num2+this.num3;
+    //       console.log(this.solution);          
+    //     }
+    //   }
+    // }
   }
   loadcolor(){
     this.service.getcolor().subscribe((data:any[])=>{
@@ -152,9 +154,49 @@ export class VariantComponent implements OnInit {
       Total:amount.target.value()
     })
   }
-  sum()
+  sum1()
   {
-    this.solution=this.num1+this.num2+this.num3;
+    this.solution=this.variantForm.value['invoiceAmount']+this.variantForm.value['lifeTax']+this.variantForm.value['insurance'];
+    this.total=this.solution;
+    this.igstp=this.variantForm.value['igst'];
+    this.cgstp=this.variantForm.value['cgst'];
+    this.sgstp=this.variantForm.value['sgst'];
+    if(this.igstp!='')
+    {
+    this.igst(this.igstp);
+    }
+    if(this.cgstp!='')
+    {
+    this.cgst(this.cgstp);
+    }
+    if(this.sgstp!='')
+    {
+    this.cgst(this.cgstp);
+    }
+  }
+  sum2()
+  {
+    this.solution=this.variantForm.value['invoiceAmount']+this.variantForm.value['lifeTax']+this.variantForm.value['insurance'];
+    this.total=this.solution;
+    this.igstp=this.variantForm.value['igst'];
+    this.cgstp=this.variantForm.value['cgst'];
+    this.sgstp=this.variantForm.value['sgst'];
+    if(this.igstp!='')
+    {
+    this.igst(this.igstp);
+    }
+    if(this.cgstp!='')
+    {
+    this.cgst(this.cgstp);
+    }
+    if(this.sgstp!='')
+    {
+    this.cgst(this.cgstp);
+    }
+  }
+  sum3()
+  {
+    this.solution=this.variantForm.value['invoiceAmount']+this.variantForm.value['lifeTax']+this.variantForm.value['insurance'];
     this.total=this.solution;
     this.igstp=this.variantForm.value['igst'];
     this.cgstp=this.variantForm.value['cgst'];
@@ -214,5 +256,22 @@ export class VariantComponent implements OnInit {
     {
     this.igst(this.igstp);
     }
+  }
+  display(){    
+    this.displayadd=true;
+    this.service.variant.next('');
+    this.variantForm.reset();
+    this.submitted=false;
+  }
+  listdisplay(){
+    this.displayadd=false;
+  }
+  changemodel(e:any){
+    console.log(e.target.value);    
+    this.variantForm.patchValue({
+      currentModel:0
+    })
+    console.log(this.variantForm.value['currentModel']);
+    
   }
 }

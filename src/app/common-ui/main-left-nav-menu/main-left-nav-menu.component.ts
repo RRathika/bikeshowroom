@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-left-nav-menu.component.css'],
 })
 export class MainLeftNavMenuComponent implements OnInit {
+  userdata:any;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userdata=localStorage.getItem('UserName');
+  }
 }

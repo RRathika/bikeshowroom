@@ -15,7 +15,7 @@ export class ShowroomComponent implements OnInit {
   showdata:any;
   result: any;
   showRoomId:any;
-  submitted = false;
+  submitted:boolean = false;
   displayadd:boolean=false;
   p: number = 1;
   count: number = 10;
@@ -24,7 +24,7 @@ export class ShowroomComponent implements OnInit {
   showroomForm:FormGroup=this.formbuilder.group({
   showRoomName:new FormControl('',[Validators.required]),
   address: new FormControl('',[Validators.required]),
-  mobileNo:new FormControl('',[Validators.required]),
+  mobileNo:new FormControl('',[Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
   showRoomId:0
   })
   ngOnInit(): void {
@@ -120,6 +120,7 @@ export class ShowroomComponent implements OnInit {
     this.displayadd=true;
     this.service.showroom.next('');
     this.showroomForm.reset();
+    this.submitted=false;
   }
   listdisplay(){
     this.displayadd=false;

@@ -13,10 +13,11 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Show Room Name</label> 
                     <input type="text" class="form-control" formControlName="showRoomName" placeholder="Show Room Name">
-                    <span class="text-danger"
-                    *ngIf="(showroomForm.controls.showRoomName.touched || submitted) && showroomForm.controls.showRoomName.errors?.required">
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="showroomForm.controls.showRoomName.errors?.required">
                     <small>Name is required</small> 
                     </span>
+                    </div>                    
                   </div>
                 <!-- </div> -->
               </div>
@@ -24,12 +25,13 @@
                 <!-- <div class="card-body"> -->
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
-                    <input type="text" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
-                    <span class="text-danger"
-                    *ngIf="(showroomForm.controls.showRoomName.touched || submitted) && showroomForm.controls.showRoomName.errors?.required">
-                    <small>Mobile number is required</small> 
-                    <!-- <div *ngIf="showroomForm.controls.showRoomName.errors?.pattern">Mobile number is not 10 digit</div> -->
-                    </span>
+                    <input type="number" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
+                    <div class="text-danger" *ngIf="submitted">
+                    <span 
+                    *ngIf="showroomForm.controls.mobileNo.errors?.required">
+                    <small>Mobile number is required</small> </span>
+                    <div *ngIf="showroomForm.controls.mobileNo.errors?.pattern">Mobile number is not 10 digit</div>
+                  </div>
                   </div>
                 <!-- </div>   -->
                 </div>           
@@ -38,10 +40,12 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Address</label>
                     <textarea placeholder="Address" class="form-control" rows="3" formControlName="address"></textarea> 
+                    <div *ngIf="submitted">
                     <span class="text-danger"
-                    *ngIf="(showroomForm.controls.showRoomName.touched || submitted) && showroomForm.controls.showRoomName.errors?.required">
-                    <small>Address is required</small> 
-                </span>
+                    *ngIf="showroomForm.controls.address.errors?.required">
+                    <small>Address is required</small> </span>
+                  </div>
+                
                   </div>
                 <!-- </div> -->
               </div>
@@ -66,7 +70,7 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr class="text-center">
-                  <!-- <th>SI.NO</th> -->
+                  <th>SI.NO</th>
                   <th>Show Room Name</th>
                   <th>Address</th>                
                   <th>Mobile No</th>
@@ -76,12 +80,12 @@
               </thead>
               <tbody class="text-center">
                 <tr *ngFor="let data of showdata| paginate: { itemsPerPage: count, currentPage: p };let i=index;">
-                  <!-- <td>{{i+1}}</td> -->
+                  <td>{{ (p - 1) * count + i +1 }}</td>
                   <td>{{data.showRoomName}}</td>
                   <td>{{data.address}}</td>
                   <td>{{data.mobileNo}}</td>                
-                  <td> <button class="btn btn-success" (click)="editshowroom(data.showRoomId)"><i class="fas fa-edit" style="color: white;" ></i></button></td>
-                  <td><button class="btn btn-danger" (click)="delete(data.showRoomId)"><i class="fa fa-trash"  style="color: white;" aria-hidden="true" ></i></button></td>
+                  <td> <button class="btn btn-success btn-sm" (click)="editshowroom(data.showRoomId)"><i class="fas fa-edit" style="color: white;" ></i></button></td>
+                  <td><button class="btn btn-danger btn-sm" (click)="delete(data.showRoomId)"><i class="fa fa-trash"  style="color: white;" aria-hidden="true" ></i></button></td>
                 </tr>              
               </tbody>
             </table>

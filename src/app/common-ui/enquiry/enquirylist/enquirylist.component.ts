@@ -22,12 +22,15 @@ export class EnquirylistComponent implements OnInit {
   currentRate = 8;
   dataOnPage = 5;
   status: any;
-  closedata:any;
+  closedata :any='';
   myData:any;
   enquiryStatus:any;
   showroom: any;
   roleid: any;
   showdata:any;
+  submitted:boolean=false;
+  p: number = 1;
+  count: number = 10;
   constructor(private router: Router, private service: YamahaserviceService, private formbuilder: FormBuilder,public toastService:ToastServiceService) { }
   popupForm: FormGroup = this.formbuilder.group({
     enquiryId: [0],
@@ -51,8 +54,8 @@ export class EnquirylistComponent implements OnInit {
     this.service.getenquiry(this.roleid,name).subscribe(data=>{
       if(data.statusCode==200)
       {
-        this.toastService.show(data.message,{classname:'bg-success text-light', delay: 10000})
-        this.list=[];
+        // this.toastService.show(data.message,{classname:'bg-success text-light', delay: 10000})
+        this.list='';
       }
       else
       {
@@ -70,50 +73,64 @@ export class EnquirylistComponent implements OnInit {
   }
   popup(id: any) {
     this.enquiryDetailsId = '';
-    this.enquiryid = id;
+    this.enquiryid = id;    
     this.enquirydetail(this.enquiryid);
   }
-  enquirydetail(id: any) {
+  enquirydetail(id: any) {    
+    console.log(this.service.enquirydetails['_value']='');
+    this.popupForm.reset();
     this.service.getenquirydetailbyidall(id).subscribe((data: any) => {
+      if(data.statusCode==200)
+      {
+        this.enquirydetailslist=''; 
+      }
+      else{
       this.enquirydetailslist = data;
-      this.flowcount=data[0].isActive;     
+      this.flowcount=data[0].isActive;    
+      } 
     })
   }
-  submit() {
+  submit() { 
+    this.submitted=true;   
     if (this.enquiryDetailsId) {
       console.log(this.enquiryDetailsId);
       this.popupForm.patchValue({
         enquiryDetailsId: this.enquiryDetailsId
       });
+      
+      if(this.popupForm.valid)
+      {  
       this.service.updateenquirydetails(this.popupForm?.value).subscribe((data: any) => {
         if (data.statusCode == 200) {
-          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
+          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
           this.popupForm.reset();
           this.enquiryDetailsId = '';
           this.enquirydetail(this.enquiryid);
           this.enquiry();
         }
         else {
-          this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 15000});
+          this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 5000});
         }
       })
-
+    }
     }
     else {
       this.popupForm.patchValue({
         enquiryId: this.enquiryid
       });
+      if(this.popupForm.valid){
       this.service.saveenquirydetails(this.popupForm?.value).subscribe((data:any) => {
         if (data.statusCode == 200) {
-          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
+          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
         this.popupForm.reset();
         this.enquirydetail(this.enquiryid);
         this.enquiry();
         }
         else{
-          this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 15000});
+          this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 5000});
         }
       })
+    }
     }
   }
   editdetails(detailid: any) {
@@ -149,9 +166,8 @@ export class EnquirylistComponent implements OnInit {
       };  
       this.service.updateenquiryclose(this.myData).subscribe((data:any)=>{
         if (data.statusCode == 200) {   
-          this.enquirydetail(this.enquiryid);      
-          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
-          
+          // this.enquirydetail(this.enquiryid);      
+          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });          
         } 
         else{
           this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 15000});

@@ -19,11 +19,12 @@ export class AdvancebookComponent implements OnInit {
   selectedObject:any;
   showdata:any;
   role:any;
+  submitted:boolean=false;
   constructor(private service:YamahaserviceService,private route:Router,private formbuilder:FormBuilder,public toastservice:ToastServiceService) { }
   
   advancebookForm:FormGroup=this.formbuilder.group({
   name: new FormControl('',[Validators.required]), 
-  mobileNo: new FormControl('',[Validators.required]), 
+  mobileNo: new FormControl('',[Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]), 
   gender: new FormControl('',[Validators.required]), 
   date: new FormControl('',[Validators.required]), 
   advanceAmount:new FormControl('',[Validators.required]), 
@@ -40,6 +41,8 @@ export class AdvancebookComponent implements OnInit {
     this.varient();
     this.showroomdata();
     this.role=localStorage.getItem('RoleId');
+    this.advancebookForm.controls['colorId'].disable();
+    this.advancebookForm.controls['variantId'].disable();
   }
   showroomdata(){
     this.service.getshowroom().subscribe(data=>{
@@ -67,12 +70,13 @@ export class AdvancebookComponent implements OnInit {
     })
   }
   modelnamechange(e:any){
-    let model=e.target.value;
+    let model=e.target.value;    
+    this.advancebookForm.controls['colorId'].enable();
     this.service.selectmodel(model).subscribe(data=>{
       if(data.statusCode==200){  
         this.colorcode=[];
         this.varientcode=[];
-        this.toastservice.show('Dont have related color', { classname: 'bg-danger text-light', delay: 10000 });       
+        this.toastservice.show('Dont have related color Name', { classname: 'bg-danger text-light', delay: 10000 });       
       }
       else
       {
@@ -81,11 +85,12 @@ export class AdvancebookComponent implements OnInit {
     })    
   }
   colornamechange(e:any){
+    this.advancebookForm.controls['variantId'].enable();
     let model=e.target.value;
     this.service.selectcolor(model).subscribe(data=>{
       if(data.statusCode==200){  
         this.varientcode=[];
-        this.toastservice.show('Dont have related variant', { classname: 'bg-danger text-light', delay: 10000 });       
+        this.toastservice.show('Dont have related variant Name', { classname: 'bg-danger text-light', delay: 10000 });       
       }
       else
       {
@@ -101,7 +106,7 @@ export class AdvancebookComponent implements OnInit {
     })
     }
     console.log(this.advancebookForm.value);
-    
+    this.submitted=true;
     if(this.advancebookForm.valid)
     {
       this.service.saveadvancebokk(this.advancebookForm.value).subscribe(data=>{

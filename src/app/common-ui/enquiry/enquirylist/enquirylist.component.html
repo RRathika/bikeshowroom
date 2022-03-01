@@ -5,7 +5,7 @@
             <div class="card card-primary">
                 <div class="card-header bg-primary">
                     <h3 class="card-title">Enquiry Details</h3>
-                    <button class="btn btn-success float-end" (click)="addshow()">Add Enquiry</button>
+                    <button class="btn btn-success float-end btn-sm" (click)="addshow()">Add Enquiry</button>
                 </div>
                 <div class="col-md-3 pt-2" *ngIf="roleid==1">
                     <div class="form-group">
@@ -16,7 +16,7 @@
                         </select>
                     </div>
                 </div>
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped" *ngIf="list">
                     <thead>
                         <tr class="text-center">
                             <th>SI.NO</th>
@@ -29,27 +29,31 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        <tr *ngFor="let data of list; let i=index;">
-                            <td>{{i+1}}</td>
+                        <tr *ngFor="let data of list| paginate: { itemsPerPage: count, currentPage: p };let i=index;">
+                            <td>{{ (p - 1) * count + i +1 }}</td>
                             <td>{{data.name}}</td>
                             <td>{{data.mobileNo}}</td>
-                            <td>{{data.planningDate | date }} <h4 class="badge badge-danger">{{data.followCount}}</h4>
+                            <td>{{data.planningDate | date }} <small class="badge badge-danger">{{data.followCount}}</small>
                             </td>
                             <td>{{data.interestedInName}}</td>
                             <td>{{data.place}}</td>
                             <td>
-                                <i class="fas fa-edit" data-toggle="modal" data-target="#exampleModal"
-                                    data-whatever="@mdo" (click)="popup(data.enquiryId)"></i>
+                                <button class="btn btn-sm btn-primary"><i class="fas fa-edit" data-toggle="modal" data-target="#exampleModal"
+                                    data-whatever="@mdo" (click)="popup(data.enquiryId)"></i></button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <!-- <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"
-                    [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination> -->
+                <div class="text-right" *ngIf="list">
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+                  </div>
+                <div *ngIf="!list">
+                    <p  class="text-center text-danger"><small>No data found</small></p>
+                </div>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
+                    <div class="modal-dialog" role="document" >
+                        <div class="modal-content" style="width: 600px;">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Details</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -62,8 +66,10 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="message-text" class="col-form-label">Remarks</label>
-                                                <textarea class="form-control" rows="4"
-                                                    formControlName="remarks"></textarea>
+                                                <textarea class="form-control" rows="4" formControlName="remarks"></textarea>
+                                                <div class="text-danger" *ngIf="submitted">
+                                                    <span  *ngIf="popupForm.controls.remarks.errors?.required">Remarks required.</span> 
+                                                 </div> 
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -71,6 +77,9 @@
                                                 <label for="recipient-name" class="col-form-label">Planing Date</label>
                                                 <input type="date" class="form-control" id="recipient-name"
                                                     [readonly]="enquiryDetailsId" formControlName="planningDate">
+                                                    <div class="text-danger" *ngIf="submitted">
+                                                        <span  *ngIf="popupForm.controls.planningDate.errors?.required">Planing Date required.</span> 
+                                                     </div> 
                                                 <button type="submit" class="btn btn-primary mt-3"
                                                     *ngIf="enquiryDetailsId =='' &&  flowcount!=3 && status!='InProgress'">Save</button>
                                                 <button type="submit" class="btn btn-primary mt-3"
@@ -81,7 +90,7 @@
                                 </form>
                             </div>
                             <div class="modal-body">
-                                <table class="table">
+                                <table class="table" *ngIf="enquirydetailslist">
                                     <thead>
                                         <th>No</th>
                                         <th>Date</th>
@@ -90,16 +99,22 @@
                                         <th *ngIf="flowcount==0">Edit</th>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let data of enquirydetailslist;let i=index;">
-                                            <td>{{i+1}}</td>
+                                        <tr *ngFor="let data of enquirydetailslist| paginate: { itemsPerPage: count, currentPage: p };let i=index;">
+                                            <td>{{ (p - 1) * count + i +1 }}</td>
                                             <td>{{data.planningDate | date}}</td>
                                             <td>{{data.remarks}}</td>
                                             <td>{{data.statusName}}</td>
-                                            <td *ngIf="flowcount==0"> <i class="fas fa-edit"
-                                                    (click)="editdetails(data.enquiryDetailsId)"></i></td>
+                                            <td *ngIf="flowcount==0"><button class="btn btn-sm btn-primary"> <i class="fas fa-edit"
+                                                    (click)="editdetails(data.enquiryDetailsId)"></i></button></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="text-right" *ngIf="enquirydetailslist">
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+                                  </div>
+                                <div *ngIf="!enquirydetailslist" class="text-center text-danger">
+                                    <small>No data found</small>
+                                </div>
                             </div>
                             <div class="model-footer" *ngIf="flowcount==0">
                                 <div class="col-md-12 mb-3">
@@ -107,8 +122,8 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <!-- <label for="exampleFormControlSelect1">Example select</label> -->
-                                                <select class="form-select" id="exampleFormControlSelect1" [(ngModel)]="closedata">
-                                                  <option ngValue=""> Select Option</option>
+                                                <select class="form-select" [(ngModel)]="closedata">
+                                                  <option value="" > Select Option</option>
                                                   <option ngValue="1">Not interest</option>
                                                   <option ngValue="2">Purchase</option>
                                                 </select>
