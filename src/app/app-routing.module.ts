@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddrolemasterComponent } from './addrolemaster/addrolemaster.component';
 import { AuthguardGuard } from './authguard.guard';
 import { AdvancebookComponent } from './common-ui/advancebook/advancebook.component';
 import { DashboardComponent } from './common-ui/dashboard/dashboard.component';
@@ -16,9 +15,6 @@ import { VariantComponent } from './common-ui/vehiclesales/variant/variant.compo
 import { VehiclepurchaseComponent } from './common-ui/vehiclesales/vehiclepurchase/vehiclepurchase.component';
 import { VehiclepurchaselistComponent } from './common-ui/vehiclesales/vehiclepurchaselist/vehiclepurchaselist.component';
 import { VehiclesaleslistComponent } from './common-ui/vehiclesales/vehiclesaleslist/vehiclesaleslist.component';
-import { VendoraddComponent } from './common-ui/vehiclesales/vendoradd/vendoradd.component';
-import { VendorsComponent } from './common-ui/vehiclesales/vendors/vendors.component';
-import { RolemasterComponent } from './rolemaster/rolemaster.component';
 import { ShowroomComponent } from './transit/showroom/showroom.component';
 import { TransitlistComponent } from './transit/transitlist/transitlist.component';
 import { TranslistComponent } from './transit/translist/translist.component';
@@ -42,8 +38,6 @@ children:[
 {path:'',component:HomeComponent},
 {path:'color', component:ColorComponent},
 {path:'bikemodel',component:BikemodelComponent},
-{path:'vendors',component:VendorsComponent},
-{path:'vendoradd',component:VendoraddComponent},
 {path:'transitadd',component:TransitlistComponent},
 {path:'transitlist',component:TranslistComponent},
 {path:'addvehiclesale',component:AddvehiclesalesComponent},
@@ -51,7 +45,6 @@ children:[
 {path:'enquirylist',component:EnquirylistComponent},
 {path:'enquiryadd',component:EnquirylistaddComponent},
 {path:'advancebook',component:AdvancebookComponent},
-{path:'rolemaster',component:RolemasterComponent},
 {path:'showroom',component:ShowroomComponent},
 {path:'vehiclepurchase',component:VehiclepurchaselistComponent},
 {path:'vehiclepurchaseadd',component:VehiclepurchaseComponent},
@@ -64,7 +57,6 @@ children:[
 {path:'finance',component:FinanceComponent},
 {path:'showroomtoyard',component:ShowroomtoyardComponent},
 {path:'yardtoyard',component:YardtoyardComponent},
-{path:'addrole',component:AddrolemasterComponent},
 {path:'vendor',component:VendorComponent}
 ]}
 ];

@@ -10,8 +10,6 @@ import { DashboardComponent } from './common-ui/dashboard/dashboard.component';
 import { HomeComponent } from './common-ui/home/home.component';
 import { ColorComponent } from './common-ui/vehiclesales/color/color.component';
 import { BikemodelComponent } from './common-ui/vehiclesales/bikemodel/bikemodel.component';
-import { VendorsComponent } from './common-ui/vehiclesales/vendors/vendors.component';
-import { VendoraddComponent } from './common-ui/vehiclesales/vendoradd/vendoradd.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
@@ -23,7 +21,6 @@ import { EnquirylistaddComponent } from './common-ui/enquiry/enquirylistadd/enqu
 import { AdvancebookComponent } from './common-ui/advancebook/advancebook.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastsContainer } from './toasts-container.component';
-import { RolemasterComponent } from './rolemaster/rolemaster.component';
 import { TransitlistComponent } from './transit/transitlist/transitlist.component';
 import { TranslistComponent } from './transit/translist/translist.component';
 import { ShowroomComponent } from './transit/showroom/showroom.component';
@@ -40,7 +37,6 @@ import { ShowroomtoyardComponent } from './vehicleManage/showroomtoyard/showroom
 import { YardtoyardComponent } from './vehicleManage/yardtoyard/yardtoyard.component';
 import { FinanceComponent } from './common-ui/Finance/finance.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { AddrolemasterComponent } from './addrolemaster/addrolemaster.component';
 import { VendorComponent } from './common-ui/vehiclesales/vendor/vendor.component';
 
 
@@ -54,15 +50,12 @@ import { VendorComponent } from './common-ui/vehiclesales/vendor/vendor.componen
     HomeComponent,
     ColorComponent,
     BikemodelComponent,
-    VendorsComponent,
-    VendoraddComponent,
     TransitlistComponent,
     AddvehiclesalesComponent,
     EnquirylistComponent,
     EnquirylistaddComponent,
     AdvancebookComponent,
-    ToastsContainer,
-    RolemasterComponent,
+    ToastsContainer,    
     TranslistComponent,
     ShowroomComponent,
     VehiclepurchaseComponent,
@@ -77,7 +70,6 @@ import { VendorComponent } from './common-ui/vehiclesales/vendor/vendor.componen
     ShowroomtoyardComponent,
     YardtoyardComponent,
     FinanceComponent,
-    AddrolemasterComponent,
     VendorComponent
   ],
   imports: [
