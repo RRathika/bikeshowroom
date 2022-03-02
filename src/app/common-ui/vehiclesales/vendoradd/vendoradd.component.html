@@ -3,33 +3,62 @@
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header bg-primary">
-                    <h3 class="card-title">Bike vendor Details</h3>
+                    <h3 class="card-title">Bike Vendor Details</h3>
                 </div>
                 <form [formGroup]="vendorForm" (ngSubmit)="submit()">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label>Company Name</label>
+                                    <input type="text" class="form-control" 
+                                        placeholder="Company Name" formControlName="companyName">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>GSTNo</label>
+                                    <input type="text" class="form-control" 
+                                        placeholder="GSTNo" formControlName="gSTNo">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control" 
+                                        placeholder="Phone" formControlName="phone">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Place</label>
+                                    <input type="text" class="form-control" 
+                                        placeholder="Place" formControlName="place">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Pin Code</label>
+                                    <input type="text" class="form-control" 
+                                        placeholder="Pin Code" formControlName="pinCode">
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Date</label>
                                     <input type="date" class="form-control" id="exampleInputEmail1"
                                         placeholder="Bike Type" formControlName="date">
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Company Name</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Company Name" formControlName="companyName">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Company Address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Company Address" formControlName="companyAddress">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            </div> -->
+                           
+                         
+
+                           
+
+                            <!-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">City</label>
                                     <input type="email" class="form-control" id="exampleInputEmail1"
@@ -49,28 +78,16 @@
                                     <input type="email" class="form-control" id="exampleInputEmail1"
                                         placeholder="Country" formControlName="country">
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Zip</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Zip" formControlName="zipCode">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Phone</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Phone" formControlName="phone">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            </div> -->
+                            
+                           
+                            <!-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Fax</label>
                                     <input type="email" class="form-control"  formControlName="fax" id="exampleInputEmail1" placeholder="Fax">
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div> -->
+                            <!-- <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Insured?</label>
                                     <div class="input-group">
@@ -151,9 +168,10 @@
                                     <label for="exampleInputEmail1">Additional Comments</label>
                                     <textarea rows="3" class="form-control" formControlName="additionalComments"></textarea>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-2">
-                                <div class="card-body p-5 mt-3">
+                                <!-- <div class="card-body p-5 mt-3"> -->
+                                    <div class="card-body mt-3">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>

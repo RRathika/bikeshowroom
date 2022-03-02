@@ -1,0 +1,172 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" *ngIf="displayadd">
+            <div class="card card-primary">
+                <div class="card-header bg-primary">
+                    <h3 class="card-title">Vendor Add</h3>
+                    <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Vendor List</button>
+                </div>
+                <form [formGroup]="vendorForm" (ngSubmit)="submit()">
+                    <div class="row p-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Company Name</label>
+                                <input type="text" class="form-control" formControlName="companyName"
+                                    placeholder="Company Name">
+                                <div *ngIf="submitted">
+                                    <span class="text-danger" *ngIf="vendorForm.controls.companyName.errors?.required">
+                                        <small>Company Name is required</small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">GST No</label>
+                                <input type="text" class="form-control" formControlName="gstNo" placeholder="GST No">
+                                <!-- <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="vendorForm.controls.gSTNo.errors?.required">
+                  <small>GST No is required</small> 
+                  </span>
+                  </div>  -->
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Mobile No</label>
+                                <input type="number" class="form-control" formControlName="mobileNo"
+                                    id="exampleInputEmail1" placeholder="Mobile No">
+                                <div class="text-danger" *ngIf="submitted">
+                                    <span *ngIf="vendorForm.controls.mobileNo.errors?.required">
+                                        <small>Mobile No is required</small> </span>
+                                    <small *ngIf="vendorForm.controls.mobileNo.errors?.pattern">Mobile No must be 10
+                                        digit</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Place</label>
+                                <input type="text" class="form-control" formControlName="place" placeholder="Place">
+                                <div *ngIf="submitted">
+                                    <!-- <span class="text-danger" *ngIf="vendorForm.controls.Place.errors?.required">
+                  <small>Phone Number is required</small> 
+                  </span> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">PinCode</label>
+                                <input type="number" class="form-control" formControlName="pinCode"
+                                    placeholder="PinCode">
+                                <small class="text-danger" *ngIf="vendorForm.controls.pinCode.errors?.pattern">Pincode
+                                    must be 6 digit</small>
+                                <!-- <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="vendorForm.controls.pinCode.errors?.required">
+                  <small>PinCode is required</small> 
+                  </span>
+                  </div>  -->
+                            </div>
+                        </div>
+
+
+
+                        <!-- <div class="col-md-4">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Show room Name</label> 
+                  <select class="form-select" formControlName="showRoomId">
+                      <option>Select Showroom</option>
+                      <option *ngFor="let item of showroomdata" [value]="item.showRoomId">{{item.showRoomName}}</option>
+                  </select>
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="yardForm.controls.showRoomId.errors?.required">
+                  <small>Name is required</small> 
+                  </span>
+                  </div> 
+                </div>
+             </div> -->
+                        <!-- <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Mobile No</label>
+                    <input type="text" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
+                    <div class="text-danger" *ngIf="submitted">
+                      <span 
+                      *ngIf="yardForm.controls.mobileNo.errors?.required">
+                      <small>Mobile number is required</small> </span>
+                      <div *ngIf="yardForm.controls.mobileNo.errors?.pattern">Mobile number is not 10 digit</div>
+                    </div>
+                  </div>
+              </div>           
+              <div class="col-md-10">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Address</label>
+                    <textarea placeholder="Address" class="form-control" rows="3" formControlName="address"></textarea> 
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="yardForm.controls.address.errors?.required">
+                    <small>Name is required</small> 
+                    </span>
+                    </div> 
+                  </div>
+              </div> -->
+
+
+
+                        <div class="col-md-2">
+                            <div class="card-body mt-3">
+                                <button type="submit" *ngIf="!vendorId" class="btn btn-primary">Submit</button>
+                                <button type="submit" *ngIf="vendorId" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="col-md-12" *ngIf="!displayadd">
+            <div class="card card-primary">
+                <div class="card-body">
+                    <div class="card-header bg-primary">
+                        <h3 class="card-title">Vendor Details</h3>
+                        <button class="btn btn-success float-end btn-sm" (click)="display()">Add Vendor</button>
+                    </div>
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="text-center">
+                                <th>SI.NO</th>
+                                <th>Company Name</th>
+                                <th>GST No</th>
+                                <th>Mobile</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr
+                                *ngFor="let data of vendordata| paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
+                                <td>{{ (p - 1) * count + i +1 }}</td>
+                                <td>{{data.companyName}}</td>
+                                <td>{{data.gstNo}}</td>
+                                <td>{{data.mobileNo}}</td>
+                                <td> <button class="btn btn-success btn-sm" (click)="editvendor(data.vendorId)"><i
+                                            class="fas fa-edit" style="color: white;"></i></button></td>
+                                <td> <button class="btn btn-danger btn-sm" (click)="delete(data.vendorId)"><i
+                                            class="fa fa-trash" style="color: white;" aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>  
+    </div>
+</div>

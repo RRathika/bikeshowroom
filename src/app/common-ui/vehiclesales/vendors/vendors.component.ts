@@ -18,7 +18,8 @@ export class VendorsComponent implements OnInit {
   }
   getvendor(){
     this.service.getvendor().subscribe(data=>{
-      this.vendor=data;      
+      this.vendor=data;    
+      console.log(this.vendor)  
     })
   }
   show(){

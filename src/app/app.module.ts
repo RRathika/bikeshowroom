@@ -41,6 +41,8 @@ import { YardtoyardComponent } from './vehicleManage/yardtoyard/yardtoyard.compo
 import { FinanceComponent } from './common-ui/Finance/finance.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { AddrolemasterComponent } from './addrolemaster/addrolemaster.component';
+import { VendorComponent } from './common-ui/vehiclesales/vendor/vendor.component';
+
 
 @NgModule({
   declarations: [
@@ -75,7 +77,8 @@ import { AddrolemasterComponent } from './addrolemaster/addrolemaster.component'
     ShowroomtoyardComponent,
     YardtoyardComponent,
     FinanceComponent,
-    AddrolemasterComponent
+    AddrolemasterComponent,
+    VendorComponent
   ],
   imports: [
     BrowserModule,
