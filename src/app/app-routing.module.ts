@@ -29,7 +29,7 @@ import { ShowroomtoyardComponent } from './vehicleManage/showroomtoyard/showroom
 import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktransfer.component';
 import { VehiclestockComponent } from './vehicleManage/vehiclestock/vehiclestock.component';
 import { YardtoyardComponent } from './vehicleManage/yardtoyard/yardtoyard.component';
-
+import { VendorComponent } from './common-ui/vehiclesales/vendor/vendor.component';
 
 const routes: Routes = [
 {
@@ -42,7 +42,7 @@ children:[
 {path:'',component:HomeComponent},
 {path:'color', component:ColorComponent},
 {path:'bikemodel',component:BikemodelComponent},
-{path:'vendor',component:VendorsComponent},
+{path:'vendors',component:VendorsComponent},
 {path:'vendoradd',component:VendoraddComponent},
 {path:'transitadd',component:TransitlistComponent},
 {path:'transitlist',component:TranslistComponent},
@@ -64,7 +64,9 @@ children:[
 {path:'finance',component:FinanceComponent},
 {path:'showroomtoyard',component:ShowroomtoyardComponent},
 {path:'yardtoyard',component:YardtoyardComponent},
-{path:'addrole',component:AddrolemasterComponent}]}
+{path:'addrole',component:AddrolemasterComponent},
+{path:'vendor',component:VendorComponent}
+]}
 ];
 
 @NgModule({

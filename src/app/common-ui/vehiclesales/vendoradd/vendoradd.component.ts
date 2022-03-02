@@ -15,35 +15,41 @@ export class VendoraddComponent implements OnInit {
   constructor(private router:Router,private service:YamahaserviceService,private formBuilder:FormBuilder,public toastService: ToastServiceService ) { }
   vendorForm: FormGroup = this.formBuilder.group({
     vendorId:0,
-    date:new FormControl('',[Validators.required]),
+   // date:new FormControl('',[Validators.required]),
     companyName:new FormControl('',[Validators.required]),
-    companyAddress:new FormControl('',[Validators.required]),
-    city:new FormControl('',[Validators.required]),
-    state:new FormControl('',[Validators.required]),
-    country:new FormControl('',[Validators.required]),
-    zipCode:new FormControl('',[Validators.required]),
+    gSTNo :new FormControl('',[Validators.required]),
     phone:new FormControl('',[Validators.required]),
-    fax:new FormControl('',[Validators.required]),
-    insured:new FormControl('',[Validators.required]),
-    bonded:new FormControl('',[Validators.required]),
-    licensed:new FormControl('',[Validators.required]),
-    licenseNumber:new FormControl('',[Validators.required]),
-    products:new FormControl('',[Validators.required]),
-    services:new FormControl('',[Validators.required]),
-    additionalComments:new FormControl('',[Validators.required])
+    place:new FormControl('',[Validators.required]),
+    pinCode:new FormControl('',[Validators.required])
+    // companyAddress:new FormControl('',[Validators.required]),
+    // city:new FormControl('',[Validators.required]),
+    // state:new FormControl('',[Validators.required]),
+    // country:new FormControl('',[Validators.required]),
+    // zipCode:new FormControl('',[Validators.required]),
+    // phone:new FormControl('',[Validators.required]),
+    // fax:new FormControl('',[Validators.required]),
+    // insured:new FormControl('',[Validators.required]),
+    // bonded:new FormControl('',[Validators.required]),
+    // licensed:new FormControl('',[Validators.required]),
+    // licenseNumber:new FormControl('',[Validators.required]),
+    // products:new FormControl('',[Validators.required]),
+    // services:new FormControl('',[Validators.required]),
+    // additionalComments:new FormControl('',[Validators.required])
   })
   ngOnInit(): void {
     this.service.vendor.subscribe(data=>{
       this.result=data; 
-      // console.log(this.result);      
+       console.log(this.result);      
+      alert("1")
       this.vendorId=this.result.vendorId;
-      if(data){        
+      if(data){      
+        alert("2")  
         this.vendorForm.patchValue(data);
-        let part=data.date.split('T00:00:00');     
-        let parts=part[0];
-        this.vendorForm.patchValue({
-          date:parts
-        })
+        // let part=data.date.split('T00:00:00');     
+        // let parts=part[0];
+        // this.vendorForm.patchValue({
+        //   date:parts
+        // })
       }
     })
   }
