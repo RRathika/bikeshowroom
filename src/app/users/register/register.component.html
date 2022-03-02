@@ -4,7 +4,6 @@
       <div class="register-logo">
         <a href="#"><b>YAMAHA</b></a>
       </div>
-
       <div class="card">
         <div class="card-body register-card-body">
           <p class="login-box-msg">Register a new membership</p>
@@ -28,37 +27,59 @@
                       <div class="input-group-text">
                         <span class="fas fa-user"></span>
                       </div>
-                    </div>
+                    </div>                    
                   </div>
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="registerForm.controls.userName.errors?.required">
+                  <small>Name is required</small> 
+                  </span>
+                  </div> 
                 </div>                
                 <div class="col-md-4">
                   <div class="input-group mb-3">
-                    <input type="text" class="form-control" formControlName="mobileNo" placeholder="Mobile No">
+                    <input type="number" class="form-control" formControlName="mobileNo" placeholder="Mobile No">
                     <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fas fa-phone"></span>
                       </div>
-                    </div>
+                    </div>                    
                   </div>
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="registerForm.controls.mobileNo.errors?.required">
+                  <small>MobileNo required</small> 
+                  <div *ngIf="registerForm.controls.mobileNo.errors?.pattern">Mobile number is not 10 digit</div>
+                  </span>
+                  </div> 
                 </div>                
                 <div class="col-md-4">
                   <div class="input-group mb-3">
                     <select class="form-select" formControlName="gender" aria-label="Default select example"  >
                       <option value="" disabled>Select gender</option>
                       <option value="Male">Male</option>
-                      <option value="Female">Female</option>                   
-                    </select>
+                      <option value="Female">Female</option>
+                      <option value="other">Other</option>                   
+                    </select>                    
                     <!-- <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fas fa-address-list"></span>
                       </div>
                     </div> -->
                   </div>
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="registerForm.controls.gender.errors?.required">
+                  <small>Gender required</small> 
+                  </span>
+                  </div> 
                 </div>
                 <div class="col-md-4">
                   <div class="input-group mb-3">
-                    <input type="date" class="form-control" formControlName="dob">                    
+                    <input type="date" class="form-control" formControlName="dob">
                   </div>
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="registerForm.controls.dob.errors?.required">
+                  <small>Date of birth required</small> 
+                  </span>
+                  </div> 
                 </div>
                 <div class="col-md-4">
                   <div class="input-group mb-3">
@@ -67,16 +88,27 @@
                       <div class="input-group-text">
                         <span class="fas fa-user"></span>
                       </div>
-                    </div>
+                    </div>                    
                   </div>
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="registerForm.controls.macAddress.errors?.required">
+                  <small>Mac Address is required</small> 
+                  </span>
+                  </div> 
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Role Name</label>
                    <select class="form-select" formControlName="roleId" (change)="changeshowroom($event)" aria-label="Default select example">
                      <option value="" disabled>Select Role Name</option>
-                     <option *ngFor="let data of role" [value]="data.roleId">{{data.role}}</option>
+                     <option value="1">Admin</option>
+                     <option value="2">User</option>
                    </select>
+                   <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="registerForm.controls.roleId.errors?.required">
+                  <small>Role Name is required</small> 
+                  </span>
+                  </div> 
                   </div>  
                 </div>
                 <div class="col-md-4">
@@ -86,23 +118,34 @@
                     <option value="" disabled>Select Role Name</option>
                      <option *ngFor="let data of showroom" [value]="data.showRoomId">{{data.showRoomName}}</option>
                    </select>
+                   <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="registerForm.controls.showRoomId.errors?.required">
+                  <small>Showroom Name required</small> 
+                  </span>
+                  </div> 
                   </div>  
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-3">
                     <textarea class="form-control" formControlName="place" placeholder="place" rows="2"></textarea>                    
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="registerForm.controls.place.errors?.required">
+                    <small>Place required</small> 
+                    </span>
+                    </div> 
                   </div>
                 </div>                
                   <div class="col-md-12 my-2 text-center">
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" *ngIf="!userId" class="btn btn-primary">Register</button>
+                    <button type="submit" *ngIf="userId" class="btn btn-primary">Update Register Details</button>
                 </div>
                 </div>
             </form>
           </div>
 
-          <p class="mb-0 text-center pt-2">
+          <!-- <p class="mb-0 text-center pt-2">
             <a href="" class="text-center">I already have a membership</a>
-          </p>
+          </p> -->
         </div>
       </div>
     </div>

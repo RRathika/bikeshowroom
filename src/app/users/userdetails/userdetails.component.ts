@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 })
 export class UserdetailsComponent implements OnInit {
   userdata:any;
+   p: number = 1;
+  count: number = 10;
   constructor(private router:Router,private service:YamahaserviceService) { }
 
   ngOnInit(): void {
@@ -20,7 +22,8 @@ export class UserdetailsComponent implements OnInit {
       this.userdata=data;
     })
   }
-  add(){
+  add(){    
+    this.service.user['_value']='';
     this.router.navigateByUrl('/dashboard/register');
   }
   viewbyid(id:any){

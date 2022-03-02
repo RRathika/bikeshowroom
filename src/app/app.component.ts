@@ -7,5 +7,8 @@ const { read, write, utils } = XLSX;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'cks-internal-project';
+  title = 'yamaha-project';
+  onActivate(event:any) {
+    window.scroll(0,0);
+}
 }

@@ -17,6 +17,8 @@ export class TranslistComponent implements OnInit {
   roleid:any;
   showdata:any;
   yard:any;
+  p: number = 1;
+  count: number = 10;
   constructor(private router:Router,private formBuilder:FormBuilder,private service:YamahaserviceService,public toastservice:ToastServiceService) { }
   translistForm:FormGroup=this.formBuilder.group({
     fromdate:'',
@@ -28,9 +30,10 @@ export class TranslistComponent implements OnInit {
   ngOnInit(): void {
     this.showroom=localStorage.getItem('ShowRoomId');
     this.roleid=localStorage.getItem('RoleId')
-    this.loaddata( this.showroom);
+    this.loaddata(this.showroom);
     this.showroomdata();
     this.loadyard();
+    this.translistForm.controls['yard'].disable();
   }
   submit(){
     console.log(this.translistForm.value);
@@ -39,10 +42,11 @@ export class TranslistComponent implements OnInit {
       this.translistForm.value['showRoomId']=this.showroom;
     }
     this.service.gettransit(this.translistForm.value['showRoomId'],this.translistForm.value['yard'],this.translistForm.value['month'],this.translistForm.value['fromdate'],this.translistForm.value['todate']).subscribe(data=>{
+      debugger
       if(data.statusCode==200)
       {
-        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
-        this.list=[];
+        // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
+        this.list='';
         this.translistForm.reset();
       }
       else
@@ -72,6 +76,7 @@ export class TranslistComponent implements OnInit {
     this.service.showroombyyard(name).subscribe(data=>{
       this.yard=data;
     });
+    this.translistForm.controls['yard'].enable();
   }
   showroomdata(){
     this.service.getshowroom().subscribe(data=>{
@@ -84,8 +89,8 @@ export class TranslistComponent implements OnInit {
     this.service.gettransit(show,0,0,from,to).subscribe(data=>{
       if(data.statusCode==200)
       {
-        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
-        this.list=[];
+        // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
+        this.list='';
       }
       else
       {
@@ -108,5 +113,8 @@ export class TranslistComponent implements OnInit {
       this.service.purchasedata.next(data);
       this.router.navigateByUrl("/dashboard/vehiclepurchaseadd");
     })
+  }
+  datechoose(){
+    this.translistForm.controls['month'].disable();
   }
 }

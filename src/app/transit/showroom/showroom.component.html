@@ -67,7 +67,7 @@
               <h3 class="card-title">Showroom Master Details</h3>             
               <button class="btn btn-success float-end btn-sm" (click)="display()">Add Showroom</button>
             </div>
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-bordered table-striped" *ngIf="showdata">
               <thead>
                 <tr class="text-center">
                   <th>SI.NO</th>
@@ -89,9 +89,12 @@
                 </tr>              
               </tbody>
             </table>
-            <div class="text-right">
+            <div class="text-right" *ngIf="showdata">
               <pagination-controls (pageChange)="p = $event"></pagination-controls>  
             </div>
+            <div *ngIf="!showdata" class="pt-3">
+              <p  class="text-center text-danger"><small>No data found</small></p>
+          </div>
           </div>
           <!-- /.card-body -->
         </div>

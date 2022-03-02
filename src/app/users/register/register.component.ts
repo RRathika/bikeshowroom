@@ -17,11 +17,12 @@ export class RegisterComponent implements OnInit {
   userId: any;
   role:any;
   showroom:any;
+  submitted:boolean=false;
   constructor(private service:YamahaserviceService,private formbuilder:FormBuilder,private route:Router,public toastservice:ToastServiceService) {}
   registerForm:FormGroup=this.formbuilder.group({
     userCode: new FormControl('',[Validators.required]), 
     userName: new FormControl('',[Validators.required]),
-    mobileNo: new FormControl('',[Validators.required]),
+    mobileNo: new FormControl('',[Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
     gender: new FormControl('',[Validators.required]),
     dob: new FormControl('',[Validators.required]),
     place: new FormControl('',[Validators.required]), 
@@ -41,7 +42,7 @@ export class RegisterComponent implements OnInit {
     else{
     this.service.user.subscribe(response=>{
       this.result=response; 
-     this.userId=this.result.userId;
+     this.userId=this.result.userCode;
      this.usercode=this.result.userCode;
       if(response){        
         this.registerForm.patchValue(response);
@@ -83,6 +84,7 @@ export class RegisterComponent implements OnInit {
     })
   }
   submit(){
+    this.submitted=true
     if(this.service.user.value=='')
     {
     if(this.registerForm.valid){

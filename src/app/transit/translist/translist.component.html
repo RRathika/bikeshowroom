@@ -13,7 +13,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Showroom Name</label>
                                 <select class="form-select" (change)="showroomchange($event)" formControlName="showRoomId">
-                                    <!-- <option>Select</option> -->
+                                    <option value="">Select</option>
                                     <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                 </select>
                             </div>
@@ -22,7 +22,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Yard Name</label>
                                 <select class="form-select"formControlName="yard">
-                                    <!-- <option>Select</option> -->
+                                    <option value="">Select</option>
                                     <option *ngFor="let data of yard" [value]="data.yardId">{{data.yardName}}</option>
                                 </select>
                             </div>
@@ -31,6 +31,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Month</label>
                                 <select class="form-select" formControlName="month" (change)="changemonth($event)">
+                                    <option value="">Select Month</option>
                                     <option value="1">January</option>
                                     <option value="2">February</option>
                                     <option value="3">March</option>
@@ -49,7 +50,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">From Date</label>
-                                <input type="date" class="form-control" formControlName="fromdate"/>
+                                <input type="date" class="form-control" (change)="datechoose()" formControlName="fromdate"/>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -66,7 +67,7 @@
                     </div>
                 </form>
                 <div class="">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example1" class="table table-bordered table-striped" *ngIf="list">
                         <thead>
                             <tr class="text-center">
                                 <th>SI.NO</th>
@@ -82,8 +83,8 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            <tr *ngFor="let data of list; let i=index;">
-                                <td>{{i+1}}</td>
+                            <tr *ngFor="let data of list | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
+                                <td>{{ (p - 1) * count + i +1 }}</td>
                                 <td>{{data.invoiceNo}}</td>
                                 <td>{{data.invoiceDate|date}}</td>
                                 <td>{{data.transitType}}</td>
@@ -100,6 +101,12 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="text-right" *ngIf="list">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+                      </div>
+                      <div *ngIf="!list" class="pt-3">
+                        <p  class="text-center text-danger"><small>No data found</small></p>
+                    </div>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">

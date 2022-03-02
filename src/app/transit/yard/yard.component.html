@@ -23,12 +23,12 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Show room Name</label> 
                   <select class="form-select" formControlName="showRoomId">
-                      <option>Select Showroom</option>
+                      <option value="">Select Showroom</option>
                       <option *ngFor="let item of showroomdata" [value]="item.showRoomId">{{item.showRoomName}}</option>
                   </select>
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="yardForm.controls.showRoomId.errors?.required">
-                  <small>Name is required</small> 
+                  <small>Show room name is required</small> 
                   </span>
                   </div> 
                 </div>
@@ -36,7 +36,7 @@
               <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
-                    <input type="text" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
+                    <input type="number" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
                     <div class="text-danger" *ngIf="submitted">
                       <span 
                       *ngIf="yardForm.controls.mobileNo.errors?.required">
@@ -51,7 +51,7 @@
                     <textarea placeholder="Address" class="form-control" rows="3" formControlName="address"></textarea> 
                     <div *ngIf="submitted">
                       <span class="text-danger" *ngIf="yardForm.controls.address.errors?.required">
-                    <small>Name is required</small> 
+                    <small>Address is required</small> 
                     </span>
                     </div> 
                   </div>
@@ -74,7 +74,7 @@
               <h3 class="card-title">Yard Master Details</h3>             
               <button class="btn btn-success float-end btn-sm" (click)="display()">Add Yard</button>
             </div>
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-bordered table-striped" *ngIf="yarddata">
               <thead>
                 <tr class="text-center">
                   <th>SI.NO</th>
@@ -96,9 +96,12 @@
                 </tr>              
               </tbody>
             </table>
-            <div class="text-right">
+            <div class="text-right"  *ngIf="yarddata">
               <pagination-controls (pageChange)="p = $event"></pagination-controls>  
             </div>
+            <div *ngIf="!yarddata" class="pt-3">
+              <p  class="text-center text-danger"><small>No data found</small></p>
+          </div>
           </div>
           <!-- /.card-body -->
         </div>

@@ -9,7 +9,7 @@
                 <div class="col-md-12">
 
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped" *ngIf="userdata">
                             <thead>
                                 <tr class="text-center">
                                     <th>SI.NO</th>
@@ -26,8 +26,8 @@
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                <tr *ngFor="let data of userdata; let i=index;">
-                                    <td>{{i+1}}</td>
+                                <tr *ngFor="let data of userdata | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
+                                    <td>{{ (p - 1) * count + i +1 }}</td>
                                     <td>{{data.userCode}}</td>
                                     <td>{{data.userName}}</td>
                                     <td>{{data.mobileNo}}</td>
@@ -37,13 +37,18 @@
                                     <td>{{data.macAddress}}</td>
                                     <td>{{data.showRoomName}}</td>
                                     <td>{{data.role}}</td>
-                                    <td><i class="fas fa-edit" style="color: blue;"  data-toggle="modal" data-target="#exampleModal"
-                                        data-whatever="@mdo" (click)="viewbyid(data.userCode)"></i>
-                                        <i class="fa fa-trash ml-5" style="color: red;" aria-hidden="true" (click)="delete(data.userCode)"></i></td>
+                                    <td class="text-left"><button class="btn btn-success btn-sm" (click)="viewbyid(data.userCode)"><i class="fas fa-edit" style="color: white;"  data-toggle="modal" data-target="#exampleModal"
+                                        data-whatever="@mdo" ></i></button>
+                                        <button class="btn btn-danger btn-sm"  (click)="delete(data.userCode)"><i class="fa fa-trash" style="color: white;" aria-hidden="true"></i></button></td>
                                 </tr>
                             </tbody>
-                        </table>
-                    
+                        </table>                    
+                    </div>
+                    <div class="text-right" *ngIf="userdata">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+                      </div>
+                      <div *ngIf="!userdata" class="pt-3">
+                        <p  class="text-center text-danger"><small>No data found</small></p>
                     </div>
                 </div>
             </div>

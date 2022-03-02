@@ -69,7 +69,7 @@
             <h3 class="card-title">Bike Model Master Details</h3>             
             <button class="btn btn-success float-end btn-sm" (click)="display()">Add Bike Model</button>
           </div>
-          <table id="example1" class="table table-bordered table-striped">
+          <table id="example1" class="table table-bordered table-striped" *ngIf="getbike">
             <thead>
               <tr class="text-center">
                 <th>SI.NO</th>
@@ -91,9 +91,12 @@
               </tr>
             </tbody>  
           </table>
-          <div class="text-right">
+          <div class="text-right" *ngIf="getbike">
             <pagination-controls (pageChange)="p = $event"></pagination-controls>  
           </div>
+          <div *ngIf="!getbike" class="pt-3">
+            <p  class="text-center text-danger"><small>No data found</small></p>
+        </div>
         	<!-- <ngb-pagination [collectionSize]="pagingNumber" [(page)]="page" [boundaryLinks]="true"></ngb-pagination> -->
         </div>
         <!-- /.card-body -->
@@ -101,23 +104,4 @@
     </div>
   </div>
   </div>
-  <ngb-toast header="Notification header">
-    Content of the notification
-  </ngb-toast>
-  <script>
-    $(function () {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
-    });
-  </script>
+  

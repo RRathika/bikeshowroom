@@ -14,6 +14,11 @@ export class FinanceComponent implements OnInit {
   showdata: any;
   result: any;
   financeDetailId: any;
+  p: number = 1;
+  count: number = 10;
+  submitted:boolean = false;
+  displayadd:boolean=false;
+  currentModel:number=1;
   constructor(private router: Router, private service: YamahaserviceService, private formbuilder: FormBuilder, public toastservice: ToastServiceService) { }
   financeForm: FormGroup = this.formbuilder.group({
     financeName: new FormControl('', [Validators.required]),
@@ -24,13 +29,7 @@ export class FinanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.loaddata();
-    this.service.finance.subscribe(data => {
-      this.result = data;
-      this.financeDetailId = this.result.financeDetailId;
-      if (data) {
-        this.financeForm.patchValue(data);
-      }
-    })
+   
   }
 
   loaddata() {
@@ -45,6 +44,7 @@ export class FinanceComponent implements OnInit {
           if (data.statusCode == 200) {
             this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 5000 });
             this.financeForm.reset();
+            this.displayadd=false;
             this.loaddata();
           }
           else {
@@ -59,6 +59,7 @@ export class FinanceComponent implements OnInit {
           if (data.statusCode == 200) {
             this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 5000 });
             this.financeForm.reset();
+            this.displayadd=false;
             this.loaddata();
           }
           else {
@@ -69,8 +70,16 @@ export class FinanceComponent implements OnInit {
     }
   }
   editFinance(id: any) {
+    this.displayadd=true;
     this.service.getFinanceDetailById(id).subscribe(data => {
       this.service.finance.next(data);
+      this.service.finance.subscribe(data => {
+        this.result = data;
+        this.financeDetailId = this.result.financeDetailId;
+        if (data) {
+          this.financeForm.patchValue(data);
+        }
+      })
     })
   }
   delete(id: any) {
@@ -99,5 +108,13 @@ export class FinanceComponent implements OnInit {
       }
     });
   }
-
+  display(){    
+    this.displayadd=true;
+    this.service.variant.next('');
+    this.financeForm.reset();
+    this.submitted=false;
+  }
+  listdisplay(){
+    this.displayadd=false;
+  }
 }

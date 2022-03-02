@@ -7,11 +7,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./top-bar-menu.component.css']
 })
 export class TopBarMenuComponent implements OnInit {
-
+show:any;
   constructor(private router:Router) { }
 
   ngOnInit(): void {
+    this.show=localStorage.getItem('RoleId');
   }
+
   logout(){
     localStorage.removeItem('UserCode');
     localStorage.removeItem('ShowRoomId');
