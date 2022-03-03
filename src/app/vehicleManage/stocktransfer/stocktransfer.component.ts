@@ -62,12 +62,12 @@ export class StocktransferComponent implements OnInit {
     {
       this.service.savestocktransfer(this.stocktransferForm.value).subscribe((data:any)=>{
         if(data.statusCode==200){
-          this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 10000});
+          this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 3000});
           this.stocktransferForm.reset();
         }
         else
         {
-          this.toastservice.show('fill all field',{classname: 'bg-danger text-light', delay: 10000})
+          this.toastservice.show('fill all field',{classname: 'bg-danger text-light', delay: 3000})
         }
       })
     }

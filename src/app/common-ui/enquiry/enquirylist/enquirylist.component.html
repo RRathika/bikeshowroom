@@ -19,7 +19,7 @@
                 <table id="example1" class="table table-bordered table-striped" *ngIf="list">
                     <thead>
                         <tr class="text-center">
-                            <th>SI.NO</th>
+                            <th>S.No</th>
                             <th>Name</th>
                             <th>Mobile No</th>
                             <th>Planing Date</th>
@@ -33,7 +33,7 @@
                             <td>{{ (p - 1) * count + i +1 }}</td>
                             <td>{{data.name}}</td>
                             <td>{{data.mobileNo}}</td>
-                            <td>{{data.planningDate | date }} <small class="badge badge-danger">{{data.followCount}}</small>
+                            <td>{{data.planningDate | date:'dd-MM-yyyy' }} <small class="badge badge-danger">{{data.followCount}}</small>
                             </td>
                             <td>{{data.interestedInName}}</td>
                             <td>{{data.place}}</td>
@@ -101,7 +101,7 @@
                                     <tbody>
                                         <tr *ngFor="let data of enquirydetailslist| paginate: { itemsPerPage: count, currentPage: p };let i=index;">
                                             <td>{{ (p - 1) * count + i +1 }}</td>
-                                            <td>{{data.planningDate | date}}</td>
+                                            <td>{{data.planningDate | date:'dd-MM-yyyy'}}</td>
                                             <td>{{data.remarks}}</td>
                                             <td>{{data.statusName}}</td>
                                             <td *ngIf="flowcount==0"><button class="btn btn-sm btn-primary"> <i class="fas fa-edit"

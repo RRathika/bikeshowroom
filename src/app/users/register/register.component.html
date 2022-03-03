@@ -1,100 +1,87 @@
 <div class="container d-flex justify-content-center h-100">
   <div class="mx-auto">
     <div class="register-box">
-      <div class="register-logo">
+      <!-- <div class="register-logo">
         <a href="#"><b>YAMAHA</b></a>
-      </div>
+      </div> -->
       <div class="card">
         <div class="card-body register-card-body">
-          <p class="login-box-msg">Register a new membership</p>
+          <h3 class="login-box-msg">Register a new person</h3>
           <div class="col-md-12">
             <form [formGroup]="registerForm" (ngSubmit)="submit()">
               <div class="row">
                 <div class="col-md-4">
-                  <div class="input-group mb-3">
+                  <div class="form-group mb-3">
+                    <label for="exampleInputEmail1">User Code</label>
                     <input type="text" class="form-control" formControlName="userCode" placeholder="User Code" [value]="usercode" readonly>
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-user"></span>
-                      </div>
-                    </div>
-                  </div>
+                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="input-group mb-3">
+                  <div class="form-group mb-3">
+                    <label for="exampleInputEmail1">User Name</label>
                     <input type="text" class="form-control" formControlName="userName" placeholder="Name">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-user"></span>
-                      </div>
+                    <div *ngIf="registerForm.controls.userName.errors?.pattern"  class="text-danger"><small>Special characters not allowed</small></div>
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="registerForm.controls.userName.errors?.required">
+                    <small>Name is required</small>                    
+                    </span>
                     </div>                    
                   </div>
-                  <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="registerForm.controls.userName.errors?.required">
-                  <small>Name is required</small> 
-                  </span>
-                  </div> 
+                  
                 </div>                
                 <div class="col-md-4">
-                  <div class="input-group mb-3">
+                  <div class="form-group mb-3">
+                    <label for="exampleInputEmail1">Mobile No</label>
                     <input type="number" class="form-control" formControlName="mobileNo" placeholder="Mobile No">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-phone"></span>
-                      </div>
-                    </div>                    
+                    <div class="text-danger" *ngIf="submitted">
+                      <span 
+                      *ngIf="registerForm.controls.mobileNo.errors?.required">
+                      <small>Mobile No is required</small> </span>
+                      <div *ngIf="registerForm.controls.mobileNo.errors?.pattern"><small>Mobile No is not 10 digit</small></div>
+                    </div>                 
                   </div>
-                  <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="registerForm.controls.mobileNo.errors?.required">
-                  <small>MobileNo required</small> 
-                  <div *ngIf="registerForm.controls.mobileNo.errors?.pattern">Mobile number is not 10 digit</div>
-                  </span>
-                  </div> 
+                  
                 </div>                
                 <div class="col-md-4">
-                  <div class="input-group mb-3">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Gender</label>
                     <select class="form-select" formControlName="gender" aria-label="Default select example"  >
-                      <option value="" disabled>Select gender</option>
+                      <option value="" disabled selected>Select gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
-                      <option value="other">Other</option>                   
-                    </select>                    
-                    <!-- <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-address-list"></span>
-                      </div>
-                    </div> -->
+                      <option value="other">Others</option>                   
+                    </select>                   
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="registerForm.controls.gender.errors?.required">
+                    <small>Gender required</small> 
+                    </span>
+                    </div> 
                   </div>
-                  <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="registerForm.controls.gender.errors?.required">
-                  <small>Gender required</small> 
-                  </span>
-                  </div> 
+                  
                 </div>
                 <div class="col-md-4">
-                  <div class="input-group mb-3">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Date of Birth</label>
                     <input type="date" class="form-control" formControlName="dob">
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="registerForm.controls.dob.errors?.required">
+                    <small>Date of birth required</small> 
+                    </span>
+                    </div> 
                   </div>
-                  <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="registerForm.controls.dob.errors?.required">
-                  <small>Date of birth required</small> 
-                  </span>
-                  </div> 
+                  
                 </div>
                 <div class="col-md-4">
-                  <div class="input-group mb-3">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">MAC Address</label>
                     <input type="text" class="form-control" formControlName="macAddress" placeholder="Mac Address" [value]="macadd">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fas fa-user"></span>
-                      </div>
-                    </div>                    
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="registerForm.controls.macAddress.errors?.required">
+                    <small>Mac Address is required</small> 
+                    </span>
+                    </div>                   
                   </div>
-                  <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="registerForm.controls.macAddress.errors?.required">
-                  <small>Mac Address is required</small> 
-                  </span>
-                  </div> 
+                  
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
@@ -106,7 +93,7 @@
                    </select>
                    <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="registerForm.controls.roleId.errors?.required">
-                  <small>Role Name is required</small> 
+                  <small>Role name is required</small> 
                   </span>
                   </div> 
                   </div>  
@@ -115,26 +102,49 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Showroom Name</label>
                    <select class="form-select" formControlName="showRoomId" readonly aria-label="Default select example">
-                    <option value="" disabled>Select Role Name</option>
+                    <option value="" disabled>Select Showroom Name</option>
                      <option *ngFor="let data of showroom" [value]="data.showRoomId">{{data.showRoomName}}</option>
                    </select>
                    <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="registerForm.controls.showRoomId.errors?.required">
-                  <small>Showroom Name required</small> 
+                  <small>Showroom name is required</small> 
                   </span>
                   </div> 
                   </div>  
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group mb-3">
-                    <textarea class="form-control" formControlName="place" placeholder="place" rows="2"></textarea>                    
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Place Detail</label>
+                    <textarea class="form-control" formControlName="place" placeholder="place" rows="1"></textarea>                    
                     <div *ngIf="submitted">
                       <span class="text-danger" *ngIf="registerForm.controls.place.errors?.required">
                     <small>Place required</small> 
                     </span>
                     </div> 
                   </div>
-                </div>                
+                </div>    
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Password</label>
+                    <input type="text" class="form-control" formControlName="pass" placeholder="Password">
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="registerForm.controls.pass.errors?.required">
+                    <small>Password is required</small> 
+                    </span>
+                    </div>    
+                  </div>
+                </div>     
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Confirm Password</label>
+                    <input type="text" class="form-control" formControlName="password" placeholder="Confirm Password" >
+                    <div *ngIf="submitted">
+                      <span class="text-danger" *ngIf="registerForm.controls.password.errors?.required">
+                    <small>Confirmpassword is required</small> 
+                    </span>
+                    </div>    
+                  </div>
+                </div>            
                   <div class="col-md-12 my-2 text-center">
                     <button type="submit" *ngIf="!userId" class="btn btn-primary">Register</button>
                     <button type="submit" *ngIf="userId" class="btn btn-primary">Update Register Details</button>

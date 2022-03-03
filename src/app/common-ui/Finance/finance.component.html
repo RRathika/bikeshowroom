@@ -4,7 +4,7 @@
         <div class="card card-primary">
           <div class="card-header bg-primary">
             <h3 class="card-title">Finance Details</h3>            
-            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Finance Detail List</button>
+            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Finance Detail List</button>
           </div>
           <form [formGroup]="financeForm" (ngSubmit)="submit()">
             <div class="row p-3">
@@ -14,7 +14,7 @@
                     <input type="text" class="form-control" formControlName="financeName" placeholder="Finance Name">
                     <div *ngIf="submitted">
                       <span class="text-danger" *ngIf="financeForm.controls.financeName.errors?.required">
-                    <small>Finance name required</small> 
+                    <small>Finance name is required</small> 
                     </span>
                     </div> 
                   </div>
@@ -23,10 +23,11 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
                     <input type="number" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
+                    <div class="text-danger" *ngIf="financeForm.controls.mobileNo.errors?.pattern"><small>Mobile No is not 10 digit</small></div>
                     <div *ngIf="submitted">
                       <span class="text-danger" *ngIf="financeForm.controls.mobileNo.errors?.required">
-                    <small>Mobile number required</small> 
-                    <div *ngIf="financeForm.controls.mobileNo.errors?.pattern">Mobile number is not 10 digit</div>
+                    <small>Mobile No required</small> 
+                    
                     </span>
                     </div> 
                   </div>
@@ -57,13 +58,13 @@
         <div class="card card-primary">
           <div class="card-body">
             <div class="card-header bg-primary" >     
-              <h3 class="card-title">Finance Master Details</h3>             
-              <button class="btn btn-success float-end btn-sm" (click)="display()">Add Finance</button>
+              <h3 class="card-title">Finance Details</h3>             
+              <button class="btn btn-success float-end btn-sm" (click)="display()">Add New Finance</button>
             </div>
             <table id="example1" class="table table-bordered table-striped" *ngIf="showdata">
               <thead>
                 <tr class="text-center">
-                  <th>SI.NO</th>
+                  <th>S.No</th>
                   <th>Finance Name</th>
                   <th>Address</th>                
                   <th>Mobile No</th>

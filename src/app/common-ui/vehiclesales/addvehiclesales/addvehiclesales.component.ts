@@ -287,7 +287,7 @@ export class AddvehiclesalesComponent implements OnInit {
       if (data.statusCode == 200) {
         this.colorcode = [];
         this.varientcode = [];
-        this.toastService.show('Dont have related color', { classname: 'bg-danger text-light', delay: 10000 });
+        this.toastService.show('Dont have related color', { classname: 'bg-danger text-light', delay: 3000 });
       }
       else {
         this.colorcode = data;
@@ -302,7 +302,7 @@ export class AddvehiclesalesComponent implements OnInit {
     this.service.selectcolor(model).subscribe(data => {
       if (data.statusCode == 200) {
         this.varientcode = [];
-        this.toastService.show('Dont have related variant', { classname: 'bg-danger text-light', delay: 10000 });
+        this.toastService.show('Dont have related variant', { classname: 'bg-danger text-light', delay: 3000 });
       }
       else {
         this.varientcode = data;
@@ -633,11 +633,11 @@ export class AddvehiclesalesComponent implements OnInit {
       if(data)
       {
         this.service.printvalue.next(this.finalform.value);
-        this.toastService.show(data.message,{classname:'bg-success text-light', delay: 10000});  
+        this.toastService.show(data.message,{classname:'bg-success text-light', delay: 3000});  
         this.print();         
       }
       else{
-        this.toastService.show(data.message,{classname:'bg-danger text-light', delay: 10000})
+        this.toastService.show(data.message,{classname:'bg-danger text-light', delay: 3000})
       }
     })
     

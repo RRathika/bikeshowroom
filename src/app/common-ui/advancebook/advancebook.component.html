@@ -12,7 +12,7 @@
                                 <label for="modelName">Name</label>
                                 <input type="text" class="form-control" formControlName="name" placeholder="Name">
                                 <div class="text-danger" *ngIf="submitted">
-                                    <span  *ngIf="advancebookForm.controls.name.errors?.required">Name required.</span> 
+                                    <span  *ngIf="advancebookForm.controls.name.errors?.required">Name is required.</span> 
                                  </div>
                             </div>
                             
@@ -23,8 +23,8 @@
                                 <input type="number" class="form-control" formControlName="mobileNo"
                                     placeholder="Mobile No">
                                     <div class="text-danger" *ngIf="submitted">
-                                        <span  *ngIf="advancebookForm.controls.mobileNo.errors?.required">Mobile Number required.</span>
-                                        <span *ngIf="advancebookForm.controls.mobileNo.errors?.pattern">Please, Enter 10 digit Mobile Number.</span>
+                                        <span  *ngIf="advancebookForm.controls.mobileNo.errors?.required">Mobile No required.</span>
+                                        <span *ngIf="advancebookForm.controls.mobileNo.errors?.pattern">Please, Enter 10 digit Mobile No.</span>
                                         <span></span> 
                                      </div> 
                             </div>
@@ -88,7 +88,7 @@
                                     <option *ngFor="let name of showdata" [value]="name.showRoomId">{{name.showRoomName}}</option>
                                 </select>
                                 <div class="text-danger" *ngIf="submitted">
-                                    <span  *ngIf="advancebookForm.controls.showRoomId.errors?.required">ShowRoom name required.</span> 
+                                    <span  *ngIf="advancebookForm.controls.showRoomId.errors?.required">ShowRoom name is required.</span> 
                                  </div>
                             </div>
                            
@@ -102,7 +102,7 @@
                                 </option>
                             </select>
                             <div class="text-danger" *ngIf="submitted">
-                                <span  *ngIf="advancebookForm.controls.showRoomId.errors?.required">ShowRoom name required.</span> 
+                                <span  *ngIf="advancebookForm.controls.showRoomId.errors?.required">ShowRoom name is required.</span> 
                              </div>
                         </div>
                         <div class="col-md-3">
@@ -113,7 +113,7 @@
                                 </option>
                             </select>
                             <div class="text-danger" *ngIf="submitted">
-                                <span  *ngIf="advancebookForm.controls.colorId.errors?.required">Color name required.</span> 
+                                <span  *ngIf="advancebookForm.controls.colorId.errors?.required">Color name is required.</span> 
                              </div>
                         </div>
                         <div class="col-md-3">
@@ -124,7 +124,7 @@
                                 </option>
                             </select>
                             <div class="text-danger" *ngIf="submitted">
-                                <span  *ngIf="advancebookForm.controls.variantId.errors?.required">Variant name required.</span> 
+                                <span  *ngIf="advancebookForm.controls.variantId.errors?.required">Variant name is required.</span> 
                              </div>
                         </div>
 

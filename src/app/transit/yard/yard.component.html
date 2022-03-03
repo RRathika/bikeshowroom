@@ -4,44 +4,46 @@
         <div class="card card-primary">
           <div class="card-header bg-primary">
             <h3 class="card-title">Yard Add</h3>
-            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Yard List</button>
+            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Yard List</button>
           </div>
           <form [formGroup]="yardForm" (ngSubmit)="submit()">
             <div class="row p-3">
-              <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Yard Name</label> 
-                    <input type="text" class="form-control" formControlName="yardName" placeholder="Yard Name">
-                    <div *ngIf="submitted">
-                      <span class="text-danger" *ngIf="yardForm.controls.yardName.errors?.required">
-                    <small>Name is required</small> 
-                    </span>
-                    </div> 
-                  </div>
-              </div>
+              
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Show room Name</label> 
-                  <select class="form-select" formControlName="showRoomId">
-                      <option value="">Select Showroom</option>
+                  <label for="exampleInputEmail1">Showroom Name</label> 
+                  <select class="form-select" formControlName="showRoomId" aria-label="Default select example">
+                    <option>Select Showroom Name</option>
                       <option *ngFor="let item of showroomdata" [value]="item.showRoomId">{{item.showRoomName}}</option>
                   </select>
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="yardForm.controls.showRoomId.errors?.required">
-                  <small>Show room name is required</small> 
+                  <small>Showroom name is required</small> 
                   </span>
                   </div> 
                 </div>
              </div>
+             <div class="col-md-4">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Yard Name</label> 
+                <input type="text" class="form-control" formControlName="yardName" placeholder="Yard Name">
+                <div *ngIf="submitted">
+                  <span class="text-danger" *ngIf="yardForm.controls.yardName.errors?.required">
+                <small>Yard name is required</small> 
+                </span>
+                </div> 
+              </div>
+          </div>
               <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
                     <input type="number" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
+                    <div class="text-danger" *ngIf="yardForm.controls.mobileNo.errors?.pattern"><small>Mobile No is not 10 digit</small></div>
                     <div class="text-danger" *ngIf="submitted">
                       <span 
                       *ngIf="yardForm.controls.mobileNo.errors?.required">
-                      <small>Mobile number is required</small> </span>
-                      <div *ngIf="yardForm.controls.mobileNo.errors?.pattern">Mobile number is not 10 digit</div>
+                      <small>Mobile No is required</small> </span>
+                     
                     </div>
                   </div>
               </div>           
@@ -71,13 +73,14 @@
         <div class="card card-primary">
           <div class="card-body">
             <div class="card-header bg-primary" >     
-              <h3 class="card-title">Yard Master Details</h3>             
-              <button class="btn btn-success float-end btn-sm" (click)="display()">Add Yard</button>
+              <h3 class="card-title">Yard Details</h3>             
+              <button class="btn btn-success float-end btn-sm" (click)="display()">Add New Yard</button>
             </div>
             <table id="example1" class="table table-bordered table-striped" *ngIf="yarddata">
               <thead>
                 <tr class="text-center">
-                  <th>SI.NO</th>
+                  <th>S.No</th>
+                  <th>Showroom Name</th>
                   <th>Yard Name</th>
                   <th>Address</th>                
                   <th>Mobile No</th>
@@ -88,6 +91,7 @@
               <tbody class="text-center">
                 <tr *ngFor="let data of yarddata| paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
                   <td>{{ (p - 1) * count + i +1 }}</td>
+                  <td>{{data.showRoomName}}</td>
                   <td>{{data.yardName}}</td>
                   <td>{{data.address}}</td>
                   <td>{{data.mobileNo}}</td>                

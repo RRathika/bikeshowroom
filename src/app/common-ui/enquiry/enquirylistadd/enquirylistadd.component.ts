@@ -72,11 +72,11 @@ export class EnquirylistaddComponent implements OnInit {
     {      
     this.service.saveenquiry(this.MainForm.value).subscribe((data:any)=>{
       if(data.statusCode==200){      
-      this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
+      this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
       this.route.navigateByUrl('/dashboard/enquirylist');
       }
       else{
-        this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 15000});
+        this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 5000});
       } 
     })   
   }

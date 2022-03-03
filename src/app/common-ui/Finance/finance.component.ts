@@ -42,7 +42,7 @@ export class FinanceComponent implements OnInit {
       if (this.financeForm.valid) {
         this.service.updateFinanceDetail(this.financeForm.value).subscribe((data: any) => {
           if (data.statusCode == 200) {
-            this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 5000 });
+            this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
             this.financeForm.reset();
             this.displayadd=false;
             this.loaddata();
@@ -57,7 +57,7 @@ export class FinanceComponent implements OnInit {
       if (this.financeForm.valid) {
         this.service.saveFinanceDetail(this.financeForm.value).subscribe((data: any) => {
           if (data.statusCode == 200) {
-            this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 5000 });
+            this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
             this.financeForm.reset();
             this.displayadd=false;
             this.loaddata();
@@ -104,6 +104,9 @@ export class FinanceComponent implements OnInit {
       if (result.value) {
         this.service.deleteFinanceDetail(id).subscribe(data => {
           this.loaddata();
+          if (data.statusCode == 200) {
+            this.toastservice.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
+          }
         })
       }
     });

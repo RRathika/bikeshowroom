@@ -108,7 +108,10 @@ export class ShowroomComponent implements OnInit {
       if (result.value) {
         this.service.deleteshowroom(id).subscribe(data=>{
           this.loaddata();
-          console.log('delete');
+          if(data.statusCode==200)
+          {
+          this.toastservice.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
+          }
         })        
       }
       else{

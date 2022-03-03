@@ -1,16 +1,19 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
- 
+  
+    <h2 >VARALAXMI MOTORS</h2>
+
   <ul class="navbar-nav ml-auto">
     <!-- Messages Dropdown Menu -->
+   
     <li class="">
-      <a class="nav-link"  href="#/dashboard/user">
+      <a class="nav-link"  href="#/dashboard/user" style="margin-top: -5px;">
         <!-- <i class="far fa-users"> -->
         <button class="btn btn-success" *ngIf="show==1">User Details</button>
       </a>
     </li>
     <!-- Notifications Dropdown Menu -->
-    <li class="nav-item dropdown">
-      <a class="nav-link">
+    <li class="nav-item">
+      <a class="nav-link" style="margin-top: -5px;">
         <!-- <i class="far fa-bell"> -->
         <button class="btn btn-danger" (click)="logout()">Logout</button>
       </a>

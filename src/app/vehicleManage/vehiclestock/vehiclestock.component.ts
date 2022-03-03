@@ -38,7 +38,7 @@ export class VehiclestockComponent implements OnInit {
       this.service.listvehiclestock(this.stockForm.value['ShowRoomId'],this.stockForm.value['VehicleModelId'],0).subscribe((data:any)=>{
         if(data.statusCode==200)
         {
-          this.toastservice.show(data.message,{ classname: 'bg-danger text-light', delay: 10000 });
+          this.toastservice.show(data.message,{ classname: 'bg-danger text-light', delay: 3000 });
         }
         else
         {          

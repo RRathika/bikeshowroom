@@ -21,14 +21,16 @@ export class RegisterComponent implements OnInit {
   constructor(private service:YamahaserviceService,private formbuilder:FormBuilder,private route:Router,public toastservice:ToastServiceService) {}
   registerForm:FormGroup=this.formbuilder.group({
     userCode: new FormControl('',[Validators.required]), 
-    userName: new FormControl('',[Validators.required]),
+    userName: new FormControl('',[Validators.required,Validators.pattern("^$|^[A-Za-z0-9]+")]),
     mobileNo: new FormControl('',[Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
     gender: new FormControl('',[Validators.required]),
     dob: new FormControl('',[Validators.required]),
     place: new FormControl('',[Validators.required]), 
     macAddress: new FormControl('',[Validators.required]),
     roleId:new FormControl('',[Validators.required]),
-    showRoomId:new FormControl('',[Validators.required])
+    showRoomId:new FormControl('',[Validators.required]),
+    pass:new FormControl('',[Validators.required]),
+    password:new FormControl('',[Validators.required])
   });
   ngOnInit(): void {
     this.loadrole();
@@ -48,6 +50,8 @@ export class RegisterComponent implements OnInit {
         this.registerForm.patchValue(response);
       }
     })
+    this.registerForm.controls['userName'].disable();
+    this.registerForm.controls['roleId'].disable();
   }
   }
   loadshowroom(){
@@ -84,18 +88,21 @@ export class RegisterComponent implements OnInit {
     })
   }
   submit(){
-    this.submitted=true
+    this.submitted=true;
+    if(this.registerForm.value['pass']===this.registerForm.value['password'])
+    {      
     if(this.service.user.value=='')
     {
     if(this.registerForm.valid){
     this.service.saveregister(this.registerForm.value).subscribe((data:any)=>{
       if(data.statusCode==200)
       {
-        alert("This is your password: "+data.message);
+        this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 3000});
         this.registerForm.reset();
+        this.submitted=false;
       }
       else{
-        this.toastservice.show(data.message,{classname: 'bg-danger text-light', delay: 15000});
+        this.toastservice.show(data.message,{classname: 'bg-danger text-light', delay: 5000});
       }      
     })
   }
@@ -107,15 +114,21 @@ else
     this.service.updateuserdetail(this.registerForm.value).subscribe((data:any)=>{
       if(data.statusCode==200)
       {
-        this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 15000});
+        this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 3000});
         this.registerForm.reset();
+        this.submitted=false;
       }
       else{
-        this.toastservice.show(data.message,{classname: 'bg-danger text-light', delay: 15000});
+        this.toastservice.show(data.message,{classname: 'bg-danger text-light', delay: 5000});
       }      
     })
   }
 }
+    }
+    else
+    {
+      this.toastservice.show('Password and confirm password not match',{classname: 'bg-danger text-light', delay: 5000});
+    }
   }
 
 }

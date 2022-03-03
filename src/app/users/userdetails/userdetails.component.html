@@ -4,7 +4,7 @@
             <div class="card card-primary">
                 <div class="card-header bg-primary">
                     <h3 class="card-title">User Details</h3>
-                    <button class="btn btn-success float-end" (click)="add()">Add user</button>
+                    <button class="btn btn-success float-end btn-sm" (click)="add()">Add user</button>
                 </div>
                 <div class="col-md-12">
 
@@ -12,7 +12,7 @@
                         <table id="example1" class="table table-bordered table-striped" *ngIf="userdata">
                             <thead>
                                 <tr class="text-center">
-                                    <th>SI.NO</th>
+                                    <th>S.No</th>
                                     <th>User Code</th>
                                     <th>User Name</th>
                                     <th>Mobile No</th>
@@ -32,14 +32,14 @@
                                     <td>{{data.userName}}</td>
                                     <td>{{data.mobileNo}}</td>
                                     <td>{{data.gender}}</td>
-                                    <td>{{data.dob}}</td>
+                                    <td>{{data.dob | date:'dd-MM-yyyy' }}</td>
                                     <td>{{data.place}}</td>
                                     <td>{{data.macAddress}}</td>
                                     <td>{{data.showRoomName}}</td>
                                     <td>{{data.role}}</td>
                                     <td class="text-left"><button class="btn btn-success btn-sm" (click)="viewbyid(data.userCode)"><i class="fas fa-edit" style="color: white;"  data-toggle="modal" data-target="#exampleModal"
                                         data-whatever="@mdo" ></i></button>
-                                        <button class="btn btn-danger btn-sm"  (click)="delete(data.userCode)"><i class="fa fa-trash" style="color: white;" aria-hidden="true"></i></button></td>
+                                        <button class="btn btn-danger btn-sm ml-1"  (click)="delete(data.userCode)"><i class="fa fa-trash" style="color: white;" aria-hidden="true"></i></button></td>
                                 </tr>
                             </tbody>
                         </table>                    

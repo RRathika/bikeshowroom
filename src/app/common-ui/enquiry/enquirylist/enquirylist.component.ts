@@ -54,7 +54,7 @@ export class EnquirylistComponent implements OnInit {
     this.service.getenquiry(this.roleid,name).subscribe(data=>{
       if(data.statusCode==200)
       {
-        // this.toastService.show(data.message,{classname:'bg-success text-light', delay: 10000})
+        // this.toastService.show(data.message,{classname:'bg-success text-light', delay: 3000})
         this.list='';
       }
       else
@@ -167,16 +167,16 @@ export class EnquirylistComponent implements OnInit {
       this.service.updateenquiryclose(this.myData).subscribe((data:any)=>{
         if (data.statusCode == 200) {   
           // this.enquirydetail(this.enquiryid);      
-          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });          
+          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });          
         } 
         else{
-          this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 15000});
+          this.toastService.show(data.message,{classname: 'bg-danger text-light', delay: 5000});
         }    
       })  
     }
     else
     {
-      this.toastService.show('Please Select the reson for enquiry closing',{classname: 'bg-danger text-light', delay: 15000});
+      this.toastService.show('Please Select the reson for enquiry closing',{classname: 'bg-danger text-light', delay: 5000});
     }    
   }
 }

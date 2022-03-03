@@ -95,9 +95,9 @@ export class YamahaserviceService {
   getbyidyard(id:any):Observable<any>{return this.httpclient.get(this.url+`Yard/GetYardById?YardId=${id}`);}
   getbyidshowroom(id:any):Observable<any>{return this.httpclient.get(this.url+`ShowRoom/GetShowRoomById?ShowRoomId=${id}`);}
   updateshowroom(data:any):Observable<any>{return this.httpclient.put(this.url+'ShowRoom/UpdateShowRoom',data);}
-  deleteshowroom(id:any):Observable<any>{return this.httpclient.delete(this.url+`ShowRoom/DeleteShowRoom?ShowRoomId=${id}`);}
+  deleteshowroom(id:any):Observable<any>{return this.httpclient.post(this.url+`ShowRoom/DeleteShowRoom?ShowRoomId=${id}`,'');}
   updateyard(data:any):Observable<any>{return this.httpclient.put(this.url+'Yard/UpdateYard',data);}
-  deleteyard(id:any):Observable<any>{return this.httpclient.delete(this.url+`Yard/DeleteYard?YardId=${id}`);}
+  deleteyard(id:any):Observable<any>{return this.httpclient.post(this.url+`Yard/DeleteYard?YardId=${id}`,'');}
   showroombyyard(id:any):Observable<any>{return this.httpclient.get(this.url+`Yard/GetYardByShowRoomId?ShowRoomId=${id}`);}
   vartantbydata(variant:any,show:any,role:any):Observable<any>{return this.httpclient.get(this.url+`VehicleStock/GetVehicleDetailsByVariantId?VariantId=${variant}&RoleId=${role}&ShowRoomId=${show}&YardId=0`);}
   getfinance():Observable<any>{return this.httpclient.get(this.url+'FinanceDetail/GetFinanceDetail');}
@@ -106,10 +106,7 @@ export class YamahaserviceService {
   getsales(show:any,yard:any,from:any,to:any):Observable<any>{return this.httpclient.get(this.url+`VehicleSalesDetail/GetVehicleSalesInvoiceDetail?ShowRoomId=${show}&YardId=${yard}&FromDate=${from}&ToDate=${to}`);}
   getbysale(id:any):Observable<any>{return this.httpclient.get(this.url+`VehicleSalesDetail/GetVehicleSalesInvoiceDetailById?VehicleSalesInvoiceDetailId=${id}`)}
   saveFinanceDetail(data:any):Observable<any>{return this.httpclient.post(this.url+'FinanceDetail/SaveFinanceDetail',data);}
-
   getFinanceDetailById(id:any):Observable<any>{return this.httpclient.get(this.url+`FinanceDetail/GetFinanceDetailById?FinanceDetailId=${id}`);}
-
   updateFinanceDetail(data:any):Observable<any>{return this.httpclient.put(this.url+'FinanceDetail/UpdateFinanceDetail',data);}
-
   deleteFinanceDetail(id:any):Observable<any>{return this.httpclient.post(this.url+`FinanceDetail/DeleteFinanceDetail?FinanceDetailId=${id}`,"");}
 }

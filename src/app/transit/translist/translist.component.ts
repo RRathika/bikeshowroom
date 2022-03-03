@@ -45,7 +45,7 @@ export class TranslistComponent implements OnInit {
       debugger
       if(data.statusCode==200)
       {
-        // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
+        // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
         this.list='';
         this.translistForm.reset();
       }
@@ -89,7 +89,7 @@ export class TranslistComponent implements OnInit {
     this.service.gettransit(show,0,0,from,to).subscribe(data=>{
       if(data.statusCode==200)
       {
-        // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
+        // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
         this.list='';
       }
       else

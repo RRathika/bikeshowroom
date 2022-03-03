@@ -55,7 +55,7 @@ export class ShowroomtoyardComponent implements OnInit {
     this.service.listvehiclestock(showroomId,0,0).subscribe((data: any) => {
       if (data.statusCode == 200) {
         this.firstTable =[];
-        this.toastservice.show("No Stocks Available", { classname: 'bg-danger text-light', delay: 10000 });
+        this.toastservice.show("No Stocks Available", { classname: 'bg-danger text-light', delay: 3000 });
       }
       else {
         this.firstTable = data;
@@ -68,7 +68,7 @@ export class ShowroomtoyardComponent implements OnInit {
     if(this.yardId != undefined)
     {
       if (yardId == this.yardId) {
-        this.toastservice.show("Cant move to the same yard", { classname: 'bg-danger text-light', delay: 10000 });
+        this.toastservice.show("Cant move to the same yard", { classname: 'bg-danger text-light', delay: 3000 });
       }
       else {
         this.secondTable.push({
@@ -124,12 +124,12 @@ export class ShowroomtoyardComponent implements OnInit {
     // {
       this.service.savestocktransfer(this.secondTable).subscribe((data:any)=>{
         if(data.statusCode==200){
-          this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 10000});
+          this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 3000});
          // this.stocktransferForm.reset();
         }
         // else
         // {
-        //   this.toastservice.show('fill all field',{classname: 'bg-danger text-light', delay: 10000})
+        //   this.toastservice.show('fill all field',{classname: 'bg-danger text-light', delay: 3000})
         // }
       })
     // }

@@ -28,8 +28,7 @@ export class ColorComponent implements OnInit {
   })
   ngOnInit(): void {
     this.getcolor();
-    this.getmodel();
-    
+    this.getmodel();    
   }
   getmodel(){
     this.service.getbikemodel().subscribe(data=>{
@@ -49,13 +48,13 @@ export class ColorComponent implements OnInit {
       console.log("update");      
       this.service.updatecolor(this.colorForm?.value).subscribe(data=>{
         if(data.statusCode==200){
-          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });   
+          this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });   
           this.colorForm.reset();
           this.displayadd=false;
           this.getcolor();
           }
           else{
-            this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 }); 
+            this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 }); 
           }        
       })
     }
@@ -63,13 +62,13 @@ export class ColorComponent implements OnInit {
       // console.log("save");
     this.service.savecolor(this.colorForm?.value).subscribe(data=>{
       if(data.statusCode==200){
-      this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
+      this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 }); 
       this.colorForm.reset();
       this.displayadd=false;
       this.getcolor();   
       }
       else{
-        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 }); 
+        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 }); 
       }
     })
   }
@@ -111,7 +110,11 @@ export class ColorComponent implements OnInit {
       if (result.value) {
         this.service.deletecolor(id).subscribe(data=>{
           this.getcolor();
-          console.log('delete');
+          if(data.statusCode==200)
+          {
+          this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
+          }
+          // console.log('delete');
         })        
       }
       else{

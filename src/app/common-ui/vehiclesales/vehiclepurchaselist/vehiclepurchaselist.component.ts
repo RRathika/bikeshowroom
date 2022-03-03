@@ -37,7 +37,7 @@ export class VehiclepurchaselistComponent implements OnInit {
     this.service.getvehiclepurchase(show,0,0,from,to).subscribe(data=>{
       if(data.statusCode==200)
       {
-        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
+        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
         this.vehiclepurchase=[];
       }
       else
@@ -81,7 +81,7 @@ export class VehiclepurchaselistComponent implements OnInit {
     this.service.getvehiclepurchase(this.purchaselistForm.value['showRoomId'],this.purchaselistForm.value['yard'],this.purchaselistForm.value['month'],this.purchaselistForm.value['fromdate'],this.purchaselistForm.value['todate']).subscribe(data=>{
       if(data.statusCode==200)
       {
-        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
+        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
         this.vehiclepurchase=[];
         this.purchaselistForm.reset();
       }

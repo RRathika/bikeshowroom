@@ -26,6 +26,7 @@ export class VariantComponent implements OnInit {
   submitted:boolean = false;
   displayadd:boolean=false;
   currentModel:number=1;
+  bikemodeldata:any;
   constructor(private router:Router,private service:YamahaserviceService,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   variantForm: FormGroup = this.formBuilder.group({
     colorId:new FormControl('',[Validators.required]),
@@ -34,7 +35,7 @@ export class VariantComponent implements OnInit {
     variantName:new FormControl('',[Validators.required]),
     yearsOfWarranty:new FormControl('',[Validators.required]),
     oilChange:new FormControl('',[Validators.required]),
-    currentModel:new FormControl(1),
+    currentModel:new FormControl(''),
     hsnCode:new FormControl('',[Validators.required]),
     invoiceAmount:new FormControl('',[Validators.required]),
     lifeTax:new FormControl('',[Validators.required]),
@@ -48,12 +49,18 @@ export class VariantComponent implements OnInit {
     hypCharges: 0,
     extraCharges: 0,
     otherCharges: 0,
+    modelId:new FormControl('',[Validators.required])
   })
   ngOnInit(): void {
     this.loadcolor();
     this.loadvariant();
     this.variantForm.controls['total'].disable();
-   
+    this.getmodel();
+  }
+  getmodel(){
+    this.service.getbikemodel().subscribe(data=>{
+      this.bikemodeldata=data;
+    })
   }
   loadcolor(){
     this.service.getcolor().subscribe((data:any[])=>{
@@ -61,6 +68,13 @@ export class VariantComponent implements OnInit {
       console.log(this.color);
       
     })
+  }
+  selectmodel(e:any){
+    let model=e.target.value;
+    this.service.selectmodel(model).subscribe(data=>{
+      this.color=data;
+    this.variantForm.controls['colorId'].enable();
+    })      
   }
   loadvariant(){
     this.service.getvariant().subscribe(data=>{
@@ -105,7 +119,10 @@ export class VariantComponent implements OnInit {
       if (result.value) {
         this.service.deletevariant(id).subscribe(data=>{
           this.loadvariant();
-          console.log('delete');
+          if(data.statusCode==200)
+          {
+          this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
+          }
         })        
       }
       else{
@@ -153,13 +170,13 @@ export class VariantComponent implements OnInit {
     {
       this.service.updatevariant(this.variantForm?.value).subscribe((data:any)=>{
         if(data.statusCode==200){
-        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
+        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 }); 
       this.variantForm.reset();
       this.displayadd=false;
       this.loadvariant();
       }
       else{
-        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 }); 
+        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 }); 
       }
       })
     }
@@ -167,13 +184,13 @@ export class VariantComponent implements OnInit {
       this.variantForm.value['total']=this.total;
       this.service.savevariant(this.variantForm?.value).subscribe((data:any)=>{
         if(data.statusCode==200){
-        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
+        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 }); 
       this.variantForm.reset();
       this.displayadd=false;
       this.loadvariant();
       }
       else{
-        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 }); 
+        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 }); 
       }
       })    
   }
@@ -269,6 +286,7 @@ export class VariantComponent implements OnInit {
     this.service.variant.next('');
     this.variantForm.reset();
     this.submitted=false;
+    this.variantForm.controls['colorId'].disable();
   }
   listdisplay(){
     this.displayadd=false;
@@ -276,7 +294,7 @@ export class VariantComponent implements OnInit {
   changemodel(e:any){
     console.log(e.target.value);   
     this.variantForm.patchValue({
-      currentModel:0
+      currentModel:1
     })
     console.log(this.variantForm.value['currentModel']);
     
