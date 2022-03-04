@@ -53,12 +53,12 @@
             <tr *ngFor="let data of firstTable;let i=index;">
               <td>
                 <input type="checkbox" value="{{data.id}}"
-                  (click)="onSelect(firstTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId)">
+                  (click)="onSelect(firstTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName)">
               </td>
               <td>{{data.chassisNo}}</td>
               <td>{{data.engineNo}}</td>
               <td>{{data.vehicleModelName}}</td>
-              <td>{{data.yardId}}</td>
+              <td>{{data.yardName}}</td>
             </tr>
           </table>
         </div>
@@ -78,12 +78,12 @@
             <tr *ngFor="let data of secondTable; let i=index;">
               <td>
                 <input type="checkbox" value="{{data.id}}"
-                  (click)="onDelect(secondTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId)">
+                  (click)="onDelect(secondTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName)">
               </td>
               <td>{{ data.chassisNo }}</td>
               <td>{{ data.engineNo }}</td>
               <td>{{ data.vehicleModelName }}</td>
-              <td>{{data.yardId}}</td>
+              <td>{{data.yardName}}</td>
             </tr>
           </table>
         </div>

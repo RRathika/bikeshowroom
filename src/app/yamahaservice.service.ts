@@ -112,4 +112,6 @@ export class YamahaserviceService {
   updateFinanceDetail(data:any):Observable<any>{return this.httpclient.put(this.url+'FinanceDetail/UpdateFinanceDetail',data);}
 
   deleteFinanceDetail(id:any):Observable<any>{return this.httpclient.post(this.url+`FinanceDetail/DeleteFinanceDetail?FinanceDetailId=${id}`,"");}
+  getStockTransfer(date:any,fromShowRoomId:any,fromYardId:any):Observable<any>{return this.httpclient.get(this.url+`StockTransfer/GetStockTransfer?Date=${date}&FromShowRoomId=${fromShowRoomId}&FromYardId=${fromYardId}`);}
+  
 }

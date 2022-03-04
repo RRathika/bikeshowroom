@@ -64,7 +64,7 @@ export class ShowroomtoyardComponent implements OnInit {
   }
 
 
-  onSelect(data: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any) {
+  onSelect(data: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any,yardName:any) {
     if(this.yardId != undefined)
     {
       if (yardId == this.yardId) {
@@ -81,7 +81,8 @@ export class ShowroomtoyardComponent implements OnInit {
           vehicleModelId:vehicleModelId,
           userCode:localStorage.getItem('UserCode'),
           vehicleModelName: vehicleModelName,
-          yardId: yardId
+          yardId: yardId,
+          yardName:yardName
         });
     
         this.firstTable = this.firstTable.filter((el: any) => el !== data);
@@ -92,7 +93,7 @@ export class ShowroomtoyardComponent implements OnInit {
   }
 
 
-  onDelect(serialNo: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any) {
+  onDelect(serialNo: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any,yardName:any) {
     // console.log(serialNo,chassisNo,engineNo,vehicleModelName);
     // console.log(serialNo); 
 
@@ -106,7 +107,8 @@ export class ShowroomtoyardComponent implements OnInit {
       vehicleModelId:vehicleModelId,
       userCode:localStorage.getItem('UserCode'),
       vehicleModelName: vehicleModelName,
-      yardId: yardId
+      yardId: yardId,
+      yardName:yardName
     });
 
 
