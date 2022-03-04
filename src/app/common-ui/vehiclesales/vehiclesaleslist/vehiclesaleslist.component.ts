@@ -81,7 +81,7 @@ export class VehiclesaleslistComponent implements OnInit {
     this.service.getsales(this.saleForm.value['showRoomId'],this.saleForm.value['yard'],this.saleForm.value['fromdate'],this.saleForm.value['todate']).subscribe(data=>{
       if(data.statusCode==200)
       {
-        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 10000});
+        this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
         this.list='';
         this.saleForm.reset();
         this.submitted=false;  

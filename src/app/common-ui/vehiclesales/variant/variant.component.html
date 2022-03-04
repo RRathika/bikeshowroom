@@ -4,10 +4,23 @@
         <div class="card card-primary">
           <div class="card-header bg-primary">
             <h3 class="card-title">Bike Variant</h3>
-            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Bike variant List</button>
+            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Bike variant List</button>
           </div>
           <form [formGroup]="variantForm" (ngSubmit)="submit()">
             <div class="row p-3">
+              <div class="col-md-3">                
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Bike Model</label> 
+                    <select formControlName="modelId" class="form-select dropdown-primary" id="Select1" (change)="selectmodel($event)">
+                      <option *ngFor="let data of bikemodeldata"  [value]=data.modelId selected>{{data.modelName}}</option>
+                  </select>
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="variantForm.controls.modelId.errors?.required">
+                  <small>Bike Model name is required</small> 
+                  </span>
+                  </div> 
+                  </div>               
+              </div>   
               <div class="col-md-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Color Name</label> 
@@ -17,33 +30,34 @@
                   </select>
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="variantForm.controls.colorId.errors?.required">
-                  <small>Color name required</small> 
+                  <small>Color name is required</small> 
                   </span>
                   </div> 
                   </div>                
               </div>   
               <div class="col-md-3">                
                 <div class="form-group">
+                  <label for="exampleInputEmail1">Variant Name</label>
+                  <input type="text" class="form-control" formControlName="variantName"  placeholder="Variant">
+                  <div *ngIf="submitted">
+                    <span class="text-danger" *ngIf="variantForm.controls.variantName.errors?.required">
+                  <small>Variant name is required</small> 
+                  </span>
+                  </div>
+                </div>               
+            </div>
+              <div class="col-md-3">                
+                <div class="form-group">
                   <label for="exampleInputEmail1">Variant Code</label>
-                  <input type="text" class="form-control" formControlName="variantCode"  placeholder="variant Code">
+                  <input type="text" class="form-control" formControlName="variantCode"  placeholder="Variant Code">
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="variantForm.controls.variantCode.errors?.required">
-                  <small>Variant code required</small> 
+                  <small>Variant code is required</small> 
                   </span>
                   </div>
                 </div>               
             </div>        
-              <div class="col-md-3">                
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Variant Name</label>
-                    <input type="text" class="form-control" formControlName="variantName"  placeholder="variant">
-                    <div *ngIf="submitted">
-                      <span class="text-danger" *ngIf="variantForm.controls.variantName.errors?.required">
-                    <small>Variant name required</small> 
-                    </span>
-                    </div>
-                  </div>               
-              </div>
+              
               <div class="col-md-3">                
                   <div class="form-group">
                     <label for="exampleInputEmail1">Years of Warranty</label>
@@ -72,7 +86,7 @@
                     <input type="number" class="form-control" formControlName="hsnCode"  placeholder="HSN Code">
                     <div *ngIf="submitted">
                       <span class="text-danger" *ngIf="variantForm.controls.hsnCode.errors?.required">
-                    <small>HSN Code required</small> 
+                    <small>HSN Code is required</small> 
                     </span>
                     </div>
                   </div>
@@ -83,7 +97,7 @@
                     <label for="exampleInputEmail1">Current Model </label>
                   </div>
                  <div class="col-md-6">
-                  <input  class="form-check-input"  type="checkbox"  value="1"  id="flexCheckChecked"
+                  <input  class="form-check-input"  type="checkbox"  value="0" formControlName="currentModel"  id="flexCheckChecked"
                   [checked]="false" (change)="changemodel($event)"
                 />
                   <!-- <input  type="checkbox" class="form-group" formControlName="currentModel" [checked]="currentModel" (change)="changemodel()"/> -->
@@ -142,8 +156,8 @@
                 </div>
                 <div class="col-md-4">                  
                   <div class="form-group">
-                    <label for="exampleInputEmail1">HRFee</label>
-                    <input type="number" class="form-control" formControlName="hrFee" (change)="sum4()" placeholder="HRFee">
+                    <label for="exampleInputEmail1">HR Fee</label>
+                    <input type="number" class="form-control" formControlName="hrFee" (change)="sum4()" placeholder="HR Fee">
                     <div *ngIf="submitted">
                       <span class="text-danger" *ngIf="variantForm.controls.hrFee.errors?.required">
                     <small>HRFee required</small> 
@@ -153,8 +167,8 @@
               </div>
               <div class="col-md-4">                  
                 <div class="form-group">
-                  <label for="exampleInputEmail1">HYPCharges </label>
-                  <input type="number" class="form-control" formControlName="hypCharges" (change)="sum5()" placeholder="HYPCharges">
+                  <label for="exampleInputEmail1">HYP Charges </label>
+                  <input type="number" class="form-control" formControlName="hypCharges" (change)="sum5()" placeholder="HYP Charges">
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="variantForm.controls.hypCharges.errors?.required">
                   <small>HYP Charges required</small> 
@@ -164,8 +178,8 @@
             </div>
             <div class="col-md-4">                  
               <div class="form-group">
-                <label for="exampleInputEmail1">ExtraCharges </label>
-                <input type="number" class="form-control" formControlName="extraCharges" (change)="sum6()" placeholder="ExtraCharges">
+                <label for="exampleInputEmail1">Extra Charges </label>
+                <input type="number" class="form-control" formControlName="extraCharges" (change)="sum6()" placeholder="Extra Charges">
                 <div *ngIf="submitted">
                   <span class="text-danger" *ngIf="variantForm.controls.extraCharges.errors?.required">
                 <small>Extra Charges required</small> 
@@ -175,8 +189,8 @@
           </div>
           <div class="col-md-4">                  
             <div class="form-group">
-              <label for="exampleInputEmail1">OtherCharges</label>
-              <input type="number" class="form-control" formControlName="otherCharges" (change)="sum7()" placeholder="OtherCharges">
+              <label for="exampleInputEmail1">Other Charges</label>
+              <input type="number" class="form-control" formControlName="otherCharges" (change)="sum7()" placeholder="Other Charges">
               <div *ngIf="submitted">
                 <span class="text-danger" *ngIf="variantForm.controls.otherCharges.errors?.required">
               <small>Other Charges required</small> 
@@ -250,16 +264,17 @@
       <div class="col-md-12" *ngIf="!displayadd">
         <div class="card card-primary">
           <div class="card-header bg-primary" >     
-            <h3 class="card-title">Variant Master Details</h3>             
-            <button class="btn btn-success float-end btn-sm" (click)="display()">Add variant</button>
+            <h3 class="card-title">Variant Details</h3>             
+            <button class="btn btn-success float-end btn-sm" (click)="display()">Add New variant</button>
           </div>
             <table id="example1" class="table table-bordered table-striped" *ngIf="variant">
               <thead>
                 <tr class="text-center">
-                  <th>SI.NO</th>
-                  <th>Variant Code</th>
-                  <th>Variant Name</th>
+                  <th>S.No</th>
+                  <th>Model Name</th>
                   <th>Color Name</th>
+                  <th>Variant Name</th>
+                  <th>Variant Code</th>                  
                   <!-- <th>Color Code</th>                 -->
                   <th>Edit</th>
                   <th>Delete</th>
@@ -268,9 +283,10 @@
               <tbody class="text-center">
                 <tr *ngFor="let data of variant  | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
                   <td>{{ (p - 1) * count + i +1 }}</td>
-                  <td>{{data.variantCode}}</td>
-                  <td>{{data.variantName}}</td>
-                  <td>{{data.colorName}}</td>    
+                  <td>{{data.modelName}}</td>    
+                  <td>{{data.colorName}}</td>  
+                  <td>{{data.variantName}}</td>  
+                  <td>{{data.variantCode}}</td>                  
                   <!-- <td>{{data.colorCode}}</td>             -->
                   <td> <button class="btn btn-success btn-sm" (click)="Editcolor(data.variantId)"><i class="fas fa-edit" style="color: white;"></i></button></td>
                   <td> <button class="btn btn-danger btn-sm" (click)="Delete(data.variantId)"><i class="fa fa-trash"  style="color: white;" aria-hidden="true"></i></button></td>

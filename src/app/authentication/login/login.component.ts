@@ -47,11 +47,11 @@ export class LoginComponent implements OnInit {
         
         if(data.statusCode==400)
         {
-          this.toastservice.show(data.message,{className:'bg-danger text-light', delay: 15000})
+          this.toastservice.show(data.message,{className:'bg-danger text-light', delay: 5000})
         }
         if(data.statusCode==201)
         {
-          this.toastservice.show(data.message,{className:'bg-danger text-danger', delay: 15000})
+          this.toastservice.show(data.message,{className:'bg-danger text-danger', delay: 5000})
         }
         else{
          this.username= localStorage.setItem('UserName', data.userName);
@@ -63,14 +63,14 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
           }
           else{
-            this.toastservice.show('Doesnot match your details',{className:'bg-danger text-light', delay: 15000})
+            this.toastservice.show('Doesnot match your details',{className:'bg-danger text-light', delay: 5000})
           }
         }
       })
     }
     else
     {
-      this.toastservice.show('Please Fill all Field',{className:'bg-danger text-light', delay: 15000})
+      this.toastservice.show('Please Fill all Field',{className:'bg-danger text-light', delay: 5000})
     }
     
   }

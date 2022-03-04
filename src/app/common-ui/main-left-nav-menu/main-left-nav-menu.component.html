@@ -1,12 +1,12 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="/#/dashboard" class="brand-link">
+    <a class="brand-link">
       <img
         src="assets/dist/img/yamahalogo.png"
         alt="AdminLTE Logo"
         class="brand-image img-circle elevation-3"
         style="opacity: 0.8"
       />
-      <span class="brand-text font-weight-light">YAMAHA</span>
+      <span class="brand-text font-weight-light text-light">YAMAHA</span>
     </a>
     <div class="sidebar">
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -18,7 +18,7 @@
           />
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{userdata}}</a>
+          <a class="d-block text-light">{{userdata}}</a>
         </div>
       </div>
       <nav class="mt-2">
@@ -36,8 +36,8 @@
               </p>
             </a>                    
           </li>
-          <li class="nav-item has-treeview">
-            <a href="/#/dashboard/showroom" class="nav-link ">
+          <li class="nav-item has-treeview" [class]="master" (click)="openmaster()">
+            <a  class="nav-link ">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Master
@@ -50,7 +50,7 @@
               <li class="nav-item">
                 <a href="/#/dashboard/showroom" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Show Room</p>
+                  <p>Showroom</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -82,7 +82,7 @@
               <li class="nav-item">
                 <a href="/#/dashboard/vendor" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add Vendors</p>
+                  <p>Vendors</p>
                 </a>
               </li> 
               <li class="nav-item">
@@ -94,8 +94,8 @@
               </ul>        
           </li>
 
-          <li class="nav-item has-treeview ">
-            <a href="/#/transitlist" class="nav-link ">
+          <li class="nav-item has-treeview "  [class]="trans" (click)="opentrans()">
+            <a  class="nav-link ">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Vehicle Purchase
@@ -122,8 +122,8 @@
                   </li>
                   </ul>
             </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link ">
+          <li class="nav-item has-treeview"  [class]="sale" (click)="opensale()">
+            <a class="nav-link ">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Vehicle sales
@@ -140,8 +140,8 @@
               </li>              
             </ul>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link ">
+          <li class="nav-item has-treeview"  [class]="stock" (click)="openstock()">
+            <a  class="nav-link ">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Stock Management

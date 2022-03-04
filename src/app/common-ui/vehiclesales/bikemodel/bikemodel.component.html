@@ -4,23 +4,24 @@
         <div class="card card-primary">
           <div class="card-header bg-primary">
             <h3 class="card-title">Bike Model Details</h3>
-            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Bike Model List</button>
+            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Bike Model List</button>
           </div>
           <form [formGroup]="bikemodelForm" (ngSubmit)="submit()">
             <div class="row">
             <div class="col-md-3">
               <div class="card-body">
                 <div class="form-group">
-                  <label for="bikeType">Bike Type</label>
+                  <label for="bikeType">Vehicle Type</label>
                   <!-- <input class="form-control" list="vehicle"
                   placeholder="Type to search..." formControlName="vehicleType"> -->
                 <select id="vehicle" class="form-select" formControlName="vehicleType">
+                  <option value="">Select Vehicle Type</option>
                   <option value="1">Bike</option>
                   <option value="2">Scooty</option>
                 </select>
                 <div *ngIf="submitted">
                   <span class="text-danger" *ngIf="bikemodelForm.controls.vehicleType.errors?.required">
-                <small>Vehicle Type required</small> 
+                <small>Vehicle type is required</small> 
                 </span>
                 </div> 
                 </div>
@@ -30,10 +31,10 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="modelName">Model Name</label>
-                  <input type="email" class="form-control" formControlName="modelName" id="modelName" placeholder="Model Name">
+                  <input type="text" class="form-control" formControlName="modelName" id="modelName" placeholder="Model Name">
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="bikemodelForm.controls.modelName.errors?.required">
-                  <small>Name is required</small> 
+                  <small>Model name is required</small> 
                   </span>
                   </div> 
                 </div>
@@ -43,10 +44,10 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="modelName">Model Code</label>
-                  <input type="email" class="form-control" formControlName="modelCode" id="modelName" placeholder="Model Code">
+                  <input type="text" class="form-control" formControlName="modelCode" id="modelName" placeholder="Model Code">
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="bikemodelForm.controls.modelCode.errors?.required">
-                  <small>Model Code  required</small> 
+                  <small>Model Code is required</small> 
                   </span>
                   </div> 
                 </div>
@@ -66,13 +67,13 @@
       <div class="card card-primary">     
         <div class="card-body">
           <div class="card-header bg-primary" >     
-            <h3 class="card-title">Bike Model Master Details</h3>             
-            <button class="btn btn-success float-end btn-sm" (click)="display()">Add Bike Model</button>
+            <h3 class="card-title">Bike Model Details</h3>             
+            <button class="btn btn-success float-end btn-sm" (click)="display()">Add New Bike Model</button>
           </div>
           <table id="example1" class="table table-bordered table-striped" *ngIf="getbike">
             <thead>
               <tr class="text-center">
-                <th>SI.NO</th>
+                <th>S.No</th>
                 <th>Bike Type</th>
                 <th>Model Name</th>
                 <th>Model Code</th>

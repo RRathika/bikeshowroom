@@ -4,7 +4,7 @@
       <div class="card card-primary">
         <div class="card-header bg-primary">
           <h3 class="card-title">Bike Color</h3>
-          <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Bike color List</button>
+          <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Bike color List</button>
         </div>
         <form [formGroup]="colorForm" (ngSubmit)="submit()">
           <div class="row">
@@ -17,7 +17,7 @@
                 </select>
                 <div *ngIf="submitted">
                   <span class="text-danger" *ngIf="colorForm.controls.modelId.errors?.required">
-                <small>Model Name required</small> 
+                <small>Bike Model name is required</small> 
                 </span>
                 </div> 
                 </div>
@@ -27,10 +27,10 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Color Name</label>
-                  <input type="text" class="form-control" formControlName="colorName" id="exampleInputEmail1" placeholder="variant">
+                  <input type="text" class="form-control" formControlName="colorName" id="exampleInputEmail1" placeholder="Color Name">
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="colorForm.controls.colorName.errors?.required">
-                  <small>Color Name required</small> 
+                  <small>Color name is required</small> 
                   </span>
                   </div> 
                 </div>
@@ -40,10 +40,10 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Color Code</label>
-                  <input type="text" class="form-control" formControlName="colorCode" id="exampleInputEmail1" placeholder="variant">
+                  <input type="text" class="form-control" formControlName="colorCode" id="exampleInputEmail1" placeholder="Color Code">
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="colorForm.controls.colorName.errors?.required">
-                  <small>Color code required</small> 
+                  <small>Color code is required</small> 
                   </span>
                   </div> 
                 </div>
@@ -63,13 +63,13 @@
       <div class="card card-primary">
         <div class="card-body">
           <div class="card-header bg-primary" >     
-            <h3 class="card-title">Color Master Details</h3>             
-            <button class="btn btn-success float-end btn-sm" (click)="display()">Add Color</button>
+            <h3 class="card-title">Color Details</h3>             
+            <button class="btn btn-success float-end btn-sm" (click)="display()">Add New Color</button>
           </div>
           <table id="example1" class="table table-bordered table-striped" *ngIf="colordata">
             <thead>
               <tr class="text-center">
-                <th>SI.NO</th>
+                <th>S.No</th>
                 <th>Bike Model</th>
                 <th>Color Name</th>
                 <th>Color Code</th>                

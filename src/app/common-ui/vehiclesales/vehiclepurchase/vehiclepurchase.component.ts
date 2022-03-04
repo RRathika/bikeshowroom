@@ -264,17 +264,17 @@ export class VehiclepurchaseComponent implements OnInit {
       this.service.savepurchase(this.vehiclepurchaseForm.value).subscribe((data:any)=>{
         if(data.statusCode)
         {
-        this.toastservice.show(data.message,{ classname: 'bg-success text-light', delay: 10000 });
+        this.toastservice.show(data.message,{ classname: 'bg-success text-light', delay: 3000 });
         this.clear();
         }
         else{
-          this.toastservice.show(data.message,{ classname: 'bg-danger text-light', delay: 15000 });
+          this.toastservice.show(data.message,{ classname: 'bg-danger text-light', delay: 5000 });
         }
       })
     }
     else
     {
-      this.toastservice.show("please Fill all Field",{ classname: 'bg-danger text-light', delay: 15000 })
+      this.toastservice.show("please Fill all Field",{ classname: 'bg-danger text-light', delay: 5000 })
     }
     }
     else
@@ -285,17 +285,17 @@ export class VehiclepurchaseComponent implements OnInit {
         this.service.savepurchase(this.vehiclepurchaseForm.value).subscribe((data:any)=>{
           if(data.statusCode)
           {
-          this.toastservice.show(data.message,{ classname: 'bg-success text-light', delay: 10000 });
+          this.toastservice.show(data.message,{ classname: 'bg-success text-light', delay: 3000 });
           this.clear();
           }
           else{
-            this.toastservice.show(data.message,{ classname: 'bg-danger text-light', delay: 15000 });
+            this.toastservice.show(data.message,{ classname: 'bg-danger text-light', delay: 5000 });
           }
         })
       }
       else
       {
-        this.toastservice.show("please Fill all Field",{ classname: 'bg-danger text-light', delay: 15000 })
+        this.toastservice.show("please Fill all Field",{ classname: 'bg-danger text-light', delay: 5000 })
       }
     }
   }

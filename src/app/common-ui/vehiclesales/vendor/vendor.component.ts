@@ -75,7 +75,10 @@ export class VendorComponent implements OnInit {
       if (result.value) {
         this.service.deletevendor(id).subscribe(data => {
           this.loadVendor();
-          console.log('delete');
+          if(data.statusCode==200)
+          {
+          this.toastservice.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
+          }
         })
       }
       else {

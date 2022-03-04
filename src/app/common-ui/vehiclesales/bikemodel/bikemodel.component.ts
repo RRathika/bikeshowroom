@@ -45,13 +45,13 @@ export class BikemodelComponent implements OnInit {
       this.service.updatebikemodel(this.bikemodelForm?.value).subscribe(data=>{
         this.statusCode=data.statusCode;
       if(this.statusCode==200){
-        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
+        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 }); 
         this.bikemodelForm.reset();
         this.displayadd=false;
         this.getbikemodel()
       }
       else{
-        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 }); 
+        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 }); 
       }    
       })
     }
@@ -59,13 +59,13 @@ export class BikemodelComponent implements OnInit {
     this.service.savebikemodel(this.bikemodelForm?.value).subscribe(data=>{
       this.statusCode=data.statusCode;
       if(this.statusCode==200){
-        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 }); 
+        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 }); 
         this.bikemodelForm.reset();
         this.displayadd=false;
         this.getbikemodel()
       }
       else{
-        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 }); 
+        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 }); 
       }    
     })
   }
@@ -106,6 +106,10 @@ export class BikemodelComponent implements OnInit {
       if (result.value) {
         this.service.deletebikemodel(id).subscribe(data=>{
           this.getbikemodel();
+          if(data.statusCode==200)
+          {
+          this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
+          }
         })        
       }
       else{

@@ -4,7 +4,7 @@
             <div class="card card-primary">
                 <div class="card-header bg-primary">
                     <h3 class="card-title">Vendor Add</h3>
-                    <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Vendor List</button>
+                    <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Vendor List</button>
                 </div>
                 <form [formGroup]="vendorForm" (ngSubmit)="submit()">
                     <div class="row p-3">
@@ -15,7 +15,7 @@
                                     placeholder="Company Name">
                                 <div *ngIf="submitted">
                                     <span class="text-danger" *ngIf="vendorForm.controls.companyName.errors?.required">
-                                        <small>Company Name is required</small>
+                                        <small>Company name is required</small>
                                     </span>
                                 </div>
                             </div>
@@ -38,11 +38,12 @@
                                 <label for="exampleInputEmail1">Mobile No</label>
                                 <input type="number" class="form-control" formControlName="mobileNo"
                                     id="exampleInputEmail1" placeholder="Mobile No">
+                                    <small class="text-danger" *ngIf="vendorForm.controls.mobileNo.errors?.pattern">Mobile No must be 10
+                                        digit</small>
                                 <div class="text-danger" *ngIf="submitted">
                                     <span *ngIf="vendorForm.controls.mobileNo.errors?.required">
                                         <small>Mobile No is required</small> </span>
-                                    <small *ngIf="vendorForm.controls.mobileNo.errors?.pattern">Mobile No must be 10
-                                        digit</small>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -133,12 +134,12 @@
                 <div class="card-body">
                     <div class="card-header bg-primary">
                         <h3 class="card-title">Vendor Details</h3>
-                        <button class="btn btn-success float-end btn-sm" (click)="display()">Add Vendor</button>
+                        <button class="btn btn-success float-end btn-sm" (click)="display()">Add New Vendor</button>
                     </div>
                     <table id="example1" class="table table-bordered table-striped" *ngIf="vendordata">
                         <thead>
                             <tr class="text-center">
-                                <th>SI.NO</th>
+                                <th>S.No</th>
                                 <th>Company Name</th>
                                 <th>GST No</th>
                                 <th>Mobile</th>

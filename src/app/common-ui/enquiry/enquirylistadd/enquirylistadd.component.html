@@ -14,7 +14,7 @@
                                 <input type="text" class="form-control" formControlName="name" id="name"
                                     placeholder="Name">
                                     <div class="text-danger" *ngIf="submitted">
-                                        <span  *ngIf="enquiryaddForm.controls.name.errors?.required">Name required.</span> 
+                                        <span  *ngIf="enquiryaddForm.controls.name.errors?.required">Name is required.</span> 
                                      </div> 
                             </div>
                         </div>
@@ -31,19 +31,13 @@
                                 <input type="number" class="form-control" formControlName="mobileNo" id="mobileNo"
                                     placeholder="Mobile No">
                                     <div class="text-danger" *ngIf="submitted">
-                                        <span  *ngIf="enquiryaddForm.controls.mobileNo.errors?.required">Mobile Number required.</span>
-                                        <span *ngIf="enquiryaddForm.controls.mobileNo.errors?.pattern">Please, Enter 10 digit Mobile Number.</span>
+                                        <span  *ngIf="enquiryaddForm.controls.mobileNo.errors?.required">Mobile No required.</span>
+                                        <span *ngIf="enquiryaddForm.controls.mobileNo.errors?.pattern">Please, Enter 10 digit Mobile No.</span>
                                         <span></span> 
                                      </div> 
                             </div>
                         </div>
-                        <!-- <div class="col-md-4">                        
-                            <div class="form-group">
-                                <label for="modelName">Email</label>
-                                <input type="email" class="form-control" formControlName="mail" id="mail"
-                                    placeholder="Email">
-                            </div>                        
-                    </div> -->
+                        
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="modelName">Planing Date</label>
@@ -82,7 +76,7 @@
                                     <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                 </select>
                                 <div class="text-danger" *ngIf="submitted">
-                                    <span  *ngIf="enquiryaddForm.controls.showRoomId.errors?.required">Showroom Name required.</span> 
+                                    <span  *ngIf="enquiryaddForm.controls.showRoomId.errors?.required">Showroom name is required.</span> 
                                  </div> 
                             </div>
                         </div>

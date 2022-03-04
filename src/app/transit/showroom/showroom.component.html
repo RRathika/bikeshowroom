@@ -3,19 +3,19 @@
       <div class="col-md-12" *ngIf="displayadd">
         <div class="card card-primary">
           <div class="card-header bg-primary">
-            <h3 class="card-title">Show Room Details</h3>
-            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">Showroom List</button>
+            <h3 class="card-title">Showroom Details</h3>
+            <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Showroom List</button>
           </div>
           <form [formGroup]="showroomForm" (ngSubmit)="submit()">
             <div class="row p-3">
               <div class="col-md-6">
                 <!-- <div class="card-body"> -->
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Show Room Name</label> 
+                    <label for="exampleInputEmail1">Showroom Name</label> 
                     <input type="text" class="form-control" formControlName="showRoomName" placeholder="Show Room Name">
                     <div *ngIf="submitted">
                       <span class="text-danger" *ngIf="showroomForm.controls.showRoomName.errors?.required">
-                    <small>Name is required</small> 
+                    <small>Showroom name is required</small> 
                     </span>
                     </div>                    
                   </div>
@@ -26,11 +26,12 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
                     <input type="number" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
+                    <div *ngIf="showroomForm.controls.mobileNo.errors?.pattern" class="text-danger"><small>Mobile No is not 10 digit</small></div>
                     <div class="text-danger" *ngIf="submitted">
                     <span 
                     *ngIf="showroomForm.controls.mobileNo.errors?.required">
-                    <small>Mobile number is required</small> </span>
-                    <div *ngIf="showroomForm.controls.mobileNo.errors?.pattern">Mobile number is not 10 digit</div>
+                    <small>Mobile No is required</small> </span>
+                   
                   </div>
                   </div>
                 <!-- </div>   -->
@@ -64,14 +65,14 @@
         <div class="card card-primary">
           <div class="card-body">
             <div class="card-header bg-primary" >     
-              <h3 class="card-title">Showroom Master Details</h3>             
-              <button class="btn btn-success float-end btn-sm" (click)="display()">Add Showroom</button>
+              <h3 class="card-title">Showroom Details</h3>             
+              <button class="btn btn-success float-end btn-sm" (click)="display()">Add New Showroom</button>
             </div>
             <table id="example1" class="table table-bordered table-striped" *ngIf="showdata">
               <thead>
                 <tr class="text-center">
-                  <th>SI.NO</th>
-                  <th>Show Room Name</th>
+                  <th>S.No</th>
+                  <th>Showroom Name</th>
                   <th>Address</th>                
                   <th>Mobile No</th>
                   <th>Edit</th>

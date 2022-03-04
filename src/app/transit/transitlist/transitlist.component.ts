@@ -173,17 +173,17 @@ export class TransitlistComponent implements OnInit {
     // if(this.transitForm.valid){
     this.service.savetransit(this.transitForm.value).subscribe((data: any) => {
       if (data.statusCode == 200) {
-        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 10000 });
+        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
         this.transitForm.reset();
         this.router.navigateByUrl('/dashboard/transitlist');
       }
       else {
-        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 15000 });
+        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
       }
     })
   // }
   // else{
-  //   this.toastService.show("Please fill all field", { classname: 'bg-danger text-light', delay: 15000 });
+  //   this.toastService.show("Please fill all field", { classname: 'bg-danger text-light', delay: 5000 });
   // }
   }
   clear() {

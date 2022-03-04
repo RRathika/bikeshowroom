@@ -16,7 +16,7 @@
                                 <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
                             </select>
                             <div class="text-danger" *ngIf="submitted">
-                               <span  *ngIf="saleForm.controls.showRoomId.errors?.required">Showroom Name required.</span> 
+                               <span  *ngIf="saleForm.controls.showRoomId.errors?.required">Showroom name is required.</span> 
                             </div> 
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                                 <option *ngFor="let data of yard" [value]="data.yardId">{{data.yardName}}</option>
                             </select>
                             <div class="text-danger" *ngIf="submitted">
-                                <span  *ngIf="saleForm.controls.yard.errors?.required">Showroom Name required.</span> 
+                                <span  *ngIf="saleForm.controls.yard.errors?.required">Showroom name is required.</span> 
                              </div> 
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                             <label for="exampleInputEmail1">From Date</label>
                             <input type="date" class="form-control" formControlName="fromdate"/>
                             <div class="text-danger" *ngIf="submitted">
-                                <span  *ngIf="saleForm.controls.fromdate.errors?.required">Showroom Name required.</span> 
+                                <span  *ngIf="saleForm.controls.fromdate.errors?.required">Showroom name is required.</span> 
                              </div>
                         </div>
                          
@@ -47,7 +47,7 @@
                             <label for="exampleInputEmail1">To Date</label>
                             <input type="date" class="form-control" formControlName="todate"/>
                             <div class="text-danger" *ngIf="submitted">
-                                <span  *ngIf="saleForm.controls.todate.errors?.required">Showroom Name required.</span> 
+                                <span  *ngIf="saleForm.controls.todate.errors?.required">Showroom name is required.</span> 
                              </div> 
                         </div>                        
                     </div>
@@ -62,7 +62,7 @@
             <table id="example1" class="table table-bordered table-striped" *ngIf="list">
               <thead>
                 <tr class="text-center">
-                  <th>SI.NO</th>
+                  <th>S.No</th>
                   <th>Invoice No</th>
                   <th>Invoice Date</th>
                   <th>Customer Name</th>
@@ -240,7 +240,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <h4 for="exampleInputEmail1"><b>Cheque Date:</b> {{viewdata.chequeDate | date}}</h4>
+                                        <h4 for="exampleInputEmail1"><b>Cheque Date:</b> {{viewdata.chequeDate | date:'dd-MM-yyyy'}}</h4>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -260,7 +260,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <h4 for="exampleInputEmail1"><b>DD Date:</b> {{viewdata.ddDate | date}}</h4>
+                                        <h4 for="exampleInputEmail1"><b>DD Date:</b> {{viewdata.ddDate | date:'dd-MM-yyyy'}}</h4>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
