@@ -38,6 +38,8 @@ import { YardtoyardComponent } from './vehicleManage/yardtoyard/yardtoyard.compo
 import { FinanceComponent } from './common-ui/Finance/finance.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { VendorComponent } from './common-ui/vehiclesales/vendor/vendor.component';
+import { ListshowroomtransferComponent } from './vehicleManage/listshowroomtransfer/listshowroomtransfer.component';
+import { ListyardtransferComponent } from './vehicleManage/listyardtransfer/listyardtransfer.component';
 
 
 @NgModule({
@@ -70,7 +72,9 @@ import { VendorComponent } from './common-ui/vehiclesales/vendor/vendor.componen
     ShowroomtoyardComponent,
     YardtoyardComponent,
     FinanceComponent,
-    VendorComponent
+    VendorComponent,
+    ListshowroomtransferComponent,
+    ListyardtransferComponent
   ],
   imports: [
     BrowserModule,

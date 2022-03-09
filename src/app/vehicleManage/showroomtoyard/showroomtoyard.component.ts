@@ -17,7 +17,9 @@ export class ShowroomtoyardComponent implements OnInit {
   public firstTable: any[] = [];
   public secondTable: any[] = [];
   // isshow:boolean=false;
-  constructor(private service: YamahaserviceService, private formbuilder: FormBuilder, private router: Router, public toastservice: ToastServiceService, private toastService: ToastServiceService) { }
+  yardBtnDisabled: boolean = false;
+
+  constructor(private service: YamahaserviceService, private formbuilder: FormBuilder, private route: Router, public toastservice: ToastServiceService, private toastService: ToastServiceService) { }
 
   ngOnInit(): void {
     this.showroom();
@@ -31,7 +33,11 @@ export class ShowroomtoyardComponent implements OnInit {
   }
 
   changeShowroom(e: any) {
+    this.yardBtnDisabled = false;
     this.yardname = [];
+    this.firstTable =[];
+    this.secondTable =[];
+
     let data = e.target.value;
     this.showroomId = data;
     this.service.showroombyyard(data).subscribe(data => {
@@ -49,6 +55,7 @@ export class ShowroomtoyardComponent implements OnInit {
   changeYard(event: any) {
     let data = event.target.value;
     this.yardId = data;
+    this.yardBtnDisabled = true;
   }
 
   getListByShowroomId(showroomId: any) {
@@ -64,7 +71,11 @@ export class ShowroomtoyardComponent implements OnInit {
   }
 
 
-  onSelect(data: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any) {
+  onSelect(data: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any,yardName:any,event:any) {
+   
+    console.log(event)
+    console.log(event.currentTarget.checked);
+  //  alert("onSelect")
     if(this.yardId != undefined)
     {
       if (yardId == this.yardId) {
@@ -81,7 +92,8 @@ export class ShowroomtoyardComponent implements OnInit {
           vehicleModelId:vehicleModelId,
           userCode:localStorage.getItem('UserCode'),
           vehicleModelName: vehicleModelName,
-          yardId: yardId
+          yardId: yardId,
+          yardName:yardName
         });
     
         this.firstTable = this.firstTable.filter((el: any) => el !== data);
@@ -92,9 +104,11 @@ export class ShowroomtoyardComponent implements OnInit {
   }
 
 
-  onDelect(serialNo: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any) {
+  onDelect(serialNo: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any,yardName:any) {
     // console.log(serialNo,chassisNo,engineNo,vehicleModelName);
     // console.log(serialNo); 
+
+    // alert("onDelect")
 
     this.firstTable.push({
       vehicleStockId:vehicleStockId,
@@ -106,7 +120,8 @@ export class ShowroomtoyardComponent implements OnInit {
       vehicleModelId:vehicleModelId,
       userCode:localStorage.getItem('UserCode'),
       vehicleModelName: vehicleModelName,
-      yardId: yardId
+      yardId: yardId,
+      yardName:yardName
     });
 
 
@@ -125,6 +140,9 @@ export class ShowroomtoyardComponent implements OnInit {
       this.service.savestocktransfer(this.secondTable).subscribe((data:any)=>{
         if(data.statusCode==200){
           this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 3000});
+         // this.route.navigateByUrl('/dashboard/listshowroomtransfer');
+         this.changeShowroom(this.showroomId);
+         this.showroom();
          // this.stocktransferForm.reset();
         }
         // else
@@ -133,6 +151,10 @@ export class ShowroomtoyardComponent implements OnInit {
         // }
       })
     // }
+  }
+
+  listTransfer(){
+    this.route.navigateByUrl('/dashboard/listshowroomtransfer');
   }
 
 }

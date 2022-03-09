@@ -1,0 +1,113 @@
+<div class="container">
+
+  <div class="col-md-12">
+    <div class="card card-primary">
+      <div class="card-header bg-primary">
+        <h3 class="card-title">Showroom To Yard List</h3>
+        <button class="btn btn-success float-end btn-sm" (click)="stockTransfer()">Stock Transfer</button>
+      </div>
+      <form [formGroup]="stockForm" (ngSubmit)="submit()">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="modelName">Showroom Name</label>
+                <select class="form-select" formControlName="ShowRoomId" (change)="changeShowroom($event)">
+                  <option value="0">All showroom name</option>
+                  <option *ngFor="let data of showroomdata;" [value]="data.showRoomId">{{data.showRoomName}}</option>
+                </select>
+                <div *ngIf="submitted">
+                  <span class="text-danger" *ngIf="stockForm.controls.ShowRoomId.errors?.required">
+                    <small>Showroom name required</small>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="exampleInputEmail1">To Yard</label>
+                <select class="form-select" aria-label="Default select example" formControlName="yardId">
+                  <option>Select</option>
+                  <option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}</option>
+                </select>
+                <div *ngIf="submitted">
+                  <span class="text-danger" *ngIf="stockForm.controls.yardId.errors?.required">
+                    <small>Yard Name required</small>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Date</label>
+                <input type="date" class="form-control" formControlName="date" />
+                <!-- <div class="text-danger" *ngIf="submitted">
+                  <span *ngIf="stockForm.controls.date.errors?.required">
+                    <small>Date is required</small>
+                  </span>
+                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 my-5">
+            <div class="form-group text-center ">
+              <button class="btn btn-success" type="submit">Submit</button>
+            </div>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="card card-primary">
+      <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped"  *ngIf="vehiclestock">
+          <thead>
+            <tr class="text-center">
+              <th>SI.NO</th>
+              <th>Date</th>
+              <th>Chassis No</th>
+              <th>Engine No</th>
+              <th>From Showroom Name</th>
+              <th>To Yard Name</th>
+              <th>Model Name</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <!-- <tr *ngFor="let data of vehiclestock;let i=index;"> -->
+
+              <tr *ngFor="let data of vehiclestock | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
+                <td>{{ (p - 1) * count + i +1 }}</td>
+
+              <!-- <td>{{i+1}}</td> -->
+              <td>{{data.date|date}}</td>
+              <td>{{data.chassisNo}}</td>
+              <td>{{data.engineNo}}</td>
+              <td>{{data.fromShowRoomName}}</td>
+              <td>{{data.toYardName}}</td>
+              <td>{{data.vehicleModelName}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="text-right" *ngIf="vehiclestock">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+        </div>
+        <div *ngIf="!vehiclestock" class="pt-3">
+          <p  class="text-center text-danger"><small>No data found</small></p>
+      </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

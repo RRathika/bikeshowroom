@@ -26,6 +26,8 @@ import { StocktransferComponent } from './vehicleManage/stocktransfer/stocktrans
 import { VehiclestockComponent } from './vehicleManage/vehiclestock/vehiclestock.component';
 import { YardtoyardComponent } from './vehicleManage/yardtoyard/yardtoyard.component';
 import { VendorComponent } from './common-ui/vehiclesales/vendor/vendor.component';
+import { ListshowroomtransferComponent } from './vehicleManage/listshowroomtransfer/listshowroomtransfer.component';
+import { ListyardtransferComponent } from './vehicleManage/listyardtransfer/listyardtransfer.component';
 
 const routes: Routes = [
 {
@@ -57,7 +59,9 @@ children:[
 {path:'finance',component:FinanceComponent},
 {path:'showroomtoyard',component:ShowroomtoyardComponent},
 {path:'yardtoyard',component:YardtoyardComponent},
-{path:'vendor',component:VendorComponent}
+{path:'vendor',component:VendorComponent},
+{path:'listshowroomtransfer',component:ListshowroomtransferComponent},
+{path:'listyardtransfer',component:ListyardtransferComponent}
 ]}
 ];
 
