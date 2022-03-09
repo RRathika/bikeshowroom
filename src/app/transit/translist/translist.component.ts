@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { ToastServiceService } from 'src/app/toast-service.service';
@@ -19,12 +19,14 @@ export class TranslistComponent implements OnInit {
   yard:any;
   p: number = 1;
   count: number = 10;
+  selectedQuantity=0;
+  submitted:boolean=false;
   constructor(private router:Router,private formBuilder:FormBuilder,private service:YamahaserviceService,public toastservice:ToastServiceService) { }
   translistForm:FormGroup=this.formBuilder.group({
     fromdate:'',
     todate:'',
     month:0,
-    showRoomId:new FormControl(''),    
+    showRoomId:new FormControl('',[Validators.required]),    
     yard:new FormControl('')
   })
   ngOnInit(): void {
@@ -41,20 +43,52 @@ export class TranslistComponent implements OnInit {
     {
       this.translistForm.value['showRoomId']=this.showroom;
     }
+    if(this.translistForm.value['yard']=='')
+    {
+      this.translistForm.patchValue({
+        yard:0
+      })
+    }
+    if(this.translistForm.value['month']==null)
+    {
+      this.translistForm.patchValue({
+        month:0
+      })
+    }
+    if(this.translistForm.value['fromdate']==null)
+    {
+      this.translistForm.patchValue({
+        month:''
+      })
+    }
+    if(this.translistForm.value['todate']==null)
+    {
+      this.translistForm.patchValue({
+        month:''
+      })
+    }
+    this.submitted=true;
+    if(this.translistForm.valid){
     this.service.gettransit(this.translistForm.value['showRoomId'],this.translistForm.value['yard'],this.translistForm.value['month'],this.translistForm.value['fromdate'],this.translistForm.value['todate']).subscribe(data=>{
-      debugger
       if(data.statusCode==200)
       {
         // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
         this.list='';
         this.translistForm.reset();
+        this.translistForm.controls['fromdate'].enable();
+        this.translistForm.controls['todate'].enable();
+        this.translistForm.controls['yard'].disable();
       }
       else
       {
       this.list=data;
       this.translistForm.reset();
+      this.translistForm.controls['fromdate'].enable();
+      this.translistForm.controls['todate'].enable();
+      this.translistForm.controls['yard'].disable();
     }
     })
+  }
   }
   changemonth(e:any){
     console.log(e.target.value);
@@ -84,9 +118,9 @@ export class TranslistComponent implements OnInit {
     })
   }
   loaddata(show:any){ 
-    let from="01-01-0001 00:00:00";
-    let to="01-01-0001 00:00:00";  
-    this.service.gettransit(show,0,0,from,to).subscribe(data=>{
+    // let from="01-01-0001 00:00:00";
+    // let to="01-01-0001 00:00:00";  
+    this.service.gettransit(show,0,0,this.translistForm.value['fromdate'],this.translistForm.value['todate']).subscribe(data=>{
       if(data.statusCode==200)
       {
         // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});

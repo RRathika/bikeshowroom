@@ -38,12 +38,13 @@
                                 <label for="exampleInputEmail1">Mobile No</label>
                                 <input type="number" class="form-control" formControlName="mobileNo"
                                     id="exampleInputEmail1" placeholder="Mobile No">
-                                    <small class="text-danger" *ngIf="vendorForm.controls.mobileNo.errors?.pattern">Mobile No must be 10
-                                        digit</small>
+                                <small class="text-danger" *ngIf="vendorForm.controls.mobileNo.errors?.pattern">Mobile
+                                    No must be 10
+                                    digit</small>
                                 <div class="text-danger" *ngIf="submitted">
                                     <span *ngIf="vendorForm.controls.mobileNo.errors?.required">
                                         <small>Mobile No is required</small> </span>
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -67,55 +68,8 @@
                                     placeholder="PinCode">
                                 <small class="text-danger" *ngIf="vendorForm.controls.pinCode.errors?.pattern">Pincode
                                     must be 6 digit</small>
-                                <!-- <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="vendorForm.controls.pinCode.errors?.required">
-                  <small>PinCode is required</small> 
-                  </span>
-                  </div>  -->
                             </div>
                         </div>
-
-
-
-                        <!-- <div class="col-md-4">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Show room Name</label> 
-                  <select class="form-select" formControlName="showRoomId">
-                      <option>Select Showroom</option>
-                      <option *ngFor="let item of showroomdata" [value]="item.showRoomId">{{item.showRoomName}}</option>
-                  </select>
-                  <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="yardForm.controls.showRoomId.errors?.required">
-                  <small>Name is required</small> 
-                  </span>
-                  </div> 
-                </div>
-             </div> -->
-                        <!-- <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Mobile No</label>
-                    <input type="text" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
-                    <div class="text-danger" *ngIf="submitted">
-                      <span 
-                      *ngIf="yardForm.controls.mobileNo.errors?.required">
-                      <small>Mobile number is required</small> </span>
-                      <div *ngIf="yardForm.controls.mobileNo.errors?.pattern">Mobile number is not 10 digit</div>
-                    </div>
-                  </div>
-              </div>           
-              <div class="col-md-10">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Address</label>
-                    <textarea placeholder="Address" class="form-control" rows="3" formControlName="address"></textarea> 
-                    <div *ngIf="submitted">
-                      <span class="text-danger" *ngIf="yardForm.controls.address.errors?.required">
-                    <small>Name is required</small> 
-                    </span>
-                    </div> 
-                  </div>
-              </div> -->
-
-
 
                         <div class="col-md-2">
                             <div class="card-body mt-3">
@@ -166,11 +120,11 @@
                         <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     </div>
                     <div *ngIf="!vendordata" class="pt-3">
-                        <p  class="text-center text-danger"><small>No data found</small></p>
+                        <p class="text-center text-danger"><small>No data found</small></p>
                     </div>
                 </div>
                 <!-- /.card-body -->
             </div>
-        </div>  
+        </div>
     </div>
 </div>

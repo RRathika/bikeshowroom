@@ -27,6 +27,8 @@ export class VariantComponent implements OnInit {
   displayadd:boolean=false;
   currentModel:number=1;
   bikemodeldata:any;
+  selectedQuantity=0;
+  selectedQuantity1=0;
   constructor(private router:Router,private service:YamahaserviceService,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   variantForm: FormGroup = this.formBuilder.group({
     colorId:new FormControl('',[Validators.required]),

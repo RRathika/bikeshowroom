@@ -20,6 +20,7 @@ export class YardComponent implements OnInit {
   displayadd:boolean=false;
   p: number = 1;
   count: number = 10;
+  selectedQuantity = 0;
   constructor(private service:YamahaserviceService,private router:Router,private formbuilder:FormBuilder,public toastservice:ToastServiceService) { }
   yardForm:FormGroup=this.formbuilder.group({
     yardName:new FormControl('',[Validators.required]),

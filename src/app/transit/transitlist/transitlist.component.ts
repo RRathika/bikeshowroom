@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastServiceService } from 'src/app/toast-service.service';
@@ -30,6 +30,7 @@ export class TransitlistComponent implements OnInit {
   roledata:any;
   yardname: any;
   showname: any;
+  submitted:boolean = false;
   constructor(private router: Router, private service: YamahaserviceService, private formBuilder: FormBuilder, private toastService: ToastServiceService) { }
   transitForm: FormGroup = this.formBuilder.group({
     invoiceNo: new FormControl('', [Validators.required]),
@@ -163,14 +164,15 @@ export class TransitlistComponent implements OnInit {
     this.jsonData[i].variantId = event.target.value;
   }
   
-  submit() {    
+  submit() {     
+   this.submitted=true;   
     this.transitForm.patchValue({ createTransitDetailsDTO: this.jsonData });
    if(this.transitForm.value['showRoomId']=='')
    {
     this.transitForm.value['showRoomId']=localStorage.getItem('ShowRoomId');
    }
     console.log(this.transitForm.value);    
-    // if(this.transitForm.valid){
+    if(this.transitForm.valid){
     this.service.savetransit(this.transitForm.value).subscribe((data: any) => {
       if (data.statusCode == 200) {
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
@@ -181,7 +183,7 @@ export class TransitlistComponent implements OnInit {
         this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
       }
     })
-  // }
+  }
   // else{
   //   this.toastService.show("Please fill all field", { classname: 'bg-danger text-light', delay: 5000 });
   // }

@@ -12,15 +12,15 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Showroom Name</label> 
-                  <select class="form-select" formControlName="showRoomId" aria-label="Default select example">
-                    <option>Select Showroom Name</option>
+                  <select class="form-select" formControlName="showRoomId" [(ngModel)]="selectedQuantity">
+                    <option  value="0" disabled>Select Showroom Name</option>
                       <option *ngFor="let item of showroomdata" [value]="item.showRoomId">{{item.showRoomName}}</option>
                   </select>
-                  <div *ngIf="submitted">
+                  <!-- <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="yardForm.controls.showRoomId.errors?.required">
                   <small>Showroom name is required</small> 
                   </span>
-                  </div> 
+                  </div>  -->
                 </div>
              </div>
              <div class="col-md-4">

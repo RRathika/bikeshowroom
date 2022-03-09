@@ -19,6 +19,7 @@ export class ColorComponent implements OnInit {
   count: number = 10;
   submitted:boolean = false;
   displayadd:boolean=false;
+  selectedQuantity=0;
   constructor(private router:Router,private service:YamahaserviceService,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   colorForm: FormGroup = this.formBuilder.group({
     colorId:0,

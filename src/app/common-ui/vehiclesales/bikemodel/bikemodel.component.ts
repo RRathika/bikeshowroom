@@ -20,6 +20,7 @@ export class BikemodelComponent implements OnInit {
   count: number = 10;
   submitted:boolean = false;
   displayadd:boolean=false;
+  selectedQuantity=0
   constructor(private service:YamahaserviceService,private router: Router,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   bikemodelForm: FormGroup = this.formBuilder.group({
     modelId:0,

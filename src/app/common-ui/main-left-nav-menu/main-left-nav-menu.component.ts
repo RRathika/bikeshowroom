@@ -7,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainLeftNavMenuComponent implements OnInit {
   userdata:any;
-  masterclick:boolean=false;
-  transclick:boolean=false;
-  saleclick:boolean=false;
-  stockclick:boolean=false;
+  masterclick:boolean=true;
+  transclick:boolean=true;
+  saleclick:boolean=true;
+  stockclick:boolean=true;
   master:any;
   trans:any;
   sale:any;
@@ -21,10 +21,16 @@ export class MainLeftNavMenuComponent implements OnInit {
     this.userdata=localStorage.getItem('UserName');
   }
   openmaster(){
+    console.log(this.masterclick);
+    
     this.masterclick=!this.masterclick;
     if(this.masterclick==true)
     {
       this.master="menu-open";
+    }
+    if(this.masterclick==false)
+    {
+      this.master="";
     }
   }
   opentrans(){
@@ -32,7 +38,11 @@ export class MainLeftNavMenuComponent implements OnInit {
     if(this.transclick==true)
     {
       this.trans="menu-open"
-    }    
+    }   
+    if(this.transclick==false)
+    {
+      this.trans="";
+    } 
   }
   opensale(){
     this.saleclick=!this.saleclick;
@@ -40,6 +50,10 @@ export class MainLeftNavMenuComponent implements OnInit {
     {
       this.sale="menu-open"
     }    
+    if(this.saleclick==false)
+    {
+      this.sale="";
+    }
   }
   openstock(){
     this.stockclick=!this.stockclick;
@@ -47,5 +61,9 @@ export class MainLeftNavMenuComponent implements OnInit {
     {
       this.stock="menu-open"
     }    
+    if(this.stockclick==false)
+    {
+      this.stock="";
+    }
   }
 }

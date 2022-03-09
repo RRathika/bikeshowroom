@@ -4,35 +4,53 @@
 			<div class="card card-primary">
 				<div class="card-header bg-primary">
 					<h3 class="card-title">Transit Details</h3>
-					<!-- <button class="btn btn-success float-right" (click)="show()">Add New Vendor</button> -->
 				</div>
 				<form [formGroup]="transitForm" (ngSubmit)="submit()">
-				<div class="col-md-12 pt-3">
-					<div class="card card-primary">	
+					<div class="col-md-12 pt-3">
+						<div class="card card-primary">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Invoice No</label>
-											<input type="text" class="form-control" 
-												placeholder="Invoice No" formControlName="invoiceNo">
+											<input type="text" class="form-control" placeholder="Invoice No"
+												formControlName="invoiceNo">
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="transitForm.controls.invoiceNo.errors?.required">
+													<small>Invoice no is required</small>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Date</label>
-											<input type="date" class="form-control" 
-												placeholder="Bike Type" formControlName="invoiceDate">
+											<input type="date" class="form-control" placeholder="Bike Type"
+												formControlName="invoiceDate">
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="transitForm.controls.invoiceDate.errors?.required">
+													<small>Invoice date is required</small>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Transit Type</label>
-											<select class="form-select" aria-label="Default select example" formControlName="transitType">
+											<select class="form-select" aria-label="Default select example"
+												formControlName="transitType">
 												<option selected>Select option</option>
 												<option value="1">Within State</option>
 												<option value="2">Outside State</option>
-											  </select>											
+											</select>
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="transitForm.controls.transitType.errors?.required">
+													<small>Transit Type is required</small>
+												</span>
+											</div>
 										</div>
 									</div>
 									<!-- <div class="col-md-4">
@@ -45,94 +63,129 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Supplier/Plant</label>
-											<input type="text" class="form-control" 
-												placeholder="Supplier/Plant" formControlName="supplier">
+											<input type="text" class="form-control" placeholder="Supplier/Plant"
+												formControlName="supplier">
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="transitForm.controls.supplier.errors?.required">
+													<small>Supplier name is required</small>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Transport Name</label>
-											<input type="text" class="form-control" 
-												placeholder="Transport Name" formControlName="transportName">
+											<input type="text" class="form-control" placeholder="Transport Name"
+												formControlName="transportName">
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="transitForm.controls.transportName.errors?.required">
+													<small>Transport name is required</small>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Truck Number</label>
-											<input type="text" class="form-control"  placeholder="Truck Number"formControlName="truckNo">
+											<input type="text" class="form-control" placeholder="Truck Number"
+												formControlName="truckNo">
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="transitForm.controls.truckNo.errors?.required">
+													<small>Truck no is required</small>
+												</span>
+											</div>
 										</div>
-									</div>								
+									</div>
 									<div class="col-md-3" *ngIf="roledata==1">
 										<div class="form-group">
 											<label for="exampleInputEmail1">ShowRoom Name</label>
-											<select class="form-select" aria-label="Default select example" formControlName="showRoomId" (change)="changeshowroom($event)">
-												<option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
-											</select>											
+											<select class="form-select" aria-label="Default select example"
+												formControlName="showRoomId" (change)="changeshowroom($event)">
+												<option *ngFor="let data of showdata" [value]="data.showRoomId">
+													{{data.showRoomName}}</option>
+											</select>
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="transitForm.controls.showRoomId.errors?.required">
+													<small>Showroom name is required</small>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="exampleInputEmail1">Yard Name</label>
-											<select class="form-select" aria-label="Default select example" formControlName="yardId">
-												<option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}</option>
+											<select class="form-select" aria-label="Default select example"
+												formControlName="yardId">
+												<option *ngFor="let data of yardname" [value]="data.yardId">
+													{{data.yardName}}</option>
 											</select>
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="transitForm.controls.yardId.errors?.required">
+													<small>Yard name is required</small>
+												</span>
+											</div>
 										</div>
-									</div>									
+									</div>
 									<div class="col-md-3">
 										<div class="card-body p-4 mt-1">
-											<input type="file" #myInput (change)="onFileChange($event)" multiple="false" />
+											<input type="file" #myInput (change)="onFileChange($event)" multiple="false"
+												accept=".xls,.xlsx" />
 										</div>
 									</div>
 								</div>
 							</div>
-						
+
+						</div>
 					</div>
-				</div>
-				<div class="card-body" *ngIf="count==1">
-					<div class="card-header bg-primary">						
-						<!-- <button class="btn btn-success float-right" (click)="submit()">Submit</button> -->
-						<h3 class="card-title">Transit List</h3>
+					<div class="card-body" *ngIf="count==1">
+						<div class="card-header bg-primary">
+							<!-- <button class="btn btn-success float-right" (click)="submit()">Submit</button> -->
+							<h3 class="card-title">Transit List</h3>
+						</div>
+						<div style="overflow-x:auto;overflow-y: auto;height: 200px;">
+							<table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+								<thead style="text-align: center;">
+									<tr>
+										<th>ID</th>
+										<th>Chassis No</th>
+										<th>Engine No</th>
+										<th>Model Code</th>
+										<th>Model Name</th>
+										<th>Model Color Code</th>
+										<th>Model Color Name</th>
+										<th>Variant Code</th>
+										<th>Variant Name</th>
+									</tr>
+								</thead>
+								<tbody style="text-align: center;">
+									<tr *ngFor="let row of exceldata; let i=index; " class="table-info">
+										<td>{{i+1}}</td>
+										<td>{{row.ChassisNo}}</td>
+										<td>{{row.EngineNo}}</td>
+										<td>{{row.ModelCode}}</td>
+										<td>{{row.modelname}}</td>
+										<td>{{row.ModelColorCode}}</td>
+										<td>{{row.colorname}}</td>
+										<td>{{row.VariantCode}}</td>
+										<td>{{row.variantname}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
-					<div style="overflow-x:auto;overflow-y: auto;height: 200px;">
-					<table  class="table table-striped table-bordered table-sm" cellspacing="0"
-					width="100%">
-						<thead style="text-align: center;">
-							<tr>
-								<th>ID</th>
-								<th>Chassis No</th>
-								<th>Engine No</th>
-								<th>Model Code</th>
-								<th>Model Name</th>
-								<th>Model Color Code</th>
-								<th>Model Color Name</th>
-								<th>Variant Code</th>		
-								<th>Variant Name</th>						
-							</tr>
-						</thead>
-						<tbody style="text-align: center;">
-							<tr *ngFor="let row of exceldata; let i=index; " class="table-info">
-								<td>{{i+1}}</td>
-								<td>{{row.ChassisNo}}</td>
-								<td>{{row.EngineNo}}</td>
-								<td>{{row.ModelCode}}</td>
-								<td>{{row.modelname}}</td>
-								<td>{{row.ModelColorCode}}</td>
-								<td>{{row.colorname}}</td>
-								<td>{{row.VariantCode}}</td>
-								<td>{{row.variantname}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				</div>
-				<div class="text-center mx-auto p-3">
-					<button type="submit" class="btn btn-primary">
-						Submit
-					</button>
-					<button type="button" class="btn btn-danger ml-3"(click)="clear()">
-						Clear
-					</button>
-				</div>
+					<div class="text-center mx-auto p-3">
+						<button type="submit" class="btn btn-primary">
+							Submit
+						</button>
+						<button type="button" class="btn btn-danger ml-3" (click)="clear()">
+							Clear
+						</button>
+					</div>
 				</form>
 			</div>
 		</div>
