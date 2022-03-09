@@ -17,6 +17,10 @@ export class ListshowroomtransferComponent implements OnInit {
   yardId: any;
   submitted: boolean = false;
 
+  // getbike:any;
+  p: number = 1;
+  count: number = 3;
+
   constructor(private service: YamahaserviceService, private route: Router, public toastservice: ToastServiceService, private formbuilder: FormBuilder) { }
   stockForm: FormGroup = this.formbuilder.group({
     ShowRoomId: new FormControl('', [Validators.required]),
@@ -35,20 +39,28 @@ export class ListshowroomtransferComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.stockForm.value)
+    // console.log(this.stockForm.value)
     this.submitted = true;
-    this.service.getStockTransfer(this.stockForm.value['date'], this.stockForm.value['ShowRoomId'], this.stockForm.value['yardId']).subscribe((data: any) => {
+    this.service.getStockTransferFromShowRoom(this.stockForm.value['date'], this.stockForm.value['ShowRoomId'], this.stockForm.value['yardId']).subscribe((data: any) => {
+    //  console.log(data)
+    //  console.log(this.vehiclestock)
       if (data.statusCode == 200) {
         this.toastservice.show(data.message, { classname: 'bg-danger text-light', delay: 10000 });
+        this.vehiclestock = [];
+        // console.log(this.vehiclestock)
       }
       else {
         this.vehiclestock = data;
+        console.log(this.vehiclestock)
       }
     })
 
     if (this.stockForm.valid) {
       // alert(1)
     }
+
+    console.log(this.vehiclestock)
+
   }
 
   changeShowroom(e: any) {

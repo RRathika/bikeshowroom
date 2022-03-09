@@ -18,7 +18,7 @@ export class ListyardtransferComponent implements OnInit {
   toYardId: any;
   submitted: boolean = false;
 
-  constructor(private service: YamahaserviceService, private router: Router, public toastservice: ToastServiceService, private formbuilder: FormBuilder) { }
+  constructor(private service: YamahaserviceService, private route: Router, public toastservice: ToastServiceService, private formbuilder: FormBuilder) { }
   stockForm: FormGroup = this.formbuilder.group({
     ShowRoomId: new FormControl('', [Validators.required]),
     fromYardId: new FormControl('', [Validators.required]),
@@ -80,7 +80,7 @@ export class ListyardtransferComponent implements OnInit {
   }
 
 
-  listdisplay(){
-    alert(222)
+  stockTransfer(){
+    this.route.navigateByUrl('/dashboard/yardtoyard');
   }
 }
