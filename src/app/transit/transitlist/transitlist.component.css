@@ -4,3 +4,7 @@ tr.odd {
 thead {
     flex: 0 0 auto;
 }
+.color {
+    color: white;
+    background-color: red;
+  }

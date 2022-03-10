@@ -16,6 +16,11 @@
                                     <option value="">Select</option>
                                     <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                 </select>
+                                <div *ngIf="submitted">
+                                    <span class="text-danger" *ngIf="translistForm.controls.showRoomId.errors?.required">
+                                  <small>ShowRoom name is required</small> 
+                                  </span>
+                                  </div> 
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -129,7 +134,7 @@
                                             <th>Variant Code</th>
                                             <!-- <th>Variant Name</th> -->
                                         </thead>
-                                        <tbody>
+                                        <tbody style="text-align: center;">
                                             <tr *ngFor="let item of viewdata">
                                                 <!-- <td>{{item.transitId}}</td> -->
                                                 <td>{{item.chassisNo}}</td>
