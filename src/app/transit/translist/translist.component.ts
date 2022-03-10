@@ -25,7 +25,7 @@ export class TranslistComponent implements OnInit {
   translistForm:FormGroup=this.formBuilder.group({
     fromdate:'',
     todate:'',
-    month:0,
+    month:'',
     showRoomId:new FormControl('',[Validators.required]),    
     yard:new FormControl('')
   })
@@ -49,26 +49,46 @@ export class TranslistComponent implements OnInit {
         yard:0
       })
     }
-    if(this.translistForm.value['month']==null)
-    {
-      this.translistForm.patchValue({
-        month:0
-      })
-    }
+    
     if(this.translistForm.value['fromdate']==null)
     {
       this.translistForm.patchValue({
-        month:''
+        fromdate:''
       })
     }
     if(this.translistForm.value['todate']==null)
     {
       this.translistForm.patchValue({
-        month:''
+        todate:''
       })
     }
     this.submitted=true;
     if(this.translistForm.valid){
+      if(this.translistForm.value['month']==undefined)
+    {
+      this.service.gettransit(this.translistForm.value['showRoomId'],this.translistForm.value['yard'],0,this.translistForm.value['fromdate'],this.translistForm.value['todate']).subscribe(data=>{
+        if(data.statusCode==200)
+        {
+          // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
+          this.list='';
+          this.translistForm.reset();
+          this.translistForm.controls['fromdate'].enable();
+          this.translistForm.controls['todate'].enable();
+          this.translistForm.controls['yard'].disable();
+          this.translistForm.controls['month'].enable();
+        }
+        else
+        {
+        this.list=data;
+        this.translistForm.reset();
+        this.translistForm.controls['fromdate'].enable();
+        this.translistForm.controls['todate'].enable();
+        this.translistForm.controls['yard'].disable();
+        this.translistForm.controls['month'].enable();
+      }
+      })
+    }
+    else{
     this.service.gettransit(this.translistForm.value['showRoomId'],this.translistForm.value['yard'],this.translistForm.value['month'],this.translistForm.value['fromdate'],this.translistForm.value['todate']).subscribe(data=>{
       if(data.statusCode==200)
       {
@@ -78,6 +98,7 @@ export class TranslistComponent implements OnInit {
         this.translistForm.controls['fromdate'].enable();
         this.translistForm.controls['todate'].enable();
         this.translistForm.controls['yard'].disable();
+        this.translistForm.controls['month'].enable();
       }
       else
       {
@@ -88,6 +109,7 @@ export class TranslistComponent implements OnInit {
       this.translistForm.controls['yard'].disable();
     }
     })
+  }
   }
   }
   changemonth(e:any){
@@ -149,6 +171,9 @@ export class TranslistComponent implements OnInit {
     })
   }
   datechoose(){
-    this.translistForm.controls['month'].disable();
+    this.translistForm.controls['month'].disable();    
+      this.translistForm.patchValue({
+        month:0
+      })   
   }
 }

@@ -31,6 +31,9 @@ export class TransitlistComponent implements OnInit {
   yardname: any;
   showname: any;
   submitted:boolean = false;
+  stylebike:number=0;
+  stylecolor:number=0;
+  stylevariant:number=0;
   constructor(private router: Router, private service: YamahaserviceService, private formBuilder: FormBuilder, private toastService: ToastServiceService) { }
   transitForm: FormGroup = this.formBuilder.group({
     invoiceNo: new FormControl('', [Validators.required]),
@@ -41,7 +44,7 @@ export class TransitlistComponent implements OnInit {
     truckNo: new FormControl('', [Validators.required]),
     showRoomId:new FormControl('',[Validators.required]),
     yardId:new FormControl('',[Validators.required]),
-    createTransitDetailsDTO: new FormControl
+    createTransitDetailsDTO: new FormControl('',[Validators.required])
   })
   ngOnInit(): void {
     this.model();
@@ -121,33 +124,38 @@ export class TransitlistComponent implements OnInit {
       // const dataString = JSON.stringify(this.jsonData);
       // console.log(this.jsonData);
       for (let i = 0; i < this.jsonData.length; i++) {
-        // this.jsonData[i].modelname = '';
-        // this.jsonData[i].colorname = '';
-        // this.jsonData[i].vehicleModelId='';
-        // this.jsonData[i].colorId='';
         let model=this.jsonData[i].ModelCode;
+        console.log(model);        
         let colorcode = this.jsonData[i].ModelColorCode;
         let variantcode=this.jsonData[i].VariantCode;
         let variantvalue=this.variantdata.filter((value:{variantName:any;variantCode:any;variantId:any})=>{
           if(variantcode==value.variantCode){
             this.jsonData[i].variantname = value.variantName;
-            this.jsonData[i].variantId = value.variantId;
-            // console.log(this.jsonData[i].variantname);
+            this.jsonData[i].variantId = value.variantId;           
           }
+          else{
+            this.stylevariant=this.stylevariant + 1;
+          }
+         
         })
-        let bikedata= this.bikemodel.filter((value: any)=>{
-          if(model==value.modelCode){
-            // alert('yes')            
-            this.jsonData[i].modelname = value.modelName;
+        let bikedata= this.bikemodel.filter((value: any)=>{          
+          if(model==value.modelCode){                        
+            this.jsonData[i].modelname = value.modelName;            
+            console.log(this.jsonData[i].modelname);
             this.jsonData[i].vehicleModelId = value.modelId;
-            // console.log(this.jsonData[i].modelname);
-          }          
+          }
+           else{
+            this.stylebike=this.stylebike + 1;
+          } 
         });
         let colordata= this.color.filter((value: { colorCode: any; colorName: any;colorId:any; })=>{
           if(colorcode==value.colorCode){   
             this.jsonData[i].colorname =value.colorName;
             this.jsonData[i].colorId=value.colorId;
-          }         
+          }  
+          else{
+            this.stylecolor=this.stylecolor + 1;
+          }      
         });
       }
       // this.splitData = this.data.slice(1);
@@ -165,6 +173,8 @@ export class TransitlistComponent implements OnInit {
   }
   
   submit() {     
+    console.log(this.stylevariant);
+    
    this.submitted=true;   
     this.transitForm.patchValue({ createTransitDetailsDTO: this.jsonData });
    if(this.transitForm.value['showRoomId']=='')
@@ -184,9 +194,9 @@ export class TransitlistComponent implements OnInit {
       }
     })
   }
-  // else{
-  //   this.toastService.show("Please fill all field", { classname: 'bg-danger text-light', delay: 5000 });
-  // }
+  else{
+    this.toastService.show("Please fill all field", { classname: 'bg-danger text-light', delay: 5000 });
+  }
   }
   clear() {
     this.transitForm.reset();

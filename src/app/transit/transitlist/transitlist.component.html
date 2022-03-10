@@ -148,7 +148,7 @@
 							<h3 class="card-title">Transit List</h3>
 						</div>
 						<div style="overflow-x:auto;overflow-y: auto;height: 200px;">
-							<table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+							<table class="table table-bordered table-sm" cellspacing="0" width="100%">
 								<thead style="text-align: center;">
 									<tr>
 										<th>ID</th>
@@ -168,11 +168,11 @@
 										<td>{{row.ChassisNo}}</td>
 										<td>{{row.EngineNo}}</td>
 										<td>{{row.ModelCode}}</td>
-										<td>{{row.modelname}}</td>
+										<td [class.color]='row.modelname == null'>{{row.modelname}}</td>
 										<td>{{row.ModelColorCode}}</td>
-										<td>{{row.colorname}}</td>
+										<td [class.color]='row.colorname == null'>{{row.colorname}}</td>
 										<td>{{row.VariantCode}}</td>
-										<td>{{row.variantname}}</td>
+										<td [class.color]="row.variantname == null">{{row.variantname}}</td>
 									</tr>
 								</tbody>
 							</table>
