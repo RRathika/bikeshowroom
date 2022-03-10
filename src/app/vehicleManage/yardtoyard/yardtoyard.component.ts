@@ -20,7 +20,7 @@ export class YardtoyardComponent implements OnInit {
   public secondTable: any[] = [];
   // isshow:boolean=false;
   yardBtnDisabled: boolean = false;
-  constructor(private service: YamahaserviceService, private formbuilder: FormBuilder, private router: Router, public toastservice: ToastServiceService, private toastService: ToastServiceService) { }
+  constructor(private service: YamahaserviceService, private formbuilder: FormBuilder, private route: Router, public toastservice: ToastServiceService, private toastService: ToastServiceService) { }
 
   ngOnInit(): void {
     this.showroom();
@@ -117,7 +117,7 @@ export class YardtoyardComponent implements OnInit {
 
   onSelect(data: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any,yardName:any) {
    
-    console.log(this.toYardId )
+    console.log(data )
     //if(this.toYardId!='Select'){
    
     if(this.toYardId != undefined && this.toYardId != '' && this.toYardId != 'Select' && this.fromYardId != undefined)
@@ -131,7 +131,7 @@ export class YardtoyardComponent implements OnInit {
           chassisNo: chassisNo,
           engineNo: engineNo,
           fromShowRoomId:parseInt(this.showroomId),
-          fromYardId:0,
+          fromYardId:parseInt(this.fromYardId),
           toYardId: parseInt(this.toYardId),
           vehicleModelId:vehicleModelId,
           userCode:localStorage.getItem('UserCode'),
@@ -158,7 +158,7 @@ else{
       chassisNo: chassisNo,
       engineNo: engineNo,
       fromShowRoomId:parseInt(this.showroomId),
-      fromYardId:0,
+      fromYardId:parseInt(this.fromYardId),
       toYardId: parseInt(this.toYardId),
       vehicleModelId:vehicleModelId,
       userCode:localStorage.getItem('UserCode'),
@@ -175,20 +175,23 @@ else{
   }
 
   save(){
+console.log(this.secondTable)
 
-    // if(this.secondTable)
-    // {
       this.service.savestocktransfer(this.secondTable).subscribe((data:any)=>{
         if(data.statusCode==200){
-          this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 3000});
-         // this.stocktransferForm.reset();
+          this.toastservice.show("Stock transfered sucessfully",{classname: 'bg-success text-light', delay: 3000});
         }
-        // else
-        // {
-        //   this.toastservice.show('fill all field',{classname: 'bg-danger text-light', delay: 3000})
-        // }
+
+        this.changeShowroom(this.showroomId);
+        this.showroom();
+
+     
       })
-    // }
+   
   }
 
+
+  listTransfer() {
+    this.route.navigateByUrl('/dashboard/listyardtransfer');
+  }
 }

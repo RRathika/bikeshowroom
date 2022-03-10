@@ -4,6 +4,7 @@
         <div class="card card-primary">
           <div class="card-header bg-primary">
             <h3 class="card-title">Yard To Yard</h3>
+            <button class="btn btn-success float-end btn-sm" (click)="listTransfer()">List Transfer</button>
           </div>
           <div class="row">
             <div class="col-md-3">
@@ -60,10 +61,17 @@
                     </tr>
                   </thead>
                   <tr *ngFor="let data of firstTable;let i=index;">
-                    <td>
+                    <!-- <td>
                       <input type="checkbox" value="{{data.id}}"
                         (click)="onSelect(firstTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName)">
+                    </td> -->
+
+                    <td>
+                      <i class="fa fa-arrow-right pointer"
+                        (click)="onSelect(firstTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName)">
+                      </i>
                     </td>
+
                     <td>{{data.chassisNo}}</td>
                     <td>{{data.engineNo}}</td>
                     <td>{{data.vehicleModelName}}</td>
@@ -85,10 +93,17 @@
                     </tr>
                   </thead>
                   <tr *ngFor="let data of secondTable; let i=index;">
-                    <td>
+                    <!-- <td>
                       <input type="checkbox" value="{{data.id}}"
                         (click)="onDelect(secondTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName)">
+                    </td> -->
+
+                    <td>
+                      <i class="fa fa-arrow-left pointer"
+                        (click)="onDelect(secondTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName)">
+                      </i>
                     </td>
+
                     <td>{{ data.chassisNo }}</td>
                     <td>{{ data.engineNo }}</td>
                     <td>{{ data.vehicleModelName }}</td>

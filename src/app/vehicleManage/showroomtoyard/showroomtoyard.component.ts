@@ -115,7 +115,7 @@ export class ShowroomtoyardComponent implements OnInit {
   save() {
     this.service.savestocktransfer(this.secondTable).subscribe((data: any) => {
       if (data.statusCode == 200) {
-        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
+        this.toastService.show("Stock transfered sucessfully", { classname: 'bg-success text-light', delay: 3000 });
         this.changeShowroom(this.showroomId);
         this.showroom();
       }
