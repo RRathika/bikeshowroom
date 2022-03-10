@@ -14,16 +14,19 @@ export class YardtoyardComponent implements OnInit {
   showroomdata: any;
   yardname: any;
   showroomId : any;
-  fromYardId : any;
-  toYardId : any;
+  fromYardId : any = '';
+  toYardId : any = '';
   public firstTable: any[] = [];
   public secondTable: any[] = [];
   // isshow:boolean=false;
+  yardBtnDisabled: boolean = false;
   constructor(private service: YamahaserviceService, private formbuilder: FormBuilder, private router: Router, public toastservice: ToastServiceService, private toastService: ToastServiceService) { }
 
   ngOnInit(): void {
     this.showroom();
-    
+   
+    console.log(this.fromYardId)
+    console.log(this.toYardId)
   }
 
   showroom() {
@@ -34,6 +37,10 @@ export class YardtoyardComponent implements OnInit {
 
   changeShowroom(e: any) {
     this.yardname = [];
+    this.firstTable=[];
+    this.secondTable=[];
+    this.fromYardId='';
+    this.toYardId='';
     let data = e.target.value;
     this.showroomId = data;
     this.service.showroombyyard(data).subscribe(data => {
@@ -45,18 +52,52 @@ export class YardtoyardComponent implements OnInit {
         this.yardname = data;
       }
     })
+    console.log(this.fromYardId)
+    console.log(this.toYardId)
+
   }
 
   changeFromYard(event: any) {
+    console.log(this.fromYardId)
+    this.secondTable =[];
+    
     let data = event.target.value;
     this.fromYardId = data;
-      this.getListByShowroomId(this.showroomId,this.fromYardId);
+    if(this.fromYardId!='Select'){
+      this.yardBtnDisabled = false;
+        this.getListByShowroomId(this.showroomId,this.fromYardId);
+      console.log(this.fromYardId)
+      console.log(this.toYardId)
+    }
+    else{
+      this.firstTable =[];
+      this.secondTable =[];
+    }
 
   }
 
   changeToYard(event: any) {
+    // this.yardBtnDisabled = true;
+    this.secondTable =[];
     let data = event.target.value;
     this.toYardId = data;
+
+    if(this.toYardId!='Select'){
+
+      if(this.fromYardId==this.toYardId){
+        this.toastservice.show("From Yard & To Yard should not be same", { classname: 'bg-danger text-light', delay: 3000 });
+
+      }
+      else{
+        this.yardBtnDisabled = true;
+      }
+
+      
+    }
+
+    
+    console.log(this.fromYardId)
+    console.log(this.toYardId)
   }
 
   getListByShowroomId(showroomId: any,yardId:any) {
@@ -64,16 +105,22 @@ export class YardtoyardComponent implements OnInit {
       if (data.statusCode == 200) {
         this.firstTable =[];
         this.toastservice.show("No Stocks Available", { classname: 'bg-danger text-light', delay: 3000 });
+        // alert(1)
       }
       else {
         this.firstTable = data;
+        // alert(2)
       }
     })
   }
 
 
-  onSelect(data: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any) {
-    if(this.toYardId != undefined && this.fromYardId != undefined)
+  onSelect(data: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any,yardName:any) {
+   
+    console.log(this.toYardId )
+    //if(this.toYardId!='Select'){
+   
+    if(this.toYardId != undefined && this.toYardId != '' && this.toYardId != 'Select' && this.fromYardId != undefined)
     {
       if (yardId == this.toYardId) {
         this.toastservice.show("Cant move to the same yard", { classname: 'bg-danger text-light', delay: 3000 });
@@ -89,18 +136,22 @@ export class YardtoyardComponent implements OnInit {
           vehicleModelId:vehicleModelId,
           userCode:localStorage.getItem('UserCode'),
           vehicleModelName: vehicleModelName,
-          yardId: yardId
+          yardId: yardId,
+          yardName: yardName
         });
     
         this.firstTable = this.firstTable.filter((el: any) => el !== data);
       }
     }
+else{
+  this.toastservice.show("Choose to Yard ", { classname: 'bg-danger text-light', delay: 3000 });
 
+}
 
   }
 
 
-  onDelect(serialNo: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any) {
+  onDelect(serialNo: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any,yardName:any) {
 
     this.firstTable.push({
       vehicleStockId:vehicleStockId,
@@ -112,7 +163,8 @@ export class YardtoyardComponent implements OnInit {
       vehicleModelId:vehicleModelId,
       userCode:localStorage.getItem('UserCode'),
       vehicleModelName: vehicleModelName,
-      yardId: yardId
+      yardId: yardId,
+      yardName: yardName
     });
 
 

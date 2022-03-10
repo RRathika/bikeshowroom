@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="col-md-12">
     <div class="card card-primary">
       <div class="card-header bg-primary">
@@ -40,37 +39,74 @@
               </div>
             </div>
           </div>
-
           <div class="col-md-3">
             <div class="card-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">Date</label>
                 <input type="date" class="form-control" formControlName="date" />
-                <!-- <div class="text-danger" *ngIf="submitted">
-                  <span *ngIf="stockForm.controls.date.errors?.required">
-                    <small>Date is required</small>
-                  </span>
-                </div> -->
               </div>
             </div>
           </div>
-
           <div class="col-md-3 my-5">
             <div class="form-group text-center ">
               <button class="btn btn-success" type="submit">Submit</button>
             </div>
           </div>
-
         </div>
       </form>
+
+      <table id="example1" class="table table-bordered table-striped" *ngIf="vehiclestock">
+        <thead>
+          <tr class="text-center">
+            <th>SI.NO</th>
+            <th>Date</th>
+            <th>Chassis No</th>
+            <th>Engine No</th>
+            <!-- <th>From Showroom Name</th>
+            <th>To Yard Name</th> -->
+            <th>Model Name</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr *ngFor="let data of vehiclestock | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
+            <td>{{ (p - 1) * count + i +1 }}</td>
+            <td>{{data.date|date}}</td>
+            <td>{{data.chassisNo}}</td>
+            <td>{{data.engineNo}}</td>
+            <!-- <td>{{data.fromShowRoomName}}</td>
+            <td>{{data.toYardName}}</td> -->
+            <td>{{data.vehicleModelName}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-right" *ngIf="vehiclestock">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+      <div *ngIf="!vehiclestock" class="pt-3">
+        <p class="text-center text-danger"><small>No data found</small></p>
+      </div>
 
     </div>
   </div>
 
-  <div class="col-md-12">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <div class="col-md-12">
     <div class="card card-primary">
       <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped"  *ngIf="vehiclestock">
+        <table id="example1" class="table table-bordered table-striped" *ngIf="vehiclestock">
           <thead>
             <tr class="text-center">
               <th>SI.NO</th>
@@ -83,12 +119,10 @@
             </tr>
           </thead>
           <tbody class="text-center">
-            <!-- <tr *ngFor="let data of vehiclestock;let i=index;"> -->
 
-              <tr *ngFor="let data of vehiclestock | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
-                <td>{{ (p - 1) * count + i +1 }}</td>
+            <tr *ngFor="let data of vehiclestock | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
+              <td>{{ (p - 1) * count + i +1 }}</td>
 
-              <!-- <td>{{i+1}}</td> -->
               <td>{{data.date|date}}</td>
               <td>{{data.chassisNo}}</td>
               <td>{{data.engineNo}}</td>
@@ -100,14 +134,16 @@
         </table>
 
         <div class="text-right" *ngIf="vehiclestock">
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
         <div *ngIf="!vehiclestock" class="pt-3">
-          <p  class="text-center text-danger"><small>No data found</small></p>
-      </div>
+          <p class="text-center text-danger"><small>No data found</small></p>
+        </div>
 
       </div>
     </div>
-  </div>
+  </div> -->
+
+
 
 </div>

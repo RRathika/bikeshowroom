@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastServiceService } from 'src/app/toast-service.service';
 import { YamahaserviceService } from 'src/app/yamahaservice.service';
@@ -12,18 +11,16 @@ import { YamahaserviceService } from 'src/app/yamahaservice.service';
 export class ShowroomtoyardComponent implements OnInit {
   showroomdata: any;
   yardname: any;
-  showroomId : any;
-  yardId : any;
+  showroomId: any;
+  yardId: any;
   public firstTable: any[] = [];
   public secondTable: any[] = [];
-  // isshow:boolean=false;
   yardBtnDisabled: boolean = false;
 
-  constructor(private service: YamahaserviceService, private formbuilder: FormBuilder, private route: Router, public toastservice: ToastServiceService, private toastService: ToastServiceService) { }
+  constructor(private service: YamahaserviceService, private route: Router, private toastService: ToastServiceService) { }
 
   ngOnInit(): void {
     this.showroom();
-    
   }
 
   showroom() {
@@ -35,9 +32,9 @@ export class ShowroomtoyardComponent implements OnInit {
   changeShowroom(e: any) {
     this.yardBtnDisabled = false;
     this.yardname = [];
-    this.firstTable =[];
-    this.secondTable =[];
-
+    this.firstTable = [];
+    this.secondTable = [];
+    this.yardId = '';
     let data = e.target.value;
     this.showroomId = data;
     this.service.showroombyyard(data).subscribe(data => {
@@ -59,10 +56,10 @@ export class ShowroomtoyardComponent implements OnInit {
   }
 
   getListByShowroomId(showroomId: any) {
-    this.service.listvehiclestock(showroomId,0,0).subscribe((data: any) => {
+    this.service.listvehiclestock(showroomId, 0, 0).subscribe((data: any) => {
       if (data.statusCode == 200) {
-        this.firstTable =[];
-        this.toastservice.show("No Stocks Available", { classname: 'bg-danger text-light', delay: 3000 });
+        this.firstTable = [];
+        this.toastService.show("No Stocks Available", { classname: 'bg-danger text-light', delay: 3000 });
       }
       else {
         this.firstTable = data;
@@ -70,90 +67,62 @@ export class ShowroomtoyardComponent implements OnInit {
     })
   }
 
-
-  onSelect(data: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any,yardName:any,event:any) {
-   
-    console.log(event)
-    console.log(event.currentTarget.checked);
-  //  alert("onSelect")
-    if(this.yardId != undefined)
-    {
+  onSelect(data: any, vehicleStockId: any, chassisNo: any, engineNo: any, vehicleModelName: any, vehicleModelId: any, yardId: any, yardName: any, event: any) {
+    if (this.yardId != undefined && this.yardId != '') {
       if (yardId == this.yardId) {
-        this.toastservice.show("Cant move to the same yard", { classname: 'bg-danger text-light', delay: 3000 });
+        this.toastService.show("Cant move to the same yard", { classname: 'bg-danger text-light', delay: 3000 });
       }
       else {
         this.secondTable.push({
-          vehicleStockId:vehicleStockId,
+          vehicleStockId: vehicleStockId,
           chassisNo: chassisNo,
           engineNo: engineNo,
-          fromShowRoomId:parseInt(this.showroomId),
-          fromYardId:0,
+          fromShowRoomId: parseInt(this.showroomId),
+          fromYardId: 0,
           toYardId: parseInt(this.yardId),
-          vehicleModelId:vehicleModelId,
-          userCode:localStorage.getItem('UserCode'),
+          vehicleModelId: vehicleModelId,
+          userCode: localStorage.getItem('UserCode'),
           vehicleModelName: vehicleModelName,
           yardId: yardId,
-          yardName:yardName
+          yardName: yardName
         });
-    
         this.firstTable = this.firstTable.filter((el: any) => el !== data);
       }
     }
-
-
+    else {
+      this.toastService.show("Choose Yard", { classname: 'bg-danger text-light', delay: 1000 });
+    }
   }
 
-
-  onDelect(serialNo: any,vehicleStockId:any, chassisNo: any, engineNo: any, vehicleModelName: any,vehicleModelId:any, yardId: any,yardName:any) {
-    // console.log(serialNo,chassisNo,engineNo,vehicleModelName);
-    // console.log(serialNo); 
-
-    // alert("onDelect")
-
+  onDelect(serialNo: any, vehicleStockId: any, chassisNo: any, engineNo: any, vehicleModelName: any, vehicleModelId: any, yardId: any, yardName: any) {
     this.firstTable.push({
-      vehicleStockId:vehicleStockId,
+      vehicleStockId: vehicleStockId,
       chassisNo: chassisNo,
       engineNo: engineNo,
-      fromShowRoomId:parseInt(this.showroomId),
-      fromYardId:0,
+      fromShowRoomId: parseInt(this.showroomId),
+      fromYardId: 0,
       toYardId: parseInt(this.yardId),
-      vehicleModelId:vehicleModelId,
-      userCode:localStorage.getItem('UserCode'),
+      vehicleModelId: vehicleModelId,
+      userCode: localStorage.getItem('UserCode'),
       vehicleModelName: vehicleModelName,
       yardId: yardId,
-      yardName:yardName
+      yardName: yardName
     });
 
-
     this.secondTable = this.secondTable.filter(el => el !== serialNo);
-    // this.addresses.splice(add,1);
-    // console.log(this.secondTable);
-
-
-    // console.log(this.secondTable);
   }
 
-  save(){
-
-    // if(this.secondTable)
-    // {
-      this.service.savestocktransfer(this.secondTable).subscribe((data:any)=>{
-        if(data.statusCode==200){
-          this.toastservice.show(data.message,{classname: 'bg-success text-light', delay: 3000});
-         // this.route.navigateByUrl('/dashboard/listshowroomtransfer');
-         this.changeShowroom(this.showroomId);
-         this.showroom();
-         // this.stocktransferForm.reset();
-        }
-        // else
-        // {
-        //   this.toastservice.show('fill all field',{classname: 'bg-danger text-light', delay: 3000})
-        // }
-      })
-    // }
+  save() {
+    this.service.savestocktransfer(this.secondTable).subscribe((data: any) => {
+      if (data.statusCode == 200) {
+        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
+        this.changeShowroom(this.showroomId);
+        this.showroom();
+      }
+    })
   }
 
-  listTransfer(){
+  listTransfer() {
     this.route.navigateByUrl('/dashboard/listshowroomtransfer');
   }
 

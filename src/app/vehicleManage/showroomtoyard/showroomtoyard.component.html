@@ -22,9 +22,8 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">To Yard</label>
-
-                <select class="form-select" aria-label="Default select example" 
-                [disabled]="yardBtnDisabled" (change)="changeYard($event)">
+                <select class="form-select" aria-label="Default select example" [disabled]="yardBtnDisabled"
+                  (change)="changeYard($event)">
                   <option>Select</option>
                   <option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}</option>
                 </select>
@@ -32,88 +31,70 @@
             </div>
           </div>
         </div>
+
+        <div class="row">
+        <!-- <div class="row" *ngIf="firstTable.length>0"> -->
+          <div class="col-md-6">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Chassis No</th>
+                    <th>Engine No</th>
+                    <th>Model Name</th>
+                    <th>Yard Name</th>
+                  </tr>
+                </thead>
+                <tr *ngFor="let data of firstTable;let i=index;">
+                  <td>
+                    <i class="fa fa-arrow-right pointer"
+                      (click)="onSelect(firstTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName,$event)">
+                    </i>
+                  </td>
+                  <td>{{data.chassisNo}}</td>
+                  <td>{{data.engineNo}}</td>
+                  <td>{{data.vehicleModelName}}</td>
+                  <td>{{data.yardName}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Chassis No</th>
+                    <th>Engine No</th>
+                    <th>Model Name</th>
+                    <th>Yard Name</th>
+                  </tr>
+                </thead>
+                <tr *ngFor="let data of secondTable; let i=index;">
+                  <td>
+                    <i class="fa fa-arrow-left pointer"
+                      (click)="onDelect(secondTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName)">
+                    </i>
+                  <td>{{ data.chassisNo }}</td>
+                  <td>{{ data.engineNo }}</td>
+                  <td>{{ data.vehicleModelName }}</td>
+                  <td>{{data.yardName}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="text-center mx-auto p-3" *ngIf="secondTable.length>0">
+            <button type="submit" class="btn btn-primary" (click)="save()">
+              Submit
+            </button>
+          </div>
+        </div>
+        
       </div>
     </div>
 
-
-
-
-    <div class="row" *ngIf="firstTable.length>0"> 
-      <div class="col-md-6">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <!-- <th></th> -->
-                <th></th>
-                <th>Chassis No</th>
-                <th>Engine No</th>
-                <th>Model Name</th>
-                <th>Yard Name</th>
-              </tr>
-            </thead>
-            <tr *ngFor="let data of firstTable;let i=index;">
-             
-              <!-- <td><i class="fa fa-arrow-right" data-toggle="tooltip" data-placement="top" title="Move to purchase" aria-hidden="true"></i></td>  -->
-              <!-- <td >
-
-                <button class="fa fa-arrow-right" (click)="onSelect(firstTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName,$event)">
-                  
-                </button> -->
-
-                <!-- <input type="checkbox" value="{{data.id}}" 
-                  (click)="onSelect(firstTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName,$event)"> -->
-                  <!-- <td >
-                <i class="fa fa-arrow-right" ></i>
-              </td>   -->
-              <td>
-                <input type="checkbox" value="{{data.id}}" 
-                  (click)="onSelect(firstTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName,$event)">
-              </td>
-              <td>{{data.chassisNo}}</td>
-              <td>{{data.engineNo}}</td>
-              <td>{{data.vehicleModelName}}</td>
-              <td>{{data.yardName}}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Chassis No</th>
-                <th>Engine No</th>
-                <th>Model Name</th>
-                <th>Yard Name</th>
-              </tr>
-            </thead>
-            <tr *ngFor="let data of secondTable; let i=index;">
-              <td>
-                <input type="checkbox" value="{{data.id}}"
-                  (click)="onDelect(secondTable[i],data.vehicleStockId,data.chassisNo,data.engineNo,data.vehicleModelName,data.vehicleModelId,data.yardId,data.yardName)">
-              </td>
-              <td>{{ data.chassisNo }}</td>
-              <td>{{ data.engineNo }}</td>
-              <td>{{ data.vehicleModelName }}</td>
-              <td>{{data.yardName}}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="text-center mx-auto p-3" *ngIf="secondTable.length>0">
-        <button type="submit" class="btn btn-primary" (click)="save()">
-          Submit
-        </button>
-      </div>
-
-    </div>
+   
   </div>
 </div>
-
-
-
-
