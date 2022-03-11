@@ -17,6 +17,8 @@ export class ListyardtransferComponent implements OnInit {
   fromYardId: any;
   toYardId: any;
   submitted: boolean = false;
+  p: number = 1;
+  count: number = 10;
 
   constructor(private service: YamahaserviceService, private route: Router, public toastservice: ToastServiceService, private formbuilder: FormBuilder) { }
   stockForm: FormGroup = this.formbuilder.group({
@@ -39,19 +41,14 @@ export class ListyardtransferComponent implements OnInit {
   submit() {
     console.log(this.stockForm.value)
     this.submitted = true;
-    // this.service.getStockTransfer(this.stockForm.value['date'], this.stockForm.value['ShowRoomId'], this.stockForm.value['fromYardId'], this.stockForm.value['toYardId']).subscribe((data: any) => {
-    this.service.getStockTransfer(this.stockForm.value['date'], this.stockForm.value['ShowRoomId'], this.stockForm.value['yardId']).subscribe((data: any) => {
+    this.service.getStockTransferFromYard(this.stockForm.value['date'], this.stockForm.value['ShowRoomId'], this.stockForm.value['fromYardId'], this.stockForm.value['toYardId']).subscribe((data: any) => {
       if (data.statusCode == 200) {
-        this.toastservice.show(data.message, { classname: 'bg-danger text-light', delay: 10000 });
+        this.vehiclestock = '';
       }
       else {
         this.vehiclestock = data;
       }
     })
-
-    if (this.stockForm.valid) {
-      // alert(1)
-    }
   }
 
   changeShowroom(e: any) {
@@ -79,8 +76,7 @@ export class ListyardtransferComponent implements OnInit {
     })
   }
 
-
-  stockTransfer(){
+  stockTransfer() {
     this.route.navigateByUrl('/dashboard/yardtoyard');
   }
 }
