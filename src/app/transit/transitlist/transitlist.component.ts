@@ -44,7 +44,7 @@ export class TransitlistComponent implements OnInit {
     truckNo: new FormControl('', [Validators.required]),
     showRoomId:new FormControl('',[Validators.required]),
     yardId:new FormControl('',[Validators.required]),
-    createTransitDetailsDTO: new FormControl('',[Validators.required])
+    createTransitDetailsDTO: new FormControl
   })
   ngOnInit(): void {
     this.model();
@@ -53,6 +53,7 @@ export class TransitlistComponent implements OnInit {
     this.showroomdata();
     this.roledata=localStorage.getItem('RoleId');
     this.showname=localStorage.getItem('ShowRoomId');
+    this.transitForm.controls['yardId'].disable();
     if(this.showname!=0)
     {
     this.service.showroombyyard(this.showname).subscribe(data=>{
@@ -89,6 +90,7 @@ export class TransitlistComponent implements OnInit {
   }
   changeshowroom(e:any){
     let data=e.target.value;
+    this.transitForm.controls['yardId'].enable();
     this.service.showroombyyard(data).subscribe(data=>{
       if(data.statusCode==200)
       {
@@ -125,7 +127,7 @@ export class TransitlistComponent implements OnInit {
       // console.log(this.jsonData);
       for (let i = 0; i < this.jsonData.length; i++) {
         let model=this.jsonData[i].ModelCode;
-        console.log(model);        
+        // console.log(model);        
         let colorcode = this.jsonData[i].ModelColorCode;
         let variantcode=this.jsonData[i].VariantCode;
         let variantvalue=this.variantdata.filter((value:{variantName:any;variantCode:any;variantId:any})=>{
@@ -141,7 +143,7 @@ export class TransitlistComponent implements OnInit {
         let bikedata= this.bikemodel.filter((value: any)=>{          
           if(model==value.modelCode){                        
             this.jsonData[i].modelname = value.modelName;            
-            console.log(this.jsonData[i].modelname);
+            // console.log(this.jsonData[i].modelname);
             this.jsonData[i].vehicleModelId = value.modelId;
           }
            else{
@@ -184,13 +186,24 @@ export class TransitlistComponent implements OnInit {
     console.log(this.transitForm.value);    
     if(this.transitForm.valid){
     this.service.savetransit(this.transitForm.value).subscribe((data: any) => {
-      if (data.statusCode == 200) {
+      if (data.message == "Fail") {
+        if(data.modelCount>0)
+        {
+          this.toastService.show(data.modelCount+'model name missing', { classname: 'bg-danger text-light', delay: 10000 });
+        }
+        if(data.colorCount>0)
+        {
+          this.toastService.show(data.colorCount+ 'color name missing', { classname: 'bg-danger text-light', delay: 10000 });
+        }
+        if(data.variantCount>0)
+        {
+          this.toastService.show(data.variantCount+ 'variant name missing', { classname: 'bg-danger text-light', delay: 10000 });
+        }        
+      }
+      else {        
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
         this.transitForm.reset();
         this.router.navigateByUrl('/dashboard/transitlist');
-      }
-      else {
-        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 5000 });
       }
     })
   }

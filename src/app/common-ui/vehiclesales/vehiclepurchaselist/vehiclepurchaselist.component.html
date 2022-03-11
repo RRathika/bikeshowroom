@@ -13,16 +13,21 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Showroom Name</label>
                                     <select class="form-select" (change)="showroomchange($event)" formControlName="showRoomId">
-                                        <option>Select</option>
+                                        <option value="" hidden>Select</option>
                                         <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                     </select>
+                                    <div *ngIf="submitted">
+                                        <span class="text-danger" *ngIf="purchaselistForm.controls.showRoomId.errors?.required">
+                                      <small>ShowRoom name is required</small> 
+                                      </span>
+                                      </div> 
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Yard Name</label>
-                                    <select class="form-select"formControlName="yard">
-                                        <!-- <option>Select</option> -->
+                                    <select class="form-select" formControlName="yard">
+                                        <option  value="" hidden>Select</option>
                                         <option *ngFor="let data of yard" [value]="data.yardId">{{data.yardName}}</option>
                                     </select>
                                 </div>
@@ -30,7 +35,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Month</label>
-                                    <select class="form-select" formControlName="month" (change)="changemonth($event)">
+                                    <select class="form-select" formControlName="month" [(ngModel)]="selectedQuantity" (change)="changemonth($event)">
+                                        <option value="0">Select</option>
                                         <option value="1">January</option>
                                         <option value="2">February</option>
                                         <option value="3">March</option>
@@ -49,7 +55,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">From Date</label>
-                                    <input type="date" class="form-control" formControlName="fromdate"/>
+                                    <input type="date" class="form-control" (change)="choosedate()" formControlName="fromdate"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -66,7 +72,7 @@
                         </div>
                     </form>
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="example1" *ngIf="vehiclepurchase" class="table table-bordered table-striped">
                             <thead>
                                 <tr class="text-center">
                                     <th>S.No</th>
@@ -81,7 +87,7 @@
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                <tr *ngFor="let data of vehiclepurchase; let i=index;">
+                                <tr *ngFor="let data of vehiclepurchase  | paginate: { itemsPerPage: count, currentPage: p }; let i=index;">
                                     <td>{{i+1}}</td>
                                     <td>{{data.invoiceNo}}</td>
                                     <td>{{data.invoiceDate|date}}</td>
@@ -96,6 +102,12 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="text-right" *ngIf="vehiclepurchase">
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+                          </div>
+                          <div *ngIf="!vehiclepurchase" class="pt-3">
+                            <p  class="text-center text-danger"><small>No data found</small></p>
+                        </div>
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">

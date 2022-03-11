@@ -15,23 +15,48 @@
 											<div class="col-md-6">
 												<label for="exampleInputEmail1">Invoice No</label>
                                                 <input type="text" class="form-control" placeholder="Invoice no" formControlName="invoiceNo">
-                                            </div>
+												<div *ngIf="submitted">
+													<span class="text-danger"
+														*ngIf="vehiclepurchaseForm.controls.invoiceNo.errors?.required">
+														<small>Invoice no is required</small>
+													</span>
+												</div>
+											</div>
 											<div class="col-md-6">
 												<label for="exampleInputEmail1">Date</label>
                                                 <input type="date" class="form-control" formControlName="invoiceDate">
+												<div *ngIf="submitted">
+													<span class="text-danger"
+														*ngIf="vehiclepurchaseForm.controls.invoiceDate.errors?.required">
+														<small>Invoice date is required</small>
+													</span>
+												</div>
                                             </div>
 										</div>						
 										<div class="form-group row">											
 											<div class="col-md-6">
                                                 <label for="exampleInputEmail1">Received Date</label>
 											<input type="date" class="form-control" formControlName="receivedDate">
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="vehiclepurchaseForm.controls.receivedDate.errors?.required">
+													<small>Received date is required</small>
+												</span>
+											</div>
                                             </div> 
 											<div class="col-md-6">
 												<label for="exampleInputEmail1">Transit Type</label>                                                
 											<select class="form-select" formControlName="purchaseType">
+												<option value="" hidden>Select transit type</option>
                                                 <option value="1">Within State</option>
-                                                <option value="2">Without State</option>
+                                                <option value="2">Outside State</option>
                                             </select>
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="vehiclepurchaseForm.controls.purchaseType.errors?.required">
+													<small>Purchase type is required</small>
+												</span>
+											</div>
                                             </div>
 											                                         
 										</div>
@@ -40,19 +65,33 @@
 												<div class="form-group">
 													<label for="exampleInputEmail1">ShowRoom Name</label>
 													<select class="form-select" aria-label="Default select example" formControlName="showRoomId" (change)="changeshowroom($event)">
+														<option value="" hidden>Select showroom</option>
 														<option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
-													</select>											
+													</select>
+													<div *ngIf="submitted">
+														<span class="text-danger"
+															*ngIf="vehiclepurchaseForm.controls.showRoomId.errors?.required">
+															<small>Showroom name is required</small>
+														</span>
+													</div>											
 												</div>
 											</div>
 											<div class="col-md-6">
 												<label for="exampleInputEmail1">Yard Name</label>
 												<select class="form-select" formControlName="yardId">
+													<option value="" hidden>Select Yard</option>
 													<option *ngFor="let item of yardname" [value]="item.yardId">{{item.yardName}}</option>
 												</select>
+												<div *ngIf="submitted">
+													<span class="text-danger"
+														*ngIf="vehiclepurchaseForm.controls.yardId.errors?.required">
+														<small>Yard name is required</small>
+													</span>
+												</div>
 											</div>	  
 											<div class="col-md-6">
-												<label for="exampleInputEmail1">Pay Mode</label>
-                                                <input type="file" #myInput  multiple="false" (change)="onFileChange($event)" />
+												<!-- <label for="exampleInputEmail1">Pay Mode</label> -->
+                                                <input type="file" #myInput  multiple="false" (change)="onFileChange($event)" accept=".xls,.xlsx" />
                                             </div>					
 										</div>
                                 </div>
@@ -62,11 +101,20 @@
 										<div class="form-group row">
 											<div class="col-md-6">
 												<label>Name</label>  
-												<input type="text" class="form-control" placeholder="Name" formControlName="supplierName">
+												<select class="form-select" formControlName="supplierName" (change)="selectsupplier($event)">
+													<option value="" hidden>Select supplier name</option>
+													<option *ngFor="let item of vendordata" [value]="item.vendorId">{{item.companyName}}</option>
+												</select>
+												<div *ngIf="submitted">
+													<span class="text-danger"
+														*ngIf="vehiclepurchaseForm.controls.supplierName.errors?.required">
+														<small>Supplier name is required</small>
+													</span>
+												</div>
 											</div>
 											<div class="col-md-6">
 												<label>Gst</label>  
-												<input type="text" class="form-control" placeholder="Gst" formControlName="supplierGST">
+												<input type="text" class="form-control" placeholder="Gst" formControlName="supplierGST">												
 											</div>
 										</div>
 										<div class="form-group row">
@@ -88,7 +136,7 @@
 						<h3 class="card-title">Transit List</h3>
 					</div>
 					<div style="overflow-x:auto;overflow-y: auto;height: 200px;">
-					<table  class="table table-striped table-bordered table-sm" cellspacing="0"
+					<table  class="table table-bordered table-sm" cellspacing="0"
 					width="100%">
 						<thead style="text-align: center;">
 							<tr>
@@ -125,11 +173,11 @@
 								<td>{{row.ChassisNo	}}</td>
 								<td>{{row.EngineNo}}</td>
 								<td>{{row.ModelCode}}</td>
-								<td>{{row.modelname}}</td>
+								<td [class.color]='row.modelname == null'>{{row.modelname}}</td>
 								<td>{{row.ModelColorCode}}</td>
-								<td>{{row.colorname}}</td>
+								<td [class.color]='row.colorname == null'>{{row.colorname}}</td>
 								<td>{{row.VariantCode}}</td>
-								<td>{{row.variantname}}</td>
+								<td [class.color]='row.variantname == null'>{{row.variantname}}</td>
 							</tr> 
 						</tbody>
 					</table>
@@ -143,24 +191,30 @@
 							<div class="col-md-6 mt-3">													
 								<div class="form-group row">
 									<div class="col-md-4">
-										<label for="exampleInputEmail1">Tot.Veh.Cost</label>
+										<label for="exampleInputEmail1">Total Vehicle Cost</label>
 									<input type="text" class="form-control" 
 										placeholder="Total Vehicle Cost" (change)="vehiclecost($event)" formControlName="totalVehicleCost">
+										<div *ngIf="submitted">
+											<span class="text-danger"
+												*ngIf="vehiclepurchaseForm.controls.totalVehicleCost.errors?.required">
+												<small>Total Vehicle Cost is required</small>
+											</span>
+										</div>
 									</div>
 									<div class="col-md-2">
-										<label for="exampleInputEmail1">IGST Amt</label>								 
+										<label for="exampleInputEmail1">IGST</label>								 
 									<input type="text" class="form-control" 
 										placeholder="%" formControlName="igstPercentage" (change)="igst($event)">							
 									</div>
 									<div class="col-md-6">
-										<label for="exampleInputEmail1">Insurance</label>
+										<label for="exampleInputEmail1">Insurance Amount</label>
 									<input type="text" class="form-control" 
 										placeholder="Insurance" formControlName="insurance" (change)="insurance($event)">
 									</div>	
 								</div>							
 								<div class="form-group row">
 									<div class="col-md-4">
-										<label for="exampleInputEmail1">Freight</label>								 
+										<label for="exampleInputEmail1">Freight Amount</label>								 
 									<input type="text" class="form-control" 
 										placeholder="Freight" formControlName="freight" (change)="freight($event)">							
 									</div>			
@@ -178,14 +232,26 @@
 								</div>
 								<div class="form-group row">
 									<div class="col-md-6">
-										<label for="exampleInputEmail1">Total</label>
+										<label for="exampleInputEmail1">Total Amount</label>
 									<input type="text" class="form-control" 
 										placeholder="Total" formControlName="total" [value]="this.total" readonly>
+										<div *ngIf="submitted">
+											<span class="text-danger"
+												*ngIf="vehiclepurchaseForm.controls.total.errors?.required">
+												<small>Total is required</small>
+											</span>
+										</div>
 									</div>
 									<div class="col-md-6">		
 										<label for="exampleInputEmail1">Net Amount</label>						
 										<input type="text" class="form-control" 
 										placeholder="Net Amount" formControlName="netAmount" [value]="this.netamount" readonly>
+										<div *ngIf="submitted">
+											<span class="text-danger"
+												*ngIf="vehiclepurchaseForm.controls.netAmount.errors?.required">
+												<small>Net Amount is required</small>
+											</span>
+										</div>
 									</div>									
 								</div>								
 							</div>
@@ -196,10 +262,17 @@
 										<div class="col-md-12">
 											<label for="exampleInputEmail1">Payment Mode</label>
 											<select class="form-select" (change)="onchange($event)" formControlName="paymentModeId">
+												<option value="" hidden>Select payment Mode</option>
 												<option value="1">Cash</option>
 												<option value="2">Card</option>
 												<option value="3">Cheque</option>
 											</select>
+											<div *ngIf="submitted">
+												<span class="text-danger"
+													*ngIf="vehiclepurchaseForm.controls.paymentModeId.errors?.required">
+													<small>Payment Mode is required</small>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="form-group row" *ngIf="textboxdisplay=='card'">
