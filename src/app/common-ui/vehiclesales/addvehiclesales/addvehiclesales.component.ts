@@ -56,6 +56,7 @@ export class AddvehiclesalesComponent implements OnInit {
   card:number=0;
   cheque:number=0;
   dd:number=0;upi:number=0;
+  showdata:any;
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -187,10 +188,15 @@ export class AddvehiclesalesComponent implements OnInit {
     this.loadmodelname();
     this.district();
     this.loadqualification();
-    this.loadoccupation();    
-    this.loadinvoice();    
+    this.loadoccupation(); 
+    this.showroomdata();
     this.show = localStorage.getItem('ShowRoomId');
-    this.role = localStorage.getItem('RoleId');   
+    this.role = localStorage.getItem('RoleId');
+    if(this.show > 0)
+    {   
+    this.loadinvoice(); 
+    }   
+       
   }
   disable(){
     this.customerDetailForm.controls['receiptNos'].disable();
@@ -208,11 +214,28 @@ export class AddvehiclesalesComponent implements OnInit {
       })
     }
   }
-  
-  loadinvoice(){
-   console.log(this.show);
-   
-    this.service.getinvoice(this.show).subscribe((data:any)=>{
+  showroomdata(){
+    this.service.getshowroom().subscribe(data=>{
+      this.showdata=data;
+    })
+  }
+  selectshowroom(e:any)
+  {
+    let data=e.target.value;
+    console.log(data);
+    this.service.getinvoice(data).subscribe((data:any)=>{
+      this.invoicevalue=data;
+      console.log(this.invoicevalue);
+      this.customerDetailForm.patchValue({
+        invoiceNo:this.invoicevalue
+      })
+    })
+  }
+
+  loadinvoice(){   
+   let da=localStorage.getItem('ShowRoomId');
+   console.log(da);   
+    this.service.getinvoice(da).subscribe((data:any)=>{
       this.invoicevalue=data;
       console.log(this.invoicevalue);
       this.customerDetailForm.patchValue({
