@@ -4,15 +4,16 @@
       <div class="card card-primary">
         <div class="card-header bg-primary">
           <h3 class="card-title">Showroom To Yard</h3>
-          <button class="btn btn-success float-end btn-sm" (click)="listTransfer()">List Transfer</button>
+          <button class="btn btn-success float-end btn-sm" (click)="listTransfer()">View List Transfer</button>
         </div>
         <div class="row">
           <div class="col-md-3">
             <div class="card-body">
               <div class="form-group">
                 <label for="modelName">From Showroom</label>
-                <select class="form-select" aria-label="Default select example" (change)="changeShowroom($event)">
-                  <option>Select</option>
+                <select class="form-select" aria-label="Default select example" (change)="changeShowroom($event)"
+                [(ngModel)]="selectedShowRoom">
+                  <option value="0" disabled>Select</option>
                   <option *ngFor="let data of showroomdata;" [value]="data.showRoomId">{{data.showRoomName}}</option>
                 </select>
               </div>
@@ -23,8 +24,8 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">To Yard</label>
                 <select class="form-select" aria-label="Default select example" [disabled]="yardBtnDisabled"
-                  (change)="changeYard($event)">
-                  <option>Select</option>
+                  (change)="changeYard($event)" [(ngModel)]="selectedYard" >
+                  <option value="0" disabled>Select</option>
                   <option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}</option>
                 </select>
               </div>
