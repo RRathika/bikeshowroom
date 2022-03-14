@@ -7,6 +7,14 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="col-md-3 p-1">
+                    <div *ngIf="show==0" class="form-group">
+                        <select class="form-select" (change)="selectshowroom($event)">
+                            <option>Select</option>
+                            <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
+                        </select>
+                    </div>
+                </div>
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist" *ngIf="isShownHome">
                             <a class="nav-item nav-link active"  data-toggle="tab" href="#nav-home"
@@ -174,7 +182,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                   
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                             aria-labelledby="nav-home-tab"  *ngIf="isShownHome">
@@ -537,11 +545,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-4">
                                             <button type="button" class="btn btn-warning" data-toggle="modal"
                                                 data-target="#exampleModal1">Vehicle Model</button>
                                             </div>
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8">
                                                 <select class="form-select"  [attr.disabled]="disableTextbox" formControlName="modelId">
                                                     <option *ngFor="let item of modelcode" [value]="item.modelId">
                                                         {{item.modelName}}</option>
@@ -726,8 +734,8 @@
                                     <div class="col-md-12 text-center">
                                         <!-- <button class="btn btn-info m-3 p-3" data-toggle="tab" id="nav-home-tab"
                                         href="#nav-home">Pre</button> -->
-                                        <button class="btn btn-info m-3 p-3" (click)="toggleShowHome()">Pre</button>
-                                        <button type="submit" class="btn btn-success p-3">Next</button>
+                                        <button class="btn btn-warning" (click)="toggleShowHome()">Previous</button>
+                                        <button type="submit" class="btn btn-success ml-2">Next</button>
                                     </div>
 
                                 </div>
@@ -1013,7 +1021,7 @@
                                                     href="#nav-profile" role="tab" aria-controls="nav-profile"
                                                     aria-selected="false">
                                                     <button class="btn btn-warning">Pre</button></a> -->
-                                                    <button class="btn btn-warning" (click)="toggleShowProfile()">Pre</button>
+                                                    <button class="btn btn-warning" (click)="toggleShowProfile()">Previous</button>
                                                 <button class="btn btn-success ml-2" type="submit">Save and Print</button>
                                                 <!-- <button class="btn btn-warning ml-2">Print</button> -->
                                             </div>

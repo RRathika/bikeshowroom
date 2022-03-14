@@ -41,7 +41,7 @@
 											<label for="exampleInputEmail1">Transit Type</label>
 											<select class="form-select" aria-label="Default select example"
 												formControlName="transitType">
-												<option value="" hidden>Select option</option>
+												<option value="" hidden>Select</option>
 												<option value="1">Within State</option>
 												<option value="2">Outside State</option>
 											</select>
@@ -62,9 +62,15 @@
 									</div> -->
 									<div class="col-md-3">
 										<div class="form-group">
-											<label for="exampleInputEmail1">Supplier/Plant</label>
-											<input type="text" class="form-control" placeholder="Supplier/Plant"
-												formControlName="supplier">
+											<label for="exampleInputEmail1">Supplier Name</label>
+											<!-- <input type="text" class="form-control" placeholder="Supplier/Plant"
+												formControlName="supplier"> -->
+												<select class="form-select" aria-label="Default select example"
+												formControlName="showRoomId" (change)="changeshowroom($event)">
+												<option value="" hidden>Select</option>
+												<option *ngFor="let data of showdata" [value]="data.showRoomId">
+													{{data.showRoomName}}</option>
+											</select>
 											<div *ngIf="submitted">
 												<span class="text-danger"
 													*ngIf="transitForm.controls.supplier.errors?.required">
@@ -104,7 +110,7 @@
 											<label for="exampleInputEmail1">ShowRoom Name</label>
 											<select class="form-select" aria-label="Default select example"
 												formControlName="showRoomId" (change)="changeshowroom($event)">
-												<option value="" hidden>Select showroom</option>
+												<option value="" hidden>Select</option>
 												<option *ngFor="let data of showdata" [value]="data.showRoomId">
 													{{data.showRoomName}}</option>
 											</select>
@@ -121,7 +127,7 @@
 											<label for="exampleInputEmail1">Yard Name</label>
 											<select class="form-select" aria-label="Default select example"
 												formControlName="yardId">
-												<option value="" hidden>Select yardroom</option>
+												<option value="" hidden>Select</option>
 												<option *ngFor="let data of yardname" [value]="data.yardId">
 													{{data.yardName}}</option>
 											</select>
@@ -144,7 +150,7 @@
 
 						</div>
 					</div>
-					<div class="card-body" *ngIf="count==1">
+					<div class="card-body" *ngIf="exceldata">
 						<div class="card-header bg-primary">
 							<!-- <button class="btn btn-success float-right" (click)="submit()">Submit</button> -->
 							<h3 class="card-title">Transit List</h3>
