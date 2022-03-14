@@ -40,10 +40,8 @@ export class ListshowroomtransferComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.stockForm.value['yardId'])
     this.submitted = true;
     if (this.stockForm.valid && this.stockForm.value['yardId'] != undefined && this.stockForm.value['yardId'] != 0) {
-
       this.service.getStockTransferFromShowRoom(this.stockForm.value['date'], this.stockForm.value['ShowRoomId'], this.stockForm.value['yardId']).subscribe((data: any) => {
         if (data.statusCode == 200) {
           this.vehiclestock = '';
@@ -53,11 +51,9 @@ export class ListshowroomtransferComponent implements OnInit {
         }
       })
     }
-
   }
 
   changeShowroom(e: any) {
-
     this.stockForm.patchValue({
       date: ''
     });
@@ -82,13 +78,5 @@ export class ListshowroomtransferComponent implements OnInit {
   stockTransfer() {
     this.route.navigateByUrl('/dashboard/showroomtoyard');
   }
-
-  // getStockTransfer(showroomId: any) {
-  //   this.service.getStockTransfer(showroomId, 0, 0).subscribe((data: any) => {
-  //     if (data.statusCode == 200) {
-  //       this.toastservice.show("No Stocks Available", { classname: 'bg-danger text-light', delay: 10000 });
-  //     }
-  //   })
-  // }
 
 }
