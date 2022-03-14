@@ -33,7 +33,6 @@ export class ListyardtransferComponent implements OnInit {
 
   ngOnInit(): void {
     this.showroom();
-
     this.stockForm.controls.fromYardId.disable();
     this.stockForm.controls.toYardId.disable();
   }
@@ -42,50 +41,40 @@ export class ListyardtransferComponent implements OnInit {
     this.stockForm.patchValue({
       date: ''
     });
-    
+
     this.service.getshowroom().subscribe(data => {
       this.showroomdata = data
     })
   }
 
   submit() {
-    console.log(this.stockForm.value['fromYardId'])
-    console.log(this.stockForm.value['toYardId'])
-
     this.submitted = true;
-
     if (this.stockForm.value['fromYardId'] != undefined || this.stockForm.value['toYardId'] != undefined) {
-      // alert(1)
-
-      if (this.stockForm.value['fromYardId'] !=0 || this.stockForm.value['toYardId'] !=0 ) {
+      if (this.stockForm.value['fromYardId'] != 0 || this.stockForm.value['toYardId'] != 0) {
         if (this.stockForm.value['fromYardId'] == this.stockForm.value['toYardId']) {
           this.toastservice.show("From Yard & To Yard should not be same", { classname: 'bg-danger text-light', delay: 3000 });
-  
         }
         else {
-  
+          if (this.stockForm.value['fromYardId'] != 0 && this.stockForm.value['toYardId'] != 0 && this.stockForm.value['fromYardId'] != '' && this.stockForm.value['toYardId'] != '') {
+            this.service.getStockTransferFromYard(this.stockForm.value['date'], this.stockForm.value['ShowRoomId'], this.stockForm.value['fromYardId'], this.stockForm.value['toYardId']).subscribe((data: any) => {
+              if (data.statusCode == 200) {
+                this.vehiclestock = '';
+              }
+              else {
+                this.vehiclestock = data;
+              }
+            })
+          }
         }
-  
-
       }
-
-    
-
-      console.log(this.stockForm.value)
-      
-      this.service.getStockTransferFromYard(this.stockForm.value['date'], this.stockForm.value['ShowRoomId'], this.stockForm.value['fromYardId'], this.stockForm.value['toYardId']).subscribe((data: any) => {
-        if (data.statusCode == 200) {
-          this.vehiclestock = '';
-        }
-        else {
-          this.vehiclestock = data;
-        }
-      })
     }
-
   }
 
   changeShowroom(e: any) {
+    this.stockForm.patchValue({
+      date: ''
+    });
+
     this.yardname = [];
     let data = e.target.value;
     this.showroomId = data;
@@ -98,7 +87,6 @@ export class ListyardtransferComponent implements OnInit {
       }
       else {
         this.yardname = data;
-
         this.stockForm.controls.fromYardId.enable();
         this.stockForm.controls.toYardId.enable();
         this.selectedFromYard = 0;
@@ -111,8 +99,6 @@ export class ListyardtransferComponent implements OnInit {
     this.service.getStockTransfer(showroomId, 0, 0).subscribe((data: any) => {
       if (data.statusCode == 200) {
         this.toastservice.show("No Stocks Available", { classname: 'bg-danger text-light', delay: 10000 });
-      }
-      else {
       }
     })
   }

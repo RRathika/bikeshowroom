@@ -16,25 +16,23 @@ export class ShowroomtoyardComponent implements OnInit {
   public firstTable: any[] = [];
   public secondTable: any[] = [];
   yardBtnDisabled: boolean = true;
-  selectedShowRoom:any;
-  selectedYard:any;
+  selectedShowRoom: any;
+  selectedYard: any;
   constructor(private service: YamahaserviceService, private route: Router, private toastService: ToastServiceService) { }
 
   ngOnInit(): void {
     this.showroom();
-    // this.selectedShowRoom =0;
   }
 
   showroom() {
     this.service.getshowroom().subscribe((data: any) => {
       this.showroomdata = data
     })
-    this.selectedShowRoom =0;
+    this.selectedShowRoom = 0;
   }
 
   changeShowroom(e: any) {
-    this.selectedYard =0;
-   
+    this.selectedYard = 0;
     this.yardname = [];
     this.firstTable = [];
     this.secondTable = [];
@@ -114,7 +112,6 @@ export class ShowroomtoyardComponent implements OnInit {
       yardId: yardId,
       yardName: yardName
     });
-
     this.secondTable = this.secondTable.filter(el => el !== serialNo);
   }
 
@@ -131,5 +128,4 @@ export class ShowroomtoyardComponent implements OnInit {
   listTransfer() {
     this.route.navigateByUrl('/dashboard/listshowroomtransfer');
   }
-
 }
