@@ -4,7 +4,7 @@
         <div class="card card-primary">
             <div class="card-header bg-primary">
                 <h3 class="card-title">Yard To Yard List</h3>
-                <button class="btn btn-success float-end btn-sm" (click)="stockTransfer()">Stock Transfer</button>
+                <button class="btn btn-success float-end btn-sm" (click)="stockTransfer()">New Stock Transfer</button>
             </div>
             <form [formGroup]="stockForm" (ngSubmit)="submit()">
                 <div class="row">
@@ -13,13 +13,16 @@
                             <div class="form-group">
                                 <label for="modelName">Showroom Name</label>
                                 <select class="form-select" formControlName="ShowRoomId"
-                                    (change)="changeShowroom($event)">
-                                    <option value="0">All showroom name</option>
+                                    (change)="changeShowroom($event)"
+                                    [(ngModel)]="selectedShowRoom">
+                                    <option value="0" disabled>Select</option>
                                     <option *ngFor="let data of showroomdata;" [value]="data.showRoomId">
                                         {{data.showRoomName}}</option>
                                 </select>
                                 <div *ngIf="submitted">
-                                    <span class="text-danger" *ngIf="stockForm.controls.ShowRoomId.errors?.required">
+                                    <!-- <span class="text-danger" *ngIf="stockForm.controls.ShowRoomId.errors?.required">
+                                         -->
+                                         <span class="text-danger" *ngIf="stockForm.controls.ShowRoomId.value == undefined || stockForm.controls.ShowRoomId.value == 0">
                                         <small>Showroom name required</small>
                                     </span>
                                 </div>
@@ -31,13 +34,14 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">From Yard</label>
                                 <select class="form-select" aria-label="Default select example"
-                                    formControlName="fromYardId">
-                                    <option>Select</option>
+                                    formControlName="fromYardId" [(ngModel)]="selectedFromYard">
+                                    <option value="0" disabled>Select</option>
                                     <option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}
                                     </option>
                                 </select>
                                 <div *ngIf="submitted">
-                                    <span class="text-danger" *ngIf="stockForm.controls.fromYardId.errors?.required">
+                                    <!-- <span class="text-danger" *ngIf="stockForm.controls.fromYardId.errors?.required"> -->
+                                        <span class="text-danger" *ngIf="stockForm.controls.fromYardId.value == undefined || stockForm.controls.fromYardId.value == 0">
                                         <small>Yard Name required</small>
                                     </span>
                                 </div>
@@ -49,13 +53,15 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">To Yard</label>
                                 <select class="form-select" aria-label="Default select example"
-                                    formControlName="toYardId">
-                                    <option>Select</option>
+                                    formControlName="toYardId"  [(ngModel)]="selectedToYard">
+                                    <option value="0" disabled>Select</option>
                                     <option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}
                                     </option>
                                 </select>
                                 <div *ngIf="submitted">
-                                    <span class="text-danger" *ngIf="stockForm.controls.toYardId.errors?.required">
+                                    <!-- *ngIf="stockForm.controls.yardId.value == undefined || stockForm.controls.yardId.value == 0" -->
+                                    <!-- <span class="text-danger" *ngIf="stockForm.controls.toYardId.errors?.required"> -->
+                                        <span class="text-danger" *ngIf="stockForm.controls.toYardId.value == undefined || stockForm.controls.toYardId.value == 0">
                                         <small>Yard Name required</small>
                                     </span>
                                 </div>

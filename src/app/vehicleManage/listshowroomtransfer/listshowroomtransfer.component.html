@@ -3,21 +3,22 @@
     <div class="card card-primary">
       <div class="card-header bg-primary">
         <h3 class="card-title">Showroom To Yard List</h3>
-        <button class="btn btn-success float-end btn-sm" (click)="stockTransfer()">Stock Transfer</button>
+        <button class="btn btn-success float-end btn-sm" (click)="stockTransfer()">New Stock Transfer</button>
       </div>
+
       <form [formGroup]="stockForm" (ngSubmit)="submit()">
         <div class="row">
           <div class="col-md-3">
             <div class="card-body">
               <div class="form-group">
-                <label for="modelName">Showroom Name</label>
-                <select class="form-select" formControlName="ShowRoomId" (change)="changeShowroom($event)">
-                  <option value="0">All showroom name</option>
+                <label for="modelName">From Showroom</label>
+                <select class="form-select" formControlName="ShowRoomId" (change)="changeShowroom($event)" [(ngModel)]="selectedShowRoom">
+                  <option value="0" disabled>Select</option>
                   <option *ngFor="let data of showroomdata;" [value]="data.showRoomId">{{data.showRoomName}}</option>
                 </select>
                 <div *ngIf="submitted">
-                  <span class="text-danger" *ngIf="stockForm.controls.ShowRoomId.errors?.required">
-                    <small>Showroom name required</small>
+                    <span class="text-danger" *ngIf="stockForm.controls.ShowRoomId.value == 0 || stockForm.controls.ShowRoomId.errors?.required">
+                      <small>Showroom name required</small>
                   </span>
                 </div>
               </div>
@@ -27,12 +28,12 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">To Yard</label>
-                <select class="form-select" aria-label="Default select example" formControlName="yardId">
-                  <option>Select</option>
+                <select class="form-select" aria-label="Default select example" formControlName="yardId" [(ngModel)]="selectedYard">
+                  <option value="0" disabled>Select</option>
                   <option *ngFor="let data of yardname" [value]="data.yardId">{{data.yardName}}</option>
                 </select>
                 <div *ngIf="submitted">
-                  <span class="text-danger" *ngIf="stockForm.controls.yardId.errors?.required">
+                    <span class="text-danger" *ngIf="stockForm.controls.yardId.value == undefined || stockForm.controls.yardId.value == 0">
                     <small>Yard Name required</small>
                   </span>
                 </div>
@@ -49,7 +50,7 @@
           </div>
           <div class="col-md-3 my-5">
             <div class="form-group text-center ">
-              <button class="btn btn-success" type="submit">Submit</button>
+              <button class="btn btn-success" type="submit">Search</button>
             </div>
           </div>
         </div>
