@@ -41,7 +41,7 @@ export class VehiclepurchaseComponent implements OnInit {
   purchaseType:  new FormControl('', [Validators.required]),
   showRoomId:  new FormControl('',[Validators.required]),
   yardId : new FormControl('',[Validators.required]),
-  supplierName:  new FormControl('', [Validators.required]),
+  supplierId:  new FormControl('', [Validators.required]),
   suppierAddress:  new FormControl(''),
   supplierGST:  new FormControl(''),
   totalVehicleCost:  new FormControl('', [Validators.required]),

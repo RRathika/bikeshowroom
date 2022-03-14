@@ -210,8 +210,9 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   
   loadinvoice(){
+   console.log(this.show);
    
-    this.service.getinvoice().subscribe((data:any)=>{
+    this.service.getinvoice(this.show).subscribe((data:any)=>{
       this.invoicevalue=data;
       console.log(this.invoicevalue);
       this.customerDetailForm.patchValue({
@@ -498,45 +499,6 @@ export class AddvehiclesalesComponent implements OnInit {
         this.iscredit = false;
         break;
     }
-  //  if(value.target.value==1)
-  //  {
-  //   let bookamount=this.advanceamount;
-  //   let net=this.vehicleDetailsForm.value['total'];
-  //   let cash=this.transtypecash.value['handAmount'];
-  //   let card=this.transtypecash.value['cardAmount'];
-  //   let cheque=this.transtypecash.value['chequeAmount'];
-  //   let dd=this.transtypecash.value['ddAmount'];
-  //   let upi=this.transtypecash.value['upiAmount'];
-  //   let amount=cash+card+cheque+dd+upi
-  //   let balance=net-(bookamount+amount)
-  //   this.payDetails.patchValue({
-  //     cashbank:amount,
-  //     balanceamt:balance
-  //   })
-  //  }
-  //  if(value.target.value==2)
-  //  {
-  //   let amount=this.creditForm.value['creditAmount'];
-  //   let bookamount=this.advanceamount;
-  //   let net=this.vehicleDetailsForm.value['total'];
-  //   let balance=net-(bookamount+amount)
-  //   this.payDetails.patchValue({
-  //     creditamt:amount,
-  //     balanceamt:balance
-  //   })
-  //  }
-  //  if(value.target.value==3)
-  //  {
-  //   let amount=this.finalform.value['downPayment'];
-  //   let bookamount=this.advanceamount;
-  //   let net=this.vehicleDetailsForm.value['total'];
-  //   let balance=net-(bookamount+amount)
-  //   this.payDetails.patchValue({
-  //     financeamt:amount,
-  //     balanceamt:balance
-  //   })
-  //  }
-
   }
 
   showchecked(checked: any) {

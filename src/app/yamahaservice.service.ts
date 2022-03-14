@@ -101,7 +101,7 @@ export class YamahaserviceService {
   showroombyyard(id:any):Observable<any>{return this.httpclient.get(this.url+`Yard/GetYardByShowRoomId?ShowRoomId=${id}`);}
   vartantbydata(variant:any,show:any,role:any):Observable<any>{return this.httpclient.get(this.url+`VehicleStock/GetVehicleDetailsByVariantId?VariantId=${variant}&RoleId=${role}&ShowRoomId=${show}&YardId=0`);}
   getfinance():Observable<any>{return this.httpclient.get(this.url+'FinanceDetail/GetFinanceDetail');}
-  getinvoice():Observable<any>{return this.httpclient.get(this.url+'VehicleCustomerDetails/GetInvoiceNo');}
+  getinvoice(id:any):Observable<any>{return this.httpclient.get(this.url+`VehicleCustomerDetails/GetInvoiceNo?ShowRoomId=${id}`);}
   salessave(data:any):Observable<any>{return this.httpclient.post(this.url+'VehicleSalesDetail/SaveVehicleSales',data);}
   getsales(show:any,yard:any,from:any,to:any):Observable<any>{return this.httpclient.get(this.url+`VehicleSalesDetail/GetVehicleSalesInvoiceDetail?ShowRoomId=${show}&YardId=${yard}&FromDate=${from}&ToDate=${to}`);}
   getbysale(id:any):Observable<any>{return this.httpclient.get(this.url+`VehicleSalesDetail/GetVehicleSalesInvoiceDetailById?VehicleSalesInvoiceDetailId=${id}`)}
