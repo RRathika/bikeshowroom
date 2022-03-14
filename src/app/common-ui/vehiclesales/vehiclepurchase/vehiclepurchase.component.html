@@ -101,7 +101,7 @@
 										<div class="form-group row">
 											<div class="col-md-6">
 												<label>Name</label>  
-												<select class="form-select" formControlName="supplierName" (change)="selectsupplier($event)">
+												<select class="form-select" formControlName="supplierId" (change)="selectsupplier($event)">
 													<option value="" hidden>Select supplier name</option>
 													<option *ngFor="let item of vendordata" [value]="item.vendorId">{{item.companyName}}</option>
 												</select>
