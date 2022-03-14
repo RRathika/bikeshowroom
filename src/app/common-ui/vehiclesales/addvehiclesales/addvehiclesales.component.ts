@@ -424,6 +424,7 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.patchValue({ aadharNo: final });
   }
   submit() {
+   // alert(2)
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
     // console.log(this.customerDetailForm.value);
     
@@ -606,5 +607,9 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   print(){    
     this.route.navigateByUrl('/invoice');
+  }
+
+  customerNext(){
+   // alert(1)
   }
 }
