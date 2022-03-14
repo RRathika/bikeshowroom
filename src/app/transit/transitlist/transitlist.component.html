@@ -41,7 +41,7 @@
 											<label for="exampleInputEmail1">Transit Type</label>
 											<select class="form-select" aria-label="Default select example"
 												formControlName="transitType">
-												<option selected>Select option</option>
+												<option value="" hidden>Select option</option>
 												<option value="1">Within State</option>
 												<option value="2">Outside State</option>
 											</select>
@@ -104,6 +104,7 @@
 											<label for="exampleInputEmail1">ShowRoom Name</label>
 											<select class="form-select" aria-label="Default select example"
 												formControlName="showRoomId" (change)="changeshowroom($event)">
+												<option value="" hidden>Select showroom</option>
 												<option *ngFor="let data of showdata" [value]="data.showRoomId">
 													{{data.showRoomName}}</option>
 											</select>
@@ -120,6 +121,7 @@
 											<label for="exampleInputEmail1">Yard Name</label>
 											<select class="form-select" aria-label="Default select example"
 												formControlName="yardId">
+												<option value="" hidden>Select yardroom</option>
 												<option *ngFor="let data of yardname" [value]="data.yardId">
 													{{data.yardName}}</option>
 											</select>

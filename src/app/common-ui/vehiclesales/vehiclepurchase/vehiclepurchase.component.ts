@@ -29,6 +29,9 @@ export class VehiclepurchaseComponent implements OnInit {
   yardname: any;
   roledata: any;
   showdata:any;
+  submitted:boolean = false;
+  vendordata:any;
+  vendoriddata:any;
   constructor(private router:Router,private service:YamahaserviceService,private formbuilder:FormBuilder,public toastservice:ToastServiceService) { }
   vehiclepurchaseForm:FormGroup=this.formbuilder.group({
   receivedDate:  new FormControl('', [Validators.required]),
@@ -39,13 +42,13 @@ export class VehiclepurchaseComponent implements OnInit {
   showRoomId:  new FormControl('',[Validators.required]),
   yardId : new FormControl('',[Validators.required]),
   supplierName:  new FormControl('', [Validators.required]),
-  suppierAddress:  new FormControl('', [Validators.required]),
-  supplierGST:  new FormControl('', [Validators.required]),
+  suppierAddress:  new FormControl(''),
+  supplierGST:  new FormControl(''),
   totalVehicleCost:  new FormControl('', [Validators.required]),
-  igstPercentage:  new FormControl(''),
-  discountPercentage:  new FormControl(''),
-  freight:  new FormControl(''),
-  additionalDiscount:  new FormControl(''),
+  igstPercentage:  0,
+  discountPercentage:  0,
+  freight:  0,
+  additionalDiscount: 0,
   insurance:  new FormControl(''),
   total:  new FormControl('', [Validators.required]),
   cardDetails:  new FormControl(''),
@@ -55,8 +58,12 @@ export class VehiclepurchaseComponent implements OnInit {
   createVehiclePurchaseDetailsDTO:  new FormControl});
   ngOnInit(): void {
     this.showroomdata();
+    this.supplier();
     this.roledata=localStorage.getItem('RoleId');
     this.showname=localStorage.getItem('ShowRoomId');
+    this.vehiclepurchaseForm.controls['suppierAddress'].disable();
+    this.vehiclepurchaseForm.controls['supplierGST'].disable();
+    this.vehiclepurchaseForm.controls['yardId'].disable();
     if(this.showname!=0)
     {
     this.service.showroombyyard(this.showname).subscribe(data=>{
@@ -96,6 +103,11 @@ export class VehiclepurchaseComponent implements OnInit {
     this.colorid();
     this.variantid();
   }
+  supplier(){
+    this.service.getvendor().subscribe(data=>{
+      this.vendordata=data;
+    })
+  }
   modelid() {
     this.service.getbikemodel().subscribe(data => {
       this.bikemodel = data;
@@ -128,6 +140,7 @@ export class VehiclepurchaseComponent implements OnInit {
       this.yardname=data;
       }
     })
+    this.vehiclepurchaseForm.controls['yardId'].enable();
   }
   onchange(e:any)
   {
@@ -259,16 +272,31 @@ export class VehiclepurchaseComponent implements OnInit {
     if(this.vehiclepurchaseForm.value['transitId']==0)
     {
     this.vehiclepurchaseForm.patchValue({ createVehiclePurchaseDetailsDTO: this.jsonData});
+    this.submitted=true;
+    console.log(this.vehiclepurchaseForm.value['supplierGST']);
+    
     if(this.vehiclepurchaseForm.valid)
     {
       this.service.savepurchase(this.vehiclepurchaseForm.value).subscribe((data:any)=>{
-        if(data.statusCode)
-        {
-        this.toastservice.show(data.message,{ classname: 'bg-success text-light', delay: 3000 });
-        this.clear();
+        
+        if (data.message == "Fail") {
+          if(data.modelCount>0)
+          {
+            this.toastservice.show(data.modelCount+'model name missing', { classname: 'bg-danger text-light', delay: 10000 });
+          }
+          if(data.colorCount>0)
+          {
+            this.toastservice.show(data.colorCount+ 'color name missing', { classname: 'bg-danger text-light', delay: 10000 });
+          }
+          if(data.variantCount>0)
+          {
+            this.toastservice.show(data.variantCount+ 'variant name missing', { classname: 'bg-danger text-light', delay: 10000 });
+          }        
         }
-        else{
-          this.toastservice.show(data.message,{ classname: 'bg-danger text-light', delay: 5000 });
+        else
+        {
+          this.toastservice.show(data.message,{ classname: 'bg-success text-light', delay: 3000 });
+        this.clear();
         }
       })
     }
@@ -303,5 +331,15 @@ export class VehiclepurchaseComponent implements OnInit {
     this.vehiclepurchaseForm.reset();
     this.count=0;
     this.myInputVariable.nativeElement.value = "";
+  }
+  selectsupplier(e:any){
+    console.log(e.target.value);
+    this.service.getbyidvendor(e.target.value).subscribe(data=>{
+      this.vendoriddata=data;
+      this.vehiclepurchaseForm.patchValue({
+        supplierGST:this.vendoriddata['gstNo'],
+        suppierAddress:this.vendoriddata['place']+','+this.vendoriddata['pinCode']
+      })
+    })   
   }
 }
