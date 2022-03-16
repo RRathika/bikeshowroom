@@ -113,4 +113,5 @@ export class YamahaserviceService {
 
   getStockTransferFromShowRoom(date:any,fromShowRoomId:any,toYardId:any):Observable<any>{return this.httpclient.get(this.url+`StockTransfer/GetStockTransferFromShowRoom?Date=${date}&FromShowRoomId=${fromShowRoomId}&ToYardId=${toYardId}`);}
   getStockTransferFromYard(date:any,fromShowRoomId:any,fromYardId:any,toYardId:any):Observable<any>{return this.httpclient.get(this.url+`StockTransfer/GetStockTransferFromYard?Date=${date}&FromShowRoomId=${fromShowRoomId}&FromYardId=${fromYardId}&ToYardId=${toYardId}`);}
+  getAdvanceBookingsByFilter(name:any,date:any,modelName:any):Observable<any>{return this.httpclient.get(this.url+`AdvanceBooking/GetAdvanceBookingsByFilter?Name=${name}&Date=${date}&ModelName=${modelName}`);}
 }

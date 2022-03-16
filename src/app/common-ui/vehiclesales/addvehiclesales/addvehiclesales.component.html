@@ -58,26 +58,41 @@
                                                     <div class="form-group">
                                                         <label>Name</label>
                                                         <input class="form-control" list="advancebookname"
-                                                            placeholder="Type to search..." formControlName="name">
+                                                            placeholder="Type to search..." formControlName="name"
+                                                            [(ngModel)]="selectedAdvanceName" 
+                                                            (change)="onChangeselectedAdvanceName($event)" >
+                                                          
                                                         <datalist id="advancebookname">
-                                                            <option *ngFor="let data of username;" [value]=data.name>
+                                                            <!-- <select (change)="onChangeselectedAdvanceName($event)"
+                                                            [(ngModel)]="selectedAdvanceName"> -->
+                                                            <option *ngFor="let data of username;" [value]=data.name
+                                                            >
+                                                            </option>
+                                                        <!-- </select> -->
+
                                                         </datalist>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label>Date</label>
-                                                    <input type="date" class="form-control" placeholder="">
+                                                    <input type="date" class="form-control" placeholder=""
+                                                    [(ngModel)]="selectedAdvanceDate">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label>Bike Model</label>
                                                     <input class="form-control" list="advancebookmodelname"
-                                                        placeholder="Type to search..." formControlName="modelName">
+                                                        placeholder="Type to search..." formControlName="modelName"
+                                                        [(ngModel)]="selectedAdvanceModelName"
+                                                        
+                                                        (change)="onChangeselectedAdvanceModelName($event)"
+                                                        >
                                                     <datalist id="advancebookmodelname">
                                                         <option *ngFor="let data of modelname;" [value]=data.modelName>
                                                     </datalist>
                                                 </div>
                                                 <div class="col-md-12 my-2 text-center">
-                                                    <button type="submit" class="btn btn-success">Search</button>
+                                                    <button type="button" class="btn btn-success" 
+                                                    (click)="getAdvanceBookingsByFilter()">Search</button>
                                                 </div>
                                             </div>                                       
                                     </div>
@@ -208,20 +223,22 @@
                                             <label for="exampleInputEmail1">Receipt type</label>
                                             <select class="form-select" id="exampleFormControlSelect1"
                                                 (change)="onChange($event.target)" formControlName="receiptType">
-                                                <option value="0"> Direct.</option>
-                                                <option value="1">Advance</option>
+                                                <option value="0" disabled>Select</option>
+                                                <option value="1"> Direct</option>
+                                                <option value="2">Advance</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group text-center my-4">
                                             <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                data-target="#exampleModal" [disabled]='isdisable'>Booking</button>
+                                                data-target="#exampleModal" [disabled]='isdisable'
+                                                (click)="bookingBtn()">Booking</button>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Receipt No's</label>
+                                            <label for="exampleInputEmail1">Recpt-No</label>
                                             <input type="text" class="form-control" placeholder="Receipt No's"
                                                 formControlName="receiptNos">
                                         </div>
@@ -233,6 +250,14 @@
                                                 formControlName="date">
                                         </div>
                                     </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group text-center my-4">
+                                            <button type="button" class="btn btn-danger" 
+                                             [disabled]='isdisableClearBtn'
+                                            (click)="clearBtn()">Clear</button>
+                                            </div>
+                                            </div>
                                    
                                     <hr style="width: 98%">
                                     <div class="col-md-4">
@@ -240,6 +265,12 @@
                                             <label for="exampleInputEmail1">First Name</label>
                                             <input type="text" class="form-control" placeholder="First Name"
                                                 formControlName="firstName">
+                                                <div *ngIf="submitted">
+                                                    <span class="text-danger"
+                                                        *ngIf="customerDetailForm.controls.firstName.errors?.required">
+                                                        <small>First Name required</small>
+                                                    </span>
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -254,10 +285,20 @@
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Gender</label>
                                             <select class="form-select" placeholder="Type to search..."
-                                                formControlName="gender">
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
+                                                formControlName="gender" [(ngModel)]="selectedGender">
+                                                <option value="0" disabled>Select</option>
+                                                <option value="1">Male</option>
+                                                <option value="2">Female</option>
+                                                <option value="3">Others</option>
+                                                <!-- <option value="Male">Male</option>
+                                                <option value="Female">Female</option> -->
                                             </select>
+                                            <div *ngIf="submitted">
+                                                <span class="text-danger"
+                                                    *ngIf="customerDetailForm.controls.gender.value == undefined || customerDetailForm.controls.gender.value == 0">
+                                                    <small>Gender required</small>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -320,7 +361,9 @@
                                                     Name</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-select" placeholder="District Name"
-                                                        formControlName="district" (change)="districttaluk($event)">
+                                                        formControlName="district" (change)="districttaluk($event)"
+                                                        [(ngModel)]="selectedPresentDistrict">
+                                                        <option value="0" disabled>Select</option>
                                                         <option *ngFor="let item of districtname"
                                                             [value]="item.districtId">{{item.district}}</option>
                                                     </select>
@@ -331,7 +374,8 @@
                                                     class="col-sm-3 col-form-label">Mandal/Taluk</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-select" placeholder="Mandal/Taluk"
-                                                        formControlName="taluk">
+                                                        formControlName="taluk"  [(ngModel)]="selectedPresentTaluk">
+                                                        <option value="0" disabled>Select</option>
                                                         <option *ngFor="let data of taluk1" [value]="data.talukId">
                                                             {{data.taluk}}</option>
                                                     </select>
@@ -344,7 +388,7 @@
                                     </div>
                                     <div class="col-sm-6 header-border">
                                         <form [formGroup]="permanentaddressForm">
-                                            <h4 class="heading-subtitle"><span>permanent Address</span></h4>
+                                            <h4 class="heading-subtitle"><span>Permanent Address</span></h4>
                                             <div class="form-group row">
                                                 <label for="staticEmail"
                                                     class="col-sm-3 col-form-label">Door/Street</label>
@@ -518,7 +562,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <button class="btn btn-success" type="submit">Next</button>
+                                        <button class="btn btn-success" type="submit" (click)="customerNext()">Next</button>
                                     </div>
                                 </div>
                             </form>
