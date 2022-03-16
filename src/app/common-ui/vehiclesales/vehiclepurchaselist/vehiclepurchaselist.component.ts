@@ -58,7 +58,7 @@ export class VehiclepurchaselistComponent implements OnInit {
     })
   }
   changemonth(e:any){
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.purchaselistForm.controls['fromdate'].disable();
     this.purchaselistForm.controls['todate'].disable();
     this.purchaselistForm.value['fromdate']='';
@@ -124,11 +124,26 @@ export class VehiclepurchaselistComponent implements OnInit {
         this.purchaselistForm.controls['todate'].enable();
         this.purchaselistForm.controls['yard'].disable();
         this.purchaselistForm.controls['month'].enable();
+        this.purchaselistForm.patchValue({
+          yard:'',
+          month:0,
+          showRoomId:''
+        })
       }
       else
       {
       this.vehiclepurchase=data;
       this.purchaselistForm.reset();
+      this.submitted=false;
+      this.purchaselistForm.controls['fromdate'].enable();
+        this.purchaselistForm.controls['todate'].enable();
+        this.purchaselistForm.controls['yard'].disable();
+        this.purchaselistForm.controls['month'].enable();
+      this.purchaselistForm.patchValue({
+        yard:'',
+        month:0,
+        showRoomId:''
+      })
     }
     })
   }
@@ -145,11 +160,26 @@ export class VehiclepurchaselistComponent implements OnInit {
         this.purchaselistForm.controls['todate'].enable();
         this.purchaselistForm.controls['yard'].disable();
         this.purchaselistForm.controls['month'].enable();
+        this.purchaselistForm.patchValue({
+          yard:'',
+          month:0,
+          showRoomId:''
+        })
       }
       else
       {
       this.vehiclepurchase=data;
       this.purchaselistForm.reset();
+      this.submitted=false;
+      this.purchaselistForm.controls['fromdate'].enable();
+        this.purchaselistForm.controls['todate'].enable();
+        this.purchaselistForm.controls['yard'].disable();
+        this.purchaselistForm.controls['month'].enable();
+      this.purchaselistForm.patchValue({
+        yard:'',
+        month:0,
+        showRoomId:''
+      })
     }
     })
   }

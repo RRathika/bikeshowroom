@@ -66,14 +66,14 @@
 											<!-- <input type="text" class="form-control" placeholder="Supplier/Plant"
 												formControlName="supplier"> -->
 												<select class="form-select" aria-label="Default select example"
-												formControlName="showRoomId" (change)="changeshowroom($event)">
+												formControlName="supplierId">
 												<option value="" hidden>Select</option>
-												<option *ngFor="let data of showdata" [value]="data.showRoomId">
-													{{data.showRoomName}}</option>
+												<option *ngFor="let data of vendordata" [value]="data.vendorId">
+													{{data.companyName}}</option>
 											</select>
 											<div *ngIf="submitted">
 												<span class="text-danger"
-													*ngIf="transitForm.controls.supplier.errors?.required">
+													*ngIf="transitForm.controls.supplierId.errors?.required">
 													<small>Supplier name is required</small>
 												</span>
 											</div>
@@ -107,7 +107,7 @@
 									</div>
 									<div class="col-md-3" *ngIf="roledata==1">
 										<div class="form-group">
-											<label for="exampleInputEmail1">ShowRoom Name</label>
+											<label for="exampleInputEmail1">Showroom Name</label>
 											<select class="form-select" aria-label="Default select example"
 												formControlName="showRoomId" (change)="changeshowroom($event)">
 												<option value="" hidden>Select</option>

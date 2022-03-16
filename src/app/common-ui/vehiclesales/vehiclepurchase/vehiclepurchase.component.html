@@ -47,7 +47,7 @@
 											<div class="col-md-6">
 												<label for="exampleInputEmail1">Transit Type</label>                                                
 											<select class="form-select" formControlName="purchaseType">
-												<option value="" hidden>Select transit type</option>
+												<option value="" hidden>Select</option>
                                                 <option value="1">Within State</option>
                                                 <option value="2">Outside State</option>
                                             </select>
@@ -65,7 +65,7 @@
 												<div class="form-group">
 													<label for="exampleInputEmail1">ShowRoom Name</label>
 													<select class="form-select" aria-label="Default select example" formControlName="showRoomId" (change)="changeshowroom($event)">
-														<option value="" hidden>Select showroom</option>
+														<option value="" hidden>Select</option>
 														<option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
 													</select>
 													<div *ngIf="submitted">
@@ -79,7 +79,7 @@
 											<div class="col-md-6">
 												<label for="exampleInputEmail1">Yard Name</label>
 												<select class="form-select" formControlName="yardId">
-													<option value="" hidden>Select Yard</option>
+													<option value="" hidden>Select</option>
 													<option *ngFor="let item of yardname" [value]="item.yardId">{{item.yardName}}</option>
 												</select>
 												<div *ngIf="submitted">
@@ -102,12 +102,12 @@
 											<div class="col-md-6">
 												<label>Name</label>  
 												<select class="form-select" formControlName="supplierId" (change)="selectsupplier($event)">
-													<option value="" hidden>Select supplier name</option>
+													<option value="" hidden>Select</option>
 													<option *ngFor="let item of vendordata" [value]="item.vendorId">{{item.companyName}}</option>
 												</select>
 												<div *ngIf="submitted">
 													<span class="text-danger"
-														*ngIf="vehiclepurchaseForm.controls.supplierName.errors?.required">
+														*ngIf="vehiclepurchaseForm.controls.supplierId.errors?.required">
 														<small>Supplier name is required</small>
 													</span>
 												</div>
@@ -130,7 +130,7 @@
 						
 					</div>
 				</div>		
-                <div class="card-body border" *ngIf="count==1">
+                <div class="card-body border" *ngIf="purchase || exceldata">
 					<div class="card-header bg-primary">						
 						<!-- <button class="btn btn-success float-right" (click)="submit()">Submit</button> -->
 						<h3 class="card-title">Transit List</h3>
@@ -192,7 +192,7 @@
 								<div class="form-group row">
 									<div class="col-md-4">
 										<label for="exampleInputEmail1">Total Vehicle Cost</label>
-									<input type="text" class="form-control" 
+									<input type="number" class="form-control" 
 										placeholder="Total Vehicle Cost" (change)="vehiclecost($event)" formControlName="totalVehicleCost">
 										<div *ngIf="submitted">
 											<span class="text-danger"
@@ -203,29 +203,29 @@
 									</div>
 									<div class="col-md-2">
 										<label for="exampleInputEmail1">IGST</label>								 
-									<input type="text" class="form-control" 
+									<input type="number" class="form-control" 
 										placeholder="%" formControlName="igstPercentage" (change)="igst($event)">							
 									</div>
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Insurance Amount</label>
-									<input type="text" class="form-control" 
+									<input type="number" class="form-control" 
 										placeholder="Insurance" formControlName="insurance" (change)="insurance($event)">
 									</div>	
 								</div>							
 								<div class="form-group row">
 									<div class="col-md-4">
 										<label for="exampleInputEmail1">Freight Amount</label>								 
-									<input type="text" class="form-control" 
+									<input type="number" class="form-control" 
 										placeholder="Freight" formControlName="freight" (change)="freight($event)">							
 									</div>			
 									<div class="col-md-2">
 										<label for="exampleInputEmail1">discount</label>								 
-									<input type="text" class="form-control" 
+									<input type="number" class="form-control" 
 										placeholder="%" formControlName="discountPercentage" (change)="discount($event)">							
 									</div>	
 									<div class="col-md-6">
 										<label for="exampleInputEmail1">Additional Discount</label>								
-										<input type="text" class="form-control" 
+										<input type="number" class="form-control" 
 										placeholder="Additional Discount" formControlName="additionalDiscount" (change)="discountamount($event)">
 									</div>
 																				
@@ -262,7 +262,7 @@
 										<div class="col-md-12">
 											<label for="exampleInputEmail1">Payment Mode</label>
 											<select class="form-select" (change)="onchange($event)" formControlName="paymentModeId">
-												<option value="" hidden>Select payment Mode</option>
+												<option value="" hidden>Select</option>
 												<option value="1">Cash</option>
 												<option value="2">Card</option>
 												<option value="3">Cheque</option>

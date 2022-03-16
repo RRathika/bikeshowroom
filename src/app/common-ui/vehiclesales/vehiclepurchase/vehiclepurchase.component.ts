@@ -32,6 +32,8 @@ export class VehiclepurchaseComponent implements OnInit {
   submitted:boolean = false;
   vendordata:any;
   vendoriddata:any;
+  finaldata:any;
+  excelkey:boolean=false;
   constructor(private router:Router,private service:YamahaserviceService,private formbuilder:FormBuilder,public toastservice:ToastServiceService) { }
   vehiclepurchaseForm:FormGroup=this.formbuilder.group({
   receivedDate:  new FormControl('', [Validators.required]),
@@ -79,7 +81,7 @@ export class VehiclepurchaseComponent implements OnInit {
   }
     if(this.service.purchasedata.value!='')
     {
-      this.count=this.count+1;
+      // this.count=this.count+1;
     this.service.purchasedata.subscribe((data:any)=>{
       console.log(data.viewTransitDetailsDTO);
       this.vehiclepurchaseForm.patchValue({
@@ -161,7 +163,7 @@ export class VehiclepurchaseComponent implements OnInit {
 
   }
   onFileChange(evt: any) {
-    this.count=this.count+1;
+    // this.count=this.count+1;
     const target: DataTransfer = <DataTransfer>(evt.target);
     if (target.files.length !== 1) throw new Error('Cannot use multiple files');
     let workBook = null;
@@ -170,7 +172,11 @@ export class VehiclepurchaseComponent implements OnInit {
       const bstr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });     
       const wsname: string = wb.SheetNames[0];
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];      
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];    
+      this.finaldata = (XLSX.utils.sheet_to_json(ws, { header: 1 }));  
+      if(this.finaldata[0][8]=='ChassisNo' && this.finaldata[0][9]=='EngineNo'){ 
+        if(this.finaldata[0][10]=='ModelCode' && this.finaldata[0][12]=='ModelColorCode')
+        { 
       this.jsonData = wb.SheetNames.reduce((initial, name) => {
         const sheet = wb.Sheets[name];
         initial = XLSX.utils.sheet_to_json(sheet);
@@ -204,7 +210,13 @@ export class VehiclepurchaseComponent implements OnInit {
           }
          
         });
-      }    
+      } 
+    }
+    }
+    else{
+      alert('Not a valid excel sheet');
+      this.myInputVariable.nativeElement.value = "";
+    }   
     };
 
     reader.readAsBinaryString(target.files[0]);
@@ -272,9 +284,27 @@ export class VehiclepurchaseComponent implements OnInit {
     if(this.vehiclepurchaseForm.value['transitId']==0)
     {
     this.vehiclepurchaseForm.patchValue({ createVehiclePurchaseDetailsDTO: this.jsonData});
-    this.submitted=true;
-    console.log(this.vehiclepurchaseForm.value['supplierGST']);
-    
+     this.submitted=true;   
+    console.log(this.jsonData);   
+    if(this.jsonData)
+    {
+    for(let i = 0; i < this.jsonData.length; i++)
+      {
+        console.log(this.jsonData[i].keyNo );
+        
+       if( this.jsonData[i].keyNo != '' )
+       {
+        this.excelkey=true;
+       }
+       else{
+        this.excelkey=false;
+       }
+      }
+    }
+    if(this.jsonData)
+    {
+    if( this.excelkey == true)
+    {   
     if(this.vehiclepurchaseForm.valid)
     {
       this.service.savepurchase(this.vehiclepurchaseForm.value).subscribe((data:any)=>{
@@ -300,30 +330,40 @@ export class VehiclepurchaseComponent implements OnInit {
         }
       })
     }
-    else
-    {
-      this.toastservice.show("please Fill all Field",{ classname: 'bg-danger text-light', delay: 5000 })
-    }
+    
+  }
+  else{
+    this.toastservice.show("Please fill key value",{ classname: 'bg-danger text-light', delay: 5000 })
+  } 
+}
+else
+{
+  this.toastservice.show("Please upload file",{ classname: 'bg-danger text-light', delay: 5000 })
+}  
     }
     else
     {
       this.vehiclepurchaseForm.patchValue({ createVehiclePurchaseDetailsDTO:this.purchase});
+      this.submitted=true; 
+      if(this.purchase)
+      {
       if(this.vehiclepurchaseForm.valid)
       {
         this.service.savepurchase(this.vehiclepurchaseForm.value).subscribe((data:any)=>{
-          if(data.statusCode)
+          if(data.message == "Fail")
           {
           this.toastservice.show(data.message,{ classname: 'bg-success text-light', delay: 3000 });
-          this.clear();
           }
           else{
             this.toastservice.show(data.message,{ classname: 'bg-danger text-light', delay: 5000 });
+            this.clear();
           }
         })
+        }
       }
       else
       {
-        this.toastservice.show("please Fill all Field",{ classname: 'bg-danger text-light', delay: 5000 })
+        this.toastservice.show("Not a valid file",{ classname: 'bg-danger text-light', delay: 5000 })
       }
     }
   }

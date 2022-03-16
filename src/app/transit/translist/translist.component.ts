@@ -38,7 +38,7 @@ export class TranslistComponent implements OnInit {
     this.translistForm.controls['yard'].disable();
   }
   submit(){
-    console.log(this.translistForm.value);
+    // console.log(this.translistForm.value);
     if(this.showroom!=0)
     {
       this.translistForm.value['showRoomId']=this.showroom;
@@ -72,19 +72,34 @@ export class TranslistComponent implements OnInit {
           // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
           this.list='';
           this.translistForm.reset();
+          this.submitted=false;
+          console.log(this.translistForm.value);
+          
           this.translistForm.controls['fromdate'].enable();
           this.translistForm.controls['todate'].enable();
           this.translistForm.controls['yard'].disable();
           this.translistForm.controls['month'].enable();
+          this.translistForm.patchValue({
+            yard:'',
+            showRoomId:'',
+            month:0
+          });
         }
         else
         {
         this.list=data;
         this.translistForm.reset();
+        this.submitted=false;
+        console.log(this.translistForm.value);
         this.translistForm.controls['fromdate'].enable();
         this.translistForm.controls['todate'].enable();
         this.translistForm.controls['yard'].disable();
         this.translistForm.controls['month'].enable();
+        this.translistForm.patchValue({
+          yard:'',
+          showRoomId:'',
+          month:0
+        });
       }
       })
     }
@@ -95,25 +110,39 @@ export class TranslistComponent implements OnInit {
         // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
         this.list='';
         this.translistForm.reset();
+        this.submitted=false;
+        console.log(this.translistForm.value);
         this.translistForm.controls['fromdate'].enable();
         this.translistForm.controls['todate'].enable();
         this.translistForm.controls['yard'].disable();
         this.translistForm.controls['month'].enable();
+        this.translistForm.patchValue({
+          yard:'',
+          showRoomId:'',
+          month:0
+        });
       }
       else
       {
       this.list=data;
       this.translistForm.reset();
+      this.submitted=false;
+      console.log(this.translistForm.value);
       this.translistForm.controls['fromdate'].enable();
       this.translistForm.controls['todate'].enable();
       this.translistForm.controls['yard'].disable();
+      this.translistForm.patchValue({
+        yard:'',
+        showRoomId:'',
+        month:0
+      });
     }
     })
   }
   }
   }
   changemonth(e:any){
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.translistForm.controls['fromdate'].disable();
     this.translistForm.controls['todate'].disable();
     this.translistForm.value['fromdate']='';
@@ -156,7 +185,7 @@ export class TranslistComponent implements OnInit {
     })
   }
   viewbyid(id:any){
-    console.log(id);
+    // console.log(id);
     this.service.getbyidtransit(id).subscribe(data=>{     
       this.viewdata=data;      
     })    
