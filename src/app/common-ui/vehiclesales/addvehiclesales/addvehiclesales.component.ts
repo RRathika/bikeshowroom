@@ -25,6 +25,7 @@ export class AddvehiclesalesComponent implements OnInit {
   isDD: boolean = false;
   isShownCash: boolean = false;
   isdisable = false;
+  isdisableClearBtn = false;
   myDate: any;
   bookdata: any;
   username: any;
@@ -57,6 +58,13 @@ export class AddvehiclesalesComponent implements OnInit {
   cheque:number=0;
   dd:number=0;upi:number=0;
   showdata:any;
+  selectedAdvanceModelName:any ='';
+  selectedAdvanceName:any ='';
+  selectedAdvanceDate:any ='';
+  selectedGender = 0;
+  submitted: boolean = false;
+  selectedPresentDistrict = 0;
+  selectedPresentTaluk:any;
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -80,10 +88,10 @@ export class AddvehiclesalesComponent implements OnInit {
   customerDetailForm: FormGroup = this.formBuilder.group({
     invoiceNo: new FormControl('', []),
     invoiceDate: new FormControl('', []),
-    receiptType: new FormControl('', []),
+    receiptType: new FormControl(0, []),
     receiptNos: new FormControl('', []),
     date: new FormControl('', []),
-    firstName: new FormControl('', []),
+    firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', []),
     gender: new FormControl('', []),
     dob: new FormControl('', []),
@@ -183,9 +191,9 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   ngOnInit(): void {
     this.disable();   
-    this.loadadvancebook();
-    this.loadname();
-    this.loadmodelname();
+    // this.loadadvancebook();
+    // this.loadname();
+    // this.loadmodelname();
     this.district();
     this.loadqualification();
     this.loadoccupation(); 
@@ -196,14 +204,19 @@ export class AddvehiclesalesComponent implements OnInit {
     {   
     this.loadinvoice(); 
     }   
-       
+    this.customerDetailForm.controls['receiptNos'].disable();
+    this.customerDetailForm.controls['date'].disable();
+   // this.isdisableClearBtn=true;
   }
   disable(){
     this.customerDetailForm.controls['receiptNos'].disable();
     this.customerDetailForm.controls['date'].disable();
     this.customerDetailForm.controls['invoiceNo'].disable();
+    this.permanentaddressForm.controls['taluk'].disable();
     this.isdisable=true;
     let role = localStorage.getItem('RoleId');
+
+    this.isdisableClearBtn=true;
     
     if(role != '1')
     {
@@ -399,7 +412,15 @@ export class AddvehiclesalesComponent implements OnInit {
   districttaluk(e: any) {
     let name = e.target.value;
     this.service.gettaluk(name).subscribe((data: any) => {
-      this.taluk1 = data
+      console.log(data)
+      if(data.message == 'No Data Found'){
+        this.taluk1 = '';
+      }
+      else{
+        this.taluk1 = data;
+        this.selectedPresentTaluk=0;
+      }
+  
     })
   }
   loadadvancebook() {
@@ -411,6 +432,8 @@ export class AddvehiclesalesComponent implements OnInit {
   loadname() {
     this.service.getadvancename().subscribe(data => {
       this.username = data;
+      console.log( this.username);
+      
     })
   }
   loadmodelname() {
@@ -419,6 +442,7 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   apply(id: any, date1: any,advance:any) {
+    this.isdisableClearBtn=false;
     let date2 = date1.split('T');
     this.advanceamount=advance;
     console.log(date2[0]);
@@ -429,14 +453,15 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   onChange(e: any) {
 
-    if (e.value == 1) {
-      this.customerDetailForm.controls['receiptNos'].enable();
-      this.customerDetailForm.controls['date'].enable();
+    if (e.value == 2) {
+        // this.customerDetailForm.controls['receiptNos'].enable();
+        // this.customerDetailForm.controls['date'].enable();
+
       this.isdisable = false;
     }
     else {
-      this.customerDetailForm.controls['receiptNos'].disable();
-      this.customerDetailForm.controls['date'].disable();
+     this.clearBtn();
+     this.isdisableClearBtn=true;
       this.isdisable = true;
     }
   }
@@ -447,7 +472,6 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.patchValue({ aadharNo: final });
   }
   submit() {
-   // alert(2)
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
     // console.log(this.customerDetailForm.value);
     
@@ -600,6 +624,7 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   finalsubmit() {   
+    console.log(this.finalform.value)
     this.myDate=this.datePipe.transform(this.now, 'yyyy-MM-dd');
     this.transtypecash.patchValue({
       currentDate:this.myDate,
@@ -633,6 +658,50 @@ export class AddvehiclesalesComponent implements OnInit {
   }
 
   customerNext(){
-   // alert(1)
+    this.submitted = true;
+
   }
+
+  bookingBtn(){
+  //  this.advanceDate = new Date().toISOString().split('T')[0];
+
+    this.loadadvancebook();
+    this.loadname();
+    this.loadmodelname();
+  }
+
+  getAdvanceBookingsByFilter(){
+    console.log( this.selectedAdvanceName)
+    console.log( this.selectedAdvanceDate )
+    console.log( this.selectedAdvanceModelName)
+    this.service.getAdvanceBookingsByFilter(this.selectedAdvanceName,this.selectedAdvanceDate,this.selectedAdvanceModelName).subscribe(data=>{
+     // this.showdata=data;
+     this.bookdata=data;
+     console.log(data)
+    })
+  }
+
+  onChangeselectedAdvanceName(getName:any){
+    console.log(getName);
+    console.log( this.selectedAdvanceName)
+    this.selectedAdvanceName=getName.target.value;
+ console.log(getName.target.value);
+
+
+  }
+
+  onChangeselectedAdvanceModelName(getName:any){
+    console.log(getName);
+    console.log( this.selectedAdvanceModelName)
+    this.selectedAdvanceModelName=getName.target.value;
+ console.log(getName.target.value);
+
+  }
+
+  clearBtn(){
+    this.customerDetailForm.patchValue({'receiptNos':''});
+    this.customerDetailForm.patchValue({'date':''});
+  }
+
+
 }
