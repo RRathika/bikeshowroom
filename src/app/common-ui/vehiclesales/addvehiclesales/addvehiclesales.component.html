@@ -381,7 +381,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="text-center">
+                                            <div class="text-center pb-2">
                                                 <button class="btn btn-secondary">>>></button>
                                             </div>
                                         </form>
@@ -423,7 +423,10 @@
                                                     Name</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-select" placeholder="District Name"
-                                                        formControlName="district" (change)="districttaluk($event)">
+                                                        formControlName="district"
+                                                         (change)="districttalukPermanent($event)"
+                                                         [(ngModel)]="selectedPermanentDistrict">
+                                                        <option value="0" disabled>Select</option>
                                                         <option *ngFor="let item of districtname"
                                                             [value]="item.districtId">{{item.district}}</option>
                                                     </select>
@@ -434,8 +437,9 @@
                                                     class="col-sm-3 col-form-label">Mandal/Taluk</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-select" placeholder="Mandal/Taluk"
-                                                        formControlName="taluk">
-                                                        <option *ngFor="let data of taluk1" [value]="data.talukId">
+                                                        formControlName="taluk"  [(ngModel)]="selectedPermanentTaluk">
+                                                        <option value="0" disabled>Select</option>
+                                                        <option *ngFor="let data of taluk2" [value]="data.talukId">
                                                             {{data.taluk}}</option>
                                                     </select>
                                                 </div>
@@ -562,7 +566,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <button class="btn btn-success" type="submit" (click)="customerNext()">Next</button>
+                                        <button class="btn btn-success" type="submit">Next</button>
                                     </div>
                                 </div>
                             </form>

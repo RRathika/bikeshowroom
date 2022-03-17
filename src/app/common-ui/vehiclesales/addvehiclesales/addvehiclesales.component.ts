@@ -32,6 +32,7 @@ export class AddvehiclesalesComponent implements OnInit {
   modelname: any;
   districtname: any;
   taluk1: any;
+  taluk2:any;
   qualification: any;
   occupation: any;
   year: any;
@@ -64,8 +65,9 @@ export class AddvehiclesalesComponent implements OnInit {
   selectedGender = 0;
   submitted: boolean = false;
   selectedPresentDistrict = 0;
+  selectedPermanentDistrict = 0;
   selectedPresentTaluk:any;
-
+  selectedPermanentTaluk:any;
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -213,7 +215,9 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.controls['receiptNos'].disable();
     this.customerDetailForm.controls['date'].disable();
     this.customerDetailForm.controls['invoiceNo'].disable();
+    this.presentaddressForm.controls['taluk'].disable();
     this.permanentaddressForm.controls['taluk'].disable();
+
     this.isdisable=true;
     let role = localStorage.getItem('RoleId');
 
@@ -430,14 +434,61 @@ export class AddvehiclesalesComponent implements OnInit {
       console.log(data)
       if(data.message == 'No Data Found'){
         this.taluk1 = '';
+        this.selectedPresentTaluk=0;
+        this.presentaddressForm.controls['taluk'].disable();
+        // alert(1)  
+        // this.toastService.show("No Taluk under "+name,{classname:'bg-danger text-light', delay: 3000})
       }
       else{
+        this.presentaddressForm.controls['taluk'].enable();
         this.taluk1 = data;
         this.selectedPresentTaluk=0;
+        // alert(2)
       }
   
     })
   }
+
+  districttalukPermanent(e: any) {
+    let name = e.target.value;
+    this.service.gettaluk(name).subscribe((data: any) => {
+      console.log(data)
+      if(data.message == 'No Data Found'){
+        this.taluk2 = '';
+        this.selectedPermanentTaluk=0;
+        this.permanentaddressForm.controls['taluk'].disable();
+         alert(1)  
+      }
+      else{
+        this.permanentaddressForm.controls['taluk'].enable();
+        this.taluk2 = data;
+        this.selectedPermanentTaluk=0;
+         alert(2)
+      }
+  
+    })
+  }
+
+  districttalukPermanentLoad(name: any) {
+   // let name = e.target.value;
+    this.service.gettaluk(name).subscribe((data: any) => {
+      console.log(data)
+      if(data.message == 'No Data Found'){
+        this.taluk2 = '';
+        this.selectedPermanentTaluk=0;
+        this.permanentaddressForm.controls['taluk'].disable();
+        // alert(1)  
+      }
+      else{
+        this.permanentaddressForm.controls['taluk'].enable();
+        this.taluk2 = data;
+      //  this.selectedPermanentTaluk=0;
+      //   alert(2)
+      }
+  
+    })
+  }
+  
   loadadvancebook() {
     let bookid = localStorage.getItem('ShowRoomId')
     this.service.getadvancebook(bookid).subscribe(data => {
@@ -464,7 +515,52 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.patchValue({ receiptNos: id, date: date2[0] });
   }
   shift() {
-    this.permanentaddressForm.patchValue(this.presentaddressForm.value);
+
+    console.log(this.presentaddressForm.get('district')?.value);
+    console.log(this.permanentaddressForm.get('district')?.value);
+
+    console.log(this.presentaddressForm.value)
+    console.log( this.permanentaddressForm.value)
+    // this.permanentaddressForm.controls['taluk'].enable();
+    
+    console.log(this.presentaddressForm.get('taluk')?.value);
+
+   
+    
+    this.permanentaddressForm.addControl('taluk', this.formBuilder.control('', Validators.required));
+    this.permanentaddressForm.patchValue({'taluk' : this.presentaddressForm.get('taluk')?.value})
+
+    this.permanentaddressForm.patchValue({'district' : this.presentaddressForm.get('district')?.value})
+
+    this.permanentaddressForm.controls['taluk'].enable();
+    console.log(this.presentaddressForm.value)
+    console.log( this.permanentaddressForm.value)
+  
+    this.districttalukPermanentLoad(this.presentaddressForm.get('district')?.value);
+
+    // console.log(this.presentaddressForm.value)
+    // console.log(this.permanentaddressForm.value)
+
+    // console.log(this.presentaddressForm.get('taluk')?.value);
+    
+
+    // // this.permanentaddressForm.controls['taluk'].enable();
+    // // this.presentaddressForm.controls['taluk'].enable();
+
+    // if(this.presentaddressForm.value!=''){
+      
+    //   this.permanentaddressForm.controls['taluk'].enable(); 
+   
+    //   // this.permanentaddressForm.addControl('taluk', []);
+
+       this.permanentaddressForm.patchValue(this.presentaddressForm.value);
+       console.log(this.presentaddressForm.value)
+       console.log( this.permanentaddressForm.value)
+  
+    //    this.permanentaddressForm.patchValue({'taluk' : '2'})
+    //}
+  
+    
   }
   onChange(e: any) {
 
@@ -487,18 +583,26 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.patchValue({ aadharNo: final });
   }
   submit() {
-    this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
-    // console.log(this.customerDetailForm.value);
+    this.submitted = true;
+
+    if(this.customerDetailForm.valid){
+      this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
+      // console.log(this.customerDetailForm.value);
+      
+      this.isShownProfile = ! this.isShownProfile;
+      this.isShownHome = false;
+      this.isShownContact = false;
+      this.showroom();
+      this.yard();
+      this.model();
+      this.color();
+      this.loadfinance();
+      this.getyear();
+    }
+   
+   
     
-    this.isShownProfile = ! this.isShownProfile;
-    this.isShownHome = false;
-    this.isShownContact = false;
-    this.showroom();
-    this.yard();
-    this.model();
-    this.color();
-    this.loadfinance();
-    this.getyear();
+   
   }
   vehicleform() {
     // console.log(this.vehicleDetailsForm.value);
@@ -672,10 +776,10 @@ export class AddvehiclesalesComponent implements OnInit {
     this.route.navigateByUrl('/invoice');
   }
 
-  customerNext(){
-    this.submitted = true;
+  // customerNext(){
+  //   this.submitted = true;
 
-  }
+  // }
 
   bookingBtn(){
   //  this.advanceDate = new Date().toISOString().split('T')[0];
