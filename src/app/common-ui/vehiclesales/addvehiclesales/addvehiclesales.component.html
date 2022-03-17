@@ -575,14 +575,14 @@
                                             <div class="col-md-6" *ngIf="role==1">
                                                 <select class="browser-default custom-select"
                                                     formControlName="showRoomId" (change)="selectyard($event)">
-                                                    <option selected>Open this select menu</option>
+                                                    <option value="">Open this select menu</option>
                                                     <option *ngFor="let name of showroomname" [value]="name.showRoomId">
                                                         {{name.showRoomName}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
                                                 <select class="browser-default custom-select" formControlName="yardId">
-                                                    <option selected>Open this select menu</option>
+                                                    <option value="">Open this select menu</option>
                                                     <option *ngFor="let name of yardname" [value]="name.yardId">
                                                         {{name.yardName}}</option>
                                                 </select>
@@ -595,6 +595,7 @@
                                             </div>
                                             <div class="col-sm-8">
                                                 <select class="form-select"  [attr.disabled]="disableTextbox" formControlName="modelId">
+                                                    <option value="">Select</option>
                                                     <option *ngFor="let item of modelcode" [value]="item.modelId">
                                                         {{item.modelName}}</option>
                                                 </select>
@@ -624,6 +625,7 @@
                                                 <label class="label" for="customCheckDisabled">Color</label>
 
                                                 <select class="form-select"  [attr.disabled]="disableTextbox" formControlName="colorId">
+                                                    <option value="">Select</option>
                                                     <option *ngFor="let data of colordetails" [value]="data.colorId">
                                                         {{data.colorName}} </option>
                                                 </select>
@@ -639,6 +641,7 @@
                                             <div class="col-md-6">
                                                 <label class="label">Month of Mfg</label>
                                                 <select class="form-select" formControlName="month">
+                                                    <option value="">Select</option>
                                                     <option value="1">January</option>
                                                     <option value="2">February</option>
                                                     <option value="3">March</option>
@@ -656,6 +659,7 @@
                                             <div class="col-md-6">
                                                 <label class="label">Year of Mfg</label>
                                                 <select class="form-select" formControlName="year">
+                                                    <option value="">Select</option>
                                                     <option *ngFor="let name of year" [value]=name>{{name}}</option>
                                                 </select>
                                             </div>
@@ -667,8 +671,8 @@
                                             </div>
                                             <div class="col-sm-9">
                                                 <select class="browser-default custom-select"
-                                                    formControlName="vehicleSaleType">
-                                                    <option selected>Open this select menu</option>
+                                                    formControlName="vehicleSaleType" (change)="changesale($event)">
+                                                    <option value="">Select</option>
                                                     <option value="Within State Sales">Within State Sales</option>
                                                     <option value="outside State Sales">Outside State Sales</option>
                                                 </select>
@@ -688,7 +692,7 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-4">
-                                                <label class="label" for="customCheckDisabled">CGST, SGST, IGST</label>
+                                                <label class="label" for="customCheckDisabled">{{showdata}}</label>
                                             </div>
                                             <div class="col-sm-2">
                                                 <input type="text" class="form-control"
@@ -795,10 +799,9 @@
                                                 <label>Transaction Type</label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <select (change)="toggleShowCash($event)" class="form-control"
-                                                    name="val" list="transtype" id="transtype"
+                                                <select (change)="toggleShowCash($event)" class="form-select"
                                                     formControlName="transactionTypeId">
-                                                    <option selected disabled>Select One</option>
+                                                    <option value="" disabled>Select</option>
                                                     <option value=1>Cash</option>
                                                     <option value=2>Credit</option>
                                                     <option value=3>Finance</option>

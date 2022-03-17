@@ -65,6 +65,7 @@ export class AddvehiclesalesComponent implements OnInit {
   submitted: boolean = false;
   selectedPresentDistrict = 0;
   selectedPresentTaluk:any;
+
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -225,6 +226,20 @@ export class AddvehiclesalesComponent implements OnInit {
       this.customerDetailForm.patchValue({
         invoiceDate:this.myDate
       })
+    }
+  }
+  changesale(e:any){
+    console.log(this.showdata);
+    
+    console.log(e.target.value);
+    if(e.target.value == 'Within State Sales'){
+      this.showdata='CGST + SGST';
+      console.log(this.showdata);
+    }
+    if(e.target.value == 'outside State Sales')
+    {
+      this.showdata='IGST';
+      console.log(this.showdata);
     }
   }
   showroomdata(){

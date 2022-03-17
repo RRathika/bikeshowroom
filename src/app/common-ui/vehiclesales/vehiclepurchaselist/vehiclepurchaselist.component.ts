@@ -193,6 +193,7 @@ export class VehiclepurchaselistComponent implements OnInit {
   }
   add()
   {
+    this.service.purchasedata.next('');
     this.router.navigateByUrl('/dashboard/vehiclepurchaseadd')
   }
 }
