@@ -694,13 +694,12 @@
                                                 <input type="text" class="form-control" formControlName="vehicleCost"  [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="form-group row" *ngIf="labeldata!=''">
                                             <div class="col-sm-4">
-                                                <label class="label" for="customCheckDisabled">{{showdata}}</label>
+                                                <label class="label" for="customCheckDisabled">{{labeldata}}</label>
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" class="form-control"
-                                                    (change)="gstcalculation($event)">
+                                                <input type="text" class="form-control" formControlName="taxpercentage" >
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"  [attr.disabled]="disableTextbox" formControlName="tax">
@@ -725,7 +724,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="lifetax"  [attr.disabled]="disableTextbox"/>
+                                                                formControlName="lifetax" />
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -736,29 +735,32 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="insurance"  [attr.disabled]="disableTextbox"/>
+                                                                formControlName="insurance" />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Extra charges</th>
                                                         <td>0</td>
-                                                        <td>0</td>
+                                                        <td><input type="text" class="form-control"
+                                                            formControlName="taxtotal"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Other charges</th>
                                                         <td>0</td>
-                                                        <td>0</td>
+                                                        <td><input type="text" class="form-control"
+                                                            formControlName="taxtotal"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Extended Warrenty</th>
                                                         <td>0</td>
-                                                        <td>0</td>
+                                                        <td><input type="text" class="form-control"
+                                                            formControlName="taxtotal"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Total</th>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="taxtotal"[attr.disabled]="disableTextbox" />
+                                                                formControlName="taxtotal"/>
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
@@ -773,7 +775,7 @@
                                                 <label class="label" for="customCheckDisabled">Total</label>
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" formControlName="finaltotal"[attr.disabled]="disableTextbox">
+                                                <input type="text" class="form-control" formControlName="finaltotal" [attr.disabled]="disableTextbox">
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="label" for="customCheckDisabled">Net Total</label>

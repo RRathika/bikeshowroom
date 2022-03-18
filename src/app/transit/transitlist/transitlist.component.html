@@ -3,7 +3,8 @@
 		<div class="col-md-12">
 			<div class="card card-primary">
 				<div class="card-header bg-primary">
-					<h3 class="card-title">Transit Details</h3>
+					<h3 class="card-title">Transit Details</h3>					
+					<button class="btn btn-success float-end" (click)="add()">View Transit List</button>
 				</div>
 				<form [formGroup]="transitForm" (ngSubmit)="submit()">
 					<div class="col-md-12 pt-3">
@@ -31,7 +32,7 @@
 											<div *ngIf="submitted">
 												<span class="text-danger"
 													*ngIf="transitForm.controls.invoiceDate.errors?.required">
-													<small>Invoice date is required</small>
+													<small>Date is required</small>
 												</span>
 											</div>
 										</div>

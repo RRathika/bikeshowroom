@@ -4,6 +4,7 @@
 			<div class="card card-primary">
 				<div class="card-header bg-primary">
 					<h3 class="card-title">Vehicle Purchase Add</h3>
+					<button class="btn btn-success float-end" (click)="add()">View Vehicle purchase List</button>
                 </div>
 				<form [formGroup]="vehiclepurchaseForm" (ngSubmit)="submit()">
 				<div class="col-md-12 pt-3 border">
@@ -28,7 +29,7 @@
 												<div *ngIf="submitted">
 													<span class="text-danger"
 														*ngIf="vehiclepurchaseForm.controls.invoiceDate.errors?.required">
-														<small>Invoice date is required</small>
+														<small>Date is required</small>
 													</span>
 												</div>
                                             </div>

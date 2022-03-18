@@ -58,7 +58,7 @@ export class AddvehiclesalesComponent implements OnInit {
   card:number=0;
   cheque:number=0;
   dd:number=0;upi:number=0;
-  showdata:any;
+  showdata:any='';
   selectedAdvanceModelName:any ='';
   selectedAdvanceName:any ='';
   selectedAdvanceDate:any ='';
@@ -68,6 +68,8 @@ export class AddvehiclesalesComponent implements OnInit {
   selectedPermanentDistrict = 0;
   selectedPresentTaluk:any;
   selectedPermanentTaluk:any;
+  labeldata:any='';
+  taxper:any;
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -140,7 +142,8 @@ export class AddvehiclesalesComponent implements OnInit {
     sgst: new FormControl('', []),
     lifetax: new FormControl('', []),
     insurance: new FormControl('', []),
-    taxtotal: new FormControl('', [])
+    taxtotal: new FormControl('', []),
+    taxpercentage:new FormControl('',[])
   })
   payDetails: FormGroup = this.formBuilder.group({   
       transactionTypeId: 0,
@@ -233,17 +236,33 @@ export class AddvehiclesalesComponent implements OnInit {
     }
   }
   changesale(e:any){
-    console.log(this.showdata);
-    
+    // console.log(this.showdata);    
+    debugger
     console.log(e.target.value);
-    if(e.target.value == 'Within State Sales'){
-      this.showdata='CGST + SGST';
-      console.log(this.showdata);
+    if(e.target.value == 'Within State Sales')
+    {
+      this.labeldata='CGST + SGST ';
+      console.log(this.labeldata);
+      let a = this.vehicleDetailsForm.value['cgst'];
+      let b = this.vehicleDetailsForm.value['sgst'];
+      this.taxper = a+b;      
+      console.log(this.vehicleDetailsForm.value);
+      this.vehicleDetailsForm.patchValue({
+        taxpercentage: this.taxper
+      })
+      this.gstcalculation(this.taxper);
+      console.log(this.vehicleDetailsForm.value);
+      
     }
     if(e.target.value == 'outside State Sales')
     {
-      this.showdata='IGST';
-      console.log(this.showdata);
+      this.labeldata='IGST';
+      console.log(this.labeldata);
+      this.taxper = this.vehicleDetailsForm.value['igst'];
+      this.vehicleDetailsForm.patchValue({
+        taxpercentage: this.taxper
+      })
+      this.gstcalculation(this.taxper);
     }
   }
   showroomdata(){
@@ -382,7 +401,7 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   gstcalculation(e: any) {
     
-    let data = e.target.value;
+    let data = e;
     let invoice = (data / 100) * (this.vehicleDetailsForm.value['vehicleCost']);
     let invoiceamount = this.vehicleDetailsForm.value['vehicleCost'] + invoice;
     let final = invoiceamount + this.vehicleDetailsForm.value['taxtotal']

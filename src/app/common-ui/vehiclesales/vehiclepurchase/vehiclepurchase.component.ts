@@ -358,6 +358,8 @@ export class VehiclepurchaseComponent implements OnInit {
     this.vehiclepurchaseForm.reset();
     this.count = 0;
     this.myInputVariable.nativeElement.value = "";
+    this.purchase='';
+    this.exceldata='';
   }
   selectsupplier(e: any) {
     console.log(e.target.value);
@@ -368,5 +370,8 @@ export class VehiclepurchaseComponent implements OnInit {
         suppierAddress: this.vendoriddata['place'] + ',' + this.vendoriddata['pinCode']
       })
     })
+  }
+  add(){
+    this.router.navigateByUrl('/dashboard/vehiclepurchase');
   }
 }
