@@ -956,6 +956,4 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.patchValue({ 'receiptNos': '' });
     this.customerDetailForm.patchValue({ 'date': '' });
   }
-
-
 }

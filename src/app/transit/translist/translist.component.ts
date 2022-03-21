@@ -37,7 +37,8 @@ export class TranslistComponent implements OnInit {
     this.loadyard();
     this.translistForm.controls['yard'].disable();
   }
-  submit(){    
+  submit(){   
+    debugger 
     // console.log(this.translistForm.value);
     if(this.showroom!=0)
     {
@@ -143,7 +144,7 @@ export class TranslistComponent implements OnInit {
     })
     }
     else{
-    this.service.gettransit(this.translistForm.value['showRoomId'],this.translistForm.value['yard'],this.translistForm.value['month'],this.translistForm.value['fromdate'],this.translistForm.value['todate']).subscribe(data=>{
+    this.service.gettransit(this.translistForm.value['showRoomId'],this.translistForm.value['yard'],this.translistForm.value['month'],'','').subscribe(data=>{
       if(data.statusCode==200)
       {
         // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
