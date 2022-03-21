@@ -7,42 +7,45 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="col-md-3 p-1">
-                    <div *ngIf="show==0" class="form-group">
-                        <select class="form-select" (change)="selectshowroom($event)">
-                            <option>Select</option>
-                            <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
-                        </select>
-                    </div>
-                </div>
+                    <!-- <div class="col-md-3 p-1">
+                        <div *ngIf="show==0" class="form-group">
+                            <select class="form-select" (change)="selectshowroom($event)">
+                                <option>Select</option>
+                                <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div> -->
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist" *ngIf="isShownHome">
-                            <a class="nav-item nav-link active"  data-toggle="tab" href="#nav-home"
-                                role="tab" aria-controls="nav-home" aria-selected="false">Cutomer Details</a>
-                            <a class="nav-item nav-link"  
-                                role="tab" aria-controls="nav-profile" aria-selected="false">Vehicle Details</a>
-                            <a class="nav-item nav-link"  
-                                role="tab" aria-controls="nav-contact" aria-selected="false">Pay Details</a>
+                            <a class="nav-item nav-link active" data-toggle="tab" href="#nav-home" role="tab"
+                                aria-controls="nav-home" aria-selected="false">Cutomer Details</a>
+                            <a class="nav-item nav-link" role="tab" aria-controls="nav-profile"
+                                aria-selected="false">Vehicle Details</a>
+                            <a class="nav-item nav-link" role="tab" aria-controls="nav-contact"
+                                aria-selected="false">Pay Details</a>
                         </div>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist" *ngIf="isShownProfile">
-                            <a class="nav-item nav-link " id="nav-home-tab"
-                                role="tab" aria-controls="nav-home" aria-selected="false">Cutomer Details</a>
-                            <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-                                role="tab" aria-controls="nav-profile" aria-selected="false">Vehicle Details</a>
-                            <a class="nav-item nav-link" id="nav-contact-tab"
-                                role="tab" aria-controls="nav-contact" aria-selected="false">Pay Details</a>
+                            <a class="nav-item nav-link " id="nav-home-tab" role="tab" aria-controls="nav-home"
+                                aria-selected="false">Cutomer Details</a>
+                            <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab"
+                                href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Vehicle
+                                Details</a>
+                            <a class="nav-item nav-link" id="nav-contact-tab" role="tab" aria-controls="nav-contact"
+                                aria-selected="false">Pay Details</a>
                         </div>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist" *ngIf="isShownContact">
-                            <a class="nav-item nav-link " id="nav-home-tab" 
-                                role="tab" aria-controls="nav-home" aria-selected="false">Cutomer Details</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" 
-                                role="tab" aria-controls="nav-profile" aria-selected="false">Vehicle Details</a>
-                            <a class="nav-item nav-link active" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
-                                role="tab" aria-controls="nav-contact" aria-selected="false">Pay Details</a>
+                            <a class="nav-item nav-link " id="nav-home-tab" role="tab" aria-controls="nav-home"
+                                aria-selected="false">Cutomer Details</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" role="tab" aria-controls="nav-profile"
+                                aria-selected="false">Vehicle Details</a>
+                            <a class="nav-item nav-link active" id="nav-contact-tab" data-toggle="tab"
+                                href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Pay
+                                Details</a>
                         </div>
                     </nav>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -52,49 +55,46 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="col-md-12">                                        
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Name</label>
-                                                        <input class="form-control" list="advancebookname"
-                                                            placeholder="Type to search..." formControlName="name"
-                                                            [(ngModel)]="selectedAdvanceName" 
-                                                            (change)="onChangeselectedAdvanceName($event)" >
-                                                          
-                                                        <datalist id="advancebookname">
-                                                            <!-- <select (change)="onChangeselectedAdvanceName($event)"
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Name</label>
+                                                    <input class="form-control" list="advancebookname"
+                                                        placeholder="Type to search..." formControlName="name"
+                                                        [(ngModel)]="selectedAdvanceName"
+                                                        (change)="onChangeselectedAdvanceName($event)">
+
+                                                    <datalist id="advancebookname">
+                                                        <!-- <select (change)="onChangeselectedAdvanceName($event)"
                                                             [(ngModel)]="selectedAdvanceName"> -->
-                                                            <option *ngFor="let data of username;" [value]=data.name
-                                                            >
-                                                            </option>
+                                                        <option *ngFor="let data of username;" [value]=data.name>
+                                                        </option>
                                                         <!-- </select> -->
 
-                                                        </datalist>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label>Date</label>
-                                                    <input type="date" class="form-control" placeholder=""
-                                                    [(ngModel)]="selectedAdvanceDate">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label>Bike Model</label>
-                                                    <input class="form-control" list="advancebookmodelname"
-                                                        placeholder="Type to search..." formControlName="modelName"
-                                                        [(ngModel)]="selectedAdvanceModelName"
-                                                        
-                                                        (change)="onChangeselectedAdvanceModelName($event)"
-                                                        >
-                                                    <datalist id="advancebookmodelname">
-                                                        <option *ngFor="let data of modelname;" [value]=data.modelName>
                                                     </datalist>
                                                 </div>
-                                                <div class="col-md-12 my-2 text-center">
-                                                    <button type="button" class="btn btn-success" 
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Date</label>
+                                                <input type="date" class="form-control" placeholder=""
+                                                    [(ngModel)]="selectedAdvanceDate">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Bike Model</label>
+                                                <input class="form-control" list="advancebookmodelname"
+                                                    placeholder="Type to search..." formControlName="modelName"
+                                                    [(ngModel)]="selectedAdvanceModelName"
+                                                    (change)="onChangeselectedAdvanceModelName($event)">
+                                                <datalist id="advancebookmodelname">
+                                                    <option *ngFor="let data of modelname;" [value]=data.modelName>
+                                                </datalist>
+                                            </div>
+                                            <div class="col-md-12 my-2 text-center">
+                                                <button type="button" class="btn btn-success"
                                                     (click)="getAdvanceBookingsByFilter()">Search</button>
-                                                </div>
-                                            </div>                                       
+                                            </div>
+                                        </div>
                                     </div>
                                     <table class="table text-center">
                                         <tr>
@@ -110,7 +110,8 @@
                                             <td>{{item.advanceBookingId}}</td>
                                             <td>{{item.advanceAmount}}</td>
                                             <td><a class="btn btn-info" data-dismiss="modal"
-                                                    (click)="apply(item.advanceBookingId,item.date,item.advanceAmount)">Apply</a></td>
+                                                    (click)="apply(item.advanceBookingId,item.date,item.advanceAmount)">Apply</a>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -132,42 +133,76 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="col-md-12">                                        
-                                            <div class="row pb-2">
-                                                <div class="col-md-4">
-                                                    <label for="modelName">Model Name</label>
-                                                    <select formControlName="modelId" class="form-select dropdown-primary" (change)='modelnamechange($event)'>
-                                                        <option *ngFor="let data of modelcode" [value]="data.modelId">
-                                                            {{data.modelName}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="modelName">Color Name</label>
-                                                    <select formControlName="colorId" [(ngModel)]="selectedObject"
-                                                        class="form-select dropdown-primary"
-                                                        (change)='colornamechange($event)'>
-                                                        <option value="" selected>Color Name</option>
-                                                        <option *ngFor="let data of colorcode" [value]="data.colorId">
-                                                            {{data.colorName}}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="modelName">Variant Name</label>
-                                                    <select formControlName="variantId"
-                                                        class="form-select dropdown-primary"
-                                                        (change)='variantnamechange($event)'>
-                                                        <option >Variant Name</option>
-                                                        <option *ngFor="let data of varientcode"
-                                                            [value]="data.variantId">{{data.variantName}}
-                                                        </option>
-                                                    </select>
-                                                </div>
+
+                                    <form [formGroup]="ModalFilterform" (ngSubmit)="submit()">
+
+                                    <div class="col-md-12">
+                                        <div class="row pb-2">
+                                            <div class="col-md-4">
+                                                <label for="modelName">Model Name</label>
+                                                <!-- <select formControlName="modelId" class="form-select" 
+                                                    (change)='modelnamechange($event)' [(ngModel)]="selectedModelName">
+                                                    <option value="0" disabled>Select</option>
+                                                    <option *ngFor="let data of modelcode" [value]="data.modelId">
+                                                        {{data.modelName}}
+                                                    </option>
+                                                </select> -->
+
+                                                <select class="form-select" formControlName="modelId"
+                                                (change)='modelnamechange($event)' [(ngModel)]="selectedModelName">
+                                                <option value="0" disabled>Select</option>
+                                                <option *ngFor="let data of modelcode" [value]="data.modelId">
+                                                    {{data.modelName}}
+                                                </option>
+                                            </select>
 
                                             </div>
-                                       
+                                            <div class="col-md-4">
+                                                <label for="modelName">Color Name</label>
+                                                <!-- <select formControlName="colorId" [(ngModel)]="selectedObject"
+                                                    class="form-select dropdown-primary"
+                                                    (change)='colornamechange($event)'>
+                                                    <option value="" selected>Color Name</option>
+                                                    <option *ngFor="let data of colorcode" [value]="data.colorId">
+                                                        {{data.colorName}}
+                                                    </option>
+                                                </select> -->
+
+                                                <select formControlName="colorId" 
+                                                [(ngModel)]="selectedColor" class="form-select" 
+                                                    (change)='colornamechange($event)'>
+                                                    <option value="0" disabled>Select</option>
+                                                    <option *ngFor="let data of colorcode" [value]="data.colorId">
+                                                        {{data.colorName}}
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="modelName">Variant Name</label>
+                                                <!-- <select formControlName="variantId" class="form-select dropdown-primary"
+                                                    (change)='variantnamechange($event)'>
+                                                    <option>Variant Name</option>
+                                                    <option *ngFor="let data of varientcode" [value]="data.variantId">
+                                                        {{data.variantName}}
+                                                    </option>
+                                                </select> -->
+                                                <select formControlName="variantId"
+                                                 class="form-select" [(ngModel)]="selectedVariant" 
+                                                (change)='variantnamechange($event)'>
+                                                <option value="0" disabled>Select</option>
+                                                <option *ngFor="let data of varientcode" [value]="data.variantId">
+                                                    {{data.variantName}}
+                                                </option>
+                                            </select>
+                                            </div>
+
+                                        </div>
+
                                     </div>
+
+                                    </form>
+
                                     <table class="table text-center">
                                         <tr>
                                             <!-- <th>Select</th> -->
@@ -197,18 +232,18 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                   
+                    </div>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                            aria-labelledby="nav-home-tab"  *ngIf="isShownHome">
+                            aria-labelledby="nav-home-tab" *ngIf="isShownHome">
                             <form [formGroup]="customerDetailForm" (ngSubmit)="submit()">
                                 <div class="row mt-3">
 
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Invoice No</label>
-                                            <input type="text" class="form-control" 
-                                                formControlName="invoiceNo" [value]="invoicevalue" [attr.disabled]="disableTextbox">
+                                            <input type="text" class="form-control" formControlName="invoiceNo"
+                                                [value]="invoicevalue" [attr.disabled]="disableTextbox">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -253,24 +288,23 @@
 
                                     <div class="col-md-1">
                                         <div class="form-group text-center my-4">
-                                            <button type="button" class="btn btn-danger" 
-                                             [disabled]='isdisableClearBtn'
-                                            (click)="clearBtn()">Clear</button>
-                                            </div>
-                                            </div>
-                                   
+                                            <button type="button" class="btn btn-danger" [disabled]='isdisableClearBtn'
+                                                (click)="clearBtn()">Clear</button>
+                                        </div>
+                                    </div>
+
                                     <hr style="width: 98%">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">First Name</label>
                                             <input type="text" class="form-control" placeholder="First Name"
                                                 formControlName="firstName">
-                                                <div *ngIf="submitted">
-                                                    <span class="text-danger"
-                                                        *ngIf="customerDetailForm.controls.firstName.errors?.required">
-                                                        <small>First Name required</small>
-                                                    </span>
-                                                </div>
+                                            <div *ngIf="submitted">
+                                                <span class="text-danger"
+                                                    *ngIf="customerDetailForm.controls.firstName.errors?.required">
+                                                    <small>First Name required</small>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -280,7 +314,7 @@
                                                 formControlName="lastName">
                                         </div>
                                     </div>
-                                  
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Gender</label>
@@ -313,27 +347,40 @@
                                             <label for="exampleInputEmail1">Father's Name</label>
                                             <input type="text" class="form-control" placeholder="Father Name"
                                                 formControlName="fatherName">
+                                                <div class="text-danger" *ngIf="submitted">
+                                                    <small class="text-danger"
+                                                        *ngIf="customerDetailForm.controls.fatherName.errors?.required">
+                                                        Father's Name required</small>
+                                                </div>
+
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">GST No</label>
                                             <input type="text" class="form-control" placeholder="GST No"
                                                 formControlName="gstNo">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <hr style="width: 98%;">
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 header-border">
                                         <form [formGroup]="presentaddressForm" (ngSubmit)="shift()">
-                                            <h4 class="heading-subtitle"><span>Present Address</span></h4>
+                                            <h4 style="text-align: center;"><span>Present Address</span></h4>
                                             <div class="form-group row">
                                                 <label for="staticEmail"
                                                     class="col-sm-3 col-form-label">Door/Street</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="staticEmail"
                                                         placeholder="Door/Street" formControlName="doorNo">
+
+                                                    <div class="text-danger" *ngIf="submitted">
+                                                        <small class="text-danger"
+                                                            *ngIf="presentaddressForm.controls.doorNo.errors?.required">
+                                                            Door No /Street Name required</small>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -341,19 +388,44 @@
                                                     Name</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="inputPassword"
-                                                        placeholder="Area/Name" formControlName="areaName">
+                                                        placeholder="Area Name" formControlName="areaName">
+
+                                                    <div class="text-danger" *ngIf="submitted">
+                                                        <small class="text-danger"
+                                                            *ngIf="presentaddressForm.controls.areaName.errors?.required">
+                                                            Area Name required</small>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputPassword" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-4">
                                                     <input type="text" class="form-control" id="inputPassword"
-                                                        placeholder="Town/Village" formControlName="city">
+                                                        placeholder="City" formControlName="city">
+
+                                                    <div class="text-danger" *ngIf="submitted">
+                                                        <small class="text-danger"
+                                                            *ngIf="presentaddressForm.controls.city.errors?.required">
+                                                            City required</small>
+                                                    </div>
+
                                                 </div>
-                                                <label for="inputPassword" class="col-sm-2 col-form-label">Pin</label>
+                                                <label for="inputPassword"
+                                                    class="col-sm-2 col-form-label">PinCode</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="inputPassword"
-                                                        placeholder="Pin" formControlName="pinCode">
+                                                    <input type="number" class="form-control" id="inputPassword"
+                                                        placeholder="Pincode" formControlName="pinCode">
+
+                                                    <div class="text-danger" *ngIf="submitted">
+                                                        <small class="text-danger"
+                                                            *ngIf="presentaddressForm.controls.pinCode.errors?.pattern">
+                                                            Must be 6 digit</small>
+                                                        <small class="text-danger"
+                                                            *ngIf="presentaddressForm.controls.pinCode.errors?.required">
+                                                            Pincode required</small>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -367,6 +439,14 @@
                                                         <option *ngFor="let item of districtname"
                                                             [value]="item.districtId">{{item.district}}</option>
                                                     </select>
+
+                                                    <div *ngIf="submitted">
+                                                        <span class="text-danger"
+                                                            *ngIf="presentaddressForm.controls.district.value == 0 || presentaddressForm.controls.district.errors?.required">
+                                                            <small>Choose district</small>
+                                                        </span>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -374,11 +454,19 @@
                                                     class="col-sm-3 col-form-label">Mandal/Taluk</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-select" placeholder="Mandal/Taluk"
-                                                        formControlName="taluk"  [(ngModel)]="selectedPresentTaluk">
+                                                        formControlName="taluk" [(ngModel)]="selectedPresentTaluk">
                                                         <option value="0" disabled>Select</option>
                                                         <option *ngFor="let data of taluk1" [value]="data.talukId">
                                                             {{data.taluk}}</option>
                                                     </select>
+
+                                                    <div *ngIf="submitted">
+                                                        <span class="text-danger"
+                                                            *ngIf="presentaddressForm.controls.taluk.value == 0 || presentaddressForm.controls.taluk.errors?.required">
+                                                            <small>Choose Taluk</small>
+                                                        </span>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="text-center pb-2">
@@ -388,34 +476,65 @@
                                     </div>
                                     <div class="col-sm-6 header-border">
                                         <form [formGroup]="permanentaddressForm">
-                                            <h4 class="heading-subtitle"><span>Permanent Address</span></h4>
+                                            <h4 style="text-align: center;"><span>Permanent Address</span></h4>
                                             <div class="form-group row">
                                                 <label for="staticEmail"
                                                     class="col-sm-3 col-form-label">Door/Street</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="staticEmail"
                                                         placeholder="Door/Street" formControlName="doorNo">
+
+                                                    <div class="text-danger" *ngIf="submitted">
+                                                        <small class="text-danger"
+                                                            *ngIf="permanentaddressForm.controls.doorNo.errors?.required">
+                                                            Door No /Street Name required</small>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="inputPassword"
-                                                    class="col-sm-3 col-form-label">Area/Name</label>
+                                                <label for="inputPassword" class="col-sm-3 col-form-label">Area
+                                                    Name</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="inputPassword"
-                                                        placeholder="Area/Name" formControlName="areaName">
+                                                        placeholder="Area Name" formControlName="areaName">
+
+                                                    <div class="text-danger" *ngIf="submitted">
+                                                        <small class="text-danger"
+                                                            *ngIf="permanentaddressForm.controls.areaName.errors?.required">
+                                                            Area Name required</small>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="inputPassword"
-                                                    class="col-sm-3 col-form-label">Town/Village</label>
+                                                <label for="inputPassword" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-4">
                                                     <input type="text" class="form-control" id="inputPassword"
-                                                        placeholder="Town/Village" formControlName="city">
+                                                        placeholder="City" formControlName="city">
+
+                                                    <div class="text-danger" *ngIf="submitted">
+                                                        <small class="text-danger"
+                                                            *ngIf="permanentaddressForm.controls.city.errors?.required">
+                                                            City required</small>
+                                                    </div>
+
                                                 </div>
-                                                <label for="inputPassword" class="col-sm-2 col-form-label">Pin</label>
+                                                <label for="inputPassword"
+                                                    class="col-sm-2 col-form-label">Pincode</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="inputPassword"
-                                                        placeholder="Pin" formControlName="pinCode">
+                                                        placeholder="Pincode" formControlName="pinCode">
+
+                                                    <div class="text-danger" *ngIf="submitted">
+                                                        <small class="text-danger"
+                                                            *ngIf="permanentaddressForm.controls.pinCode.errors?.pattern">
+                                                            Must be 6 digit</small>
+                                                        <small class="text-danger"
+                                                            *ngIf="permanentaddressForm.controls.pinCode.errors?.required">
+                                                            Pincode required</small>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -424,12 +543,20 @@
                                                 <div class="col-sm-9">
                                                     <select class="form-select" placeholder="District Name"
                                                         formControlName="district"
-                                                         (change)="districttalukPermanent($event)"
-                                                         [(ngModel)]="selectedPermanentDistrict">
+                                                        (change)="districttalukPermanent($event)"
+                                                        [(ngModel)]="selectedPermanentDistrict">
                                                         <option value="0" disabled>Select</option>
                                                         <option *ngFor="let item of districtname"
                                                             [value]="item.districtId">{{item.district}}</option>
                                                     </select>
+
+                                                    <div *ngIf="submitted">
+                                                        <span class="text-danger"
+                                                            *ngIf="permanentaddressForm.controls.district.value == 0 || permanentaddressForm.controls.district.errors?.required">
+                                                            <small>Choose district</small>
+                                                        </span>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -437,11 +564,19 @@
                                                     class="col-sm-3 col-form-label">Mandal/Taluk</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-select" placeholder="Mandal/Taluk"
-                                                        formControlName="taluk"  [(ngModel)]="selectedPermanentTaluk">
+                                                        formControlName="taluk" [(ngModel)]="selectedPermanentTaluk">
                                                         <option value="0" disabled>Select</option>
                                                         <option *ngFor="let data of taluk2" [value]="data.talukId">
                                                             {{data.taluk}}</option>
                                                     </select>
+
+                                                    <div *ngIf="submitted">
+                                                        <span class="text-danger"
+                                                            *ngIf="permanentaddressForm.controls.taluk.value == 0 || permanentaddressForm.controls.taluk.errors?.required">
+                                                            <small>Choose Taluk</small>
+                                                        </span>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </form>
@@ -450,23 +585,33 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Phone Off</label>
-                                            <input type="text" class="form-control" placeholder="Phone Off"
+                                            <label for="exampleInputEmail1">Phone Office</label>
+                                            <input type="text" class="form-control" placeholder="Phone Office"
                                                 formControlName="phoneOff">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Resi</label>
-                                            <input type="text" class="form-control" placeholder="Resi"
+                                            <label for="exampleInputEmail1">Phone Residence</label>
+                                            <input type="text" class="form-control" placeholder="Phone Residence"
                                                 formControlName="residence">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Mobile No</label>
-                                            <input type="text" class="form-control" placeholder="Mobile No"
+                                            <input type="number" class="form-control" placeholder="Mobile No"
                                                 formControlName="mobileNo">
+
+                                            <small class="text-danger"
+                                                *ngIf="customerDetailForm.controls.mobileNo.errors?.pattern">Mobile
+                                                No must be 10
+                                                digit</small>
+                                            <div class="text-danger" *ngIf="submitted">
+                                                <span *ngIf="customerDetailForm.controls.mobileNo.errors?.required">
+                                                    <small>Mobile No is required</small> </span>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -478,12 +623,18 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Add Proof</label>
-                                            <input type="text" class="form-control" list="proof"
-                                                placeholder="Aadhar Proof" formControlName="addressProof">
-                                            <datalist id="proof">
+                                            <label for="exampleInputEmail1">Address Proof</label>
+                                            <!-- <input type="text" class="form-control" list="proof"
+                                                placeholder="Aadhar Proof" formControlName="addressProof"> -->
+                                            <!-- <datalist id="proof">
                                                 <option value="Aadhar Proof">
-                                            </datalist>
+                                            </datalist> -->
+
+                                            <select class="form-select" placeholder="Aadhar Proof"
+                                                formControlName="addressProof" [(ngModel)]="selectedAddressProof">
+                                                <option value="Aadhar Proof">Aadhar Proof</option>
+                                            </select>
+
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -491,39 +642,69 @@
                                             <label for="exampleInputEmail1">Aadhar No</label>
                                             <input type="text" class="form-control" placeholder="Aadhar No"
                                                 formControlName="aadharNo" (keyup)="onKeyUp($event)">
+
+                                            <div class="text-danger" *ngIf="submitted">
+                                                <small class="text-danger"
+                                                    *ngIf="customerDetailForm.controls.aadharNo.errors?.required">
+                                                    Aadhar No required</small>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Qualification</label>
                                             <select class="form-select" placeholder="Qualification"
-                                                formControlName="qualification">
+                                                formControlName="qualification" [(ngModel)]="Selectedqualification">
+                                                <option value="0" disabled>Select</option>
                                                 <option *ngFor="let item of qualification"
                                                     [value]="item.qualificationId">{{item.qualification}}</option>
                                             </select>
+                                            <div *ngIf="submitted">
+                                                <span class="text-danger"
+                                                    *ngIf="customerDetailForm.controls.qualification.value == 0 || customerDetailForm.controls.qualification.errors?.required">
+                                                    <small>Choose Qualification</small>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Occupation</label>
                                             <select class="form-select" placeholder="occupation"
-                                                formControlName="occupation">
+                                                formControlName="occupation" [(ngModel)]="SelectedOccupation">
+                                                <option value="0" disabled>Select</option>
                                                 <option *ngFor="let item of occupation" [value]="item.occupationId">
                                                     {{item.occupation}}</option>
                                             </select>
+                                            <div *ngIf="submitted">
+                                                <span class="text-danger"
+                                                    *ngIf="customerDetailForm.controls.occupation.value == 0 || customerDetailForm.controls.occupation.errors?.required">
+                                                    <small>Choose Occupation</small>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Marital Status</label>
-                                            <input type="text" class="form-control" list="maritalstatus"
-                                                placeholder="Marital Status" formControlName="maritalStatus">
-                                            <datalist id="maritalstatus">
-                                                <option value="Single">
-                                                <option value="married">
-                                                <option value="widowed">
-                                                <option value="divorced">
-                                            </datalist>
+
+                                            <select class="form-select" placeholder="maritalstatus"
+                                                formControlName="maritalStatus" [(ngModel)]="selectedMaritalStatus">
+                                                <option value="0" disabled>Select</option>
+                                                <option value="single">Single</option>
+                                                <option value="married">Married</option>
+                                                <option value="widow">Widow</option>
+                                                <option value="divorced">Divorced</option>
+                                            </select>
+
+                                            <div *ngIf="submitted">
+                                                <span class="text-danger"
+                                                    *ngIf="customerDetailForm.controls.maritalStatus.value == 0 || customerDetailForm.controls.maritalStatus.errors?.required">
+                                                    <small>Choose Marital Status</small>
+                                                </span>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -531,29 +712,57 @@
                                             <label for="exampleInputEmail1">Nominee Name</label>
                                             <input type="text" class="form-control" placeholder="Nominee Name"
                                                 formControlName="nomineeName">
+
+                                                <div class="text-danger" *ngIf="submitted">
+                                                    <small class="text-danger"
+                                                        *ngIf="customerDetailForm.controls.nomineeName.errors?.required">
+                                                        Nominee Name required</small>
+                                                </div>
+
+
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Age</label>
-                                            <input type="text" class="form-control" placeholder="Age"
+                                            <input type="number" class="form-control" placeholder="Age"
                                                 formControlName="nomineeAge">
+
+                                                <div class="text-danger" *ngIf="submitted">
+                                                    <small class="text-danger"
+                                                        *ngIf="customerDetailForm.controls.nomineeAge.errors?.pattern">
+                                                        2 digits</small>
+                                                    <small class="text-danger"
+                                                        *ngIf="customerDetailForm.controls.nomineeAge.errors?.required">
+                                                        Mandatory</small>
+                                                </div>
+
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Gender</label>
                                             <select class="form-select" placeholder="Gender"
-                                                formControlName="nomineeGender">
+                                                formControlName="nomineeGender" [(ngModel)]="selectedNomineeGender">
+                                                <option value="0" disabled>Select</option>
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
+                                                <option value="Others">Others</option>
                                             </select>
+                                            <div *ngIf="submitted">
+                                                <span class="text-danger"
+                                                  *ngIf="customerDetailForm.controls.nomineeGender.value == 0 || customerDetailForm.controls.nomineeGender.errors?.required">
+                                                  <small>Choose Gender</small>
+                                                </span>
+                                              </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Relation</label>
-                                            <select class="form-select" formControlName="relation">
+                                            <select class="form-select" formControlName="relation"
+                                            [(ngModel)]="selectedRelation">
+                                            <option value="0" disabled>Select</option>
                                                 <option value="Father">Father</option>
                                                 <option value="Mother">Mother</option>
                                                 <option value="Son">Son</option>
@@ -563,6 +772,12 @@
                                                 <option value="Brother">Brother</option>
                                                 <option value="Sister">Sister</option>
                                             </select>
+                                            <div *ngIf="submitted">
+                                                <span class="text-danger"
+                                                  *ngIf="customerDetailForm.controls.relation.value == 0 || customerDetailForm.controls.relation.errors?.required">
+                                                  <small>Choose Relation</small>
+                                                </span>
+                                              </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
@@ -571,22 +786,29 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" *ngIf="isShownProfile" >
+                        <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
+                            aria-labelledby="nav-profile-tab" *ngIf="isShownProfile">
                             <form [formGroup]="vehicleDetailsForm" (ngSubmit)="vehicleform()">
                                 <div class="row mt-3">
                                     <div class="col-md-6">
                                         <div class="form-group row">
                                             <div class="col-md-6" *ngIf="role==1">
-                                                <select class="browser-default custom-select"
-                                                    formControlName="showRoomId" (change)="selectyard($event)">
-                                                    <option value="">Open this select menu</option>
+                                                <label for="exampleInputEmail1">Showroom Name</label>
+                                                <select class="form-select"
+                                                    formControlName="showRoomId" (change)="selectyard($event)"
+                                                    [(ngModel)]="selectedShowroom">
+                                                    <!-- <option selected>Open this select menu</option> -->
+                                                    <option value="0" disabled>Select</option>
                                                     <option *ngFor="let name of showroomname" [value]="name.showRoomId">
                                                         {{name.showRoomName}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
-                                                <select class="browser-default custom-select" formControlName="yardId">
-                                                    <option value="">Open this select menu</option>
+                                                <label for="exampleInputEmail1">Yard Name</label>
+                                                <select class="form-select" formControlName="yardId"
+                                                [(ngModel)]="selectedYard">
+                                                    <!-- <option selected>Open this select menu</option> -->
+                                                    <option value="0" disabled>Select</option>
                                                     <option *ngFor="let name of yardname" [value]="name.yardId">
                                                         {{name.yardName}}</option>
                                                 </select>
@@ -594,16 +816,17 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-4">
-                                            <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                data-target="#exampleModal1">Vehicle Model</button>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#exampleModal1" 
+                                                    (click)="btnVehicleModel()">Vehicle Model</button>
                                             </div>
-                                            <div class="col-sm-8">
-                                                <select class="form-select"  [attr.disabled]="disableTextbox" formControlName="modelId">
-                                                    <option value="">Select</option>
+                                            <!-- <div class="col-sm-8">
+                                                <select class="form-select" [attr.disabled]="disableTextbox"
+                                                    formControlName="modelId">
                                                     <option *ngFor="let item of modelcode" [value]="item.modelId">
                                                         {{item.modelName}}</option>
                                                 </select>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <hr>
                                         <div class="form-group row">
@@ -612,7 +835,8 @@
                                                 <label class="label" for="customCheckDisabled">Frame No:</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" formControlName="chassisNo"  [attr.disabled]="disableTextbox">
+                                                <input type="text" class="form-control" formControlName="chassisNo"
+                                                    [attr.disabled]="disableTextbox">
 
                                             </div>
                                         </div>
@@ -621,7 +845,8 @@
                                                 <label class="label" for="customCheckDisabled">Eng No:</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" formControlName="engineNo"  [attr.disabled]="disableTextbox">
+                                                <input type="text" class="form-control" formControlName="engineNo"
+                                                    [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -638,7 +863,7 @@
                                                 <label class="label" for="customCheckDisabled">Key No</label>
 
                                                 <input type="text" class="form-control" id="customCheck"
-                                                    formControlName="keyNo"  [attr.disabled]="disableTextbox">
+                                                    formControlName="keyNo" [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -687,11 +912,13 @@
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <label class="label" for="customCheckDisabled">Invoice Amount</label>
-                                                <input type="text" class="form-control" formControlName="invoiceAmount"  [attr.disabled]="disableTextbox">
+                                                <input type="text" class="form-control" formControlName="invoiceAmount"
+                                                    [attr.disabled]="disableTextbox">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label class="label" for="customCheckDisabled">Vehicle Cost</label>
-                                                <input type="text" class="form-control" formControlName="vehicleCost"  [attr.disabled]="disableTextbox">
+                                                <input type="text" class="form-control" formControlName="vehicleCost"
+                                                    [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <div class="form-group row" *ngIf="labeldata!=''">
@@ -702,7 +929,8 @@
                                                 <input type="text" class="form-control" formControlName="taxpercentage" >
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"  [attr.disabled]="disableTextbox" formControlName="tax">
+                                                <input type="text" class="form-control" [attr.disabled]="disableTextbox"
+                                                    formControlName="tax">
                                             </div>
 
                                         </div>
@@ -720,7 +948,8 @@
                                                         <th scope="row">Life Tax</th>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="lifetax"  [attr.disabled]="disableTextbox"/>
+                                                                formControlName="lifetax"
+                                                                [attr.disabled]="disableTextbox" />
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
@@ -731,7 +960,8 @@
                                                         <th scope="row">insurance</th>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="insurance" [attr.disabled]="disableTextbox" />
+                                                                formControlName="insurance"
+                                                                [attr.disabled]="disableTextbox" />
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
@@ -764,7 +994,8 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="taxtotal"[attr.disabled]="disableTextbox" />
+                                                                formControlName="taxtotal"
+                                                                [attr.disabled]="disableTextbox" />
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -781,7 +1012,8 @@
                                                 <label class="label" for="customCheckDisabled">Net Total</label>
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" formControlName="total" [attr.disabled]="disableTextbox">
+                                                <input type="text" class="form-control" formControlName="total"
+                                                    [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                     </div>
@@ -795,8 +1027,8 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="tab-pane fade border show active" id="nav-contact" role="tabpanel" *ngIf="isShownContact"
-                            aria-labelledby="nav-contact-tab">
+                        <div class="tab-pane fade border show active" id="nav-contact" role="tabpanel"
+                            *ngIf="isShownContact" aria-labelledby="nav-contact-tab">
                             <form [formGroup]="payDetails" (ngSubmit)="finalsubmit()">
                                 <div class="row mt-3 ">
                                     <div class="col-sm-6">
@@ -830,7 +1062,7 @@
                                             </div>
                                             <div class="col-sm-8">
                                                 <input class="form-control" list="transtype"
-                                                    formControlName="vehicleCost" [attr.disabled]="disableTextbox">                                             
+                                                    formControlName="vehicleCost" [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -839,7 +1071,7 @@
                                             </div>
                                             <div class="col-sm-8">
                                                 <input class="form-control" list="transtype"
-                                                    formControlName="otherAmount" [attr.disabled]="disableTextbox">                                                
+                                                    formControlName="otherAmount" [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <hr>
@@ -850,7 +1082,7 @@
                                             <div class="col-sm-8">
                                                 <input class="form-control" list="transtype"
                                                     formControlName="totalAmount" [attr.disabled]="disableTextbox">
-                                               
+
                                             </div>
                                         </div>
                                         <hr>
@@ -859,7 +1091,8 @@
                                                 <label>Book.Rec.Amt</label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <input class="form-control" list="transtype" formControlName="bookrecamt" [attr.disabled]="disableTextbox">                                                
+                                                <input class="form-control" list="transtype"
+                                                    formControlName="bookrecamt" [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <div class="form-group row" *ngIf="isFinance">
@@ -867,7 +1100,8 @@
                                                 <label>Finance Amount</label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <input class="form-control" formControlName="financeamt" [attr.disabled]="disableTextbox">                                               
+                                                <input class="form-control" formControlName="financeamt"
+                                                    [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <div class="form-group row" *ngIf="iscredit">
@@ -875,7 +1109,8 @@
                                                 <label>Credit Amount</label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <input class="form-control" list="transtype" formControlName="creditamt" [attr.disabled]="disableTextbox">                                               
+                                                <input class="form-control" list="transtype" formControlName="creditamt"
+                                                    [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <div class="form-group row" *ngIf="isShownCash">
@@ -883,190 +1118,213 @@
                                                 <label>Cash/Bank Amt.</label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <input class="form-control" list="transtype" formControlName="cashbank" [attr.disabled]="disableTextbox">
+                                                <input class="form-control" list="transtype" formControlName="cashbank"
+                                                    [attr.disabled]="disableTextbox">
                                             </div>
-                                        </div>                                        
+                                        </div>
                                         <hr>
                                         <div class="form-group row">
                                             <div class="col-sm-4">
                                                 <label>Balance Amt</label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <input class="form-control" list="transtype" formControlName="balanceamt" [attr.disabled]="disableTextbox">                                               
+                                                <input class="form-control" list="transtype"
+                                                    formControlName="balanceamt" [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <hr>
                                     </div>
                                     <div class="col-sm-6 pr-4">
                                         <form [formGroup]="transtypecash">
-                                        <div class="col-sm-12 header-border card" *ngIf="isCashinhand">
-                                            <h3 class="heading-subtitle"><b>Cash Inhand</b></h3>
-                                            <div class="form-group row">
-                                                <div class="col-sm-2">
-                                                    <label class="heading-subtitle">Amount</label>
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" type="number" (change)="cashinhand($event)"
-                                                        formControlName="handAmount"><br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 header-border card" *ngIf="iscard">
-                                            <h3 class="heading-subtitle"><b>Card</b></h3>
-                                            <div class="form-group row">
-                                                <div class="col-sm-2">
-                                                    <label  class="heading-subtitle">Amount</label>
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" type="text" formControlName="cardAmount" (change)="cashinhand($event)">
-                                                </div>
-                                                <div class="col-sm-2 pt-2">
-                                                    <label>Card Details</label>
-                                                </div>
-                                                <div class="col-sm-10 pt-2">
-                                                    <input class="form-control" type="text" formControlName="cardDetails">
+                                            <div class="col-sm-12 header-border card" *ngIf="isCashinhand">
+                                                <h3 class="heading-subtitle"><b>Cash Inhand</b></h3>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-2">
+                                                        <label class="heading-subtitle">Amount</label>
+                                                    </div>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control" type="number"
+                                                            (change)="cashinhand($event)"
+                                                            formControlName="handAmount"><br>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12 header-border card" *ngIf="ischeque">
-                                            <h3 class="heading-subtitle"><b>Cheque</b></h3>
-                                            <div class="form-group row">
-                                                <div class="col-sm-2">
-                                                    <label class="heading-subtitle">Amount</label>
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" type="number"
-                                                        formControlName="chequeAmount" (change)="cashinhand($event)"><br>
-                                                </div>
-                                                <br>
-                                                <div class="col-sm-2">
-                                                    <label>Cheque No</label>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <input type="number" class="form-control" formControlName="chequeNo"> 
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <label>Date</label>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <input type="date" class="form-control" formControlName="chequeDate">
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <label>Cheque Details</label>
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" type="text" formControlName="chequeDetails">
+                                            <div class="col-sm-12 header-border card" *ngIf="iscard">
+                                                <h3 class="heading-subtitle"><b>Card</b></h3>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-2">
+                                                        <label class="heading-subtitle">Amount</label>
+                                                    </div>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control" type="text"
+                                                            formControlName="cardAmount" (change)="cashinhand($event)">
+                                                    </div>
+                                                    <div class="col-sm-2 pt-2">
+                                                        <label>Card Details</label>
+                                                    </div>
+                                                    <div class="col-sm-10 pt-2">
+                                                        <input class="form-control" type="text"
+                                                            formControlName="cardDetails">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12 header-border card" *ngIf="isUPI">
-                                            <h3 class="heading-subtitle"><b>UPI</b></h3>
-                                            <div class="form-group row">
-                                                <div class="col-sm-2">
-                                                    <label class="heading-subtitle">Amount</label>
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" type="number"
-                                                        formControlName="ddAmount" (change)="cashinhand($event)"><br>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <h4 class="heading-subtitle"><b>UPI No:</b></h4>
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" type="number" formControlName="upiNo"> <br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 header-border card" *ngIf="isDD">
-                                            <h3 class="heading-subtitle"><b>Demand Draft</b></h3>
-                                            <div class="form-group row">
-                                                <div class="col-sm-2">
-                                                    <label class="heading-subtitle">Amount</label>
-                                                </div>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" type="number"
-                                                        formControlName="upiAmount" (change)="cashinhand($event)"><br>
-                                                </div>
-                                                <br>
-                                                <div class="col-sm-2">
-                                                    <label>DD No</label>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <input type="number" class="form-control" formControlName="ddNo">
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <label>DD Date</label>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <input type="date" class="form-control" formControlName="ddDate">
-                                                </div>
-                                                <div class="col-sm-2 pt-2">
-                                                    <label>DD Details</label>
-                                                </div>
-                                                <div class="col-sm-10 pt-2">
-                                                    <input class="form-control" type="text" formControlName="ddDetails">
+                                            <div class="col-sm-12 header-border card" *ngIf="ischeque">
+                                                <h3 class="heading-subtitle"><b>Cheque</b></h3>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-2">
+                                                        <label class="heading-subtitle">Amount</label>
+                                                    </div>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control" type="number"
+                                                            formControlName="chequeAmount"
+                                                            (change)="cashinhand($event)"><br>
+                                                    </div>
+                                                    <br>
+                                                    <div class="col-sm-2">
+                                                        <label>Cheque No</label>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <input type="number" class="form-control"
+                                                            formControlName="chequeNo">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>Date</label>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <input type="date" class="form-control"
+                                                            formControlName="chequeDate">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>Cheque Details</label>
+                                                    </div>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control" type="text"
+                                                            formControlName="chequeDetails">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                        <div class="col-sm-12 header-border card" *ngIf="isFinance">
-                                            <form [formGroup]="financeForm">
-                                            <h3 class="heading-subtitle"><b>Finance</b></h3>
-                                            <div class="form-group row">
-                                                <div class="col-sm-4">
-                                                    <h4 class="heading-subtitle"><b>Finance List</b></h4>
+                                            <div class="col-sm-12 header-border card" *ngIf="isUPI">
+                                                <h3 class="heading-subtitle"><b>UPI</b></h3>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-2">
+                                                        <label class="heading-subtitle">Amount</label>
+                                                    </div>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control" type="number"
+                                                            formControlName="ddAmount"
+                                                            (change)="cashinhand($event)"><br>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <h4 class="heading-subtitle"><b>UPI No:</b></h4>
+                                                    </div>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control" type="number"
+                                                            formControlName="upiNo"> <br>
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-8">
-                                                   <select class="form-select" formControlName="financeId">
-                                                       <option>Select Finance</option>
-                                                       <option *ngFor="let data of finance" value="data.financeDetailId">{{data.financeName}}</option>
-                                                   </select><br>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <h4 class="heading-subtitle"><b>Down Payment</b></h4>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <input class="form-control" type="number" formControlName="downPayment"(change)="financeamount($event)"><br>
+                                            </div>
+                                            <div class="col-sm-12 header-border card" *ngIf="isDD">
+                                                <h3 class="heading-subtitle"><b>Demand Draft</b></h3>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-2">
+                                                        <label class="heading-subtitle">Amount</label>
+                                                    </div>
+                                                    <div class="col-sm-10">
+                                                        <input class="form-control" type="number"
+                                                            formControlName="upiAmount"
+                                                            (change)="cashinhand($event)"><br>
+                                                    </div>
+                                                    <br>
+                                                    <div class="col-sm-2">
+                                                        <label>DD No</label>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <input type="number" class="form-control"
+                                                            formControlName="ddNo">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>DD Date</label>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <input type="date" class="form-control"
+                                                            formControlName="ddDate">
+                                                    </div>
+                                                    <div class="col-sm-2 pt-2">
+                                                        <label>DD Details</label>
+                                                    </div>
+                                                    <div class="col-sm-10 pt-2">
+                                                        <input class="form-control" type="text"
+                                                            formControlName="ddDetails">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
+                                        <div class="col-sm-12 header-border card" *ngIf="isFinance">
+                                            <form [formGroup]="financeForm">
+                                                <h3 class="heading-subtitle"><b>Finance</b></h3>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-4">
+                                                        <h4 class="heading-subtitle"><b>Finance List</b></h4>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-select" formControlName="financeId">
+                                                            <option>Select Finance</option>
+                                                            <option *ngFor="let data of finance"
+                                                                value="data.financeDetailId">{{data.financeName}}
+                                                            </option>
+                                                        </select><br>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <h4 class="heading-subtitle"><b>Down Payment</b></h4>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <input class="form-control" type="number"
+                                                            formControlName="downPayment"
+                                                            (change)="financeamount($event)"><br>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                         <div class="col-sm-12 header-border card" *ngIf="iscredit">
                                             <form [formGroup]="creditForm">
-                                            <h3 class="heading-subtitle"><b>Credit</b></h3>
-                                            <div class="form-group row">
+                                                <h3 class="heading-subtitle"><b>Credit</b></h3>
+                                                <div class="form-group row">
 
-                                                <br>
-                                                <div class="col-sm-2">
-                                                    <label>Amount</label>
+                                                    <br>
+                                                    <div class="col-sm-2">
+                                                        <label>Amount</label>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <input type="number" class="form-control"
+                                                            formControlName="creditAmount"
+                                                            (change)="creditamount($event)">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>Name</label>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" class="form-control" formControlName="name">
+                                                    </div>
+                                                    <div class="col-sm-2 pt-2">
+                                                        <label>Mobile No</label>
+                                                    </div>
+                                                    <div class="col-sm-4 pt-2">
+                                                        <input class="form-control" type="number"
+                                                            formControlName="mobileNo">
+                                                    </div>
+                                                    <div class="col-sm-2 pt-2">
+                                                        <label> Address</label>
+                                                    </div>
+                                                    <div class="col-sm-4 pt-2">
+                                                        <textarea class="form-control"
+                                                            formControlName="address"></textarea>
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <input type="number" class="form-control" formControlName="creditAmount" (change)="creditamount($event)">
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <label>Name</label>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <input type="text" class="form-control" formControlName="name">
-                                                </div>
-                                                <div class="col-sm-2 pt-2">
-                                                    <label>Mobile No</label>
-                                                </div>
-                                                <div class="col-sm-4 pt-2">
-                                                    <input class="form-control" type="number" formControlName="mobileNo">
-                                                </div>
-                                                <div class="col-sm-2 pt-2">
-                                                    <label> Address</label>
-                                                </div>
-                                                <div class="col-sm-4 pt-2">
-                                                    <textarea class="form-control" formControlName="address"></textarea>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        </div>    
-                                                                       
+                                            </form>
+                                        </div>
+
                                     </div>
-                                    
+
                                     <div class="col-sm-12">
                                         <div class="row">
                                             <div class="text-center">
@@ -1074,8 +1332,10 @@
                                                     href="#nav-profile" role="tab" aria-controls="nav-profile"
                                                     aria-selected="false">
                                                     <button class="btn btn-warning">Pre</button></a> -->
-                                                    <button class="btn btn-warning" (click)="toggleShowProfile()">Previous</button>
-                                                <button class="btn btn-success ml-2" type="submit">Save and Print</button>
+                                                <button class="btn btn-warning"
+                                                    (click)="toggleShowProfile()">Previous</button>
+                                                <button class="btn btn-success ml-2" type="submit">Save and
+                                                    Print</button>
                                                 <!-- <button class="btn btn-warning ml-2">Print</button> -->
                                             </div>
                                         </div>
