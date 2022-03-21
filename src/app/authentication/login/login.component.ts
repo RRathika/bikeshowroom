@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       
       // console.log(this.loginForm.value);      
       this.service.savelogin(this.loginForm.value).subscribe((data:any)=>{
-        
+        debugger
         if(data.statusCode==400)
         {
           this.toastservice.show(data.message,{className:'bg-danger text-light', delay: 5000})
@@ -54,16 +54,24 @@ export class LoginComponent implements OnInit {
           this.toastservice.show(data.message,{className:'bg-danger text-danger', delay: 5000})
         }
         else{
-         this.username= localStorage.setItem('UserName', data.userName);
-         this.usercode= localStorage.setItem('UserCode', data.userCode);
-         this.showroom= localStorage.setItem('ShowRoomId', data.showRoomId);
-         this.mac= localStorage.setItem('MacAddress', data.macAddress);
-         this.roleid=localStorage.setItem('RoleId',data.roleId);
-          if(this.username!='' && this.usercode!=''&& this.showroom!=''&&this.mac!=''){
-          this.router.navigate(['/dashboard']);
-          }
+          this.username = data.userName;
+          this.usercode = data.userCode;
+          this.showroom = data.showRoomId;
+          this.mac = data.macAddress;
+          this.roleid = data.roleId;
+          localStorage.setItem('UserName', data.userName);
+          localStorage.setItem('UserCode', data.userCode);
+          localStorage.setItem('ShowRoomId', data.showRoomId);
+          localStorage.setItem('MacAddress', data.macAddress);
+          localStorage.setItem('RoleId',data.roleId);
+
+        //  if(this.username != undefined && this.usercode != undefined && this.showroom != undefined && this.mac != undefined){
+          if(this.username =='' && this.usercode ==''&& this.showroom ==''&&this.mac ==''){  
+            this.toastservice.show('Doesnot match your details',{className:'bg-danger text-light', delay: 5000}); 
+            }
+          // }
           else{
-            this.toastservice.show('Doesnot match your details',{className:'bg-danger text-light', delay: 5000})
+            this.router.navigateByUrl('/dashboard');
           }
         }
       })

@@ -196,10 +196,7 @@ export class AddvehiclesalesComponent implements OnInit {
       createVehicleSaleTransactionDetailDTO:new FormControl()
     })
   ngOnInit(): void {
-    this.disable();   
-    // this.loadadvancebook();
-    // this.loadname();
-    // this.loadmodelname();
+    this.disable();  
     this.district();
     this.loadqualification();
     this.loadoccupation(); 
@@ -489,22 +486,17 @@ export class AddvehiclesalesComponent implements OnInit {
   }
 
   districttalukPermanentLoad(name: any) {
-   // let name = e.target.value;
     this.service.gettaluk(name).subscribe((data: any) => {
       console.log(data)
       if(data.message == 'No Data Found'){
         this.taluk2 = '';
         this.selectedPermanentTaluk=0;
         this.permanentaddressForm.controls['taluk'].disable();
-        // alert(1)  
       }
       else{
         this.permanentaddressForm.controls['taluk'].enable();
         this.taluk2 = data;
-      //  this.selectedPermanentTaluk=0;
-      //   alert(2)
-      }
-  
+      }  
     })
   }
   
@@ -557,29 +549,9 @@ export class AddvehiclesalesComponent implements OnInit {
   
     this.districttalukPermanentLoad(this.presentaddressForm.get('district')?.value);
 
-    // console.log(this.presentaddressForm.value)
-    // console.log(this.permanentaddressForm.value)
-
-    // console.log(this.presentaddressForm.get('taluk')?.value);
-    
-
-    // // this.permanentaddressForm.controls['taluk'].enable();
-    // // this.presentaddressForm.controls['taluk'].enable();
-
-    // if(this.presentaddressForm.value!=''){
-      
-    //   this.permanentaddressForm.controls['taluk'].enable(); 
-   
-    //   // this.permanentaddressForm.addControl('taluk', []);
-
        this.permanentaddressForm.patchValue(this.presentaddressForm.value);
-       console.log(this.presentaddressForm.value)
-       console.log( this.permanentaddressForm.value)
-  
-    //    this.permanentaddressForm.patchValue({'taluk' : '2'})
-    //}
-  
-    
+       console.log(this.presentaddressForm.value);
+       console.log( this.permanentaddressForm.value); 
   }
   onChange(e: any) {
 
@@ -618,10 +590,6 @@ export class AddvehiclesalesComponent implements OnInit {
       this.loadfinance();
       this.getyear();
     }
-   
-   
-    
-   
   }
   vehicleform() {
     // console.log(this.vehicleDetailsForm.value);
@@ -795,14 +763,7 @@ export class AddvehiclesalesComponent implements OnInit {
     this.route.navigateByUrl('/invoice');
   }
 
-  // customerNext(){
-  //   this.submitted = true;
-
-  // }
-
   bookingBtn(){
-  //  this.advanceDate = new Date().toISOString().split('T')[0];
-
     this.loadadvancebook();
     this.loadname();
     this.loadmodelname();
@@ -813,7 +774,6 @@ export class AddvehiclesalesComponent implements OnInit {
     console.log( this.selectedAdvanceDate )
     console.log( this.selectedAdvanceModelName)
     this.service.getAdvanceBookingsByFilter(this.selectedAdvanceName,this.selectedAdvanceDate,this.selectedAdvanceModelName).subscribe(data=>{
-     // this.showdata=data;
      this.bookdata=data;
      console.log(data)
     })
@@ -823,23 +783,18 @@ export class AddvehiclesalesComponent implements OnInit {
     console.log(getName);
     console.log( this.selectedAdvanceName)
     this.selectedAdvanceName=getName.target.value;
- console.log(getName.target.value);
-
-
+    console.log(getName.target.value);
   }
 
   onChangeselectedAdvanceModelName(getName:any){
     console.log(getName);
     console.log( this.selectedAdvanceModelName)
     this.selectedAdvanceModelName=getName.target.value;
- console.log(getName.target.value);
-
+    console.log(getName.target.value);
   }
 
   clearBtn(){
     this.customerDetailForm.patchValue({'receiptNos':''});
     this.customerDetailForm.patchValue({'date':''});
   }
-
-
 }

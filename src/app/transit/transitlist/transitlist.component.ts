@@ -215,30 +215,30 @@ export class TransitlistComponent implements OnInit {
       if (data.message == "Fail") {
         if(data.modelCount>0)
         {
-          this.toastService.show(data.modelCount+'model name missing', { classname: 'bg-danger text-light', delay: 10000 });
+          this.toastService.show(data.modelCount+'model name missing', { classname: 'bg-danger text-light', delay: 3000 });
         }
         if(data.colorCount>0)
         {
-          this.toastService.show(data.colorCount+ 'color name missing', { classname: 'bg-danger text-light', delay: 10000 });
+          this.toastService.show(data.colorCount+ 'color name missing', { classname: 'bg-danger text-light', delay: 3000 });
         }
         if(data.variantCount>0)
         {
-          this.toastService.show(data.variantCount+ 'variant name missing', { classname: 'bg-danger text-light', delay: 10000 });
+          this.toastService.show(data.variantCount+ 'variant name missing', { classname: 'bg-danger text-light', delay: 3000 });
         }        
       }
       else {        
-        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
+        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 7000 });
         this.transitForm.reset();
         this.router.navigateByUrl('/dashboard/transitlist');
       }
     })
   }  
   else{
-    this.toastService.show("Please fill all field", { classname: 'bg-danger text-light', delay: 5000 });
+    this.toastService.show("Please fill all field", { classname: 'bg-danger text-light', delay: 3000 });
   }
 }
 else{
-  this.toastService.show("Please upload transit file", { classname: 'bg-danger text-light', delay: 5000 });
+  this.toastService.show("Please upload transit file", { classname: 'bg-danger text-light', delay: 3000 });
 }
   }
   clear() {

@@ -289,17 +289,17 @@ export class VehiclepurchaseComponent implements OnInit {
 
               if (data.message == "Fail") {
                 if (data.modelCount > 0) {
-                  this.toastservice.show(data.modelCount + 'model name missing', { classname: 'bg-danger text-light', delay: 10000 });
+                  this.toastservice.show(data.modelCount + 'model name missing', { classname: 'bg-danger text-light', delay: 3000 });
                 }
                 if (data.colorCount > 0) {
-                  this.toastservice.show(data.colorCount + 'color name missing', { classname: 'bg-danger text-light', delay: 10000 });
+                  this.toastservice.show(data.colorCount + 'color name missing', { classname: 'bg-danger text-light', delay: 3000 });
                 }
                 if (data.variantCount > 0) {
-                  this.toastservice.show(data.variantCount + 'variant name missing', { classname: 'bg-danger text-light', delay: 10000 });
+                  this.toastservice.show(data.variantCount + 'variant name missing', { classname: 'bg-danger text-light', delay: 3000 });
                 }
               }
               else {
-                this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
+                this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 7000 });
                 this.clear();
                 this.router.navigateByUrl('/dashboard/vehiclepurchase');
               }
@@ -308,11 +308,11 @@ export class VehiclepurchaseComponent implements OnInit {
 
         }
         else {
-          this.toastservice.show("Please fill key value", { classname: 'bg-danger text-light', delay: 5000 })
+          this.toastservice.show("Please fill key value", { classname: 'bg-danger text-light', delay: 3000 })
         }
       }
       else {
-        this.toastservice.show("Please upload valid file", { classname: 'bg-danger text-light', delay: 5000 })
+        this.toastservice.show("Please upload valid file", { classname: 'bg-danger text-light', delay: 3000 })
       }
     }
     else {
@@ -338,7 +338,7 @@ export class VehiclepurchaseComponent implements OnInit {
               this.toastservice.show(data.message, { classname: 'bg-danger text-light', delay: 3000 });
             }
             else {
-              this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 5000 });
+              this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 7000 });
               this.clear();
               this.router.navigateByUrl('/dashboard/vehiclepurchase');
             }
@@ -346,11 +346,11 @@ export class VehiclepurchaseComponent implements OnInit {
         }
       }
       else{
-        this.toastservice.show("Please fill key value", { classname: 'bg-danger text-light', delay: 5000 })
+        this.toastservice.show("Please fill key value", { classname: 'bg-danger text-light', delay: 3000 })
       }
       }
       else {
-        this.toastservice.show("Please upload valid file", { classname: 'bg-danger text-light', delay: 5000 })
+        this.toastservice.show("Please upload valid file", { classname: 'bg-danger text-light', delay: 3000 })
       }
     }
   }
