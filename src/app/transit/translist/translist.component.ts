@@ -37,7 +37,7 @@ export class TranslistComponent implements OnInit {
     this.loadyard();
     this.translistForm.controls['yard'].disable();
   }
-  submit(){
+  submit(){    
     // console.log(this.translistForm.value);
     if(this.showroom!=0)
     {
@@ -46,7 +46,9 @@ export class TranslistComponent implements OnInit {
     if(this.translistForm.value['yard']=='')
     {
       this.translistForm.patchValue({
-        yard:0
+        yard:0,
+        fromdate:'',
+        todate:''
       })
     }
     
@@ -62,6 +64,7 @@ export class TranslistComponent implements OnInit {
         todate:''
       })
     }
+    
     this.submitted=true;
     if(this.translistForm.valid){
       if(this.translistForm.value['month']==undefined)
@@ -102,6 +105,42 @@ export class TranslistComponent implements OnInit {
         });
       }
       })
+    }
+    else if(this.translistForm.value['yard']==0){
+      this.service.gettransit(this.translistForm.value['showRoomId'],this.translistForm.value['yard'],this.translistForm.value['month'],'','').subscribe(data=>{
+        if(data.statusCode==200)
+        {
+          // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
+          this.list='';
+          this.translistForm.reset();
+          this.submitted=false;
+          console.log(this.translistForm.value);
+          this.translistForm.controls['fromdate'].enable();
+          this.translistForm.controls['todate'].enable();
+          this.translistForm.controls['yard'].disable();
+          this.translistForm.controls['month'].enable();
+          this.translistForm.patchValue({
+            yard:'',
+            showRoomId:'',
+            month:0
+          });
+        }
+        else
+        {
+        this.list=data;
+        this.translistForm.reset();
+        this.submitted=false;
+        console.log(this.translistForm.value);
+        this.translistForm.controls['fromdate'].enable();
+        this.translistForm.controls['todate'].enable();
+        this.translistForm.controls['yard'].disable();
+        this.translistForm.patchValue({
+          yard:'',
+          showRoomId:'',
+          month:0
+        });
+      }
+    })
     }
     else{
     this.service.gettransit(this.translistForm.value['showRoomId'],this.translistForm.value['yard'],this.translistForm.value['month'],this.translistForm.value['fromdate'],this.translistForm.value['todate']).subscribe(data=>{

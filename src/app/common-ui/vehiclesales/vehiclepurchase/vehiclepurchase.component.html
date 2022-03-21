@@ -4,6 +4,7 @@
 			<div class="card card-primary">
 				<div class="card-header bg-primary">
 					<h3 class="card-title">Vehicle Purchase Add</h3>
+					<button class="btn btn-success float-end" (click)="add()">View Vehicle purchase List</button>
                 </div>
 				<form [formGroup]="vehiclepurchaseForm" (ngSubmit)="submit()">
 				<div class="col-md-12 pt-3 border">
@@ -28,7 +29,7 @@
 												<div *ngIf="submitted">
 													<span class="text-danger"
 														*ngIf="vehiclepurchaseForm.controls.invoiceDate.errors?.required">
-														<small>Invoice date is required</small>
+														<small>Date is required</small>
 													</span>
 												</div>
                                             </div>
@@ -89,7 +90,7 @@
 													</span>
 												</div>
 											</div>	  
-											<div class="col-md-6">
+											<div class="col-md-6" *ngIf="count==0">
 												<!-- <label for="exampleInputEmail1">Pay Mode</label> -->
                                                 <input type="file" #myInput  multiple="false" (change)="onFileChange($event)" accept=".xls,.xlsx" />
                                             </div>					
@@ -100,7 +101,7 @@
 										<legend  class="float-none w-auto p-2">Supplier Details</legend>
 										<div class="form-group row">
 											<div class="col-md-6">
-												<label>Name</label>  
+												<label>Supplier Name</label>  
 												<select class="form-select" formControlName="supplierId" (change)="selectsupplier($event)">
 													<option value="" hidden>Select</option>
 													<option *ngFor="let item of vendordata" [value]="item.vendorId">{{item.companyName}}</option>
@@ -188,7 +189,7 @@
 						<fieldset class="border p-2">
 							<legend  class="float-none w-auto p-2">Pay Details</legend>
 							<div class="row">	
-							<div class="col-md-6 mt-3">													
+							<div class="col-md-6">													
 								<div class="form-group row">
 									<div class="col-md-4">
 										<label for="exampleInputEmail1">Total Vehicle Cost</label>
@@ -255,9 +256,9 @@
 									</div>									
 								</div>								
 							</div>
-							<div class="col-md-6 mt-3">
+							<div class="col-md-6">
 								<fieldset class="border p-2">
-									<legend  class="float-none w-auto p-2">Pay Details</legend>
+									<legend  class="float-none w-auto p-2">Payment Details</legend>
 									<div class="form-group row">
 										<div class="col-md-12">
 											<label for="exampleInputEmail1">Payment Mode</label>

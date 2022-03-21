@@ -92,9 +92,9 @@
                                 <td>{{ (p - 1) * count + i +1 }}</td>
                                 <td>{{data.invoiceNo}}</td>
                                 <td>{{data.invoiceDate|date}}</td>
-                                <td>{{data.transitType}}</td>
+                                <td >{{data.transitType == 1 ? 'Within State':'Outside State'}}</td>
                                 <!-- <td>{{data.stockType}}</td> -->
-                                <td>{{data.supplier}}</td>
+                                <td>{{data.supplierName}}</td>
                                 <td>{{data.transportName}}</td>
                                 <td>{{data.truckNo}}</td>
                                 <td><i class="fas fa-eye" style="color: blue;" data-toggle="modal"

@@ -853,8 +853,8 @@
                                             <div class="col-sm-6">
                                                 <label class="label" for="customCheckDisabled">Color</label>
 
-                                                <select class="form-select" [attr.disabled]="disableTextbox"
-                                                    formControlName="colorId">
+                                                <select class="form-select"  [attr.disabled]="disableTextbox" formControlName="colorId">
+                                                    <option value="">Select</option>
                                                     <option *ngFor="let data of colordetails" [value]="data.colorId">
                                                         {{data.colorName}} </option>
                                                 </select>
@@ -870,6 +870,7 @@
                                             <div class="col-md-6">
                                                 <label class="label">Month of Mfg</label>
                                                 <select class="form-select" formControlName="month">
+                                                    <option value="">Select</option>
                                                     <option value="1">January</option>
                                                     <option value="2">February</option>
                                                     <option value="3">March</option>
@@ -887,6 +888,7 @@
                                             <div class="col-md-6">
                                                 <label class="label">Year of Mfg</label>
                                                 <select class="form-select" formControlName="year">
+                                                    <option value="">Select</option>
                                                     <option *ngFor="let name of year" [value]=name>{{name}}</option>
                                                 </select>
                                             </div>
@@ -898,8 +900,8 @@
                                             </div>
                                             <div class="col-sm-9">
                                                 <select class="browser-default custom-select"
-                                                    formControlName="vehicleSaleType">
-                                                    <option selected>Open this select menu</option>
+                                                    formControlName="vehicleSaleType" (change)="changesale($event)">
+                                                    <option value="">Select</option>
                                                     <option value="Within State Sales">Within State Sales</option>
                                                     <option value="outside State Sales">Outside State Sales</option>
                                                 </select>
@@ -919,13 +921,12 @@
                                                     [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="form-group row" *ngIf="labeldata!=''">
                                             <div class="col-sm-4">
-                                                <label class="label" for="customCheckDisabled">CGST, SGST, IGST</label>
+                                                <label class="label" for="customCheckDisabled">{{labeldata}}</label>
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" class="form-control"
-                                                    (change)="gstcalculation($event)">
+                                                <input type="text" class="form-control" formControlName="taxpercentage" >
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control" [attr.disabled]="disableTextbox"
@@ -952,8 +953,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="lifetax"
-                                                                [attr.disabled]="disableTextbox" />
+                                                                formControlName="lifetax" />
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -965,31 +965,32 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="insurance"
-                                                                [attr.disabled]="disableTextbox" />
+                                                                formControlName="insurance" />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Extra charges</th>
                                                         <td>0</td>
-                                                        <td>0</td>
+                                                        <td><input type="text" class="form-control"
+                                                            formControlName="taxtotal"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Other charges</th>
                                                         <td>0</td>
-                                                        <td>0</td>
+                                                        <td><input type="text" class="form-control"
+                                                            formControlName="taxtotal"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Extended Warrenty</th>
                                                         <td>0</td>
-                                                        <td>0</td>
+                                                        <td><input type="text" class="form-control"
+                                                            formControlName="taxtotal"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Total</th>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="taxtotal"
-                                                                [attr.disabled]="disableTextbox" />
+                                                                formControlName="taxtotal"/>
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
@@ -1005,8 +1006,7 @@
                                                 <label class="label" for="customCheckDisabled">Total</label>
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" formControlName="finaltotal"
-                                                    [attr.disabled]="disableTextbox">
+                                                <input type="text" class="form-control" formControlName="finaltotal" [attr.disabled]="disableTextbox">
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="label" for="customCheckDisabled">Net Total</label>
@@ -1037,10 +1037,9 @@
                                                 <label>Transaction Type</label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <select (change)="toggleShowCash($event)" class="form-control"
-                                                    name="val" list="transtype" id="transtype"
+                                                <select (change)="toggleShowCash($event)" class="form-select"
                                                     formControlName="transactionTypeId">
-                                                    <option selected disabled>Select One</option>
+                                                    <option value="" disabled>Select</option>
                                                     <option value=1>Cash</option>
                                                     <option value=2>Credit</option>
                                                     <option value=3>Finance</option>

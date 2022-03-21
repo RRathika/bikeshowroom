@@ -32,14 +32,14 @@ export class VehiclepurchaselistComponent implements OnInit {
     this.showroom=localStorage.getItem('ShowRoomId');
     this.roleid=localStorage.getItem('RoleId');
     this.purchaselistForm.controls['yard'].disable();
-    //this.loaddata(this.showroom);
+    this.loaddata(this.showroom);
     this.loadyard();
     this.showroomdata();
   }
   loaddata(show:any){
-    let from="01-01-0001";
-    let to="01-01-0001";  
-    this.service.getvehiclepurchase(show,0,0,from,to).subscribe(data=>{
+    // let from="01-01-0001";
+    // let to="01-01-0001";  
+    this.service.getvehiclepurchase(show,0,0,'','').subscribe(data=>{
       if(data.statusCode==200)
       {
         this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
@@ -147,6 +147,41 @@ export class VehiclepurchaselistComponent implements OnInit {
     }
     })
   }
+  else if(this.purchaselistForm.value['yard']== 0){
+    this.service.getvehiclepurchase(this.purchaselistForm.value['showRoomId'],this.purchaselistForm.value['yard'],this.purchaselistForm.value['month'],'','').subscribe(data=>{
+      if(data.statusCode==200)
+      {
+        // this.toastservice.show(data.message,{classname:'bg-success text-light', delay: 3000});
+        this.vehiclepurchase='';
+        this.purchaselistForm.reset();
+        this.submitted=false;
+        this.purchaselistForm.controls['fromdate'].enable();
+        this.purchaselistForm.controls['todate'].enable();
+        this.purchaselistForm.controls['yard'].disable();
+        this.purchaselistForm.controls['month'].enable();
+        this.purchaselistForm.patchValue({
+          yard:'',
+          month:0,
+          showRoomId:''
+        })
+      }
+      else
+      {
+      this.vehiclepurchase=data;
+      this.purchaselistForm.reset();
+      this.submitted=false;
+      this.purchaselistForm.controls['fromdate'].enable();
+        this.purchaselistForm.controls['todate'].enable();
+        this.purchaselistForm.controls['yard'].disable();
+        this.purchaselistForm.controls['month'].enable();
+      this.purchaselistForm.patchValue({
+        yard:'',
+        month:0,
+        showRoomId:''
+      })
+    }
+    })
+  }
   else
   {
     this.service.getvehiclepurchase(this.purchaselistForm.value['showRoomId'],this.purchaselistForm.value['yard'],this.purchaselistForm.value['month'],this.purchaselistForm.value['fromdate'],this.purchaselistForm.value['todate']).subscribe(data=>{
@@ -193,6 +228,7 @@ export class VehiclepurchaselistComponent implements OnInit {
   }
   add()
   {
+    this.service.purchasedata.next('');
     this.router.navigateByUrl('/dashboard/vehiclepurchaseadd')
   }
 }

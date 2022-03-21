@@ -178,6 +178,7 @@ export class TransitlistComponent implements OnInit {
       else{
         alert('Not a valid excel sheet');
         this.myInputVariable.nativeElement.value = "";
+        this.exceldata='';
       }
       // const dataString = JSON.stringify(this.jsonData);
       // console.log(this.jsonData);
@@ -244,6 +245,7 @@ else{
     this.transitForm.reset();
     this.count=0;
     this.myInputVariable.nativeElement.value = "";
+    this.exceldata='';
     this.transitForm.patchValue({
       transitType:'' ,
       supplierId:'',
@@ -251,5 +253,7 @@ else{
       yardId:'',
     })
   }
- 
+  add(){
+    this.router.navigateByUrl('/dashboard/transitlist');
+  }
 }

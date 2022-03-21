@@ -91,7 +91,7 @@
                                     <td>{{i+1}}</td>
                                     <td>{{data.invoiceNo}}</td>
                                     <td>{{data.invoiceDate|date}}</td>
-                                    <td>{{data.purchaseType}}</td>
+                                    <td>{{data.purchaseType == 1 ? 'Within State':'Outside State'}}</td>
                                     <td>{{data.supplierName}}</td>
                                     <td>{{data.suppierAddress}}</td>
                                     <td>{{data.supplierGST}}</td>
