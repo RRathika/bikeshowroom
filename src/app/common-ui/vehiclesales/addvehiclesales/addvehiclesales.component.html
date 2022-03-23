@@ -122,6 +122,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- {{totaldata | json}} -->
                     <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -203,7 +204,8 @@
 
                                     </form>
 
-                                    <table class="table text-center">
+                                    <!-- <table class="table text-center" *ngIf="totaldata || totaldata.length > 0"> -->
+                                        <table class="table text-center">
                                         <tr>
                                             <!-- <th>Select</th> -->
                                             <th>S.No</th>
@@ -225,10 +227,15 @@
                                             </td>
                                         </tr>
                                     </table>
+
+                                    <!-- <div *ngIf="!totaldata || totaldata.length === 0"  class="pt-3">
+                                        <p  class="text-center text-danger"><small>No data found</small></p>
+                                    </div> -->
+
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                                 </div>
                             </div>
                         </div>
@@ -802,6 +809,14 @@
                                                     <option *ngFor="let name of showroomname" [value]="name.showRoomId">
                                                         {{name.showRoomName}}</option>
                                                 </select>
+                                                
+                                                <div *ngIf="submittedVehicle">
+                                                    <span class="text-danger"
+                                                        *ngIf="vehicleDetailsForm.controls.showRoomId.value == 0 || vehicleDetailsForm.controls.showRoomId.errors?.required">
+                                                        <small>Choose Showroom</small>
+                                                    </span>
+                                                </div>
+
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="exampleInputEmail1">Yard Name</label>
@@ -812,6 +827,14 @@
                                                     <option *ngFor="let name of yardname" [value]="name.yardId">
                                                         {{name.yardName}}</option>
                                                 </select>
+
+                                                <!-- <div *ngIf="submittedVehicle">
+                                                    <span class="text-danger"
+                                                        *ngIf="vehicleDetailsForm.controls.yardId.value == 0 || vehicleDetailsForm.controls.yardId.errors?.required">
+                                                        <small>Choose Yard</small>
+                                                    </span>
+                                                </div> -->
+
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -869,8 +892,9 @@
                                         <div class="form-group row">
                                             <div class="col-md-6">
                                                 <label class="label">Month of Mfg</label>
-                                                <select class="form-select" formControlName="month">
-                                                    <option value="">Select</option>
+                                                <select class="form-select" formControlName="month"
+                                                [(ngModel)]="selectedMonth">
+                                                    <option value="0" disabled>Select</option>
                                                     <option value="1">January</option>
                                                     <option value="2">February</option>
                                                     <option value="3">March</option>
@@ -884,27 +908,55 @@
                                                     <option value="11">November</option>
                                                     <option value="12">December</option>
                                                 </select>
+
+                                                <div *ngIf="submittedVehicle">
+                                                    <span class="text-danger"
+                                                        *ngIf="vehicleDetailsForm.controls.month.value == 0 || vehicleDetailsForm.controls.month.errors?.required">
+                                                        <small>Choose Month</small>
+                                                    </span>
+                                                </div>
+
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="label">Year of Mfg</label>
-                                                <select class="form-select" formControlName="year">
-                                                    <option value="">Select</option>
+                                                <select class="form-select" formControlName="year"
+                                                [(ngModel)]="selectedYear">
+                                                    <option value="0" disabled>Select</option>
                                                     <option *ngFor="let name of year" [value]=name>{{name}}</option>
                                                 </select>
+
+                                                <div *ngIf="submittedVehicle">
+                                                    <span class="text-danger"
+                                                        *ngIf="vehicleDetailsForm.controls.year.value == 0 || vehicleDetailsForm.controls.year.errors?.required">
+                                                        <small>Choose Year</small>
+                                                    </span>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="form-group row">
-                                            <div class="col-sm-3"><label for="exampleInputEmail1">Vehicle Sale
-                                                    Type</label>
+                                            <div class="col-sm-4"><label for="exampleInputEmail1">Vehicle Sale Type</label>
                                             </div>
-                                            <div class="col-sm-9">
-                                                <select class="browser-default custom-select"
-                                                    formControlName="vehicleSaleType" (change)="changesale($event)">
-                                                    <option value="">Select</option>
+                                            <!-- {{vehicleDetailsForm.controls.selectedvehicleSaleType | json}} -->
+                                            <div class="col-sm-8">
+                                                <select class="form-select"
+                                                    formControlName="vehicleSaleType" (change)="changesale($event)"
+                                                    [(ngModel)]="selectedvehicleSaleType">
+
+                                                    <!-- <select class="browser-default custom-select"
+                                                    formControlName="vehicleSaleType" (change)="changesale($event)"> -->
+
+                                                    <option value="0" disabled>Select</option>
                                                     <option value="Within State Sales">Within State Sales</option>
                                                     <option value="outside State Sales">Outside State Sales</option>
                                                 </select>
+                                                <div *ngIf="submittedVehicle">
+                                                    <span class="text-danger"
+                                                        *ngIf="vehicleDetailsForm.controls.vehicleSaleType.value == 0 || vehicleDetailsForm.controls.vehicleSaleType.errors?.required">
+                                                        <small>Vehicle Sale Type Mandatory</small>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

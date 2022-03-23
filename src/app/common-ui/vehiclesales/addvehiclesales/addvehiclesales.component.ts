@@ -68,7 +68,7 @@ export class AddvehiclesalesComponent implements OnInit {
   // card:number=0;
   // cheque:number=0;
   // dd:number=0;upi:number=0;
-  showdata:any='';
+  showdata: any = '';
   // selectedAdvanceModelName:any ='';
   // selectedAdvanceName:any ='';
   // selectedAdvanceDate:any ='';
@@ -79,20 +79,24 @@ export class AddvehiclesalesComponent implements OnInit {
   selectedPresentTaluk: any;
   selectedPermanentTaluk: any;
   selectedAddressProof = 'Aadhar Proof';
-  Selectedqualification=0;
-  SelectedOccupation=0;
-  selectedMaritalStatus=0;
-  selectedNomineeGender=0;
-  selectedRelation=0;
-  selectedShowroom=0;
-  selectedYard=0;
-  selectedModelName:any;
-  selectedColor:any;
-  selectedVariant:any;
+  Selectedqualification = 0;
+  SelectedOccupation = 0;
+  selectedMaritalStatus = 0;
+  selectedNomineeGender = 0;
+  selectedRelation = 0;
+  selectedShowroom = 0;
+  selectedYard = 0;
+  selectedModelName: any;
+  selectedColor: any;
+  selectedVariant: any;
+  selectedMonth:any;
+  selectedYear:any;
+  selectedvehicleSaleType:any;
   // selectedPresentTaluk:any;
   // selectedPermanentTaluk:any;
-  labeldata:any='';
-  taxper:any;
+  labeldata: any = '';
+  taxper: any;
+  submittedVehicle: boolean = false;
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -137,21 +141,21 @@ export class AddvehiclesalesComponent implements OnInit {
     occupation: new FormControl('', [Validators.required]),
     maritalStatus: new FormControl('', [Validators.required]),
     nomineeName: new FormControl('', [Validators.required]),
-    nomineeAge: new FormControl('', [Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{2}$")]),
+    nomineeAge: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{2}$")]),
     nomineeGender: new FormControl('', [Validators.required]),
     relation: new FormControl('', [Validators.required])
   })
   vehicleDetailsForm: FormGroup = this.formBuilder.group({
-    showRoomId: new FormControl('', []),
+    showRoomId: new FormControl('', [Validators.required]),
     yardId: new FormControl('', []),
     modelId: new FormControl('', []),
     chassisNo: new FormControl('', []),
     engineNo: new FormControl('', []),
     colorId: new FormControl('', []),
     keyNo: new FormControl('', []),
-    month: new FormControl('', []),
-    year: new FormControl('', []),
-    vehicleSaleType: new FormControl('', []),
+    month: new FormControl('', [Validators.required]),
+    year: new FormControl('', [Validators.required]),
+    vehicleSaleType: new FormControl('', [Validators.required]),
     invoiceAmount: new FormControl('', []),
     vehicleCost: new FormControl('', []),
     discountAmount: 0,
@@ -226,11 +230,11 @@ export class AddvehiclesalesComponent implements OnInit {
     createVehicleSaleTransactionDetailDTO: new FormControl()
   })
   ModalFilterform: FormGroup = this.formBuilder.group({
-    modelId:  new FormControl('', []),
-    colorId:  new FormControl('', []),
+    modelId: new FormControl('', []),
+    colorId: new FormControl('', []),
     variantId: new FormControl('', [])
   })
-  
+
   ngOnInit(): void {
     this.disable();
     this.color();
@@ -256,9 +260,10 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.controls['invoiceNo'].disable();
     this.presentaddressForm.controls['taluk'].disable();
     this.permanentaddressForm.controls['taluk'].disable();
-
     this.vehicleDetailsForm.controls['yardId'].disable();
-    
+    this.selectedMonth=0;
+    this.selectedYear=0
+    this.selectedvehicleSaleType=0;
 
     this.isdisable = true;
     let role = localStorage.getItem('RoleId');
@@ -289,28 +294,26 @@ export class AddvehiclesalesComponent implements OnInit {
   //     })
   //   })
   // }
-  changesale(e:any){
+  changesale(e: any) {
     // console.log(this.showdata);    
-    debugger
+    // debugger
     console.log(e.target.value);
-    if(e.target.value == 'Within State Sales')
-    {
-      this.labeldata='CGST + SGST ';
+    if (e.target.value == 'Within State Sales') {
+      this.labeldata = 'CGST + SGST ';
       console.log(this.labeldata);
       let a = this.vehicleDetailsForm.value['cgst'];
       let b = this.vehicleDetailsForm.value['sgst'];
-      this.taxper = a+b;      
+      this.taxper = a + b;
       console.log(this.vehicleDetailsForm.value);
       this.vehicleDetailsForm.patchValue({
         taxpercentage: this.taxper
       })
       this.gstcalculation(this.taxper);
       console.log(this.vehicleDetailsForm.value);
-      
+
     }
-    if(e.target.value == 'outside State Sales')
-    {
-      this.labeldata='IGST';
+    if (e.target.value == 'outside State Sales') {
+      this.labeldata = 'IGST';
       console.log(this.labeldata);
       this.taxper = this.vehicleDetailsForm.value['igst'];
       this.vehicleDetailsForm.patchValue({
@@ -319,20 +322,19 @@ export class AddvehiclesalesComponent implements OnInit {
       this.gstcalculation(this.taxper);
     }
   }
-  showroomdata(){
-    this.service.getshowroom().subscribe(data=>{
-      this.showdata=data;
+  showroomdata() {
+    this.service.getshowroom().subscribe(data => {
+      this.showdata = data;
     })
   }
-  selectshowroom(e:any)
-  {
-    let data=e.target.value;
+  selectshowroom(e: any) {
+    let data = e.target.value;
     console.log(data);
-    this.service.getinvoice(data).subscribe((data:any)=>{
-      this.invoicevalue=data;
+    this.service.getinvoice(data).subscribe((data: any) => {
+      this.invoicevalue = data;
       console.log(this.invoicevalue);
       this.customerDetailForm.patchValue({
-        invoiceNo:this.invoicevalue
+        invoiceNo: this.invoicevalue
       })
     })
   }
@@ -361,9 +363,9 @@ export class AddvehiclesalesComponent implements OnInit {
   model() {
     this.service.getbikemodel().subscribe(data => {
       this.modelcode = data;
-      this.selectedModelName=0;
+      this.selectedModelName = 0;
       console.log(data);
-      
+
       //  this.selectedModelName=0;
     })
   }
@@ -381,13 +383,13 @@ export class AddvehiclesalesComponent implements OnInit {
     let name = e.target.value;
     this.service.showroombyyard(name).subscribe(data => {
       this.yardname = data;
-      if(data.message == 'No Data Found'){
+      if (data.message == 'No Data Found') {
         this.vehicleDetailsForm.controls['yardId'].disable();
         this.selectedYard = 0;
         this.yardname = [];
         this.toastService.show('No Yard for this Showroom', { classname: 'bg-danger text-light', delay: 2000 });
       }
-      else{
+      else {
         this.vehicleDetailsForm.controls['yardId'].enable();
         this.yardname = data;
         this.selectedYard = 0;
@@ -422,7 +424,10 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   modelnamechange(e: any) {
-// alert(22) 
+    this.totaldata =[];
+    this.varientcode = [];
+    this.selectedVariant = 0;
+    // alert(22) 
     let model = e.target.value;
     this.vehicleDetailsForm.patchValue({
       modelId: model
@@ -430,22 +435,30 @@ export class AddvehiclesalesComponent implements OnInit {
     this.service.selectmodel(model).subscribe(data => {
       if (data.statusCode == 200) {
         this.colorcode = [];
-        this.varientcode = [];
+     
 
-        this. ModalFilterform.controls['colorId'].disable();
-        this. ModalFilterform.controls['variantId'].disable();
-        
+
+        this.selectedColor = 0;
+
+       
+
+        this.ModalFilterform.controls['colorId'].disable();
+        this.ModalFilterform.controls['variantId'].disable();
+
         this.toastService.show('Dont have related color', { classname: 'bg-danger text-light', delay: 3000 });
       }
       else {
-        this. ModalFilterform.controls['colorId'].enable();
+        this.ModalFilterform.controls['colorId'].enable();
         this.colorcode = data;
-        this.selectedColor=0;
+        this.selectedColor = 0;
+
+
       }
     })
   }
   colornamechange(e: any) {
-    this.selectedVariant=0;
+    this.totaldata =[];
+    this.selectedVariant = 0;
     let model = e.target.value;
     this.vehicleDetailsForm.patchValue({
       colorId: model
@@ -453,34 +466,44 @@ export class AddvehiclesalesComponent implements OnInit {
     this.service.selectcolor(model).subscribe(data => {
       if (data.statusCode == 200) {
         this.varientcode = [];
-        this. ModalFilterform.controls['variantId'].disable();
+        this.ModalFilterform.controls['variantId'].disable();
         this.toastService.show('Dont have related variant', { classname: 'bg-danger text-light', delay: 3000 });
       }
       else {
-        this.varientcode = data;       
-        this. ModalFilterform.controls['variantId'].enable();
+        this.varientcode = data;
+        this.ModalFilterform.controls['variantId'].enable();
       }
     })
   }
   variantnamechange(e: any) {
-   // debugger
+    // debugger
     let variant = e.target.value;
     let show = localStorage.getItem('ShowRoomId');
     let role = localStorage.getItem('RoleId');
     this.service.vartantbydata(variant, show, role).subscribe(data => {
-      this.totaldata = data;
-      for (let i = 0; i <= this.totaldata.length; i++) {
-        this.finalamount = Math.round(this.totaldata[i].total);
-        this.totaldata[i].netamount = this.finalamount;
-        console.log(this.totaldata);
+      console.log(data)
+
+      if (data.message == 'No Data Found') {
+        this.totaldata =[];
+        this.toastService.show('No stock available', { classname: 'bg-danger text-light', delay: 2000 });
       }
+      else{
+        this.totaldata = data;
+        for (let i = 0; i <= this.totaldata.length; i++) {
+          this.finalamount = Math.round(this.totaldata[i].total);
+          this.totaldata[i].netamount = this.finalamount;
+          console.log(this.totaldata);
+        }
+      }
+      
+     
 
     })
   }
   gstcalculation(e: any) {
 
     // let data = e.target.value;
-    
+
     let data = e;
     let invoice = (data / 100) * (this.vehicleDetailsForm.value['vehicleCost']);
     let invoiceamount = this.vehicleDetailsForm.value['vehicleCost'] +  Math.round(invoice);
@@ -686,35 +709,37 @@ export class AddvehiclesalesComponent implements OnInit {
     this.submitted = true;
 
     // if (this.customerDetailForm.valid) {
-      this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
-      // console.log(this.customerDetailForm.value);
+    this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
+    // console.log(this.customerDetailForm.value);
 
-      this.isShownProfile = !this.isShownProfile;
-      this.isShownHome = false;
-      this.isShownContact = false;
-      this.showroom();
-      // this.yard();
-    
-      //  this.color();
-      this.loadfinance();
-      this.getyear();
+    this.isShownProfile = !this.isShownProfile;
+    this.isShownHome = false;
+    this.isShownContact = false;
+    this.showroom();
+    // this.yard();
+
+    //  this.color();
+    this.loadfinance();
+    this.getyear();
+
+   
     // }
 
 
 
 
   }
-  
-  btnVehicleModel(){
-  
-    
- this. ModalFilterform.controls['colorId'].disable();
- this. ModalFilterform.controls['variantId'].disable();
 
-   // alert(11)
-     this.model();
-     this.selectedColor=0;
-     this.selectedVariant=0;
+  btnVehicleModel() {
+
+    this.totaldata =[];
+    this.ModalFilterform.controls['colorId'].disable();
+    this.ModalFilterform.controls['variantId'].disable();
+
+    // alert(11)
+    this.model();
+    this.selectedColor = 0;
+    this.selectedVariant = 0;
   }
 
   vehicleform() {
