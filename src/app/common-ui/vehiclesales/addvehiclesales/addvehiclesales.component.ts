@@ -115,7 +115,7 @@ export class AddvehiclesalesComponent implements OnInit {
   });
   customerDetailForm: FormGroup = this.formBuilder.group({
     invoiceNo: new FormControl('', []),
-    invoiceDate: new FormControl('', []),
+    invoiceDate: new FormControl(),
     receiptType: new FormControl(0, []),
     receiptNos: new FormControl('', []),
     date: new FormControl('', []),
@@ -163,10 +163,16 @@ export class AddvehiclesalesComponent implements OnInit {
     igst: new FormControl('', []),
     cgst: new FormControl('', []),
     sgst: new FormControl('', []),
-    lifetax: new FormControl('', []),
-    insurance: new FormControl('', []),
+    lifetax:0,
+    insurance:0,
     taxtotal: new FormControl('', []),
-    taxpercentage:new FormControl('',[])
+    taxpercentage:new FormControl('',[]),
+    extraacc:0,
+    otheracc:0,
+    warrentyacc:0,
+    acclifetax:0,
+    accinsurance:0,
+    acctaxtotal:new FormControl()
   })
   payDetails: FormGroup = this.formBuilder.group({
     transactionTypeId: 0,
@@ -179,6 +185,7 @@ export class AddvehiclesalesComponent implements OnInit {
     cashbank: 0,
     excessamt: 0,
     balanceamt: 0,
+    vehicleTax:0,
     createVehicleSalePaymentDetailDTO: new FormControl(),
     createVehicleSaleCreditDetailDTO: new FormControl(),
     createVehicleSaleFinanceDetailDTO: new FormControl()
@@ -186,16 +193,16 @@ export class AddvehiclesalesComponent implements OnInit {
 
   transtypecash: FormGroup = this.formBuilder.group({
     handAmount: 0,
-    currentDate: new FormControl('', []),
+    currentDate: new FormControl(),
     cardAmount: 0,
     cardDetails: new FormControl('', []),
     chequeAmount: 0,
     chequeDetails: new FormControl('', []),
-    chequeDate: new FormControl('', []),
+    chequeDate: new FormControl(),
     chequeNo: new FormControl('', []),
     ddAmount: 0,
     ddDetails: new FormControl('', []),
-    ddDate: new FormControl('', []),
+    ddDate: new FormControl(),
     ddNo: new FormControl('', []),
     upiAmount: 0,
     upiNo: new FormControl('', []),
@@ -204,7 +211,7 @@ export class AddvehiclesalesComponent implements OnInit {
   creditForm: FormGroup = this.formBuilder.group({
     creditAmount: 0,
     name: new FormControl('', []),
-    mobileNo: new FormControl('', []),
+    mobileNo: 0,
     address: new FormControl('', []),
     status: 0
   })
@@ -226,6 +233,7 @@ export class AddvehiclesalesComponent implements OnInit {
   
   ngOnInit(): void {
     this.disable();
+    this.color();
     // this.loadadvancebook();
     // this.loadname();
     // this.loadmodelname();
@@ -345,11 +353,11 @@ export class AddvehiclesalesComponent implements OnInit {
       this.finance = data;
     })
   }
-  // color() {
-  //   this.service.getcolor().subscribe(data => {
-  //     this.colordetails = data;
-  //   })
-  // }
+  color() {
+    this.service.getcolor().subscribe(data => {
+      this.colordetails = data;
+    })
+  }
   model() {
     this.service.getbikemodel().subscribe(data => {
       this.modelcode = data;
@@ -475,8 +483,8 @@ export class AddvehiclesalesComponent implements OnInit {
     
     let data = e;
     let invoice = (data / 100) * (this.vehicleDetailsForm.value['vehicleCost']);
-    let invoiceamount = this.vehicleDetailsForm.value['vehicleCost'] + invoice;
-    let final = invoiceamount + this.vehicleDetailsForm.value['taxtotal']
+    let invoiceamount = this.vehicleDetailsForm.value['vehicleCost'] +  Math.round(invoice);
+    let final = invoiceamount + Math.round(this.vehicleDetailsForm.value['taxtotal']);
     this.vehicleDetailsForm.patchValue({
       tax: invoice,
       invoiceAmount: invoiceamount,
@@ -486,21 +494,22 @@ export class AddvehiclesalesComponent implements OnInit {
 
   }
   applyvehicle(chass: any, cg: any, sg: any, ig: any, engine: any, ins: any, invoice: any, key: any, life: any, net: any, total: any) {
-    let totalfortable = life + ins;
-    //  this.patchdata=this.totaldata; 
-    //  console.log(this.patchdata);
+    let acctaxtotal = life + ins;
     this.vehicleDetailsForm.patchValue({
       chassisNo: chass,
       engineNo: engine,
       keyNo: key,
       vehicleCost: invoice,
-      taxtotal: totalfortable,
       rounded: net,
       cgst: cg,
       sgst: sg,
       igst: ig,
       insurance: ins,
-      lifetax: life
+      lifetax: life,
+      acclifetax:life,
+      accinsurance:ins,
+      acctaxtotal:acctaxtotal,
+      taxtotal:acctaxtotal
     })
 
   }
@@ -709,10 +718,11 @@ export class AddvehiclesalesComponent implements OnInit {
   }
 
   vehicleform() {
-    // console.log(this.vehicleDetailsForm.value);
+    console.log(this.vehicleDetailsForm.value);
     this.isShownHome = false;
     this.isShownProfile = false;
     this.isShownContact = !this.isShownHome;
+    this.loadfield();
   }
   toggleShowProfile() {
     this.isShownProfile = !this.isShownProfile;
@@ -727,18 +737,19 @@ export class AddvehiclesalesComponent implements OnInit {
   loadfield() {
     let vehiclecost1 = this.vehicleDetailsForm.value['vehicleCost'];
     let otheramount1 = this.vehicleDetailsForm.value['taxtotal'];
-    let net = this.vehicleDetailsForm.value['total'];
+    let net = this.vehicleDetailsForm.value['finaltotal'];
     let bookamount = this.advanceamount;
+    let tax=this.vehicleDetailsForm.value['tax'];
     this.payDetails.patchValue({
       vehicleCost: vehiclecost1,
       otherAmount: otheramount1,
       totalAmount: net,
-      bookrecamt: bookamount
+      bookrecamt: bookamount,
+      vehicleTax:tax
     })
   }
   toggleShowCash(value: any) {
     console.log(value.target.value);
-    this.loadfield();
     switch (value.target.value) {
       case '1':
         this.isShownCash = !this.isShownCash;
@@ -805,14 +816,14 @@ export class AddvehiclesalesComponent implements OnInit {
   cashinhand(e: any) {
 
     let bookamount = this.advanceamount;
-    let net = this.vehicleDetailsForm.value['total'];
+    let net = this.vehicleDetailsForm.value['finaltotal'];
     let cash = this.transtypecash.value['handAmount'];
     let card = this.transtypecash.value['cardAmount'];
     let cheque = this.transtypecash.value['chequeAmount'];
     let dd = this.transtypecash.value['ddAmount'];
     let upi = this.transtypecash.value['upiAmount'];
     let amount = parseInt(cash) + parseInt(card) + parseInt(cheque) + parseInt(dd) + parseInt(upi);
-    let balance = net - (bookamount + amount);
+    let balance = Math.round(net) - (bookamount + amount);
     this.payDetails.patchValue({
       cashbank: amount,
       balanceamt: balance,
@@ -847,10 +858,11 @@ export class AddvehiclesalesComponent implements OnInit {
   finalsubmit() {
     console.log(this.finalform.value)
     this.myDate = this.datePipe.transform(this.now, 'yyyy-MM-dd');
+    let todaydata = Date.parse(this.myDate)
     this.transtypecash.patchValue({
-      currentDate: this.myDate,
-      chequeDate: this.myDate,
-      ddDate: this.myDate
+      currentDate: todaydata,
+      chequeDate: todaydata,
+      ddDate: todaydata
     })
     this.payDetails.patchValue({
       createVehicleSalePaymentDetailDTO: this.transtypecash.value, createVehicleSaleCreditDetailDTO: this.creditForm.value, createVehicleSaleFinanceDetailDTO: this.financeForm.value
@@ -921,5 +933,56 @@ export class AddvehiclesalesComponent implements OnInit {
   clearBtn() {
     this.customerDetailForm.patchValue({ 'receiptNos': '' });
     this.customerDetailForm.patchValue({ 'date': '' });
+  }
+  warrent(e:any){
+  let value= e.target.value;
+  let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['otheracc']);
+  console.log(sum);
+  let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+  this.vehicleDetailsForm.patchValue({      
+    taxtotal: sum,
+    finaltotal:final
+  })
+  
+  }
+  othercharge(e:any){
+    let value= e.target.value;
+    let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
+    console.log(sum);
+    let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+    this.vehicleDetailsForm.patchValue({      
+      taxtotal: sum,
+      finaltotal:final
+    })
+  }
+  excharge(e:any){
+    let value= e.target.value;
+    let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['otheracc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
+    console.log(sum);
+    let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+    this.vehicleDetailsForm.patchValue({      
+      taxtotal: sum,
+      finaltotal:final
+    })
+  }
+  ins(e:any){
+    let value= e.target.value;
+    let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['otheracc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
+    console.log(sum);
+    let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+    this.vehicleDetailsForm.patchValue({      
+      taxtotal: sum,
+      finaltotal:final
+    })
+  }
+  life(e:any){
+    let value = e.target.value;
+    let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['otheracc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
+    console.log(sum);
+    let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+    this.vehicleDetailsForm.patchValue({      
+      taxtotal: sum,
+      finaltotal:final
+    })
   }
 }

@@ -820,13 +820,13 @@
                                                     data-target="#exampleModal1" 
                                                     (click)="btnVehicleModel()">Vehicle Model</button>
                                             </div>
-                                            <!-- <div class="col-sm-8">
-                                                <select class="form-select" [attr.disabled]="disableTextbox"
+                                            <div class="col-sm-8">
+                                                <select class="form-control" [attr.disabled]="disableTextbox"
                                                     formControlName="modelId">
                                                     <option *ngFor="let item of modelcode" [value]="item.modelId">
                                                         {{item.modelName}}</option>
                                                 </select>
-                                            </div> -->
+                                            </div>
                                         </div>
                                         <hr>
                                         <div class="form-group row">
@@ -853,7 +853,7 @@
                                             <div class="col-sm-6">
                                                 <label class="label" for="customCheckDisabled">Color</label>
 
-                                                <select class="form-select"  [attr.disabled]="disableTextbox" formControlName="colorId">
+                                                <select class="form-control"  [attr.disabled]="disableTextbox" formControlName="colorId">
                                                     <option value="">Select</option>
                                                     <option *ngFor="let data of colordetails" [value]="data.colorId">
                                                         {{data.colorName}} </option>
@@ -947,55 +947,54 @@
                                                     <tr>
                                                         <th scope="row">Life Tax</th>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                formControlName="lifetax"
+                                                            <input type="number" class="form-control"
+                                                                formControlName="acclifetax"
                                                                 [attr.disabled]="disableTextbox" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                formControlName="lifetax" />
+                                                            <input type="number" class="form-control"
+                                                                formControlName="lifetax" (keyup)="life($event)" />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">insurance</th>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                formControlName="insurance"
+                                                            <input type="number" class="form-control"
+                                                                formControlName="accinsurance"
                                                                 [attr.disabled]="disableTextbox" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
-                                                                formControlName="insurance" />
+                                                            <input type="number" class="form-control"
+                                                                formControlName="insurance" (keyup)="ins($event)"/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Extra charges</th>
                                                         <td>0</td>
-                                                        <td><input type="text" class="form-control"
-                                                            formControlName=""/></td>
+                                                        <td><input type="number" class="form-control"
+                                                            formControlName="extraacc" (keyup)="excharge($event)"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Other charges</th>
                                                         <td>0</td>
-                                                        <td><input type="text" class="form-control"
-                                                            formControlName=""/></td>
+                                                        <td><input type="number" class="form-control"
+                                                            formControlName="otheracc" (keyup)="othercharge($event)"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Extended Warrenty</th>
                                                         <td>0</td>
-                                                        <td><input type="text" class="form-control"
-                                                            formControlName=""/></td>
+                                                        <td><input type="number" class="form-control"
+                                                            formControlName="warrentyacc" (keyup)="warrent($event)"/></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Total</th>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="taxtotal" [attr.disabled]="disableTextbox" />
+                                                                formControlName="acctaxtotal" [attr.disabled]="disableTextbox" />
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
-                                                                formControlName="taxtotal"
-                                                                [attr.disabled]="disableTextbox" />
+                                                                formControlName="taxtotal" [attr.disabled]="disableTextbox" />
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -1006,13 +1005,13 @@
                                                 <label class="label" for="customCheckDisabled">Total</label>
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" formControlName="finaltotal" [attr.disabled]="disableTextbox">
+                                                <input type="text" class="form-control" formControlName="total" [attr.disabled]="disableTextbox">
                                             </div>
                                             <div class="col-sm-2">
                                                 <label class="label" for="customCheckDisabled">Net Total</label>
                                             </div>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" formControlName="total"
+                                                <input type="text" class="form-control" formControlName="finaltotal"
                                                     [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
@@ -1063,6 +1062,15 @@
                                             <div class="col-sm-8">
                                                 <input class="form-control" list="transtype"
                                                     formControlName="vehicleCost" [attr.disabled]="disableTextbox">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-4">
+                                                <label>Vehicle Tax Amount</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" list="transtype"
+                                                    formControlName="vehicleTax" [attr.disabled]="disableTextbox">
                                             </div>
                                         </div>
                                         <div class="form-group row">
