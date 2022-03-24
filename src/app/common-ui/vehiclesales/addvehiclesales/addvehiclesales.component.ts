@@ -89,9 +89,9 @@ export class AddvehiclesalesComponent implements OnInit {
   selectedModelName: any;
   selectedColor: any;
   selectedVariant: any;
-  selectedMonth:any;
-  selectedYear:any;
-  selectedvehicleSaleType:any;
+  selectedMonth: any;
+  selectedYear: any;
+  selectedvehicleSaleType: any;
   // selectedPresentTaluk:any;
   // selectedPermanentTaluk:any;
   labeldata: any = '';
@@ -149,7 +149,7 @@ export class AddvehiclesalesComponent implements OnInit {
     showRoomId: new FormControl('', [Validators.required]),
     yardId: new FormControl('', []),
     modelId: new FormControl('', []),
-    chassisNo: new FormControl('', []),
+    chassisNo: new FormControl('', [Validators.required]),
     engineNo: new FormControl('', []),
     colorId: new FormControl('', []),
     keyNo: new FormControl('', []),
@@ -167,16 +167,19 @@ export class AddvehiclesalesComponent implements OnInit {
     igst: new FormControl('', []),
     cgst: new FormControl('', []),
     sgst: new FormControl('', []),
-    lifetax:0,
-    insurance:0,
+    lifetax: 0,
+    insurance: 0,
     taxtotal: new FormControl('', []),
-    taxpercentage:new FormControl('',[]),
-    extraacc:0,
-    otheracc:0,
-    warrentyacc:0,
-    acclifetax:0,
-    accinsurance:0,
-    acctaxtotal:new FormControl()
+    taxpercentage: new FormControl('', []),
+    extraacc: 0,
+    otheracc: 0,
+    warrentyacc: 0,
+    acclifetax: 0,
+    accinsurance: 0,
+    acctaxtotal: new FormControl(),
+    accextraacc: 0,
+    accotheracc: 0,
+    accwarrentyacc: 0,
   })
   payDetails: FormGroup = this.formBuilder.group({
     transactionTypeId: 0,
@@ -189,7 +192,7 @@ export class AddvehiclesalesComponent implements OnInit {
     cashbank: 0,
     excessamt: 0,
     balanceamt: 0,
-    vehicleTax:0,
+    vehicleTax: 0,
     createVehicleSalePaymentDetailDTO: new FormControl(),
     createVehicleSaleCreditDetailDTO: new FormControl(),
     createVehicleSaleFinanceDetailDTO: new FormControl()
@@ -261,9 +264,9 @@ export class AddvehiclesalesComponent implements OnInit {
     this.presentaddressForm.controls['taluk'].disable();
     this.permanentaddressForm.controls['taluk'].disable();
     this.vehicleDetailsForm.controls['yardId'].disable();
-    this.selectedMonth=0;
-    this.selectedYear=0
-    this.selectedvehicleSaleType=0;
+    this.selectedMonth = 0;
+    this.selectedYear = 0
+    this.selectedvehicleSaleType = 0;
 
     this.isdisable = true;
     let role = localStorage.getItem('RoleId');
@@ -424,7 +427,7 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   modelnamechange(e: any) {
-    this.totaldata =[];
+    this.totaldata = [];
     this.varientcode = [];
     this.selectedVariant = 0;
     // alert(22) 
@@ -435,12 +438,12 @@ export class AddvehiclesalesComponent implements OnInit {
     this.service.selectmodel(model).subscribe(data => {
       if (data.statusCode == 200) {
         this.colorcode = [];
-     
+
 
 
         this.selectedColor = 0;
 
-       
+
 
         this.ModalFilterform.controls['colorId'].disable();
         this.ModalFilterform.controls['variantId'].disable();
@@ -457,7 +460,7 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   colornamechange(e: any) {
-    this.totaldata =[];
+    this.totaldata = [];
     this.selectedVariant = 0;
     let model = e.target.value;
     this.vehicleDetailsForm.patchValue({
@@ -484,10 +487,10 @@ export class AddvehiclesalesComponent implements OnInit {
       console.log(data)
 
       if (data.message == 'No Data Found') {
-        this.totaldata =[];
+        this.totaldata = [];
         this.toastService.show('No stock available', { classname: 'bg-danger text-light', delay: 2000 });
       }
-      else{
+      else {
         this.totaldata = data;
         for (let i = 0; i <= this.totaldata.length; i++) {
           this.finalamount = Math.round(this.totaldata[i].total);
@@ -495,8 +498,8 @@ export class AddvehiclesalesComponent implements OnInit {
           console.log(this.totaldata);
         }
       }
-      
-     
+
+
 
     })
   }
@@ -506,7 +509,7 @@ export class AddvehiclesalesComponent implements OnInit {
 
     let data = e;
     let invoice = (data / 100) * (this.vehicleDetailsForm.value['vehicleCost']);
-    let invoiceamount = this.vehicleDetailsForm.value['vehicleCost'] +  Math.round(invoice);
+    let invoiceamount = this.vehicleDetailsForm.value['vehicleCost'] + Math.round(invoice);
     let final = invoiceamount + Math.round(this.vehicleDetailsForm.value['taxtotal']);
     this.vehicleDetailsForm.patchValue({
       tax: invoice,
@@ -529,12 +532,27 @@ export class AddvehiclesalesComponent implements OnInit {
       igst: ig,
       insurance: ins,
       lifetax: life,
-      acclifetax:life,
-      accinsurance:ins,
-      acctaxtotal:acctaxtotal,
-      taxtotal:acctaxtotal
+      acclifetax: life,
+      accinsurance: ins,
+      acctaxtotal: acctaxtotal,
+      taxtotal: acctaxtotal
     })
-
+    if (this.vehicleDetailsForm.get('chassisNo')?.value != '') {
+      this.vehicleDetailsForm.controls['vehicleSaleType'].enable();
+      this.vehicleDetailsForm.controls['lifetax'].enable();
+      this.vehicleDetailsForm.controls['insurance'].enable();
+      this.vehicleDetailsForm.controls['extraacc'].enable();
+      this.vehicleDetailsForm.controls['otheracc'].enable();
+      this.vehicleDetailsForm.controls['warrentyacc'].enable();
+    }
+    else{
+      this.vehicleDetailsForm.controls['vehicleSaleType'].disable();
+      this.vehicleDetailsForm.controls['lifetax'].disable();
+      this.vehicleDetailsForm.controls['insurance'].disable();
+      this.vehicleDetailsForm.controls['extraacc'].disable();
+      this.vehicleDetailsForm.controls['otheracc'].disable();
+      this.vehicleDetailsForm.controls['warrentyacc'].disable();
+    }
   }
   loadoccupation() {
     this.service.getoccupation().subscribe(data => {
@@ -701,12 +719,32 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   onKeyUp(x: any) { // appending the updated value to the variable
     let data = x.target.value;
-    let final = data.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter((s: string | any[]) => s.length > 0).join("-");
+    let final = data.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter((s: string | any[]) => s.length > 0).join(" ");
     //  console.log(final);
     this.customerDetailForm.patchValue({ aadharNo: final });
   }
   submit() {
     this.submitted = true;
+
+    // alert(this.vehicleDetailsForm.get('chassisNo')?.value)
+    if (this.vehicleDetailsForm.get('chassisNo')?.value != '') {
+      this.vehicleDetailsForm.controls['vehicleSaleType'].enable();
+      this.vehicleDetailsForm.controls['lifetax'].enable();
+      this.vehicleDetailsForm.controls['insurance'].enable();
+      this.vehicleDetailsForm.controls['extraacc'].enable();
+      this.vehicleDetailsForm.controls['otheracc'].enable();
+      this.vehicleDetailsForm.controls['warrentyacc'].enable();
+ 
+    }
+    else{
+      this.vehicleDetailsForm.controls['vehicleSaleType'].disable();
+      this.vehicleDetailsForm.controls['lifetax'].disable();
+      this.vehicleDetailsForm.controls['insurance'].disable();
+      this.vehicleDetailsForm.controls['extraacc'].disable();
+      this.vehicleDetailsForm.controls['otheracc'].disable();
+      this.vehicleDetailsForm.controls['warrentyacc'].disable();
+    
+    }
 
     // if (this.customerDetailForm.valid) {
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
@@ -722,7 +760,7 @@ export class AddvehiclesalesComponent implements OnInit {
     this.loadfinance();
     this.getyear();
 
-   
+
     // }
 
 
@@ -732,7 +770,7 @@ export class AddvehiclesalesComponent implements OnInit {
 
   btnVehicleModel() {
 
-    this.totaldata =[];
+    this.totaldata = [];
     this.ModalFilterform.controls['colorId'].disable();
     this.ModalFilterform.controls['variantId'].disable();
 
@@ -743,13 +781,41 @@ export class AddvehiclesalesComponent implements OnInit {
   }
 
   vehicleform() {
+  
+    this.submittedVehicle = true;
     console.log(this.vehicleDetailsForm.value);
+
+    if (this.vehicleDetailsForm.valid) {
+      alert(1)
     this.isShownHome = false;
     this.isShownProfile = false;
     this.isShownContact = !this.isShownHome;
     this.loadfield();
+    }
+    else{
+      alert(2)
+    }
+
   }
   toggleShowProfile() {
+
+    if (this.vehicleDetailsForm.get('chassisNo')?.value != '') {
+      this.vehicleDetailsForm.controls['vehicleSaleType'].enable();
+      this.vehicleDetailsForm.controls['lifetax'].enable();
+      this.vehicleDetailsForm.controls['insurance'].enable();
+      this.vehicleDetailsForm.controls['extraacc'].enable();
+      this.vehicleDetailsForm.controls['otheracc'].enable();
+      this.vehicleDetailsForm.controls['warrentyacc'].enable();
+    }
+    else{
+      this.vehicleDetailsForm.controls['vehicleSaleType'].disable();
+      this.vehicleDetailsForm.controls['lifetax'].disable();
+      this.vehicleDetailsForm.controls['insurance'].disable();
+      this.vehicleDetailsForm.controls['extraacc'].disable();
+      this.vehicleDetailsForm.controls['otheracc'].disable();
+      this.vehicleDetailsForm.controls['warrentyacc'].disable();
+    }
+
     this.isShownProfile = !this.isShownProfile;
     this.isShownHome = false;
     this.isShownContact = false;
@@ -764,13 +830,13 @@ export class AddvehiclesalesComponent implements OnInit {
     let otheramount1 = this.vehicleDetailsForm.value['taxtotal'];
     let net = this.vehicleDetailsForm.value['finaltotal'];
     let bookamount = this.advanceamount;
-    let tax=this.vehicleDetailsForm.value['tax'];
+    let tax = this.vehicleDetailsForm.value['tax'];
     this.payDetails.patchValue({
       vehicleCost: vehiclecost1,
       otherAmount: otheramount1,
       totalAmount: net,
       bookrecamt: bookamount,
-      vehicleTax:tax
+      vehicleTax: tax
     })
   }
   toggleShowCash(value: any) {
@@ -958,55 +1024,55 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.patchValue({ 'receiptNos': '' });
     this.customerDetailForm.patchValue({ 'date': '' });
   }
-  warrent(e:any){
-  let value= e.target.value;
-  let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['otheracc']);
-  console.log(sum);
-  let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
-  this.vehicleDetailsForm.patchValue({      
-    taxtotal: sum,
-    finaltotal:final
-  })
-  
-  }
-  othercharge(e:any){
-    let value= e.target.value;
-    let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
-    console.log(sum);
-    let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
-    this.vehicleDetailsForm.patchValue({      
-      taxtotal: sum,
-      finaltotal:final
-    })
-  }
-  excharge(e:any){
-    let value= e.target.value;
-    let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['otheracc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
-    console.log(sum);
-    let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
-    this.vehicleDetailsForm.patchValue({      
-      taxtotal: sum,
-      finaltotal:final
-    })
-  }
-  ins(e:any){
-    let value= e.target.value;
-    let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['otheracc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
-    console.log(sum);
-    let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
-    this.vehicleDetailsForm.patchValue({      
-      taxtotal: sum,
-      finaltotal:final
-    })
-  }
-  life(e:any){
+  warrent(e: any) {
     let value = e.target.value;
-    let sum= parseInt(value) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['otheracc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
+    let sum = parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['otheracc']);
     console.log(sum);
-    let final=this.vehicleDetailsForm.value['invoiceAmount'] + sum;
-    this.vehicleDetailsForm.patchValue({      
+    let final = this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+    this.vehicleDetailsForm.patchValue({
       taxtotal: sum,
-      finaltotal:final
+      finaltotal: final
+    })
+
+  }
+  othercharge(e: any) {
+    let value = e.target.value;
+    let sum = parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
+    console.log(sum);
+    let final = this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+    this.vehicleDetailsForm.patchValue({
+      taxtotal: sum,
+      finaltotal: final
+    })
+  }
+  excharge(e: any) {
+    let value = e.target.value;
+    let sum = parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['otheracc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
+    console.log(sum);
+    let final = this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+    this.vehicleDetailsForm.patchValue({
+      taxtotal: sum,
+      finaltotal: final
+    })
+  }
+  ins(e: any) {
+    let value = e.target.value;
+    let sum = parseInt(value) + parseInt(this.vehicleDetailsForm.value['lifetax']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['otheracc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
+    console.log(sum);
+    let final = this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+    this.vehicleDetailsForm.patchValue({
+      taxtotal: sum,
+      finaltotal: final
+    })
+  }
+  life(e: any) {
+    let value = e.target.value;
+    let sum = parseInt(value) + parseInt(this.vehicleDetailsForm.value['insurance']) + parseInt(this.vehicleDetailsForm.value['extraacc']) + parseInt(this.vehicleDetailsForm.value['otheracc']) + parseInt(this.vehicleDetailsForm.value['warrentyacc']);
+    console.log(sum);
+    let final = this.vehicleDetailsForm.value['invoiceAmount'] + sum;
+    this.vehicleDetailsForm.patchValue({
+      taxtotal: sum,
+      finaltotal: final
     })
   }
 }
