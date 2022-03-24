@@ -62,16 +62,7 @@ export class AddvehiclesalesComponent implements OnInit {
   selectedAdvanceModelName: any = '';
   selectedAdvanceName: any = '';
   selectedAdvanceDate: any = '';
-  // disableTextbox:boolean=false;
-  // advanceamount=0;
-  // cash:number=0;
-  // card:number=0;
-  // cheque:number=0;
-  // dd:number=0;upi:number=0;
   showdata: any = '';
-  // selectedAdvanceModelName:any ='';
-  // selectedAdvanceName:any ='';
-  // selectedAdvanceDate:any ='';
   selectedGender = 0;
   submitted: boolean = false;
   selectedPresentDistrict = 0;
@@ -92,8 +83,6 @@ export class AddvehiclesalesComponent implements OnInit {
   selectedMonth:any;
   selectedYear:any;
   selectedvehicleSaleType:any;
-  // selectedPresentTaluk:any;
-  // selectedPermanentTaluk:any;
   labeldata: any = '';
   taxper: any;
   submittedVehicle: boolean = false;
@@ -131,12 +120,12 @@ export class AddvehiclesalesComponent implements OnInit {
     // gstNo: new FormControl('', []),
     presentAddress: new FormControl(),
     permanentAddress: new FormControl(),
-    phoneOff: new FormControl('', []),
+    phoneOff: 0,
     residence: new FormControl('', []),
     mobileNo: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
     eMail: new FormControl('', []),
     addressProof: new FormControl('', []),
-    aadharNo: new FormControl('', [Validators.required]),
+    aadharNo: new FormControl('', [Validators.required,Validators.minLength(12)]),
     qualification: new FormControl('', [Validators.required]),
     occupation: new FormControl('', [Validators.required]),
     maritalStatus: new FormControl('', [Validators.required]),
@@ -701,7 +690,7 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   onKeyUp(x: any) { // appending the updated value to the variable
     let data = x.target.value;
-    let final = data.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter((s: string | any[]) => s.length > 0).join("-");
+    let final = data.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter((s: string | any[]) => s.length > 0).join(" ");
     //  console.log(final);
     this.customerDetailForm.patchValue({ aadharNo: final });
   }
@@ -721,12 +710,6 @@ export class AddvehiclesalesComponent implements OnInit {
     //  this.color();
     this.loadfinance();
     this.getyear();
-
-   
-    // }
-
-
-
 
   }
 
@@ -883,11 +866,10 @@ export class AddvehiclesalesComponent implements OnInit {
   finalsubmit() {
     console.log(this.finalform.value)
     this.myDate = this.datePipe.transform(this.now, 'yyyy-MM-dd');
-    let todaydata = Date.parse(this.myDate)
     this.transtypecash.patchValue({
-      currentDate: todaydata,
-      chequeDate: todaydata,
-      ddDate: todaydata
+      currentDate: this.myDate,
+      chequeDate: this.myDate,
+      ddDate: this.myDate
     })
     this.payDetails.patchValue({
       createVehicleSalePaymentDetailDTO: this.transtypecash.value, createVehicleSaleCreditDetailDTO: this.creditForm.value, createVehicleSaleFinanceDetailDTO: this.financeForm.value
