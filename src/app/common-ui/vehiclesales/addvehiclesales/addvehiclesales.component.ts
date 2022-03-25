@@ -956,11 +956,10 @@ export class AddvehiclesalesComponent implements OnInit {
 
     console.log(this.finalform.value)
     this.myDate = this.datePipe.transform(this.now, 'yyyy-MM-dd');
-    let todaydata = Date.parse(this.myDate)
     this.transtypecash.patchValue({
-      currentDate: todaydata,
-      chequeDate: todaydata,
-      ddDate: todaydata
+      currentDate: this.myDate,
+      chequeDate: this.myDate,
+      ddDate: this.myDate
     })
     this.payDetails.patchValue({
       createVehicleSalePaymentDetailDTO: this.transtypecash.value, createVehicleSaleCreditDetailDTO: this.creditForm.value, createVehicleSaleFinanceDetailDTO: this.financeForm.value
