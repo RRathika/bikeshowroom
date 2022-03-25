@@ -92,11 +92,13 @@ export class AddvehiclesalesComponent implements OnInit {
   selectedMonth: any;
   selectedYear: any;
   selectedvehicleSaleType: any;
+  selectedtransactionTypeId: any;
   // selectedPresentTaluk:any;
   // selectedPermanentTaluk:any;
   labeldata: any = '';
   taxper: any;
   submittedVehicle: boolean = false;
+  submittedFinal: boolean = false;
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -125,7 +127,7 @@ export class AddvehiclesalesComponent implements OnInit {
     date: new FormControl('', []),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', []),
-    gender: new FormControl('', []),
+    gender: new FormControl('', [Validators.required]),
     dob: new FormControl('', []),
     fatherName: new FormControl('', [Validators.required]),
     // gstNo: new FormControl('', []),
@@ -199,7 +201,8 @@ export class AddvehiclesalesComponent implements OnInit {
   })
 
   transtypecash: FormGroup = this.formBuilder.group({
-    handAmount: 0,
+    // handAmount: 0,
+    handAmount: new FormControl(0, []),
     currentDate: new FormControl(),
     cardAmount: 0,
     cardDetails: new FormControl('', []),
@@ -267,6 +270,7 @@ export class AddvehiclesalesComponent implements OnInit {
     this.selectedMonth = 0;
     this.selectedYear = 0
     this.selectedvehicleSaleType = 0;
+    this.selectedtransactionTypeId = 0;
 
     this.isdisable = true;
     let role = localStorage.getItem('RoleId');
@@ -302,7 +306,7 @@ export class AddvehiclesalesComponent implements OnInit {
     // debugger
     console.log(e.target.value);
     if (e.target.value == 'Within State Sales') {
-      this.labeldata = 'CGST + SGST ';
+      this.labeldata = 'TAX % (CGST + SGST)';
       console.log(this.labeldata);
       let a = this.vehicleDetailsForm.value['cgst'];
       let b = this.vehicleDetailsForm.value['sgst'];
@@ -316,7 +320,7 @@ export class AddvehiclesalesComponent implements OnInit {
 
     }
     if (e.target.value == 'outside State Sales') {
-      this.labeldata = 'IGST';
+      this.labeldata = 'TAX % (IGST)';
       console.log(this.labeldata);
       this.taxper = this.vehicleDetailsForm.value['igst'];
       this.vehicleDetailsForm.patchValue({
@@ -430,7 +434,6 @@ export class AddvehiclesalesComponent implements OnInit {
     this.totaldata = [];
     this.varientcode = [];
     this.selectedVariant = 0;
-    // alert(22) 
     let model = e.target.value;
     this.vehicleDetailsForm.patchValue({
       modelId: model
@@ -438,24 +441,15 @@ export class AddvehiclesalesComponent implements OnInit {
     this.service.selectmodel(model).subscribe(data => {
       if (data.statusCode == 200) {
         this.colorcode = [];
-
-
-
         this.selectedColor = 0;
-
-
-
         this.ModalFilterform.controls['colorId'].disable();
         this.ModalFilterform.controls['variantId'].disable();
-
         this.toastService.show('Dont have related color', { classname: 'bg-danger text-light', delay: 3000 });
       }
       else {
         this.ModalFilterform.controls['colorId'].enable();
         this.colorcode = data;
         this.selectedColor = 0;
-
-
       }
     })
   }
@@ -545,7 +539,7 @@ export class AddvehiclesalesComponent implements OnInit {
       this.vehicleDetailsForm.controls['otheracc'].enable();
       this.vehicleDetailsForm.controls['warrentyacc'].enable();
     }
-    else{
+    else {
       this.vehicleDetailsForm.controls['vehicleSaleType'].disable();
       this.vehicleDetailsForm.controls['lifetax'].disable();
       this.vehicleDetailsForm.controls['insurance'].disable();
@@ -577,14 +571,12 @@ export class AddvehiclesalesComponent implements OnInit {
         this.taluk1 = '';
         this.selectedPresentTaluk = 0;
         this.presentaddressForm.controls['taluk'].disable();
-        // alert(1)  
         // this.toastService.show("No Taluk under "+name,{classname:'bg-danger text-light', delay: 3000})
       }
       else {
         this.presentaddressForm.controls['taluk'].enable();
         this.taluk1 = data;
         this.selectedPresentTaluk = 0;
-        // alert(2)
       }
 
     })
@@ -616,14 +608,11 @@ export class AddvehiclesalesComponent implements OnInit {
         //this.taluk2 = '';
         //  this.selectedPermanentTaluk=0;
         // this.permanentaddressForm.controls['taluk'].disable();
-        // alert(1)  
       }
       else {
         // this.permanentaddressForm.controls['taluk'].enable();
         this.taluk2 = data;
         console.log(this.taluk2)
-        //  console.log(this.selectedPermanentTaluk)
-        //  alert(2)
         this.selectedPermanentTaluk = taluk;
       }
 
@@ -725,8 +714,6 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   submit() {
     this.submitted = true;
-
-    // alert(this.vehicleDetailsForm.get('chassisNo')?.value)
     if (this.vehicleDetailsForm.get('chassisNo')?.value != '') {
       this.vehicleDetailsForm.controls['vehicleSaleType'].enable();
       this.vehicleDetailsForm.controls['lifetax'].enable();
@@ -734,69 +721,61 @@ export class AddvehiclesalesComponent implements OnInit {
       this.vehicleDetailsForm.controls['extraacc'].enable();
       this.vehicleDetailsForm.controls['otheracc'].enable();
       this.vehicleDetailsForm.controls['warrentyacc'].enable();
- 
     }
-    else{
+    else {
       this.vehicleDetailsForm.controls['vehicleSaleType'].disable();
       this.vehicleDetailsForm.controls['lifetax'].disable();
       this.vehicleDetailsForm.controls['insurance'].disable();
       this.vehicleDetailsForm.controls['extraacc'].disable();
       this.vehicleDetailsForm.controls['otheracc'].disable();
       this.vehicleDetailsForm.controls['warrentyacc'].disable();
-    
     }
 
-    // if (this.customerDetailForm.valid) {
+    // if (this.customerDetailForm.valid && this.presentaddressForm.valid && this.permanentaddressForm.valid
+    // && this.customerDetailForm.value['gender'] != 0
+    // && this.customerDetailForm.value['qualification'] != 0 && this.customerDetailForm.value['occupation'] != 0
+    // && this.customerDetailForm.value['maritalStatus'] != 0 && this.customerDetailForm.value['nomineeGender'] != 0
+    // && this.customerDetailForm.value['relation'] != 0
+    // && this.presentaddressForm.value['district'] != 0 && this.presentaddressForm.value['taluk'] != 0) {
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
-    // console.log(this.customerDetailForm.value);
-
     this.isShownProfile = !this.isShownProfile;
     this.isShownHome = false;
     this.isShownContact = false;
     this.showroom();
     // this.yard();
-
     //  this.color();
     this.loadfinance();
     this.getyear();
-
-
     // }
-
-
-
-
   }
 
   btnVehicleModel() {
-
     this.totaldata = [];
     this.ModalFilterform.controls['colorId'].disable();
     this.ModalFilterform.controls['variantId'].disable();
-
-    // alert(11)
     this.model();
     this.selectedColor = 0;
     this.selectedVariant = 0;
   }
 
   vehicleform() {
-  
-    this.submittedVehicle = true;
-    console.log(this.vehicleDetailsForm.value);
+    // this.submittedVehicle = true;
+    // if (this.vehicleDetailsForm.get('chassisNo')?.value == '') {
+    //   this.toastService.show('Choose Vehicle Model', { classname: 'bg-danger text-light', delay: 3000 });
+    // }
+    // else{
 
-    if (this.vehicleDetailsForm.valid) {
-      alert(1)
+    //   if (this.vehicleDetailsForm.valid && this.vehicleDetailsForm.value['showRoomId'] != 0
+    //     && this.vehicleDetailsForm.value['month'] != 0 && this.vehicleDetailsForm.value['year'] != 0
+    //     && this.vehicleDetailsForm.value['vehicleSaleType'] != 0) {
     this.isShownHome = false;
     this.isShownProfile = false;
     this.isShownContact = !this.isShownHome;
     this.loadfield();
-    }
-    else{
-      alert(2)
-    }
-
+    //   }
+    // }
   }
+
   toggleShowProfile() {
 
     if (this.vehicleDetailsForm.get('chassisNo')?.value != '') {
@@ -807,7 +786,7 @@ export class AddvehiclesalesComponent implements OnInit {
       this.vehicleDetailsForm.controls['otheracc'].enable();
       this.vehicleDetailsForm.controls['warrentyacc'].enable();
     }
-    else{
+    else {
       this.vehicleDetailsForm.controls['vehicleSaleType'].disable();
       this.vehicleDetailsForm.controls['lifetax'].disable();
       this.vehicleDetailsForm.controls['insurance'].disable();
@@ -885,8 +864,27 @@ export class AddvehiclesalesComponent implements OnInit {
     switch (y) {
       case 1:
         this.isCashinhand = !this.isCashinhand;
+
+        // this.toastService.show('', { classname: 'bg-success text-light', delay: 3000 });
+       
+        // alert(this.isCashinhand)
+        if (this.isCashinhand == true) {
+          alert(1)
+          this.transtypecash.controls['handAmount'].setValidators([Validators.required]);
+          this.transtypecash.controls['handAmount'].updateValueAndValidity();
+        }
+        else {
+          alert(2)
+          this.transtypecash.controls['handAmount'].setValidators(null);
+          this.transtypecash.controls['handAmount'].updateValueAndValidity();
+        }
+
+
         break;
       case 2:
+        // alert(2)
+       
+
         this.iscard = !this.iscard;
         break;
       case 3:
@@ -947,6 +945,15 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   finalsubmit() {
+    this.submittedFinal = true;
+
+    if (this.transtypecash.valid && this.transtypecash.value['handAmount'] != 0) {
+      alert(1)
+    }
+    else {
+      alert(2)
+    }
+
     console.log(this.finalform.value)
     this.myDate = this.datePipe.transform(this.now, 'yyyy-MM-dd');
     let todaydata = Date.parse(this.myDate)

@@ -861,12 +861,12 @@
                                                 <input type="text" class="form-control" formControlName="chassisNo"
                                                     [attr.disabled]="disableTextbox">
 
-                                                    <div *ngIf="submittedVehicle">
-                                                        <span class="text-danger"
-                                                            *ngIf="vehicleDetailsForm.controls.chassisNo.errors?.required">
-                                                            <small>Mandatory</small>
-                                                        </span>
-                                                    </div>
+                                                <!-- <div *ngIf="submittedVehicle">
+                                                    <span class="text-danger"
+                                                        *ngIf="vehicleDetailsForm.controls.chassisNo.errors?.required">
+                                                        <small>Mandatory</small>
+                                                    </span>
+                                                </div> -->
 
                                             </div>
                                         </div>
@@ -982,11 +982,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group row" *ngIf="labeldata!=''">
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" style="margin-top: 10px;">
                                                 <label class="label" for="customCheckDisabled">{{labeldata}}</label>
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" class="form-control" formControlName="taxpercentage">
+                                                <input type="text" class="form-control" [attr.disabled]="disableTextbox"
+                                                    formControlName="taxpercentage">
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control" [attr.disabled]="disableTextbox"
@@ -1115,12 +1116,18 @@
                                             </div>
                                             <div class="col-sm-8">
                                                 <select (change)="toggleShowCash($event)" class="form-select"
-                                                    formControlName="transactionTypeId">
-                                                    <option value="" disabled>Select</option>
+                                                    formControlName="transactionTypeId" [(ngModel)]="selectedtransactionTypeId">
+                                                    <option value="0" disabled>Select</option>
                                                     <option value=1>Cash</option>
                                                     <option value=2>Credit</option>
                                                     <option value=3>Finance</option>
                                                 </select>
+                                                <div *ngIf="submittedFinal">
+                                                    <span class="text-danger"
+                                                        *ngIf="payDetails.controls.transactionTypeId.value == 0 || payDetails.controls.transactionTypeId.errors?.required">
+                                                        <small>Choose Transaction Type</small>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -1232,6 +1239,14 @@
                                                         <input class="form-control" type="number"
                                                             (change)="cashinhand($event)"
                                                             formControlName="handAmount"><br>
+                                                            
+                                                            <div *ngIf="submittedFinal">
+                                                                <span class="text-danger"
+                                                                    *ngIf="transtypecash.controls.handAmount.value == 0">
+                                                                    <small>mandatory</small>
+                                                                </span>
+                                                            </div>
+
                                                     </div>
                                                 </div>
                                             </div>
