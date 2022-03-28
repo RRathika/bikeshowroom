@@ -1073,6 +1073,7 @@ export class AddvehiclesalesComponent implements OnInit {
         }
         else {
           alert("not valid")
+          
         }
       }
       else {
