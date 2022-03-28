@@ -93,6 +93,8 @@ export class AddvehiclesalesComponent implements OnInit {
   selectedYear: any;
   selectedvehicleSaleType: any;
   selectedtransactionTypeId: any;
+  selectedfinanceId: any;
+
   // selectedPresentTaluk:any;
   // selectedPermanentTaluk:any;
   labeldata: any = '';
@@ -202,32 +204,33 @@ export class AddvehiclesalesComponent implements OnInit {
 
   transtypecash: FormGroup = this.formBuilder.group({
     // handAmount: 0,
-    handAmount: new FormControl(0, []),
+    // handAmount: new FormControl(0, []),
+    handAmount: new FormControl('', []),
     currentDate: new FormControl(),
-    cardAmount: 0,
+    cardAmount: new FormControl('', []),
     cardDetails: new FormControl('', []),
-    chequeAmount: 0,
+    chequeAmount: new FormControl('', []),
     chequeDetails: new FormControl('', []),
-    chequeDate: new FormControl(),
+    chequeDate: new FormControl('', []),
     chequeNo: new FormControl('', []),
-    ddAmount: 0,
+    ddAmount: new FormControl('', []),
     ddDetails: new FormControl('', []),
-    ddDate: new FormControl(),
+    ddDate: new FormControl('', []),
     ddNo: new FormControl('', []),
-    upiAmount: 0,
+    upiAmount: new FormControl('', []),
     upiNo: new FormControl('', []),
     status: 0
   })
   creditForm: FormGroup = this.formBuilder.group({
-    creditAmount: 0,
+    creditAmount: new FormControl('', []),
     name: new FormControl('', []),
-    mobileNo: 0,
+    mobileNo: new FormControl('', []),
     address: new FormControl('', []),
     status: 0
   })
   financeForm: FormGroup = this.formBuilder.group({
-    financeId: 0,
-    downPayment: 0,
+    financeId: new FormControl('', []),
+    downPayment: new FormControl('', []),
     status: 0
   })
   finalform: FormGroup = this.formBuilder.group({
@@ -271,6 +274,7 @@ export class AddvehiclesalesComponent implements OnInit {
     this.selectedYear = 0
     this.selectedvehicleSaleType = 0;
     this.selectedtransactionTypeId = 0;
+    this.selectedfinanceId = 0;
 
     this.isdisable = true;
     let role = localStorage.getItem('RoleId');
@@ -825,10 +829,34 @@ export class AddvehiclesalesComponent implements OnInit {
         this.isShownCash = !this.isShownCash;
         this.isFinance = false;
         this.iscredit = false;
+
+        this.creditForm.reset();
+        this.financeForm.reset();
         break;
 
       case "2":
         this.iscredit = !this.iscredit;
+        if (this.iscredit == true) {
+          this.creditForm.controls['creditAmount'].setValidators([Validators.required]);
+          this.creditForm.controls['creditAmount'].updateValueAndValidity();
+          this.creditForm.controls['name'].setValidators([Validators.required]);
+          this.creditForm.controls['name'].updateValueAndValidity();
+          this.creditForm.controls['mobileNo'].setValidators([Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]);
+          this.creditForm.controls['mobileNo'].updateValueAndValidity();
+          this.creditForm.controls['address'].setValidators([Validators.required]);
+          this.creditForm.controls['address'].updateValueAndValidity();
+        }
+        else {
+          this.creditForm.controls['creditAmount'].setValidators(null);
+          this.creditForm.controls['creditAmount'].updateValueAndValidity();
+          this.creditForm.controls['name'].setValidators(null);
+          this.creditForm.controls['name'].updateValueAndValidity();
+          this.creditForm.controls['mobileNo'].setValidators(null);
+          this.creditForm.controls['mobileNo'].updateValueAndValidity();
+          this.creditForm.controls['address'].setValidators(null);
+          this.creditForm.controls['address'].updateValueAndValidity();
+          // this.creditForm.patchValue({handAmount: ''})
+        }
         this.isShownCash = false;
         this.isCashinhand = false;
         this.iscard = false;
@@ -836,12 +864,30 @@ export class AddvehiclesalesComponent implements OnInit {
         this.isUPI = false;
         this.isDD = false;
         this.isFinance = false;
+
+        this.transtypecash.reset();
+        this.financeForm.reset();
+
         break;
       default:
         console.log("No such day exists!");
         break;
       case "3":
         this.isFinance = !this.isFinance;
+        if (this.isFinance == true) {
+          this.financeForm.controls['financeId'].setValidators([Validators.required]);
+          this.financeForm.controls['financeId'].updateValueAndValidity();
+          this.financeForm.controls['downPayment'].setValidators([Validators.required]);
+          this.financeForm.controls['downPayment'].updateValueAndValidity();
+        }
+        else {
+          this.financeForm.controls['financeId'].setValidators(null);
+          this.financeForm.controls['financeId'].updateValueAndValidity();
+          this.financeForm.controls['downPayment'].setValidators(null);
+          this.financeForm.controls['downPayment'].updateValueAndValidity();
+          // this.creditForm.patchValue({handAmount: ''})
+        }
+        this.selectedfinanceId = 0;
         this.isShownCash = false;
         this.isCashinhand = false;
         this.iscard = false;
@@ -849,6 +895,11 @@ export class AddvehiclesalesComponent implements OnInit {
         this.isUPI = false;
         this.isDD = false;
         this.iscredit = false;
+
+        this.transtypecash.reset();
+        this.creditForm.reset();
+
+
         break;
     }
   }
@@ -864,37 +915,103 @@ export class AddvehiclesalesComponent implements OnInit {
     switch (y) {
       case 1:
         this.isCashinhand = !this.isCashinhand;
-
-        // this.toastService.show('', { classname: 'bg-success text-light', delay: 3000 });
-       
-        // alert(this.isCashinhand)
         if (this.isCashinhand == true) {
-          alert(1)
           this.transtypecash.controls['handAmount'].setValidators([Validators.required]);
           this.transtypecash.controls['handAmount'].updateValueAndValidity();
         }
         else {
-          alert(2)
           this.transtypecash.controls['handAmount'].setValidators(null);
           this.transtypecash.controls['handAmount'].updateValueAndValidity();
+          this.transtypecash.patchValue({ handAmount: '' })
         }
-
-
         break;
       case 2:
-        // alert(2)
-       
-
         this.iscard = !this.iscard;
+        if (this.iscard == true) {
+          this.transtypecash.controls['cardAmount'].setValidators([Validators.required]);
+          this.transtypecash.controls['cardAmount'].updateValueAndValidity();
+          this.transtypecash.controls['cardDetails'].setValidators([Validators.required]);
+          this.transtypecash.controls['cardDetails'].updateValueAndValidity();
+        }
+        else {
+          this.transtypecash.controls['cardAmount'].setValidators(null);
+          this.transtypecash.controls['cardAmount'].updateValueAndValidity();
+          this.transtypecash.controls['cardDetails'].setValidators(null);
+          this.transtypecash.controls['cardDetails'].updateValueAndValidity();
+          this.transtypecash.patchValue({ cardAmount: '' })
+          this.transtypecash.patchValue({ cardDetails: '' })
+        }
         break;
       case 3:
         this.ischeque = !this.ischeque;
+        if (this.ischeque == true) {
+          this.transtypecash.controls['chequeAmount'].setValidators([Validators.required]);
+          this.transtypecash.controls['chequeAmount'].updateValueAndValidity();
+          this.transtypecash.controls['chequeNo'].setValidators([Validators.required]);
+          this.transtypecash.controls['chequeNo'].updateValueAndValidity();
+          this.transtypecash.controls['chequeDate'].setValidators([Validators.required]);
+          this.transtypecash.controls['chequeDate'].updateValueAndValidity();
+          this.transtypecash.controls['chequeDetails'].setValidators([Validators.required]);
+          this.transtypecash.controls['chequeDetails'].updateValueAndValidity();
+        }
+        else {
+          this.transtypecash.controls['chequeAmount'].setValidators(null);
+          this.transtypecash.controls['chequeAmount'].updateValueAndValidity();
+          this.transtypecash.controls['chequeNo'].setValidators(null);
+          this.transtypecash.controls['chequeNo'].updateValueAndValidity();
+          this.transtypecash.controls['chequeDate'].setValidators(null);
+          this.transtypecash.controls['chequeDate'].updateValueAndValidity();
+          this.transtypecash.controls['chequeDetails'].setValidators(null);
+          this.transtypecash.controls['chequeDetails'].updateValueAndValidity();
+          this.transtypecash.patchValue({ chequeAmount: '' })
+          this.transtypecash.patchValue({ chequeNo: '' })
+          this.transtypecash.patchValue({ chequeDate: '' })
+          this.transtypecash.patchValue({ chequeDetails: '' })
+        }
         break;
       case 4:
         this.isUPI = !this.isUPI;
+        if (this.isUPI == true) {
+          this.transtypecash.controls['upiAmount'].setValidators([Validators.required]);
+          this.transtypecash.controls['upiAmount'].updateValueAndValidity();
+          this.transtypecash.controls['upiNo'].setValidators([Validators.required]);
+          this.transtypecash.controls['upiNo'].updateValueAndValidity();
+        }
+        else {
+          this.transtypecash.controls['upiAmount'].setValidators(null);
+          this.transtypecash.controls['upiAmount'].updateValueAndValidity();
+          this.transtypecash.controls['upiNo'].setValidators(null);
+          this.transtypecash.controls['upiNo'].updateValueAndValidity();
+          this.transtypecash.patchValue({ upiAmount: '' })
+          this.transtypecash.patchValue({ upiNo: '' })
+        }
         break;
       case 5:
         this.isDD = !this.isDD;
+        if (this.isDD == true) {
+          this.transtypecash.controls['ddAmount'].setValidators([Validators.required]);
+          this.transtypecash.controls['ddAmount'].updateValueAndValidity();
+          this.transtypecash.controls['ddDetails'].setValidators([Validators.required]);
+          this.transtypecash.controls['ddDetails'].updateValueAndValidity();
+          this.transtypecash.controls['ddDate'].setValidators([Validators.required]);
+          this.transtypecash.controls['ddDate'].updateValueAndValidity();
+          this.transtypecash.controls['ddNo'].setValidators([Validators.required]);
+          this.transtypecash.controls['ddNo'].updateValueAndValidity();
+        }
+        else {
+          this.transtypecash.controls['ddAmount'].setValidators(null);
+          this.transtypecash.controls['ddAmount'].updateValueAndValidity();
+          this.transtypecash.controls['ddDetails'].setValidators(null);
+          this.transtypecash.controls['ddDetails'].updateValueAndValidity();
+          this.transtypecash.controls['ddDate'].setValidators(null);
+          this.transtypecash.controls['ddDate'].updateValueAndValidity();
+          this.transtypecash.controls['ddNo'].setValidators(null);
+          this.transtypecash.controls['ddNo'].updateValueAndValidity();
+          this.transtypecash.patchValue({ ddAmount: '' })
+          this.transtypecash.patchValue({ ddDetails: '' })
+          this.transtypecash.patchValue({ ddDate: '' })
+          this.transtypecash.patchValue({ ddNo: '' })
+        }
         break; default:
         console.log("No such day exists!");
         break;
@@ -945,22 +1062,61 @@ export class AddvehiclesalesComponent implements OnInit {
     })
   }
   finalsubmit() {
-    this.submittedFinal = true;
 
-    if (this.transtypecash.valid && this.transtypecash.value['handAmount'] != 0) {
-      alert(1)
+    this.submittedFinal = true;
+    if (this.selectedtransactionTypeId == 1) {
+      if (this.isCashinhand == true || this.iscard == true || this.ischeque == true
+        || this.isUPI == true || this.isDD == true) {
+        if (this.transtypecash.valid && this.financeForm.value['financeId'] != 0
+          && this.creditForm.valid && this.financeForm.valid) {
+          alert("valid")
+        }
+        else {
+          alert("not valid")
+        }
+      }
+      else {
+        this.toastService.show('Select Payment Mode', { classname: 'bg-danger text-light', delay: 3000 });
+      }
     }
     else {
-      alert(2)
     }
 
+
+    // this.submittedFinal = true;
+    // if (this.transtypecash.valid && this.financeForm.value['financeId'] != 0
+    //   && this.creditForm.valid && this.financeForm.valid) {
+    //   alert("valid")
+
+    //   if (this.selectedtransactionTypeId == 1) {
+    //     if (this.isCashinhand == true || this.iscard == true || this.ischeque == true
+    //       || this.isUPI == true || this.isDD == true) {
+
+    //     }
+    //     else {
+    //       this.toastService.show('Select Payment Mode', { classname: 'bg-danger text-light', delay: 3000 });
+    //     }
+    //   }
+
+    // }
+    // else {
+    //   alert("not valid")
+    // }
+
+
+
+
+
+
+    // alert(this.transtypecash.value['handAmount'])
+
     console.log(this.finalform.value)
-    this.myDate = this.datePipe.transform(this.now, 'yyyy-MM-dd');
-    this.transtypecash.patchValue({
-      currentDate: this.myDate,
-      chequeDate: this.myDate,
-      ddDate: this.myDate
-    })
+    // this.myDate = this.datePipe.transform(this.now, 'yyyy-MM-dd');
+    // this.transtypecash.patchValue({
+    //   currentDate: this.myDate,
+    //   chequeDate: this.myDate,
+    //   ddDate: this.myDate
+    // })
     this.payDetails.patchValue({
       createVehicleSalePaymentDetailDTO: this.transtypecash.value, createVehicleSaleCreditDetailDTO: this.creditForm.value, createVehicleSaleFinanceDetailDTO: this.financeForm.value
     })
