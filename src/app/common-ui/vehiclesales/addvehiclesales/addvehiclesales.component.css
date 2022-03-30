@@ -29,3 +29,6 @@
     .heading-subtitle > span      after {
         top: -13px;     
   }
+  a.btn.btn-info {
+    padding: 0px;
+}

@@ -70,6 +70,7 @@
                   <th>Chassis No</th>
                   <th>Engine No</th>
                   <th>View</th>
+                  <th>move</th>
                 </tr>
               </thead>
               
@@ -85,6 +86,8 @@
                   <td><i class="fas fa-eye" style="color: blue;" data-toggle="modal"
                     data-target="#exampleModal" data-whatever="@mdo"
                     (click)="viewbyid(data.vehicleSalesInvoiceDetailId)"></i></td>
+                    <td><i class="fas fa-eye" style="color: blue;" 
+                        (click)="invoiceid(data.vehicleSalesInvoiceDetailId)"></i></td>
                 </tr> 
               </tbody>
             </table>

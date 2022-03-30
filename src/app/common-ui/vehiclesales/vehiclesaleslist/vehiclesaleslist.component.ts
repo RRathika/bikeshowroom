@@ -30,7 +30,7 @@ export class VehiclesaleslistComponent implements OnInit {
     yard:new FormControl('',[Validators.required])
   })
   ngOnInit(): void {
-    // this.loaddata();
+    this.loaddata();
     this.roleid=localStorage.getItem('RoleId');
     this.showroom=localStorage.getItem('ShowRoomId');
     this.loadshowroom();
@@ -47,11 +47,11 @@ export class VehiclesaleslistComponent implements OnInit {
       this.yard=data;
     })
   }
-  // loaddata(){
-  //   this.service.getsales().subscribe(data=>{
-  //     this.alldata=data;
-  //   })
-  // }
+  loaddata(){
+    this.service.getsales(0,0,'','').subscribe(data=>{
+      this.list=data;
+    })
+  }
   add(){
     this.route.navigateByUrl('/dashboard/addvehiclesale');
   }
@@ -68,6 +68,15 @@ export class VehiclesaleslistComponent implements OnInit {
       console.log(this.viewdata);
       
     })
+  }
+  invoiceid(id:any)
+  {
+    this.service.getbysale(id).subscribe(data=>{
+      this.viewdata=data;
+      console.log(this.viewdata);
+      this.service.printvalue.next(this.viewdata);
+      this.route.navigateByUrl('/invoice')
+    })   
   }
   submit(){ 
     this.submitted=true;   

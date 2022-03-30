@@ -21,7 +21,8 @@ export class InvoiceComponent implements OnInit {
   callprint(){
     this.service.printvalue.subscribe(data=>{
       this.indata=data; 
-      window.print();     
+      console.log(this.indata);      
+      // window.print();     
     })
     // this.indata={
     //   "invoiceNo": "20220005",
@@ -50,6 +51,6 @@ export class InvoiceComponent implements OnInit {
     // console.log(this.form);
     // this.indate=this.form.createVehicleCustomerDetailsDTO.invoiceDate;
     // this.name=this.form.createVehicleCustomerDetailsDTO.firstName+' '+this.form.createVehicleCustomerDetailsDTO.lastName;
-
+    window.print();
   }
 }

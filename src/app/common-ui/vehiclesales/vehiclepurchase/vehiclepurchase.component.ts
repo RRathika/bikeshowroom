@@ -34,6 +34,12 @@ export class VehiclepurchaseComponent implements OnInit {
   vendoriddata: any;
   finaldata: any;
   excelkey: boolean = false;
+  excelmodel:any;
+  excelcolor:any;
+  excelvariant:any;
+  filtermodel:any;
+  filtercolor:any;
+  filtervariant:any;
   constructor(private router: Router, private service: YamahaserviceService, private formbuilder: FormBuilder, public toastservice: ToastServiceService) { }
   vehiclepurchaseForm: FormGroup = this.formbuilder.group({
     receivedDate: new FormControl('', [Validators.required]),
@@ -179,29 +185,30 @@ export class VehiclepurchaseComponent implements OnInit {
           }, {});
           for (let i = 0; i < this.jsonData.length; i++) {
             this.jsonData[i].keyNo = '';
-            let model = this.jsonData[i].ModelCode;
-            let colorcode = this.jsonData[i].ModelColorCode;
-            let variantcode = this.jsonData[i].VariantCode;
-            let variantvalue = this.variantdata.filter((value: { variantName: any; variantCode: any; variantId: any }) => {
-              if (variantcode == value.variantCode) {
+            this.excelmodel = this.jsonData[i].ModelCode;
+            this.excelcolor = this.jsonData[i].ModelColorCode;
+            this.excelvariant = this.jsonData[i].VariantCode;
+            this.filtervariant = this.variantdata.filter((value: { variantName: any; variantCode: any; variantId: any }) => {
+              if (this.excelvariant == value.variantCode) {
                 this.jsonData[i].variantname = value.variantName;
                 this.jsonData[i].variantId = value.variantId;
                 console.log(this.jsonData[i].variantname);
               }
             })
-            let bikedata = this.bikemodel.filter((value: any) => {
-              if (model == value.modelCode) {
+            this.filtermodel= this.bikemodel.filter((value: any) => {
+              if (this.excelmodel == value.modelCode) {
                 this.jsonData[i].modelname = value.modelName;
                 this.jsonData[i].vehicleModelId = value.modelId;
                 console.log(this.jsonData[i].modelname);
               }
             });
-            let colordata = this.color.filter((value: { colorCode: any; colorName: any; colorId: any; }) => {
-              if (colorcode == value.colorCode) {
+            this.filtercolor = this.color.filter((value: any) => {
+              // debugger
+              if (this.excelcolor == value.colorCode) {                   
                 this.jsonData[i].colorname = value.colorName;
                 this.jsonData[i].colorId = value.colorId;
-              }
-
+                alert(this.jsonData[i].colorname);
+              }              
             });
           }
         }
@@ -211,7 +218,6 @@ export class VehiclepurchaseComponent implements OnInit {
         this.myInputVariable.nativeElement.value = "";
       }
     };
-
     reader.readAsBinaryString(target.files[0]);
   }
   onChange(event: any, i: any) {
@@ -300,8 +306,8 @@ export class VehiclepurchaseComponent implements OnInit {
               }
               else {
                 this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 7000 });
-                this.clear();
                 this.router.navigateByUrl('/dashboard/vehiclepurchase');
+                this.clear();
               }
             })
           }
@@ -338,9 +344,9 @@ export class VehiclepurchaseComponent implements OnInit {
               this.toastservice.show(data.message, { classname: 'bg-danger text-light', delay: 3000 });
             }
             else {
-              this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 7000 });
-              this.clear();
+              this.toastservice.show(data.message, { classname: 'bg-success text-light', delay: 7000 });              
               this.router.navigateByUrl('/dashboard/vehiclepurchase');
+              this.clear();
             }
           })
         }

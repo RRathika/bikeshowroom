@@ -53,6 +53,10 @@ export class LoginComponent implements OnInit {
         {
           this.toastservice.show(data.message,{className:'bg-danger text-danger', delay: 5000})
         }
+        if(data.statusCode==202)
+        {
+          this.toastservice.show(data.message,{className:'bg-danger text-danger', delay: 5000})
+        }
         else{
           this.username = data.userName;
           this.usercode = data.userCode;
@@ -65,7 +69,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('MacAddress', data.macAddress);
           localStorage.setItem('RoleId',data.roleId);
 
-        //  if(this.username != undefined && this.usercode != undefined && this.showroom != undefined && this.mac != undefined){
+        //  if(this.username == undefined && this.usercode == undefined && this.showroom == undefined && this.mac == undefined){
           if(this.username =='' && this.usercode ==''&& this.showroom ==''&&this.mac ==''){  
             this.toastservice.show('Doesnot match your details',{className:'bg-danger text-light', delay: 5000}); 
             }

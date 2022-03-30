@@ -97,6 +97,7 @@ export class AddvehiclesalesComponent implements OnInit {
   labeldata: any = '';
   taxper: any;
   submittedVehicle: boolean = false;
+  variantchangebyshowroom:any;
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -131,7 +132,7 @@ export class AddvehiclesalesComponent implements OnInit {
     // gstNo: new FormControl('', []),
     presentAddress: new FormControl(),
     permanentAddress: new FormControl(),
-    phoneOff: new FormControl('', []),
+    phoneOff: 0,
     residence: new FormControl('', []),
     mobileNo: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
     eMail: new FormControl('', []),
@@ -480,12 +481,13 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   variantnamechange(e: any) {
     // debugger
-    let variant = e.target.value;
-    let show = localStorage.getItem('ShowRoomId');
-    let role = localStorage.getItem('RoleId');
+    let variant = e.target.value;    
+    this.variantchangebyshowroom = localStorage.getItem('ShowRoomId');
+    if(this.variantchangebyshowroom == 0)
+    {
+      let show = this.vehicleDetailsForm.value['showRoomId'];
+      let role = localStorage.getItem('RoleId');
     this.service.vartantbydata(variant, show, role).subscribe(data => {
-      console.log(data)
-
       if (data.message == 'No Data Found') {
         this.totaldata = [];
         this.toastService.show('No stock available', { classname: 'bg-danger text-light', delay: 2000 });
@@ -498,10 +500,28 @@ export class AddvehiclesalesComponent implements OnInit {
           console.log(this.totaldata);
         }
       }
-
-
-
     })
+    }
+    else
+    {
+      let show = localStorage.getItem('ShowRoomId');
+      let role = localStorage.getItem('RoleId');
+    this.service.vartantbydata(variant, show, role).subscribe(data => {
+      // console.log(data)
+      if (data.message == 'No Data Found') {
+        this.totaldata = [];
+        this.toastService.show('No stock available', { classname: 'bg-danger text-light', delay: 2000 });
+      }
+      else {
+        this.totaldata = data;
+        for (let i = 0; i <= this.totaldata.length; i++) {
+          this.finalamount = Math.round(this.totaldata[i].total);
+          this.totaldata[i].netamount = this.finalamount;
+          console.log(this.totaldata);
+        }
+      }
+    })
+    }
   }
   gstcalculation(e: any) {
 
@@ -745,11 +765,15 @@ export class AddvehiclesalesComponent implements OnInit {
       this.vehicleDetailsForm.controls['warrentyacc'].disable();
     
     }
-
+if(this.customerDetailForm.value['dob']=='')
+{
+  this.customerDetailForm.patchValue({
+    dob:null
+  })
+}
     // if (this.customerDetailForm.valid) {
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
-    // console.log(this.customerDetailForm.value);
-
+    // console.log(this.customerDetailForm.value);    
     this.isShownProfile = !this.isShownProfile;
     this.isShownHome = false;
     this.isShownContact = false;
@@ -967,7 +991,7 @@ export class AddvehiclesalesComponent implements OnInit {
       if (data) {
         this.service.printvalue.next(this.finalform.value);
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
-        this.print();
+        this.call();
       }
       else {
         this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 3000 })
@@ -975,7 +999,7 @@ export class AddvehiclesalesComponent implements OnInit {
     })
 
   }
-  print() {
+  call() {
     this.route.navigateByUrl('/invoice');
   }
 

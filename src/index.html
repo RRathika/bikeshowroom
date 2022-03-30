@@ -68,6 +68,14 @@
   <!-- AdminLTE for demo purposes -->
   <script src="./assets/dist/js/demo.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
- 
+ <script>
+   window.addEventListener("beforeunload", function(e){
+    window.localStorage.removeItem('UserCode');
+    window.localStorage.removeItem('RoleId');
+    window.localStorage.removeItem('UserName');
+    window.localStorage.removeItem('ShowRoomId');
+    window.localStorage.removeItem('MacAddress');
+}, false);
+ </script>
 </body>
 </html>
