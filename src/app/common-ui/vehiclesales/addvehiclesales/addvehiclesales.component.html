@@ -861,12 +861,12 @@
                                                 <input type="text" class="form-control" formControlName="chassisNo"
                                                     [attr.disabled]="disableTextbox">
 
-                                                    <div *ngIf="submittedVehicle">
-                                                        <span class="text-danger"
-                                                            *ngIf="vehicleDetailsForm.controls.chassisNo.errors?.required">
-                                                            <small>Mandatory</small>
-                                                        </span>
-                                                    </div>
+                                                <!-- <div *ngIf="submittedVehicle">
+                                                    <span class="text-danger"
+                                                        *ngIf="vehicleDetailsForm.controls.chassisNo.errors?.required">
+                                                        <small>Mandatory</small>
+                                                    </span>
+                                                </div> -->
 
                                             </div>
                                         </div>
@@ -982,11 +982,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group row" *ngIf="labeldata!=''">
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4" style="margin-top: 10px;">
                                                 <label class="label" for="customCheckDisabled">{{labeldata}}</label>
                                             </div>
                                             <div class="col-sm-2">
-                                                <input type="text" class="form-control" formControlName="taxpercentage">
+                                                <input type="text" class="form-control" [attr.disabled]="disableTextbox"
+                                                    formControlName="taxpercentage">
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control" [attr.disabled]="disableTextbox"
@@ -1115,12 +1116,19 @@
                                             </div>
                                             <div class="col-sm-8">
                                                 <select (change)="toggleShowCash($event)" class="form-select"
-                                                    formControlName="transactionTypeId">
-                                                    <option value="" disabled>Select</option>
+                                                    formControlName="transactionTypeId"
+                                                    [(ngModel)]="selectedtransactionTypeId">
+                                                    <option value="0" disabled>Select</option>
                                                     <option value=1>Cash</option>
                                                     <option value=2>Credit</option>
                                                     <option value=3>Finance</option>
                                                 </select>
+                                                <div *ngIf="submittedFinal">
+                                                    <span class="text-danger"
+                                                        *ngIf="payDetails.controls.transactionTypeId.value == 0 || payDetails.controls.transactionTypeId.errors?.required">
+                                                        <small>Choose Transaction Type</small>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -1230,8 +1238,15 @@
                                                     </div>
                                                     <div class="col-sm-10">
                                                         <input class="form-control" type="number"
-                                                            (change)="cashinhand($event)"
-                                                            formControlName="handAmount"><br>
+                                                            (change)="cashinhand($event)" formControlName="handAmount">
+
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.handAmount.errors?.required">
+                                                                Enter Amount
+                                                            </small>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -1244,6 +1259,12 @@
                                                     <div class="col-sm-10">
                                                         <input class="form-control" type="text"
                                                             formControlName="cardAmount" (change)="cashinhand($event)">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.cardAmount.errors?.required">
+                                                                Enter Amount
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                     <div class="col-sm-2 pt-2">
                                                         <label>Card Details</label>
@@ -1251,6 +1272,12 @@
                                                     <div class="col-sm-10 pt-2">
                                                         <input class="form-control" type="text"
                                                             formControlName="cardDetails">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.cardDetails.errors?.required">
+                                                                Enter Card Details
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1263,22 +1290,40 @@
                                                     <div class="col-sm-10">
                                                         <input class="form-control" type="number"
                                                             formControlName="chequeAmount"
-                                                            (change)="cashinhand($event)"><br>
+                                                            (change)="cashinhand($event)">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.chequeAmount.errors?.required">
+                                                                Enter Amount
+                                                            </small>
+                                                        </div>
                                                     </div>
-                                                    <br>
-                                                    <div class="col-sm-2">
+                                                    <!-- <br> -->
+                                                    <div class="col-sm-2 mt-2">
                                                         <label>Cheque No</label>
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mt-2">
                                                         <input type="number" class="form-control"
                                                             formControlName="chequeNo">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.chequeNo.errors?.required">
+                                                                Enter Cheque No
+                                                            </small>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-2 mt-2">
                                                         <label>Date</label>
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mt-2">
                                                         <input type="date" class="form-control"
                                                             formControlName="chequeDate">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.chequeDate.errors?.required">
+                                                                Choose Date
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <label>Cheque Details</label>
@@ -1286,6 +1331,12 @@
                                                     <div class="col-sm-10">
                                                         <input class="form-control" type="text"
                                                             formControlName="chequeDetails">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.chequeDetails.errors?.required">
+                                                                Enter Cheque Details
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1297,15 +1348,28 @@
                                                     </div>
                                                     <div class="col-sm-10">
                                                         <input class="form-control" type="number"
-                                                            formControlName="ddAmount"
-                                                            (change)="cashinhand($event)"><br>
+                                                            formControlName="upiAmount" (change)="cashinhand($event)">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.upiAmount.errors?.required">
+                                                                Enter Amount
+                                                            </small>
+                                                        </div>
+                                                        <!-- <br> -->
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-2 mt-2">
                                                         <h4 class="heading-subtitle"><b>UPI No:</b></h4>
                                                     </div>
-                                                    <div class="col-sm-10">
+                                                    <div class="col-sm-10 mt-2">
                                                         <input class="form-control" type="number"
-                                                            formControlName="upiNo"> <br>
+                                                            formControlName="upiNo">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.upiNo.errors?.required">
+                                                                Enter UPI No
+                                                            </small>
+                                                        </div>
+                                                        <!-- <br> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -1317,23 +1381,41 @@
                                                     </div>
                                                     <div class="col-sm-10">
                                                         <input class="form-control" type="number"
-                                                            formControlName="upiAmount"
-                                                            (change)="cashinhand($event)"><br>
+                                                            formControlName="ddAmount" (change)="cashinhand($event)">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.ddAmount.errors?.required">
+                                                                Enter Amount
+                                                            </small>
+                                                        </div>
+                                                        <!-- <br> -->
                                                     </div>
                                                     <br>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-2 mt-2">
                                                         <label>DD No</label>
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mt-2">
                                                         <input type="number" class="form-control"
                                                             formControlName="ddNo">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.ddNo.errors?.required">
+                                                                Enter DD No
+                                                            </small>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-2 mt-2">
                                                         <label>DD Date</label>
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 mt-2">
                                                         <input type="date" class="form-control"
                                                             formControlName="ddDate">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.ddDate.errors?.required">
+                                                                Choose Date
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                     <div class="col-sm-2 pt-2">
                                                         <label>DD Details</label>
@@ -1341,6 +1423,12 @@
                                                     <div class="col-sm-10 pt-2">
                                                         <input class="form-control" type="text"
                                                             formControlName="ddDetails">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="transtypecash.controls.ddDetails.errors?.required">
+                                                                Enter DD Details
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1353,12 +1441,22 @@
                                                         <h4 class="heading-subtitle"><b>Finance List</b></h4>
                                                     </div>
                                                     <div class="col-sm-8">
-                                                        <select class="form-select" formControlName="financeId">
-                                                            <option>Select Finance</option>
+                                                        <select class="form-select" formControlName="financeId"
+                                                        [(ngModel)]="selectedfinanceId">
+                                                            <option value="0" disabled>Select</option>
                                                             <option *ngFor="let data of finance"
                                                                 value="data.financeDetailId">{{data.financeName}}
                                                             </option>
-                                                        </select><br>
+                                                        </select>
+                                                        
+                                                        <div *ngIf="submitted">
+                                                            <span class="text-danger"
+                                                                *ngIf="financeForm.controls.financeId.value == 0 || financeForm.controls.financeId.errors?.required">
+                                                                <small>Choose Finance</small>
+                                                            </span>
+                                                        </div>
+
+                                                        <br>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <h4 class="heading-subtitle"><b>Down Payment</b></h4>
@@ -1366,7 +1464,15 @@
                                                     <div class="col-sm-8">
                                                         <input class="form-control" type="number"
                                                             formControlName="downPayment"
-                                                            (change)="financeamount($event)"><br>
+                                                            (change)="financeamount($event)">
+                                                             
+                                                        <div *ngIf="submitted">
+                                                            <span class="text-danger"
+                                                                *ngIf="financeForm.controls.downPayment.errors?.required">
+                                                                <small>Enter Amount</small>
+                                                            </span>
+                                                        </div>
+                                                            <br>
                                                     </div>
                                                 </div>
                                             </form>
@@ -1384,12 +1490,24 @@
                                                         <input type="number" class="form-control"
                                                             formControlName="creditAmount"
                                                             (change)="creditamount($event)">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="creditForm.controls.creditAmount.errors?.required">
+                                                                Enter Amount
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <label>Name</label>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <input type="text" class="form-control" formControlName="name">
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="creditForm.controls.name.errors?.required">
+                                                                Enter Name
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                     <div class="col-sm-2 pt-2">
                                                         <label>Mobile No</label>
@@ -1397,6 +1515,15 @@
                                                     <div class="col-sm-4 pt-2">
                                                         <input class="form-control" type="number"
                                                             formControlName="mobileNo">
+                                                        <small class="text-danger"
+                                                            *ngIf="creditForm.controls.mobileNo.errors?.pattern">
+                                                            Accepts only 10 digits</small>
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="creditForm.controls.mobileNo.errors?.required">
+                                                                Enter Mobile No
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                     <div class="col-sm-2 pt-2">
                                                         <label> Address</label>
@@ -1404,6 +1531,12 @@
                                                     <div class="col-sm-4 pt-2">
                                                         <textarea class="form-control"
                                                             formControlName="address"></textarea>
+                                                        <div *ngIf="submittedFinal">
+                                                            <small class="text-danger"
+                                                                *ngIf="creditForm.controls.address.errors?.required">
+                                                                Enter Address
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </form>
