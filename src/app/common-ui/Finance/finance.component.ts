@@ -23,13 +23,12 @@ export class FinanceComponent implements OnInit {
   financeForm: FormGroup = this.formbuilder.group({
     financeName: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
-    mobileNo: new FormControl('', [Validators.required]),
+    mobileNo: new FormControl('', [Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
     financeDetailId: 0
   })
 
   ngOnInit(): void {
-    this.loaddata();
-   
+    this.loaddata();   
   }
 
   loaddata() {
@@ -38,6 +37,7 @@ export class FinanceComponent implements OnInit {
     })
   }
   submit() {
+    this.submitted=true;
     if (this.financeDetailId) {
       if (this.financeForm.valid) {
         this.service.updateFinanceDetail(this.financeForm.value).subscribe((data: any) => {
@@ -113,7 +113,7 @@ export class FinanceComponent implements OnInit {
   }
   display(){    
     this.displayadd=true;
-    this.service.variant.next('');
+    this.service.finance.next('');
     this.financeForm.reset();
     this.submitted=false;
   }

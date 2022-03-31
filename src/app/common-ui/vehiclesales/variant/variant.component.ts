@@ -29,6 +29,8 @@ export class VariantComponent implements OnInit {
   bikemodeldata:any;
   selectedQuantity=0;
   selectedQuantity1=0;
+  changec:boolean=false;
+  changebm:boolean=false;
   constructor(private router:Router,private service:YamahaserviceService,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   variantForm: FormGroup = this.formBuilder.group({
     colorId:new FormControl('',[Validators.required]),
@@ -95,6 +97,9 @@ export class VariantComponent implements OnInit {
         
         if(data){        
           this.variantForm.patchValue(data);
+          this.variantForm.patchValue({
+            total:data.total
+          })
         }
       })    
     })
@@ -132,6 +137,14 @@ export class VariantComponent implements OnInit {
       }
     });
   }
+  changebike(e:any)
+  {
+    this.changebm=false;
+  }
+  changecolor(e:any)
+  {
+    this.changec=false;
+  }
   submit(){ 
      
     if(this.variantForm.value['hrFee']==null)
@@ -161,15 +174,19 @@ export class VariantComponent implements OnInit {
     if(this.variantForm.value['currentModel']==null)
     {
       this.variantForm.patchValue({
-        currentModel:1
+        currentModel:0
       })
     }
     console.log(this.variantForm.value);
     this.submitted=true;
+    this.changebm=true;
+    this.changec=true;
     if(this.variantForm.valid)
     {
     if(this.variantId)
     {
+      this.variantForm.value['total']=this.total;
+      // console.log(this.variantForm.value);      
       this.service.updatevariant(this.variantForm?.value).subscribe((data:any)=>{
         if(data.statusCode==200){
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 }); 
@@ -184,6 +201,7 @@ export class VariantComponent implements OnInit {
     }
     else{   
       this.variantForm.value['total']=this.total;
+      // console.log(this.variantForm.value);  
       this.service.savevariant(this.variantForm?.value).subscribe((data:any)=>{
         if(data.statusCode==200){
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 }); 
@@ -289,6 +307,8 @@ export class VariantComponent implements OnInit {
     this.variantForm.reset();
     this.submitted=false;
     this.variantForm.controls['colorId'].disable();
+    this.selectedQuantity=0;
+    this.selectedQuantity1=0;
   }
   listdisplay(){
     this.displayadd=false;

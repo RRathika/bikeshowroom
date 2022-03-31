@@ -14,13 +14,13 @@
                   <label for="bikeType">Vehicle Type</label>
                   <!-- <input class="form-control" list="vehicle"
                   placeholder="Type to search..." formControlName="vehicleType"> -->
-                <select id="vehicle" class="form-select" formControlName="vehicleType"  [(ngModel)]="selectedQuantity">
-                  <option value="0" disabled>Select Vehicle Type</option>
+                <select id="vehicle" class="form-select" formControlName="vehicleType" (change)="selectbikemodel($event)" [(ngModel)]="selectedQuantity">
+                  <option value="0" disabled>Select</option>
                   <option value="1">Bike</option>
                   <option value="2">Scooty</option>
                 </select>
-                <div *ngIf="submitted">
-                  <span class="text-danger" *ngIf="bikemodelForm.controls.vehicleType.errors?.required">
+                <div *ngIf="selectoption">
+                  <span class="text-danger">
                 <small>Vehicle type is required</small> 
                 </span>
                 </div> 

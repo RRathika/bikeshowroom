@@ -3,7 +3,7 @@
     <div class="col-md-12" *ngIf="displayadd">
       <div class="card card-primary">
         <div class="card-header bg-primary">
-          <h3 class="card-title">Bike Color</h3>
+          <h3 class="card-title">Color Details</h3>
           <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Bike color List</button>
         </div>
         <form [formGroup]="colorForm" (ngSubmit)="submit()">
@@ -12,12 +12,12 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Bike Model</label> 
-                  <select formControlName="modelId" class="form-select dropdown-primary" id="Select1"  [(ngModel)]="selectedQuantity">
-                    <option value="0" disabled>Select Bike Model</option>
+                  <select formControlName="modelId" class="form-select dropdown-primary" id="Select1" (change)="bikechange($event)"  [(ngModel)]="selectedQuantity">
+                    <option value="0" disabled>Select</option>
                     <option *ngFor="let data of bikemodeldata"  [value]=data.modelId selected>{{data.modelName}}</option>
                 </select>
-                <div *ngIf="submitted">
-                  <span class="text-danger" *ngIf="colorForm.controls.modelId.errors?.required">
+                <div *ngIf="selectoption">
+                  <span class="text-danger">
                 <small>Bike Model name is required</small> 
                 </span>
                 </div> 

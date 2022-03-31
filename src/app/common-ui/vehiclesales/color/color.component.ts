@@ -20,6 +20,7 @@ export class ColorComponent implements OnInit {
   submitted:boolean = false;
   displayadd:boolean=false;
   selectedQuantity=0;
+  selectoption:boolean=false;
   constructor(private router:Router,private service:YamahaserviceService,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   colorForm: FormGroup = this.formBuilder.group({
     colorId:0,
@@ -41,12 +42,19 @@ export class ColorComponent implements OnInit {
       this.colordata=data;      
     })
   }
+  bikechange(e:any)
+  {
+    this.selectoption=false;
+  }
   submit(){
     this.submitted=true;
-    if(this.colorForm.valid)
+    if(this.colorForm.value['modelId']== 0){
+      this.selectoption=true;
+    }
+    if(this.colorForm.valid && this.colorForm.value['modelId'] != 0)
     {
     if(this.variantId){
-      console.log("update");      
+      // console.log("update");      
       this.service.updatecolor(this.colorForm?.value).subscribe(data=>{
         if(data.statusCode==200){
           this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });   
@@ -128,6 +136,7 @@ export class ColorComponent implements OnInit {
     this.service.color.next('');
     this.colorForm.reset();
     this.submitted=false;
+    this.selectedQuantity=0;
   }
   listdisplay(){
     this.displayadd=false;

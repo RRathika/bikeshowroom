@@ -3,7 +3,7 @@
       <div class="col-md-12"  *ngIf="displayadd">
         <div class="card card-primary">
           <div class="card-header bg-primary">
-            <h3 class="card-title">Bike Variant</h3>
+            <h3 class="card-title">Variant Details</h3>
             <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Bike variant List</button>
           </div>
           <form [formGroup]="variantForm" (ngSubmit)="submit()">
@@ -11,12 +11,12 @@
               <div class="col-md-3">                
                   <div class="form-group">
                     <label for="exampleInputEmail1">Bike Model</label> 
-                    <select formControlName="modelId" class="form-select dropdown-primary" [(ngModel)]="selectedQuantity" id="Select1" (change)="selectmodel($event)">
-                      <option value="0" disabled>Select Bike Model</option>
+                    <select formControlName="modelId" class="form-select dropdown-primary" (change)="changebike($event)" [(ngModel)]="selectedQuantity" id="Select1" (change)="selectmodel($event)">
+                      <option value="0" disabled>Select</option>
                       <option *ngFor="let data of bikemodeldata"  [value]=data.modelId selected>{{data.modelName}}</option>
                   </select>
-                  <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="variantForm.controls.modelId.errors?.required">
+                  <div *ngIf="changebm">
+                    <span class="text-danger">
                   <small>Bike Model name is required</small> 
                   </span>
                   </div> 
@@ -25,12 +25,12 @@
               <div class="col-md-3">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Color Name</label> 
-                    <select formControlName="colorId" class="form-select dropdown-primary" [(ngModel)]="selectedQuantity1" id="Select1">
-                      <option value="0" disabled>Select Color</option>
+                    <select formControlName="colorId" class="form-select dropdown-primary" (change)="changecolor($event)" [(ngModel)]="selectedQuantity1" id="Select1">
+                      <option value="0" disabled>Select</option>
                       <option *ngFor="let data of color"  [value]=data.colorId selected>{{data.colorName}}</option>
                   </select>
-                  <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="variantForm.controls.colorId.errors?.required">
+                  <div *ngIf="changec">
+                    <span class="text-danger">
                   <small>Color name is required</small> 
                   </span>
                   </div> 
@@ -212,7 +212,7 @@
                       <input type="number" class="form-control" formControlName="igst"  placeholder="%">
                       <div *ngIf="submitted">
                         <span class="text-danger" *ngIf="variantForm.controls.igst.errors?.required">
-                      <small>IGST amount required</small> 
+                      <small>IGST percentage required</small> 
                       </span>
                       </div>
                     </div>                 
@@ -223,7 +223,7 @@
                       <input type="number" class="form-control" formControlName="cgst" placeholder="%">
                       <div *ngIf="submitted">
                         <span class="text-danger" *ngIf="variantForm.controls.cgst.errors?.required">
-                      <small>CGST amount required</small> 
+                      <small>CGST percentage required</small> 
                       </span>
                       </div>
                     </div>                  
@@ -234,7 +234,7 @@
                       <input type="number" class="form-control" formControlName="sgst" placeholder="%">
                       <div *ngIf="submitted">
                         <span class="text-danger" *ngIf="variantForm.controls.sgst.errors?.required">
-                      <small>SGST amount required</small> 
+                      <small>SGST percentage required</small> 
                       </span>
                       </div>
                     </div>                  
