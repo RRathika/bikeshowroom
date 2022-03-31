@@ -100,7 +100,7 @@ export class AddvehiclesalesComponent implements OnInit {
   labeldata: any = '';
   taxper: any;
   submittedVehicle: boolean = false;
-  variantchangebyshowroom:any;
+  variantchangebyshowroom: any;
   submittedFinal: boolean = false;
   constructor(private service: YamahaserviceService, private route: Router, private formBuilder: FormBuilder, public datePipe: DatePipe, public toastService: ToastServiceService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
@@ -365,6 +365,8 @@ export class AddvehiclesalesComponent implements OnInit {
   loadfinance() {
     this.service.getfinance().subscribe(data => {
       this.finance = data;
+      console.log(this.finance);
+
     })
   }
   color() {
@@ -479,46 +481,44 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   variantnamechange(e: any) {
     // debugger
-    let variant = e.target.value;    
+    let variant = e.target.value;
     this.variantchangebyshowroom = localStorage.getItem('ShowRoomId');
-    if(this.variantchangebyshowroom == 0)
-    {
+    if (this.variantchangebyshowroom == 0) {
       let show = this.vehicleDetailsForm.value['showRoomId'];
       let role = localStorage.getItem('RoleId');
-    this.service.vartantbydata(variant, show, role).subscribe(data => {
-      if (data.message == 'No Data Found') {
-        this.totaldata = [];
-        this.toastService.show('No stock available', { classname: 'bg-danger text-light', delay: 2000 });
-      }
-      else {
-        this.totaldata = data;
-        for (let i = 0; i <= this.totaldata.length; i++) {
-          this.finalamount = Math.round(this.totaldata[i].total);
-          this.totaldata[i].netamount = this.finalamount;
-          console.log(this.totaldata);
+      this.service.vartantbydata(variant, show, role).subscribe(data => {
+        if (data.message == 'No Data Found') {
+          this.totaldata = [];
+          this.toastService.show('No stock available', { classname: 'bg-danger text-light', delay: 2000 });
         }
-      }
-    })
+        else {
+          this.totaldata = data;
+          for (let i = 0; i <= this.totaldata.length; i++) {
+            this.finalamount = Math.round(this.totaldata[i].total);
+            this.totaldata[i].netamount = this.finalamount;
+            console.log(this.totaldata);
+          }
+        }
+      })
     }
-    else
-    {
+    else {
       let show = localStorage.getItem('ShowRoomId');
       let role = localStorage.getItem('RoleId');
-    this.service.vartantbydata(variant, show, role).subscribe(data => {
-      // console.log(data)
-      if (data.message == 'No Data Found') {
-        this.totaldata = [];
-        this.toastService.show('No stock available', { classname: 'bg-danger text-light', delay: 2000 });
-      }
-      else {
-        this.totaldata = data;
-        for (let i = 0; i <= this.totaldata.length; i++) {
-          this.finalamount = Math.round(this.totaldata[i].total);
-          this.totaldata[i].netamount = this.finalamount;
-          console.log(this.totaldata);
+      this.service.vartantbydata(variant, show, role).subscribe(data => {
+        // console.log(data)
+        if (data.message == 'No Data Found') {
+          this.totaldata = [];
+          this.toastService.show('No stock available', { classname: 'bg-danger text-light', delay: 2000 });
         }
-      }
-    })
+        else {
+          this.totaldata = data;
+          for (let i = 0; i <= this.totaldata.length; i++) {
+            this.finalamount = Math.round(this.totaldata[i].total);
+            this.totaldata[i].netamount = this.finalamount;
+            console.log(this.totaldata);
+          }
+        }
+      })
     }
   }
   gstcalculation(e: any) {
@@ -754,12 +754,11 @@ export class AddvehiclesalesComponent implements OnInit {
       this.vehicleDetailsForm.controls['otheracc'].disable();
       this.vehicleDetailsForm.controls['warrentyacc'].disable();
     }
-if(this.customerDetailForm.value['dob']=='')
-{
-  this.customerDetailForm.patchValue({
-    dob:null
-  })
-}
+    if (this.customerDetailForm.value['dob'] == '') {
+      this.customerDetailForm.patchValue({
+        dob: null
+      })
+    }
     // if (this.customerDetailForm.valid) {
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
     // console.log(this.customerDetailForm.value);    
@@ -859,8 +858,19 @@ if(this.customerDetailForm.value['dob']=='')
         this.isFinance = false;
         this.iscredit = false;
 
-        this.creditForm.reset();
-        this.financeForm.reset();
+        // this.creditForm.reset();
+        // this.financeForm.reset();
+
+        this.creditForm.patchValue({ creditAmount: '' })
+        this.creditForm.patchValue({ name: '' })
+        this.creditForm.patchValue({ mobileNo: '' })
+        this.creditForm.patchValue({ address: '' })
+        this.creditForm.patchValue({ status: '' })
+
+        this.financeForm.patchValue({ financeId: '' })
+        this.financeForm.patchValue({ downPayment: '' })
+        this.financeForm.patchValue({ status: '' })
+
         break;
 
       case "2":
@@ -894,8 +904,26 @@ if(this.customerDetailForm.value['dob']=='')
         this.isDD = false;
         this.isFinance = false;
 
-        this.transtypecash.reset();
-        this.financeForm.reset();
+        // this.transtypecash.reset();
+        // this.financeForm.reset();
+
+        this.transtypecash.patchValue({ handAmount: '' })
+        this.transtypecash.patchValue({ cardAmount: '' })
+        this.transtypecash.patchValue({ cardDetails: '' })
+        this.transtypecash.patchValue({ chequeAmount: '' })
+        this.transtypecash.patchValue({ chequeNo: '' })
+        this.transtypecash.patchValue({ chequeDate: '' })
+        this.transtypecash.patchValue({ chequeDetails: '' })
+        this.transtypecash.patchValue({ upiAmount: '' })
+        this.transtypecash.patchValue({ upiNo: '' })
+        this.transtypecash.patchValue({ ddAmount: '' })
+        this.transtypecash.patchValue({ ddDetails: '' })
+        this.transtypecash.patchValue({ ddDate: '' })
+        this.transtypecash.patchValue({ ddNo: '' })
+
+        this.financeForm.patchValue({ financeId: '' })
+        this.financeForm.patchValue({ downPayment: '' })
+        this.financeForm.patchValue({ status: '' })
 
         break;
       default:
@@ -925,9 +953,28 @@ if(this.customerDetailForm.value['dob']=='')
         this.isDD = false;
         this.iscredit = false;
 
-        this.transtypecash.reset();
-        this.creditForm.reset();
+        // this.transtypecash.reset();
+        // this.creditForm.reset();
 
+        this.transtypecash.patchValue({ handAmount: '' })
+        this.transtypecash.patchValue({ cardAmount: '' })
+        this.transtypecash.patchValue({ cardDetails: '' })
+        this.transtypecash.patchValue({ chequeAmount: '' })
+        this.transtypecash.patchValue({ chequeNo: '' })
+        this.transtypecash.patchValue({ chequeDate: '' })
+        this.transtypecash.patchValue({ chequeDetails: '' })
+        this.transtypecash.patchValue({ upiAmount: '' })
+        this.transtypecash.patchValue({ upiNo: '' })
+        this.transtypecash.patchValue({ ddAmount: '' })
+        this.transtypecash.patchValue({ ddDetails: '' })
+        this.transtypecash.patchValue({ ddDate: '' })
+        this.transtypecash.patchValue({ ddNo: '' })
+
+        this.creditForm.patchValue({ creditAmount: '' })
+        this.creditForm.patchValue({ name: '' })
+        this.creditForm.patchValue({ mobileNo: '' })
+        this.creditForm.patchValue({ address: '' })
+        this.creditForm.patchValue({ status: '' })
 
         break;
     }
@@ -1091,81 +1138,96 @@ if(this.customerDetailForm.value['dob']=='')
     })
   }
   finalsubmit() {
+    this.payDetails.patchValue({
+      createVehicleSalePaymentDetailDTO: this.transtypecash.value, createVehicleSaleCreditDetailDTO: this.creditForm.value, createVehicleSaleFinanceDetailDTO: this.financeForm.value
+    })
+    this.finalform.patchValue({
+      createVehicleCustomerDetailsDTO: this.customerDetailForm.value, createVehicleSalesDetailDTO: this.vehicleDetailsForm.value, createVehicleSaleTransactionDetailDTO: this.payDetails.value
+    })
+
+    // console.log(this.finalform.value)
+    // console.log(this.transtypecash.valid)
+    // console.log(this.financeForm.value['financeId'])
+    // console.log(this.creditForm.valid)
+    // console.log(this.financeForm.valid)
 
     this.submittedFinal = true;
-    if (this.selectedtransactionTypeId == 1) {
+    if (this.selectedtransactionTypeId == 1) {      
       if (this.isCashinhand == true || this.iscard == true || this.ischeque == true
         || this.isUPI == true || this.isDD == true) {
-        if (this.transtypecash.valid && this.financeForm.value['financeId'] != 0
-          && this.creditForm.valid && this.financeForm.valid) {
-          alert("valid")
-        }
-        else {
-          alert("not valid")
-          
+        if (this.transtypecash.valid) {
+          this.service.salessave(this.finalform.value).subscribe((data: any) => {
+            if (data) {
+              this.service.printvalue.next(this.finalform.value);
+              this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
+              this.call();
+            }
+            else {
+              this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 3000 })
+            }
+          })
         }
       }
       else {
         this.toastService.show('Select Payment Mode', { classname: 'bg-danger text-light', delay: 3000 });
       }
     }
-    else {
+    else if (this.selectedtransactionTypeId == 3) {
+      if (this.financeForm.value['financeId'] != 0 && this.financeForm.valid) {
+        this.service.salessave(this.finalform.value).subscribe((data: any) => {
+          if (data) {
+            this.service.printvalue.next(this.finalform.value);
+            this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
+            this.call();
+          }
+          else {
+            this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 3000 })
+          }
+        })
+      }
+    }
+    else if (this.selectedtransactionTypeId == 2) {
+      if (this.creditForm.valid) {
+        this.service.salessave(this.finalform.value).subscribe((data: any) => {
+          if (data) {
+            this.service.printvalue.next(this.finalform.value);
+            this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
+            this.call();
+          }
+          else {
+            this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 3000 })
+          }
+        })
+      }
     }
 
-
-    // this.submittedFinal = true;
-    // if (this.transtypecash.valid && this.financeForm.value['financeId'] != 0
-    //   && this.creditForm.valid && this.financeForm.valid) {
-    //   alert("valid")
-
-    //   if (this.selectedtransactionTypeId == 1) {
-    //     if (this.isCashinhand == true || this.iscard == true || this.ischeque == true
-    //       || this.isUPI == true || this.isDD == true) {
-
-    //     }
-    //     else {
-    //       this.toastService.show('Select Payment Mode', { classname: 'bg-danger text-light', delay: 3000 });
-    //     }
-    //   }
-
-    // }
-    // else {
-    //   alert("not valid")
-    // }
-
-
-
-
-
-
-    // alert(this.transtypecash.value['handAmount'])
-
-    console.log(this.finalform.value)
     // this.myDate = this.datePipe.transform(this.now, 'yyyy-MM-dd');
     // this.transtypecash.patchValue({
     //   currentDate: this.myDate,
     //   chequeDate: this.myDate,
     //   ddDate: this.myDate
     // })
-    this.payDetails.patchValue({
-      createVehicleSalePaymentDetailDTO: this.transtypecash.value, createVehicleSaleCreditDetailDTO: this.creditForm.value, createVehicleSaleFinanceDetailDTO: this.financeForm.value
-    })
-    // console.log(this.payDetails.value);
-    this.finalform.patchValue({
-      createVehicleCustomerDetailsDTO: this.customerDetailForm.value, createVehicleSalesDetailDTO: this.vehicleDetailsForm.value, createVehicleSaleTransactionDetailDTO: this.payDetails.value
-    })
 
+    // this.payDetails.patchValue({
+    //   createVehicleSalePaymentDetailDTO: this.transtypecash.value, createVehicleSaleCreditDetailDTO: this.creditForm.value, createVehicleSaleFinanceDetailDTO: this.financeForm.value
+    // })
+    // // console.log(this.payDetails.value);
+    // this.finalform.patchValue({
+    //   createVehicleCustomerDetailsDTO: this.customerDetailForm.value, createVehicleSalesDetailDTO: this.vehicleDetailsForm.value, createVehicleSaleTransactionDetailDTO: this.payDetails.value
+    // })
 
-    this.service.salessave(this.finalform.value).subscribe((data: any) => {
-      if (data) {
-        this.service.printvalue.next(this.finalform.value);
-        this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
-        this.call();
-      }
-      else {
-        this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 3000 })
-      }
-    })
+    // alert(this.finalform.value)
+
+    // this.service.salessave(this.finalform.value).subscribe((data: any) => {
+    //   if (data) {
+    //     this.service.printvalue.next(this.finalform.value);
+    //     this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 });
+    //     this.call();
+    //   }
+    //   else {
+    //     this.toastService.show(data.message, { classname: 'bg-danger text-light', delay: 3000 })
+    //   }
+    // })
 
   }
   call() {
@@ -1268,4 +1330,15 @@ if(this.customerDetailForm.value['dob']=='')
       finaltotal: final
     })
   }
+
+  financechange(e: any) {
+    let selectedId = e.target.value;
+    // alert(this.financeForm.value['financeId'].value)
+    this.financeForm.patchValue({
+      financeId: selectedId
+    })
+
+    // alert(this.financeForm.value['financeId'])
+  }
+
 }

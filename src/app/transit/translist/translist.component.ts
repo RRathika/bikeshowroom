@@ -38,7 +38,7 @@ export class TranslistComponent implements OnInit {
     this.translistForm.controls['yard'].disable();
   }
   submit(){   
-    debugger 
+    // debugger 
     // console.log(this.translistForm.value);
     if(this.showroom!=0)
     {
