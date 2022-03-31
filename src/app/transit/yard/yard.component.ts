@@ -18,6 +18,7 @@ export class YardComponent implements OnInit {
    yardId:any;
    submitted:boolean = false;
   displayadd:boolean=false;
+  showcheck:boolean=false;
   p: number = 1;
   count: number = 10;
   selectedQuantity = 0;
@@ -88,10 +89,17 @@ export class YardComponent implements OnInit {
       }
     });
   }
+  showroomchange(e:any){
+  this.showcheck=false
+  }
   submit(){
     this.submitted=true;
+    if(this.yardForm.value['showRoomId'] == 0){
+      this.showcheck = true;
+    }
+    
     if(this.yardId){
-      if(this.yardForm.valid)
+      if(this.yardForm.valid && this.yardForm.value['showRoomId']!=0)
     {
       this.service.updateyard(this.yardForm.value).subscribe((data:any)=>{
         if(data.statusCode==200){
@@ -108,7 +116,7 @@ export class YardComponent implements OnInit {
     }
     }
     else{
-    if(this.yardForm.valid)
+    if(this.yardForm.valid && this.yardForm.value['showRoomId']!=0)
     {
       this.service.saveyard(this.yardForm.value).subscribe((data:any)=>{
         if(data.statusCode==200){
@@ -130,6 +138,7 @@ export class YardComponent implements OnInit {
     this.service.yard.next('');
     this.yardForm.reset();
     this.submitted=false;
+    this.selectedQuantity = 0;
   }
   listdisplay(){
     this.displayadd=false;

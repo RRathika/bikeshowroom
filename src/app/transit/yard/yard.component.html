@@ -3,7 +3,7 @@
       <div class="col-md-12" *ngIf="displayadd">
         <div class="card card-primary">
           <div class="card-header bg-primary">
-            <h3 class="card-title">Yard Add</h3>
+            <h3 class="card-title">Yard Details</h3>
             <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Yard List</button>
           </div>
           <form [formGroup]="yardForm" (ngSubmit)="submit()">
@@ -12,15 +12,15 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Showroom Name</label> 
-                  <select class="form-select" formControlName="showRoomId" [(ngModel)]="selectedQuantity">
-                    <option  value="0" disabled>Select Showroom Name</option>
+                  <select class="form-select" formControlName="showRoomId" (change)="showroomchange($event)" [(ngModel)]="selectedQuantity">
+                    <option  value="0" disabled>Select</option>
                       <option *ngFor="let item of showroomdata" [value]="item.showRoomId">{{item.showRoomName}}</option>
                   </select>
-                  <!-- <div *ngIf="submitted">
-                    <span class="text-danger" *ngIf="yardForm.controls.showRoomId.errors?.required">
+                  <div *ngIf="showcheck">
+                    <span class="text-danger">
                   <small>Showroom name is required</small> 
                   </span>
-                  </div>  -->
+                  </div> 
                 </div>
              </div>
              <div class="col-md-4">
@@ -38,7 +38,7 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
                     <input type="number" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
-                    <div class="text-danger" *ngIf="yardForm.controls.mobileNo.errors?.pattern"><small>Mobile No is not 10 digit</small></div>
+                    <div class="text-danger" *ngIf="yardForm.controls.mobileNo.errors?.pattern"><small>Mobile No must be 10 digits</small></div>
                     <div class="text-danger" *ngIf="submitted">
                       <span 
                       *ngIf="yardForm.controls.mobileNo.errors?.required">

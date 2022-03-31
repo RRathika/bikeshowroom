@@ -3,7 +3,7 @@
         <div class="col-md-12" *ngIf="displayadd">
             <div class="card card-primary">
                 <div class="card-header bg-primary">
-                    <h3 class="card-title">Vendor Add</h3>
+                    <h3 class="card-title">Vendor Details</h3>
                     <button class="btn btn-success float-end btn-sm" (click)="listdisplay()">View Vendor List</button>
                 </div>
                 <form [formGroup]="vendorForm" (ngSubmit)="submit()">
@@ -40,7 +40,7 @@
                                     id="exampleInputEmail1" placeholder="Mobile No">
                                 <small class="text-danger" *ngIf="vendorForm.controls.mobileNo.errors?.pattern">Mobile
                                     No must be 10
-                                    digit</small>
+                                    digits</small>
                                 <div class="text-danger" *ngIf="submitted">
                                     <span *ngIf="vendorForm.controls.mobileNo.errors?.required">
                                         <small>Mobile No is required</small> </span>
@@ -67,7 +67,7 @@
                                 <input type="number" class="form-control" formControlName="pinCode"
                                     placeholder="PinCode">
                                 <small class="text-danger" *ngIf="vendorForm.controls.pinCode.errors?.pattern">Pincode
-                                    must be 6 digit</small>
+                                    must be 6 digits</small>
                             </div>
                         </div>
 

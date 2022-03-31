@@ -23,7 +23,7 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Mobile No</label>
                     <input type="number" class="form-control" formControlName="mobileNo" id="exampleInputEmail1" placeholder="Mobile No">
-                    <div class="text-danger" *ngIf="financeForm.controls.mobileNo.errors?.pattern"><small>Mobile No is not 10 digit</small></div>
+                    <div class="text-danger" *ngIf="financeForm.controls.mobileNo.errors?.pattern"><small>Mobile No must be 10 digits</small></div>
                     <div *ngIf="submitted">
                       <span class="text-danger" *ngIf="financeForm.controls.mobileNo.errors?.required">
                     <small>Mobile No required</small> 

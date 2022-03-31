@@ -20,7 +20,8 @@ export class BikemodelComponent implements OnInit {
   count: number = 10;
   submitted:boolean = false;
   displayadd:boolean=false;
-  selectedQuantity=0
+  selectedQuantity=0;
+  selectoption:boolean=false;
   constructor(private service:YamahaserviceService,private router: Router,private formBuilder: FormBuilder,public toastService: ToastServiceService) { }
   bikemodelForm: FormGroup = this.formBuilder.group({
     modelId:0,
@@ -38,9 +39,17 @@ export class BikemodelComponent implements OnInit {
          
       })
   }
+  selectbikemodel(e:any)
+  {
+    this.selectoption=false;
+  }
   submit(){
     this.submitted=true;
-    if(this.bikemodelForm.valid)
+    if(this.bikemodelForm.value['vehicleType'] == 0){
+      this.selectoption= true;
+    }
+    
+    if(this.bikemodelForm.valid && this.bikemodelForm.value['vehicleType']!=0)
     {
     if(this.modelId){
       this.service.updatebikemodel(this.bikemodelForm?.value).subscribe(data=>{
@@ -123,6 +132,7 @@ export class BikemodelComponent implements OnInit {
     this.service.bikemodel.next('');
     this.bikemodelForm.reset();
     this.submitted=false;
+    this.selectedQuantity=0
   }
   listdisplay(){
     this.displayadd=false;
