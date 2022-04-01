@@ -270,6 +270,12 @@
                                                 <option value="1"> Direct</option>
                                                 <option value="2">Advance</option>
                                             </select>
+                                            <div *ngIf="submitted">
+                                                <span class="text-danger"
+                                                    *ngIf="customerDetailForm.controls.receiptType.value == 0">
+                                                    <small>Choose Receipt type</small>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -1442,10 +1448,11 @@
                                                     </div>
                                                     <div class="col-sm-8">
                                                         <select class="form-select" formControlName="financeId"
-                                                        [(ngModel)]="selectedfinanceId">
+                                                        [(ngModel)]="selectedfinanceId"
+                                                        (change)="financechange($event)">
                                                             <option value="0" disabled>Select</option>
                                                             <option *ngFor="let data of finance"
-                                                                value="data.financeDetailId">{{data.financeName}}
+                                                                [value]="data.financeDetailId">{{data.financeName}}
                                                             </option>
                                                         </select>
                                                         
