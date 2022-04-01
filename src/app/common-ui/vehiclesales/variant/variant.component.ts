@@ -87,11 +87,19 @@ export class VariantComponent implements OnInit {
   }
   Editcolor(id:any){
     this.displayadd=true;
+    this.variantForm.controls['colorId'].enable(); 
     this.service.getbyidvariant(id).subscribe(data=>{
       this.service.variant.next(data);
       this.service.variant.subscribe(data=>{
         this.result=data; 
-        // console.log(this.result);      
+        if(this.result.modelId > 0)
+        {
+          this.changebm =false;          
+        }
+        if(this.result.colorId > 0){
+          this.changec =false;
+          this.variantForm.controls['colorId'].enable();        
+        }      
         this.variantId=this.result.variantId;
         // console.log(this.variantId);
         
