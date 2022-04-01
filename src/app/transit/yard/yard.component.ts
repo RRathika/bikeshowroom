@@ -51,6 +51,9 @@ export class YardComponent implements OnInit {
       this.service.yard.subscribe(data=>{
         this.result=data;
         console.log(this.result);
+        if(this.result.showRoomId > 0){          
+        this.showcheck=false; 
+        }
         this.yardId=this.result.yardId;
         this.yardForm.patchValue(data);
       })
@@ -90,7 +93,7 @@ export class YardComponent implements OnInit {
     });
   }
   showroomchange(e:any){
-  this.showcheck=false
+  this.showcheck=false;
   }
   submit(){
     this.submitted=true;

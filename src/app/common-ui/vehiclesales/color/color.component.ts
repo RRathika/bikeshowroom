@@ -89,7 +89,11 @@ export class ColorComponent implements OnInit {
         this.service.color.next(data);
         this.service.color.subscribe(data=>{
           this.result=data; 
-          console.log(this.result);      
+          console.log(this.result);
+          if(this.result.modelId > 0)
+          {
+            this.selectoption=false;
+          }      
           this.variantId=this.result.colorId;
           if(data){        
             this.colorForm.patchValue(data);

@@ -87,6 +87,10 @@ export class BikemodelComponent implements OnInit {
       this.service.bikemodel.next(data);    
       this.service.bikemodel.subscribe(response=>{
         this.result=response; 
+        if(this.result.vehicleType > 0)
+        {
+          this.selectoption= false;
+        }
         this.modelId=this.result.modelId;
         if(response){        
           this.bikemodelForm.patchValue(response);
