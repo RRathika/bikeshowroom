@@ -764,13 +764,13 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
     // console.log(this.customerDetailForm.value);    
 
-    if (this.customerDetailForm.valid && this.presentaddressForm.valid && this.permanentaddressForm.valid
-    && this.customerDetailForm.value['gender'] != 0
-    && this.customerDetailForm.value['qualification'] != 0 && this.customerDetailForm.value['occupation'] != 0
-    && this.customerDetailForm.value['maritalStatus'] != 0 && this.customerDetailForm.value['nomineeGender'] != 0
-    && this.customerDetailForm.value['relation'] != 0
-    && this.presentaddressForm.value['district'] != 0 && this.presentaddressForm.value['taluk'] != 0
-    && this.customerDetailForm.value['receiptType'] != 0) {
+    // if (this.customerDetailForm.valid && this.presentaddressForm.valid && this.permanentaddressForm.valid
+    // && this.customerDetailForm.value['gender'] != 0
+    // && this.customerDetailForm.value['qualification'] != 0 && this.customerDetailForm.value['occupation'] != 0
+    // && this.customerDetailForm.value['maritalStatus'] != 0 && this.customerDetailForm.value['nomineeGender'] != 0
+    // && this.customerDetailForm.value['relation'] != 0
+    // && this.presentaddressForm.value['district'] != 0 && this.presentaddressForm.value['taluk'] != 0
+    // && this.customerDetailForm.value['receiptType'] != 0) {
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
     this.isShownProfile = !this.isShownProfile;
     this.isShownHome = false;
@@ -780,7 +780,7 @@ export class AddvehiclesalesComponent implements OnInit {
     //  this.color();
     this.loadfinance();
     this.getyear();
-    }
+    // }
   }
 
   btnVehicleModel() {
@@ -794,20 +794,20 @@ export class AddvehiclesalesComponent implements OnInit {
 
   vehicleform() {
     this.submittedVehicle = true;
-    if (this.vehicleDetailsForm.get('chassisNo')?.value == '') {
-      this.toastService.show('Choose Vehicle Model', { classname: 'bg-danger text-light', delay: 3000 });
-    }
-    else{
+    // if (this.vehicleDetailsForm.get('chassisNo')?.value == '') {
+    //   this.toastService.show('Choose Vehicle Model', { classname: 'bg-danger text-light', delay: 3000 });
+    // }
+    // else{
 
-      if (this.vehicleDetailsForm.valid && this.vehicleDetailsForm.value['showRoomId'] != 0
-        && this.vehicleDetailsForm.value['month'] != 0 && this.vehicleDetailsForm.value['year'] != 0
-        && this.vehicleDetailsForm.value['vehicleSaleType'] != 0) {
+    //   if (this.vehicleDetailsForm.valid && this.vehicleDetailsForm.value['showRoomId'] != 0
+    //     && this.vehicleDetailsForm.value['month'] != 0 && this.vehicleDetailsForm.value['year'] != 0
+    //     && this.vehicleDetailsForm.value['vehicleSaleType'] != 0) {
     this.isShownHome = false;
     this.isShownProfile = false;
     this.isShownContact = !this.isShownHome;
     this.loadfield();
-      }
-    }
+      // }
+    // }
   }
 
   toggleShowProfile() {
@@ -1098,7 +1098,7 @@ export class AddvehiclesalesComponent implements OnInit {
 
   }
   cashinhand(e: any) {
-
+    debugger
     let bookamount = this.advanceamount;
     let net = this.vehicleDetailsForm.value['finaltotal'];
     let cash = this.transtypecash.value['handAmount'];
@@ -1106,6 +1106,7 @@ export class AddvehiclesalesComponent implements OnInit {
     let cheque = this.transtypecash.value['chequeAmount'];
     let dd = this.transtypecash.value['ddAmount'];
     let upi = this.transtypecash.value['upiAmount'];
+    if(cash !=''&& card !='' && cheque !='' && dd !='' && upi !=''){
     let amount = parseInt(cash) + parseInt(card) + parseInt(cheque) + parseInt(dd) + parseInt(upi);
     let balance = Math.round(net) - (bookamount + amount);
     this.payDetails.patchValue({
@@ -1114,6 +1115,49 @@ export class AddvehiclesalesComponent implements OnInit {
       financeamt: 0,
       creditamt: 0
     })
+    }
+    if(cash !='')
+    {
+      let amount = parseInt(cash);
+    let balance = Math.round(net) - (bookamount + amount);
+    this.payDetails.patchValue({
+      cashbank: amount,
+      balanceamt: balance,
+      financeamt: 0,
+      creditamt: 0
+    })
+    }
+    if(cash !='' && card !='')
+    {
+      let amount = parseInt(cash) + parseInt(card);
+    let balance = Math.round(net) - (bookamount + amount);
+    this.payDetails.patchValue({
+      cashbank: amount,
+      balanceamt: balance,
+      financeamt: 0,
+      creditamt: 0
+    })
+    }
+    if(cash !=''&& card !='' && cheque !='' ){
+      let amount = parseInt(cash) + parseInt(card) + parseInt(cheque) ;
+      let balance = Math.round(net) - (bookamount + amount);
+      this.payDetails.patchValue({
+        cashbank: amount,
+        balanceamt: balance,
+        financeamt: 0,
+        creditamt: 0
+      })
+      }
+      if(cash !=''&& card !='' && cheque !='' && dd !='' ){
+        let amount = parseInt(cash) + parseInt(card) + parseInt(cheque) + parseInt(dd) ;
+        let balance = Math.round(net) - (bookamount + amount);
+        this.payDetails.patchValue({
+          cashbank: amount,
+          balanceamt: balance,
+          financeamt: 0,
+          creditamt: 0
+        })
+        }
   }
   creditamount(e: any) {
     let bookamount = this.advanceamount;

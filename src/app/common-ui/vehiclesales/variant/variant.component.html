@@ -114,7 +114,7 @@
                   <div class="col-md-6">                
                     <div class="form-group">
                       <label for="exampleInputEmail1">Invoice Amount</label>
-                      <input type="number" class="form-control" formControlName="invoiceAmount" (change)="sum1()" placeholder="Invoice Amount">
+                      <input type="number" class="form-control" formControlName="invoiceAmount" (keyup)="sum1()" placeholder="Invoice Amount">
                       <div *ngIf="submitted">
                         <span class="text-danger" *ngIf="variantForm.controls.invoiceAmount.errors?.required">
                       <small>Invoice Amount required</small> 
@@ -136,7 +136,7 @@
                 <div class="col-md-4">                  
                     <div class="form-group">
                       <label for="exampleInputEmail1">Life Tax</label>
-                      <input type="number" class="form-control" formControlName="lifeTax" (change)="sum2()" placeholder="Life Tax">
+                      <input type="number" class="form-control" formControlName="lifeTax" (keyup)="sum2()" placeholder="Life Tax">
                       <div *ngIf="submitted">
                         <span class="text-danger" *ngIf="variantForm.controls.lifeTax.errors?.required">
                       <small>Life Tax required</small> 
@@ -147,7 +147,7 @@
                 <div class="col-md-4">                  
                     <div class="form-group">
                       <label for="exampleInputEmail1">Insurance</label>
-                      <input type="number" class="form-control" formControlName="insurance" (change)="sum3()" placeholder="Insurance">
+                      <input type="number" class="form-control" formControlName="insurance" (keyup)="sum3()" placeholder="Insurance">
                       <div *ngIf="submitted">
                         <span class="text-danger" *ngIf="variantForm.controls.insurance.errors?.required">
                       <small>Insurance amount required</small> 
@@ -158,7 +158,7 @@
                 <div class="col-md-4">                  
                   <div class="form-group">
                     <label for="exampleInputEmail1">HR Fee</label>
-                    <input type="number" class="form-control" formControlName="hrFee" (change)="sum4()" placeholder="HR Fee">
+                    <input type="number" class="form-control" formControlName="hrFee" (keyup)="sum4()" placeholder="HR Fee">
                     <div *ngIf="submitted">
                       <span class="text-danger" *ngIf="variantForm.controls.hrFee.errors?.required">
                     <small>HRFee required</small> 
@@ -169,7 +169,7 @@
               <div class="col-md-4">                  
                 <div class="form-group">
                   <label for="exampleInputEmail1">HYP Charges </label>
-                  <input type="number" class="form-control" formControlName="hypCharges" (change)="sum5()" placeholder="HYP Charges">
+                  <input type="number" class="form-control" formControlName="hypCharges" (keyup)="sum5()" placeholder="HYP Charges">
                   <div *ngIf="submitted">
                     <span class="text-danger" *ngIf="variantForm.controls.hypCharges.errors?.required">
                   <small>HYP Charges required</small> 
@@ -180,7 +180,7 @@
             <div class="col-md-4">                  
               <div class="form-group">
                 <label for="exampleInputEmail1">Extra Charges </label>
-                <input type="number" class="form-control" formControlName="extraCharges" (change)="sum6()" placeholder="Extra Charges">
+                <input type="number" class="form-control" formControlName="extraCharges" (keyup)="sum6()" placeholder="Extra Charges">
                 <div *ngIf="submitted">
                   <span class="text-danger" *ngIf="variantForm.controls.extraCharges.errors?.required">
                 <small>Extra Charges required</small> 
@@ -191,7 +191,7 @@
           <div class="col-md-4">                  
             <div class="form-group">
               <label for="exampleInputEmail1">Other Charges</label>
-              <input type="number" class="form-control" formControlName="otherCharges" (change)="sum7()" placeholder="Other Charges">
+              <input type="number" class="form-control" formControlName="otherCharges" (keyup)="sum7()" placeholder="Other Charges">
               <div *ngIf="submitted">
                 <span class="text-danger" *ngIf="variantForm.controls.otherCharges.errors?.required">
               <small>Other Charges required</small> 
