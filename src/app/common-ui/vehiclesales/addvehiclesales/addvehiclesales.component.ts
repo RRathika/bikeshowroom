@@ -148,11 +148,11 @@ export class AddvehiclesalesComponent implements OnInit {
     nomineeName: new FormControl('', [Validators.required]),
     nomineeAge: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{2}$")]),
     nomineeGender: new FormControl('', [Validators.required]),
-    relation: new FormControl('', [Validators.required])
-  })
-  vehicleDetailsForm: FormGroup = this.formBuilder.group({
+    relation: new FormControl('', [Validators.required]),
     showRoomId: new FormControl('', [Validators.required]),
-    yardId: new FormControl('', []),
+    yardId: new FormControl('', [])
+  })
+  vehicleDetailsForm: FormGroup = this.formBuilder.group({ 
     modelId: new FormControl('', []),
     chassisNo: new FormControl('', [Validators.required]),
     engineNo: new FormControl('', []),
@@ -259,10 +259,18 @@ export class AddvehiclesalesComponent implements OnInit {
     this.role = localStorage.getItem('RoleId');
     if (this.show > 0) {
       this.loadinvoice();
+      this.selectyardforAdmin(this.show);
+      
+      this.customerDetailForm.patchValue({
+        showRoomId: this.show
+      })
     }
     this.customerDetailForm.controls['receiptNos'].disable();
     this.customerDetailForm.controls['date'].disable();
     // this.isdisableClearBtn=true;
+
+    this.showroom();
+
   }
   disable() {
     this.customerDetailForm.controls['receiptNos'].disable();
@@ -270,7 +278,7 @@ export class AddvehiclesalesComponent implements OnInit {
     this.customerDetailForm.controls['invoiceNo'].disable();
     this.presentaddressForm.controls['taluk'].disable();
     this.permanentaddressForm.controls['taluk'].disable();
-    this.vehicleDetailsForm.controls['yardId'].disable();
+    this.customerDetailForm.controls['yardId'].disable();
     this.selectedMonth = 0;
     this.selectedYear = 0
     this.selectedvehicleSaleType = 0;
@@ -362,6 +370,17 @@ export class AddvehiclesalesComponent implements OnInit {
       })
     })
   }
+
+  loadinvoiceforAdmin() {
+    this.service.getinvoice(this.selectedShowroom).subscribe((data: any) => {
+      this.invoicevalue = data;
+      console.log(this.invoicevalue);
+      this.customerDetailForm.patchValue({
+        invoiceNo: this.invoicevalue
+      })
+    })
+  }
+
   loadfinance() {
     this.service.getfinance().subscribe(data => {
       this.finance = data;
@@ -394,22 +413,43 @@ export class AddvehiclesalesComponent implements OnInit {
   //   })
   // }
   selectyard(e: any) {
+
+    this.loadinvoiceforAdmin();
+
     let name = e.target.value;
     this.service.showroombyyard(name).subscribe(data => {
       this.yardname = data;
       if (data.message == 'No Data Found') {
-        this.vehicleDetailsForm.controls['yardId'].disable();
+        this.customerDetailForm.controls['yardId'].disable();
         this.selectedYard = 0;
         this.yardname = [];
         this.toastService.show('No Yard for this Showroom', { classname: 'bg-danger text-light', delay: 2000 });
       }
       else {
-        this.vehicleDetailsForm.controls['yardId'].enable();
+        this.customerDetailForm.controls['yardId'].enable();
         this.yardname = data;
         this.selectedYard = 0;
       }
     })
   }
+
+  selectyardforAdmin(showroom:any) {
+    this.service.showroombyyard(showroom).subscribe(data => {
+      this.yardname = data;
+      if (data.message == 'No Data Found') {
+        this.customerDetailForm.controls['yardId'].disable();
+        this.selectedYard = 0;
+        this.yardname = [];
+        this.toastService.show('No Yard for this Showroom', { classname: 'bg-danger text-light', delay: 2000 });
+      }
+      else {
+        this.customerDetailForm.controls['yardId'].enable();
+        this.yardname = data;
+        this.selectedYard = 0;
+      }
+    })
+  }
+
   checkboxvalues: any = [
     {
       value: "CashInhand",
@@ -483,10 +523,12 @@ export class AddvehiclesalesComponent implements OnInit {
     // debugger
     let variant = e.target.value;
     this.variantchangebyshowroom = localStorage.getItem('ShowRoomId');
+    console.log(this.variantchangebyshowroom)
+    debugger
     if (this.variantchangebyshowroom == 0) {
-      let show = this.vehicleDetailsForm.value['showRoomId'];
+      //let show = 0;
       let role = localStorage.getItem('RoleId');
-      this.service.vartantbydata(variant, show, role).subscribe(data => {
+      this.service.vartantbydata(variant, 0, role).subscribe(data => {
         if (data.message == 'No Data Found') {
           this.totaldata = [];
           this.toastService.show('No stock available', { classname: 'bg-danger text-light', delay: 2000 });
@@ -504,6 +546,8 @@ export class AddvehiclesalesComponent implements OnInit {
     else {
       let show = localStorage.getItem('ShowRoomId');
       let role = localStorage.getItem('RoleId');
+      console.log(show)
+      console.log(role)
       this.service.vartantbydata(variant, show, role).subscribe(data => {
         // console.log(data)
         if (data.message == 'No Data Found') {
@@ -738,7 +782,8 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   submit() {
     this.submitted = true;
-   
+    // alert(1)
+
     if (this.vehicleDetailsForm.get('chassisNo')?.value != '') {
       this.vehicleDetailsForm.controls['vehicleSaleType'].enable();
       this.vehicleDetailsForm.controls['lifetax'].enable();
@@ -760,26 +805,29 @@ export class AddvehiclesalesComponent implements OnInit {
         dob: null
       })
     }
-    // if (this.customerDetailForm.valid && this.customerDetailForm.value['receiptType'] != 0) {
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
-    // console.log(this.customerDetailForm.value);    
-
+console.log(this.customerDetailForm.valid)
+console.log(this.customerDetailForm.value['showRoomId'])
     if (this.customerDetailForm.valid && this.presentaddressForm.valid && this.permanentaddressForm.valid
-    && this.customerDetailForm.value['gender'] != 0
-    && this.customerDetailForm.value['qualification'] != 0 && this.customerDetailForm.value['occupation'] != 0
-    && this.customerDetailForm.value['maritalStatus'] != 0 && this.customerDetailForm.value['nomineeGender'] != 0
-    && this.customerDetailForm.value['relation'] != 0
-    && this.presentaddressForm.value['district'] != 0 && this.presentaddressForm.value['taluk'] != 0
-    && this.customerDetailForm.value['receiptType'] != 0) {
-    this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
-    this.isShownProfile = !this.isShownProfile;
-    this.isShownHome = false;
-    this.isShownContact = false;
-    this.showroom();
-    // this.yard();
-    //  this.color();
-    this.loadfinance();
-    this.getyear();
+      && this.customerDetailForm.value['gender'] != 0  && this.customerDetailForm.value['showRoomId'] != 0
+      && this.customerDetailForm.value['qualification'] != 0 && this.customerDetailForm.value['occupation'] != 0
+      && this.customerDetailForm.value['maritalStatus'] != 0 && this.customerDetailForm.value['nomineeGender'] != 0
+      && this.customerDetailForm.value['relation'] != 0
+      && this.presentaddressForm.value['district'] != 0 && this.presentaddressForm.value['taluk'] != 0
+      && this.customerDetailForm.value['receiptType'] != 0) {
+      this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
+      this.isShownProfile = !this.isShownProfile;
+      this.isShownHome = false;
+      this.isShownContact = false;
+      // this.showroom();
+      // this.yard();
+      //  this.color();
+      this.loadfinance();
+      this.getyear();
+      // alert(2)
+    }
+    else{
+      // alert(3)
     }
   }
 
@@ -794,20 +842,20 @@ export class AddvehiclesalesComponent implements OnInit {
 
   vehicleform() {
     this.submittedVehicle = true;
-    if (this.vehicleDetailsForm.get('chassisNo')?.value == '') {
-      this.toastService.show('Choose Vehicle Model', { classname: 'bg-danger text-light', delay: 3000 });
-    }
-    else{
+    // if (this.vehicleDetailsForm.get('chassisNo')?.value == '') {
+    //   this.toastService.show('Choose Vehicle Model', { classname: 'bg-danger text-light', delay: 3000 });
+    // }
+    // else {
 
-      if (this.vehicleDetailsForm.valid && this.vehicleDetailsForm.value['showRoomId'] != 0
-        && this.vehicleDetailsForm.value['month'] != 0 && this.vehicleDetailsForm.value['year'] != 0
-        && this.vehicleDetailsForm.value['vehicleSaleType'] != 0) {
-    this.isShownHome = false;
-    this.isShownProfile = false;
-    this.isShownContact = !this.isShownHome;
-    this.loadfield();
-      }
-    }
+    //   if (this.vehicleDetailsForm.valid
+    //     && this.vehicleDetailsForm.value['month'] != 0 && this.vehicleDetailsForm.value['year'] != 0
+    //     && this.vehicleDetailsForm.value['vehicleSaleType'] != 0) {
+        this.isShownHome = false;
+        this.isShownProfile = false;
+        this.isShownContact = !this.isShownHome;
+        this.loadfield();
+      // }
+    // }
   }
 
   toggleShowProfile() {
@@ -1154,7 +1202,7 @@ export class AddvehiclesalesComponent implements OnInit {
     // console.log(this.financeForm.valid)
 
     this.submittedFinal = true;
-    if (this.selectedtransactionTypeId == 1) {      
+    if (this.selectedtransactionTypeId == 1) {
       if (this.isCashinhand == true || this.iscard == true || this.ischeque == true
         || this.isUPI == true || this.isDD == true) {
         if (this.transtypecash.valid) {
