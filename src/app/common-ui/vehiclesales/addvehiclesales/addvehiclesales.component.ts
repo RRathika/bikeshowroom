@@ -125,7 +125,7 @@ export class AddvehiclesalesComponent implements OnInit {
   customerDetailForm: FormGroup = this.formBuilder.group({
     invoiceNo: new FormControl('', []),
     invoiceDate: new FormControl(),
-    receiptType: new FormControl(0, []),
+    receiptType: new FormControl(0, [Validators.required]),
     receiptNos: new FormControl('', []),
     date: new FormControl('', []),
     firstName: new FormControl('', [Validators.required]),
@@ -136,7 +136,7 @@ export class AddvehiclesalesComponent implements OnInit {
     // gstNo: new FormControl('', []),
     presentAddress: new FormControl(),
     permanentAddress: new FormControl(),
-    phoneOff: 0,
+    phoneOff: new FormControl('', []),
     residence: new FormControl('', []),
     mobileNo: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
     eMail: new FormControl('', []),
@@ -738,6 +738,7 @@ export class AddvehiclesalesComponent implements OnInit {
   }
   submit() {
     this.submitted = true;
+   
     if (this.vehicleDetailsForm.get('chassisNo')?.value != '') {
       this.vehicleDetailsForm.controls['vehicleSaleType'].enable();
       this.vehicleDetailsForm.controls['lifetax'].enable();
@@ -759,16 +760,17 @@ export class AddvehiclesalesComponent implements OnInit {
         dob: null
       })
     }
-    // if (this.customerDetailForm.valid) {
+    // if (this.customerDetailForm.valid && this.customerDetailForm.value['receiptType'] != 0) {
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
     // console.log(this.customerDetailForm.value);    
 
-    // if (this.customerDetailForm.valid && this.presentaddressForm.valid && this.permanentaddressForm.valid
-    // && this.customerDetailForm.value['gender'] != 0
-    // && this.customerDetailForm.value['qualification'] != 0 && this.customerDetailForm.value['occupation'] != 0
-    // && this.customerDetailForm.value['maritalStatus'] != 0 && this.customerDetailForm.value['nomineeGender'] != 0
-    // && this.customerDetailForm.value['relation'] != 0
-    // && this.presentaddressForm.value['district'] != 0 && this.presentaddressForm.value['taluk'] != 0) {
+    if (this.customerDetailForm.valid && this.presentaddressForm.valid && this.permanentaddressForm.valid
+    && this.customerDetailForm.value['gender'] != 0
+    && this.customerDetailForm.value['qualification'] != 0 && this.customerDetailForm.value['occupation'] != 0
+    && this.customerDetailForm.value['maritalStatus'] != 0 && this.customerDetailForm.value['nomineeGender'] != 0
+    && this.customerDetailForm.value['relation'] != 0
+    && this.presentaddressForm.value['district'] != 0 && this.presentaddressForm.value['taluk'] != 0
+    && this.customerDetailForm.value['receiptType'] != 0) {
     this.customerDetailForm.patchValue({ presentAddress: this.presentaddressForm.value, permanentAddress: this.permanentaddressForm.value })
     this.isShownProfile = !this.isShownProfile;
     this.isShownHome = false;
@@ -778,7 +780,7 @@ export class AddvehiclesalesComponent implements OnInit {
     //  this.color();
     this.loadfinance();
     this.getyear();
-    // }
+    }
   }
 
   btnVehicleModel() {
@@ -791,21 +793,21 @@ export class AddvehiclesalesComponent implements OnInit {
   }
 
   vehicleform() {
-    // this.submittedVehicle = true;
-    // if (this.vehicleDetailsForm.get('chassisNo')?.value == '') {
-    //   this.toastService.show('Choose Vehicle Model', { classname: 'bg-danger text-light', delay: 3000 });
-    // }
-    // else{
+    this.submittedVehicle = true;
+    if (this.vehicleDetailsForm.get('chassisNo')?.value == '') {
+      this.toastService.show('Choose Vehicle Model', { classname: 'bg-danger text-light', delay: 3000 });
+    }
+    else{
 
-    //   if (this.vehicleDetailsForm.valid && this.vehicleDetailsForm.value['showRoomId'] != 0
-    //     && this.vehicleDetailsForm.value['month'] != 0 && this.vehicleDetailsForm.value['year'] != 0
-    //     && this.vehicleDetailsForm.value['vehicleSaleType'] != 0) {
+      if (this.vehicleDetailsForm.valid && this.vehicleDetailsForm.value['showRoomId'] != 0
+        && this.vehicleDetailsForm.value['month'] != 0 && this.vehicleDetailsForm.value['year'] != 0
+        && this.vehicleDetailsForm.value['vehicleSaleType'] != 0) {
     this.isShownHome = false;
     this.isShownProfile = false;
     this.isShownContact = !this.isShownHome;
     this.loadfield();
-    //   }
-    // }
+      }
+    }
   }
 
   toggleShowProfile() {
