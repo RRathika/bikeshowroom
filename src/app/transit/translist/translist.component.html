@@ -26,8 +26,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Yard Name</label>
-                                <select class="form-select"formControlName="yard">
-                                    <option value="">Select</option>
+                                <select class="form-select"formControlName="yard" [(ngModel)]="selectedYard">
+                                    <option value="0" disabled>Select</option>
                                     <option *ngFor="let data of yard" [value]="data.yardId">{{data.yardName}}</option>
                                 </select>
                             </div>
@@ -66,7 +66,9 @@
                         </div>
                         <div class="col-md-3 text-center">
                             <div class="form-group mt-3 pt-1">
-                                <button type="submit" class="btn btn-success">Search</button>
+                                <button type="submit" class="btn btn-success mr-3">Search</button>
+                                <button type="button" class="btn btn-danger"
+                                (click)="Clear()">Clear</button>
                             </div>
                         </div>
                     </div>

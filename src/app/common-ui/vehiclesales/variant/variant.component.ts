@@ -187,8 +187,8 @@ export class VariantComponent implements OnInit {
     }
     console.log(this.variantForm.value);
     this.submitted=true;
-    this.changebm=true;
-    this.changec=true;
+    // this.changebm=true;
+    // this.changec=true;
     if(this.variantForm.valid)
     {
     if(this.variantId)
