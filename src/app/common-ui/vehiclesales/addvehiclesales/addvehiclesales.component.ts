@@ -842,20 +842,20 @@ console.log(this.customerDetailForm.value['showRoomId'])
 
   vehicleform() {
     this.submittedVehicle = true;
-    // if (this.vehicleDetailsForm.get('chassisNo')?.value == '') {
-    //   this.toastService.show('Choose Vehicle Model', { classname: 'bg-danger text-light', delay: 3000 });
-    // }
-    // else {
+    if (this.vehicleDetailsForm.get('chassisNo')?.value == '') {
+      this.toastService.show('Choose Vehicle Model', { classname: 'bg-danger text-light', delay: 3000 });
+    }
+    else {
 
-    //   if (this.vehicleDetailsForm.valid
-    //     && this.vehicleDetailsForm.value['month'] != 0 && this.vehicleDetailsForm.value['year'] != 0
-    //     && this.vehicleDetailsForm.value['vehicleSaleType'] != 0) {
+      if (this.vehicleDetailsForm.valid
+        && this.vehicleDetailsForm.value['month'] != 0 && this.vehicleDetailsForm.value['year'] != 0
+        && this.vehicleDetailsForm.value['vehicleSaleType'] != 0) {
         this.isShownHome = false;
         this.isShownProfile = false;
         this.isShownContact = !this.isShownHome;
         this.loadfield();
-      // }
-    // }
+      }
+    }
   }
 
   toggleShowProfile() {
@@ -1146,7 +1146,7 @@ console.log(this.customerDetailForm.value['showRoomId'])
 
   }
   cashinhand(e: any) {
-
+    debugger
     let bookamount = this.advanceamount;
     let net = this.vehicleDetailsForm.value['finaltotal'];
     let cash = this.transtypecash.value['handAmount'];
@@ -1154,6 +1154,7 @@ console.log(this.customerDetailForm.value['showRoomId'])
     let cheque = this.transtypecash.value['chequeAmount'];
     let dd = this.transtypecash.value['ddAmount'];
     let upi = this.transtypecash.value['upiAmount'];
+    if(cash !=''&& card !='' && cheque !='' && dd !='' && upi !=''){
     let amount = parseInt(cash) + parseInt(card) + parseInt(cheque) + parseInt(dd) + parseInt(upi);
     let balance = Math.round(net) - (bookamount + amount);
     this.payDetails.patchValue({
@@ -1162,6 +1163,49 @@ console.log(this.customerDetailForm.value['showRoomId'])
       financeamt: 0,
       creditamt: 0
     })
+    }
+    if(cash !='')
+    {
+      let amount = parseInt(cash);
+    let balance = Math.round(net) - (bookamount + amount);
+    this.payDetails.patchValue({
+      cashbank: amount,
+      balanceamt: balance,
+      financeamt: 0,
+      creditamt: 0
+    })
+    }
+    if(cash !='' && card !='')
+    {
+      let amount = parseInt(cash) + parseInt(card);
+    let balance = Math.round(net) - (bookamount + amount);
+    this.payDetails.patchValue({
+      cashbank: amount,
+      balanceamt: balance,
+      financeamt: 0,
+      creditamt: 0
+    })
+    }
+    if(cash !=''&& card !='' && cheque !='' ){
+      let amount = parseInt(cash) + parseInt(card) + parseInt(cheque) ;
+      let balance = Math.round(net) - (bookamount + amount);
+      this.payDetails.patchValue({
+        cashbank: amount,
+        balanceamt: balance,
+        financeamt: 0,
+        creditamt: 0
+      })
+      }
+      if(cash !=''&& card !='' && cheque !='' && dd !='' ){
+        let amount = parseInt(cash) + parseInt(card) + parseInt(cheque) + parseInt(dd) ;
+        let balance = Math.round(net) - (bookamount + amount);
+        this.payDetails.patchValue({
+          cashbank: amount,
+          balanceamt: balance,
+          financeamt: 0,
+          creditamt: 0
+        })
+        }
   }
   creditamount(e: any) {
     let bookamount = this.advanceamount;

@@ -193,8 +193,21 @@ export class VariantComponent implements OnInit {
     {
     if(this.variantId)
     {
-      this.variantForm.value['total']=this.total;
-      // console.log(this.variantForm.value);      
+      let check =this.total;
+      if(check>0)
+      {
+       this.variantForm.patchValue({
+         total:this.total
+       })
+      }
+      else
+      {
+        this.solution=this.variantForm.value['invoiceAmount']+this.variantForm.value['lifeTax']+this.variantForm.value['insurance']+this.variantForm.value['hrFee']+this.variantForm.value['hypCharges']+this.variantForm.value['extraCharges']+this.variantForm.value['otherCharges'];
+    //this.total=this.solution;
+    this.variantForm.value['total']=this.solution;
+      }
+      console.log(this.variantForm.value['total']);  
+         
       this.service.updatevariant(this.variantForm?.value).subscribe((data:any)=>{
         if(data.statusCode==200){
         this.toastService.show(data.message, { classname: 'bg-success text-light', delay: 3000 }); 
@@ -228,7 +241,7 @@ export class VariantComponent implements OnInit {
   {
     console.log(amount.target.value);    
     this.variantForm.patchValue({
-      Total:amount.target.value()
+      total:amount.target.value
     })
   }
   sum1()
