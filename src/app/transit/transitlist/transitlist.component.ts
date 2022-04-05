@@ -100,6 +100,8 @@ export class TransitlistComponent implements OnInit {
   }
   changeshowroom(e:any){
     let data=e.target.value;
+    console.log(data);
+    
     this.transitForm.controls['yardId'].enable();
     this.service.showroombyyard(data).subscribe(data=>{
       if(data.statusCode==200)
@@ -113,7 +115,9 @@ export class TransitlistComponent implements OnInit {
     })
   }
   onFileChange(evt: any) {
-    this.count=this.count+1;
+    this.count=this.count+1;   
+    debugger
+   
     const target: DataTransfer = <DataTransfer>(evt.target);
     if (target.files.length !== 1) throw new Error('Cannot use multiple files');
     let workBook = null;
