@@ -97,10 +97,10 @@
                                 <td>{{data.supplierName}}</td>
                                 <td>{{data.transportName}}</td>
                                 <td>{{data.truckNo}}</td>
-                                <td><i class="fas fa-eye" style="color: blue;" data-toggle="modal"
+                                <td style="cursor: pointer;"><i class="fas fa-eye" style="color: blue;" data-toggle="modal"
                                         data-target="#exampleModal" data-whatever="@mdo"
                                         (click)="viewbyid(data.transitId)"></i></td>
-                                <td><i class="fa fa-arrow-right" data-toggle="tooltip" data-placement="top"
+                                <td style="cursor: pointer;"><i class="fa fa-arrow-right" data-toggle="tooltip" data-placement="top"
                                         title="Move to purchase" (click)="movepurchase(data.transitId)"
                                         aria-hidden="true"></i></td>
                             </tr>

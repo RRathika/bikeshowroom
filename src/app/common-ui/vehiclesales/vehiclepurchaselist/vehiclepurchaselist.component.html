@@ -13,7 +13,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Showroom Name</label>
                                     <select class="form-select" (change)="showroomchange($event)" formControlName="showRoomId">
-                                        <option value="" hidden>Select</option>
+                                        <option value="" disabled>Select</option>
                                         <option *ngFor="let data of showdata" [value]="data.showRoomId">{{data.showRoomName}}</option>
                                     </select>
                                     <div *ngIf="submitted">
@@ -27,7 +27,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Yard Name</label>
                                     <select class="form-select" formControlName="yard">
-                                        <option  value="" hidden>Select</option>
+                                        <option  value="" disabled>Select</option>
                                         <option *ngFor="let data of yard" [value]="data.yardId">{{data.yardName}}</option>
                                     </select>
                                 </div>
@@ -96,7 +96,7 @@
                                     <td>{{data.suppierAddress}}</td>
                                     <td>{{data.supplierGST}}</td>
                                     <td>{{data.netAmount}}</td>
-                                    <td><i class="fas fa-eye" style="color: blue;"  data-toggle="modal" data-target="#exampleModal"
+                                    <td style="cursor: pointer;"><i class="fas fa-eye" style="color: blue;"  data-toggle="modal" data-target="#exampleModal"
                                             data-whatever="@mdo" (click)="viewbyid(data.vehiclePurchaseId)"></i></td>
                                     <!-- <td><i class="fa fa-arrow-right" data-toggle="tooltip" data-placement="top" title="Move to purchase" (click)="movepurchase(data.transitId)" aria-hidden="true"></i></td> -->
                                 </tr>
