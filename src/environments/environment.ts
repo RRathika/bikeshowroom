@@ -4,7 +4,7 @@
 
 export const environment = {
   // production: false,apiurl:"https://104.254.247.180/api/"
-  production: false,apiurl:"http://104.254.247.180/api/"
+  production: false,apiurl:"https://malunch.com:80/api/"
 };
 
 /*

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient,HttpHeaders   } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 @Injectable({
@@ -7,7 +8,17 @@ import { environment } from 'src/environments/environment';
 })
 export class YamahaserviceService {
   url=environment.apiurl;
-  constructor(private httpclient: HttpClient) { }
+  constructor(private httpclient: HttpClient) {}
+
+  //  getHeaders(): HttpHeaders {
+  //   let headers = new HttpHeaders();
+  //   headers = headers.append('Content-Type', 'application/json');
+  //   headers = headers.append('Content-Type', 'Access-Control-Allow-Headers');
+  //   headers = headers.append('cache-control', 'no-cache');
+  //   return headers;
+  // }
+
+
   public bikemodel = new BehaviorSubject<any>('');
   public color = new BehaviorSubject<any>('');
   public vendor = new BehaviorSubject<any>('');
@@ -20,7 +31,7 @@ export class YamahaserviceService {
   public yard = new BehaviorSubject<any>('');
   public printvalue=new BehaviorSubject<any>('');
   public finance= new BehaviorSubject<any>('');
-  getbikemodel():Observable<any>{return this.httpclient.get(this.url+'BikeModel/GetBikeModels');}
+  getbikemodel():Observable<any>{return this.httpclient.get(this.url+'BikeModel/GetBikeModels')}
   savebikemodel(data:any):Observable<any>{return this.httpclient.post(this.url+'BikeModel/SaveBikeModel',data);}
   updatebikemodel(data:any):Observable<any>{return this.httpclient.put(this.url+'BikeModel/UpdateBikeModel',data);}
   deletebikemodel(id:any):Observable<any>{return this.httpclient.delete(this.url+`BikeModel/DeleteBikeModel?ModelId=${id}`);}
