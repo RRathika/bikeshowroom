@@ -68,7 +68,8 @@
                                                     <datalist id="advancebookname">
                                                         <!-- <select (change)="onChangeselectedAdvanceName($event)"
                                                             [(ngModel)]="selectedAdvanceName"> -->
-                                                        <option *ngFor="let data of username;" [value]=data.name>
+                                                            <!-- <option value="0" disabled>Select</option> -->
+                                                            <option *ngFor="let data of username;" [value]=data.name>
                                                         </option>
                                                         <!-- </select> -->
 
@@ -87,6 +88,7 @@
                                                     [(ngModel)]="selectedAdvanceModelName"
                                                     (change)="onChangeselectedAdvanceModelName($event)">
                                                 <datalist id="advancebookmodelname">
+                                                    <!-- <option value="0" disabled>Select</option> -->
                                                     <option *ngFor="let data of modelname;" [value]=data.modelName>
                                                 </datalist>
                                             </div>
@@ -100,14 +102,18 @@
                                         <tr>
                                             <!-- <th>Select</th> -->
                                             <th>S.No</th>
+                                            <th>Name</th>
                                             <th>receipt No</th>
+                                            <th>Model Name</th>
                                             <th>Amount</th>
                                             <th>View</th>
                                         </tr>
                                         <tr *ngFor="let item of bookdata;let i=index;">
                                             <!-- <td><input type="checkbox"></td> -->
                                             <td>{{i+1}}</td>
+                                            <td>{{item.name}}</td>
                                             <td>{{item.advanceBookingId}}</td>
+                                            <td>{{item.modelName}}</td>
                                             <td>{{item.advanceAmount}}</td>
                                             <td><a class="btn btn-info bg-info" data-dismiss="modal"
                                                     (click)="apply(item.advanceBookingId,item.date,item.advanceAmount)">Apply</a>
@@ -337,8 +343,8 @@
                                     <!-- <div class="col-md-1"> -->
                                         <div class="col-md-2">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Recpt-No</label>
-                                            <input type="text" class="form-control" placeholder="Receipt No's"
+                                            <label for="exampleInputEmail1">Receipt No</label>
+                                            <input type="text" class="form-control" placeholder="Receipt No"
                                                 formControlName="receiptNos">
                                         </div>
                                     </div>

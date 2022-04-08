@@ -59,8 +59,8 @@ export class AddvehiclesalesComponent implements OnInit {
   cheque: number = 0;
   dd: number = 0; upi: number = 0;
   // showdata: any;
-  selectedAdvanceModelName: any = '';
-  selectedAdvanceName: any = '';
+  selectedAdvanceModelName: any = 0;
+  selectedAdvanceName: any = 0;
   selectedAdvanceDate: any = '';
   // disableTextbox:boolean=false;
   // advanceamount=0;
@@ -1335,23 +1335,33 @@ console.log(this.customerDetailForm.value['showRoomId'])
 
   bookingBtn() {
     //  this.advanceDate = new Date().toISOString().split('T')[0];
-
+    this.selectedAdvanceModelName = '';
+  this.selectedAdvanceName = '';
+  this.selectedAdvanceDate = '';
+    this.clearBtn();
     this.loadadvancebook();
     this.loadname();
     this.loadmodelname();
   }
 
   getAdvanceBookingsByFilter() {
-    console.log(this.selectedAdvanceName)
-    console.log(this.selectedAdvanceDate)
-    console.log(this.selectedAdvanceModelName)
+    // console.log(this.selectedAdvanceName)
+    // console.log(this.selectedAdvanceDate)
+    // console.log(this.selectedAdvanceModelName)
+    
     this.service.getAdvanceBookingsByFilter(this.selectedAdvanceName, this.selectedAdvanceDate, this.selectedAdvanceModelName).subscribe(data => {
       // this.showdata=data;
       this.bookdata = data;
       console.log(data)
     })
+    this.clearsolutions();
   }
-
+  clearsolutions(){
+    debugger
+  this.selectedAdvanceModelName = '';
+  this.selectedAdvanceName = '';
+  this.selectedAdvanceDate = '';
+  }
   onChangeselectedAdvanceName(getName: any) {
     console.log(getName);
     console.log(this.selectedAdvanceName)

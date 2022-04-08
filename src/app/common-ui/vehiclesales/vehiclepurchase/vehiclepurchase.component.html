@@ -156,7 +156,7 @@
 						<tbody style="text-align: center;" *ngIf="purchase">
 							 <tr *ngFor="let row of purchase; let i=index; " (change)="onChange($event,i)" class="table-info" >
 								<td>{{i+1}}</td>
-								<td><input type="text" /></td>
+								<td><input type="number" /></td>
 								<td>{{row.chassisNo	}}</td>
 								<td>{{row.engineNo}}</td>
 								<td>{{row.modelCode}}</td>
@@ -170,7 +170,7 @@
 						<tbody style="text-align: center;" *ngIf="exceldata">
 							<tr *ngFor="let row of exceldata; let i=index; " class="table-info" >
 								<td>{{i+1}}</td>
-								<td><input type="text" (change)="onChange($event,i)" /></td>
+								<td><input type="number" (change)="onChange($event,i)" /></td>
 								<td>{{row.ChassisNo	}}</td>
 								<td>{{row.EngineNo}}</td>
 								<td>{{row.ModelCode}}</td>
